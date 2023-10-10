@@ -2,7 +2,7 @@
 export default function BBSNav() {
   
   return (
-    <>
+    <>내브
     </>
   );
 }
