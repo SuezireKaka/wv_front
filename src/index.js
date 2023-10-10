@@ -5,13 +5,16 @@ import App from './App';
 import BBSNav from 'layout/BBSNav';
 import Footer from 'layout/Footer';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router } from "react-router-dom"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BBSNav/>
-    <App />
-    <Footer/>
+    <Router>
+      <BBSNav />
+      <App />
+      <Footer />
+    </Router>
   </React.StrictMode>
 );
 
