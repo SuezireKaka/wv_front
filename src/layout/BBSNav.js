@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Fetch } from "toolbox/Fetch";
 
 export default function BBSNav() {
-  const boardListUri = `/bb/anonymous/listAll`;
+  const boardListUri = `http://localhost:8080/bb/anonymous/listAllPost/0001/1`;
   return (
     <><Link to="/">Home</Link>
     &nbsp;&nbsp;|
@@ -11,13 +11,10 @@ export default function BBSNav() {
   );
   
   function renderSuccess(boardList) {
+    console.log(boardList);
+    console.log("놀자");
     return <>
-        {boardList.map(board => (
-            <Link key={board.id} to={`/show`}
-                state={{ boardId: board.id, page: 1 }}>
-                &nbsp;&nbsp;Scrolling_{board.name}
-            </Link>
-        ))}
+        
     </>
 }
 }

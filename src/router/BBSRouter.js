@@ -10,9 +10,9 @@ export default function BBSRouter() {
     return (
         <Routes> 
           <Route path="/" element={ <Home /> } />
-          <Route path={"/showcase"} element={ <Showcase /> } />
-          <Route path={"/series"} element={ <Series /> } />
-          <Route path={"/post/:loginId"} element={ <PostDetails /> } />
+          <Route path={"/showcase"} element={ <Showcase/> } />
+          <Route path={"/series"} element={ <Series/> } />
+          <Route path={"/post/:loginId"} element={ <PostDetails/> } />
         </Routes>
        
       )
