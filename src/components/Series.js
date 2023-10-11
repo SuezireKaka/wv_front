@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from 'api/axios';
 import { useEffect } from "react";
 import { Fetch } from "toolbox/Fetch";
+import PostList from "./PostList";
 
 export default function Series() {
   const location = useLocation();
@@ -11,51 +12,28 @@ export default function Series() {
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-  const postUri = `/work/anonymous/getPost/${state.id}/${page}`;
+  const boardUri = `http://localhost:8080/bb/anonymous/listAll/${targetBoard}`
+  const postListUri = `http://localhost:8080/work/anonymous/listAllPost/0000/1`;
 
-  const getPostListThenSet = async () => {
-    console.log('fetching 함수 호출됨');
-    try {
-        const { data } = await axios.get(`/work/anonymous/listAllSeries/${targetBoard}/${page}`);
-        console.log("읽어온 게시글 목록", data.firstVal);
-        setPostList(postList.concat(data.firstVal));
-    } catch {
-        console.error('fetching error');
-    }
-};
-    //observer 콜백함수
-    const onIntersect = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          //뷰포트에 마지막 이미지가 들어오고, page값에 1을 더하여 새 fetch 요청을 보내게됨 (useEffect의 dependency배열에 page가 있음)
-          setPage((prev) => prev + 1);
-          // 현재 타겟을 unobserve한다.
-          observer.unobserve(entry.target);
-        }
-      });
-    };
+  function RenderSuccess(series){
+    return <>
+    시리즈
+    {console.log(series)}
 
+    [썸네일 넣을칸]<br/><br/><br/>
+    제목:{series.title}<br/>
+    설명:{series.content}<br/>
+    작가:{series.writer?.nick}<br/><br/>
+    게시글등록링크 만들어야함
+    <PostList series={series}/>
     
-    useEffect(() => {
-      console.log('page ? ', page);
-      getPostListThenSet();
-    }, [page]);
-  
-    useEffect(() => {
-      //observer 인스턴스를 생성한 후 구독
-      let observer;
-      if (lastIntersectingImage) {
-        observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-         //observer 생성 시 observe할 target 요소는 불러온 이미지의 마지막아이템(randomImageList 배열의 마지막 아이템)으로 지정
-        observer.observe(lastIntersectingImage);
-      }
-      return () => observer && observer.disconnect();
-    }, [lastIntersectingImage]);
-  
+    </>
+  }
     return (
       <div>
-        <Fetch uri={postUri} renderSuccess={renderSuccess} />
-      시리즈
+        {console.log(postListUri)}
+        <Fetch uri={postListUri} renderSuccess={RenderSuccess} />
+
 
         {/*postList?.map((post, index) => {
           if (index === postList.length - 1) {
@@ -82,10 +60,6 @@ export default function Series() {
         })*/}
   
       </div>)
-      function renderSuccess(series) {
-        console.log(series)
-        
-      }
-    
+ 
   }
   
