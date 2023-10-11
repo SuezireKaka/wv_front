@@ -13,14 +13,7 @@ export default function BBSNav() {
   function renderSuccess(boardList) {
     return <>
         {boardList.map(board => (
-            <Link key={board.id} to={`/board`}
-                state={{ boardId: board.id, page: 1 }}>
-                &nbsp;&nbsp;{board.name}
-            </Link>
-        ))}
-
-        {boardList.map(board => (
-            <Link key={board.id} to={`/post-list`}
+            <Link key={board.id} to={`/show`}
                 state={{ boardId: board.id, page: 1 }}>
                 &nbsp;&nbsp;Scrolling_{board.name}
             </Link>
