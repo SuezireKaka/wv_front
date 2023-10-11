@@ -3,7 +3,8 @@ import { createContext, useState } from "react";
 const AppContext = createContext({});
 
 export const AppContextProvider = ({ children }) => {
-    const [auth, setAuth] = useState({});
+    let user = window.sessionStorage.getItem("nowUser");
+    console.log(user ? JSON.parse(user) : "야");
     const [codeList, setCodeList] = useState();
 
     return (
