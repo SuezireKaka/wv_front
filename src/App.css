@@ -12,7 +12,7 @@
 }
 
 .Question {
-  align-items: right;
+  align-items: left;
 }
 
 @media (prefers-reduced-motion: no-preference) {

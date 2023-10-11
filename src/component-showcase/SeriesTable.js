@@ -1,4 +1,13 @@
+import SeriesSkin from "./SeriesSkin";
+import { Link } from "react-router-dom";
+
 export default function Showcase({data = [], colnum = 5}) {
+    console.log(data)
+
+    const CELL_STYLE = {
+        width: "20%",
+        border: "1px solid"
+    }
 
     function sliceBy(data, colnum) {
         let resultArray = []
@@ -12,10 +21,12 @@ export default function Showcase({data = [], colnum = 5}) {
 
     return <>
         {sliceBy(data, colnum).map(slice => {
-            return <tr>
+            return <tr style={CELL_STYLE}>
                 {slice.map(series => {
-                    return <td>
-                        {series.title}
+                    return <td style={CELL_STYLE}>
+                        <Link to={"/series/" + series.id}>
+                            <SeriesSkin series={series}/>
+                        </Link>
                     </td>
                 })}
             </tr>
