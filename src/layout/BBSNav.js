@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Fetch } from "toolbox/Fetch";
 
 export default function BBSNav() {
-  const boardListUri = `http://localhost:8080/bb/anonymous/listAllPost/0001/1`;
+  const boardListUri = `http://localhost:8080/bb/anonymous/listAll`;
   return (
     <><Link to="/">Home</Link>
     &nbsp;&nbsp;|
