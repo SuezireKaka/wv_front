@@ -12,9 +12,14 @@ export default function BBSNav() {
   
   function renderSuccess(boardList) {
     console.log(boardList);
-    console.log("놀자");
+    console.log("");
     return <>
-        
+          {boardList.map(board => (
+                <Link key={board.id} to={`/board/${board.id}`}
+                    state={{ boardId: board.id, page: 1 }}>
+                    &nbsp;&nbsp;{board.name}
+                </Link>
+            ))}
     </>
 }
 }

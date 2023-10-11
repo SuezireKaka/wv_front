@@ -55,7 +55,7 @@ export default function Series() {
     return (
       <div>
         <Fetch uri={postUri} renderSuccess={renderSuccess} />
-
+      시리즈
 
         {/*postList?.map((post, index) => {
           if (index === postList.length - 1) {
