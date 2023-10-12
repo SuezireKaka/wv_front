@@ -4,12 +4,14 @@ import Showcase from 'components/Showcase';
 import Series from 'components/Series';
 import PostDetails from 'components/PostDetails';
 import Tool from 'components/Tool';
+import Agreement from 'components/Agreement';
 
 
 export default function BBSRouter() {
     return (
         <Routes> 
           <Route path="/" element={ <Home /> } />
+          <Route path={"/agreement"} element={ <Agreement/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
           <Route path={"/series/:seriesId"} element={ <Series/> } />
 
