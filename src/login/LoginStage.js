@@ -1,10 +1,11 @@
 import { useRef, useState, useEffect, useContext } from 'react';
+import AppContext from 'context/AppContextProvider';
 import { Link } from 'react-router-dom';
 
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
 
 const LoginStage = () => {
-    const { setAuth } = useContext(AppProvider);
+    const { setAuth } = useContext(AppContext);
     const loginIdRef = useRef();
     const passWordRef = useRef();
 
