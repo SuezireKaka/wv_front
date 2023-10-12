@@ -31,6 +31,8 @@ export default function LoginButton() {
       
       : 
       <>
+      <Dropdown.Item href="#/1">새글작성??</Dropdown.Item>
+      <Dropdown.Item href="#/2">내작품보기??</Dropdown.Item>
       <Dropdown.Item href="/userProfile">프로필수정</Dropdown.Item>
       <Dropdown.Item onClick={handleLogout}>로그아웃</Dropdown.Item>
       </>
