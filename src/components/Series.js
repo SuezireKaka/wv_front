@@ -11,61 +11,48 @@ export default function Series() {
   const location = useLocation();
   let state = location.state;
   console.log(state);
-  const [targetBoard, setTargetBoard] = useState(state.boardId);
+  const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-  const postListUri = `http://localhost:8080/work/anonymous/listAllPost/${state.boardId}/1`;
+  const seriesDetailsUri = `http://localhost:8080/work/anonymous/findById/${state.seriesId}`;
+  const postListUri = `http://localhost:8080/work/anonymous/listAllPost/${state.seriesId}/1`;
 
-  function RenderSuccess(series){
+  function SeriesDetailsSuccess(series){
+    console.log("여기가 먼저?")
+    console.log(series)
     return <>
-    시리즈
-    {console.log(series)}
-    [썸네일 넣을칸]<br/><br/><br/>
-    제목:{series.title}<br/>
-    설명:{series.content}<br/>
-    작가:{series.writer?.nick}<br/><br/>
-    게시글등록링크 만들어야함
-    {/*console.log(series)
-    <PostList series={series} />*/}
-    
+      시리즈
+      [썸네일 넣을칸]<br/><br/><br/>
+      제목:{series.title}<br/>
+      설명:{series.content}<br/>
+      작가:{series.writer?.nick}<br/><br/>
     </>
   }
-    return (
-      <div>
-        <Fetch uri={postListUri} renderSuccess={RenderSuccess} />
-<<<<<<< HEAD
-
-
-        {postList?.map((post, index) => {
-          if (index === postList.length - 1) {
-            return (
-                <p key={post.id} ref={setLastIntersectingImage}>
-                    <h2>{post.title}</h2>
-                    <h4>{post.writer ? post.writer.name : ""}</h4>
-                    <span>{post.readCnt}</span>
-                    <span>{post.likeCnt}</span>
-                    <h6>최종작성일 : <span>{displayDate(post.regDt, post.uptDt)} </span></h6>
-                </p>
-            );
-          } else {
-            return (
-                <p key={post.id}>
-                    <h2>{post.title}</h2>
-                    <h4>{post.writer ? post.writer.name : ""}</h4>
-                    <span>{post.readCnt}</span>
-                    <span>{post.likeCnt}</span>
-                    <h6>최종작성일 : <span>{displayDate(post.regDt, post.uptDt)} </span></h6>
-                </p>
-            );
-          }
-        })}
-  
-      </div>)
- 
-=======
-      </div>
-      )
->>>>>>> 4d39e775bd4c1729bfb54fc88b3703c2ff1541fd
+  function PostSkinListSuccess(postsPage){
+    console.log("여기는 나중?")
+    console.log(postsPage)
+    return <div>
+      {postsPage.length == 0
+        ? "로딩중....................."
+        : postsPage.firstVal.map(postSkin => {
+          return <div>
+            {"제목 : " + postSkin.title} 
+          </div>
+        })
+      }
+    </div>
   }
+
+  return <>
+    <div>
+      <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
+    </div>
+    <div>
+      게시글등록링크 만들어야함
+      <Fetch uri={postListUri} renderSuccess={PostSkinListSuccess}/>
+    </div>
+    
+  </>
+}
   
