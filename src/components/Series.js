@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from 'api/axios';
 import { useEffect } from "react";
 import { Fetch } from "toolbox/Fetch";
+import { displayDate } from "toolbox/DateDisplayer";
 import PostList from "./PostList";
 
 export default function Series() {
@@ -12,8 +13,7 @@ export default function Series() {
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-  const boardUri = `http://localhost:8080/bb/anonymous/listAll/${targetBoard}`
-  const postListUri = `http://localhost:8080/work/anonymous/listAllPost/0000/1`;
+  const postListUri = `http://localhost:8080/work/anonymous/listAllPost/${state.boardId}/1`;
 
   function RenderSuccess(series){
     return <>
@@ -35,7 +35,7 @@ export default function Series() {
         <Fetch uri={postListUri} renderSuccess={RenderSuccess} />
 
 
-        {/*postList?.map((post, index) => {
+        {postList?.map((post, index) => {
           if (index === postList.length - 1) {
             return (
                 <p key={post.id} ref={setLastIntersectingImage}>
@@ -57,7 +57,7 @@ export default function Series() {
                 </p>
             );
           }
-        })*/}
+        })}
   
       </div>)
  

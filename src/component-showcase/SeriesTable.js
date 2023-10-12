@@ -24,7 +24,7 @@ export default function Showcase({data = [], colnum = 5}) {
             return <tr style={CELL_STYLE}>
                 {slice.map(series => {
                     return <td style={CELL_STYLE}>
-                        <Link to={"/series/" + series.id}>
+                        <Link to={"/series/" + series.id} state={{ seriesId: series.id }}>
                             <SeriesSkin series={series}/>
                         </Link>
                     </td>
