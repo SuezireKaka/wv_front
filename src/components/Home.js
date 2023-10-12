@@ -7,7 +7,6 @@ export default function Home() {
       <p class="border border-danger-subtle">
       
       기본화면띄울 곳.</p>
-      <LoginStage/>
     </div>
   )
 }

@@ -1,8 +1,9 @@
+import { useRef } from "react"
 import { Fetch } from "toolbox/Fetch"
 import drawGraph from "./Graph"
 
 export default function ToolFrame({tool}) {
-    const canvas = <canvas style={{border : "1px dotted"}} width={tool.xToolSize} height={tool.yToolSize}/>
+    const canvasRef = useRef()
 
     const READY_FOR_GRAPH = `http://localhost:8080/tool/anonymous/getToolById/${tool.id}`
 
@@ -14,13 +15,19 @@ export default function ToolFrame({tool}) {
             let customRelations = toolWithGraph.customRelationList
             console.log("그래프 그리는 중")
             console.log(customEntities, customRelations)
-            {/*drawGraph(canvas, customEntities, customRelations)*/}
-        }
-        else {
-            {/*drawGraph(canvas, [], [])*/}
+            customRelations.forEach(relation => {
+                const ctx = canvasRef.current.getContext("2d");
+                let [oneCenterX, oneCenterY] =
+                    [relation.one.xPos + relation.one.xSize / 2, relation.one.yPos + relation.one.ySize / 2]
+                let [otherCenterX, otherCenterY] =
+                    [relation.other.xPos + relation.other.xSize / 2, relation.other.yPos + relation.other.ySize / 2]
+                console.log("이거 되니!?")
+                console.log(otherCenterX)
+            });
+            
         }
         return <div>
-            {canvas}
+            <canvas ref={canvasRef} style={{border : "1px dotted"}} width={tool.xToolSize} height={tool.yToolSize}/>
         </div>
     }
 
