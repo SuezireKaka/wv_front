@@ -3,7 +3,10 @@ import { Fetch } from "toolbox/Fetch";
 import { useContext } from "react";
 import AppContext from "context/AppContextProvider";
 import UserProfile from "login/UserProfile";
-
+import { Dropdown } from "react-bootstrap";
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import SplitButton from 'react-bootstrap/SplitButton';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export default function BBSNav() {
   const { auth } = useContext(AppContext);
@@ -15,10 +18,26 @@ export default function BBSNav() {
     <Link to="/">Home</Link>
     &nbsp;&nbsp;|
     <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
-    {!roles || roles[0] === ""
-    ? <Link to="/"><button style={{float: "right", marginRight: "10px"}}>로그인</button></Link>
-    : <UserProfile user={auth}/>
-    }
+
+    <Dropdown style={{float: "right", marginRight: "10px"}}>
+      <Dropdown.Toggle variant="success" id="dropdown-basic" size="sm">
+        {!roles || roles[0] === ""? <>로그인</>: <UserProfile user={auth}/>}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">로그인</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">회원가입</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">프로필수정</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+
+
+        
+
+ 
+
+
+
   </>;
   
   function renderSuccess(boardList) {
