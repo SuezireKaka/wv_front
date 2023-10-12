@@ -38,18 +38,18 @@ const LoginStage = () => {
         ).then((response) => response.json())
         .then(data => {
             console.log(data);
-            {/*if (data.code === 0) {
+            if (data.code === 0) {
                 setSignInResult(data);
                 const accessToken = data.token;
                 const roles = data.roles;
-                const name = data.userName;
-                setAuth({ nick, roles, name, accessToken });
-                {/*window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, name, accessToken }));
+                const nick = data.userNick;
+                setAuth({ roles, nick, accessToken });
+                window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken }));
             }
             else {
                 alert("아이디 또는 패스워드가 바르지 않습니다!");
-                pswdRef.current.focus();
-            };*/}
+                passWordRef.current.focus();
+            };
             // 데이터가 있고 그 데이터의 코드가 0이면 성공!
             setSuccess(data && data.code === 0);
         })

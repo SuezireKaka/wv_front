@@ -5,6 +5,7 @@ import Series from 'components/Series';
 import PostDetails from 'components/PostDetails';
 import Tool from 'components/Tool';
 import Agreement from 'components/Agreement';
+import LoginStage from 'login/LoginStage';
 
 
 export default function BBSRouter() {
@@ -17,6 +18,7 @@ export default function BBSRouter() {
 
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
           <Route path={"postd"} element={ <PostDetails/> } />
+          <Route path={"log-in"} element={ <LoginStage/> } />
         </Routes>
        
       )
