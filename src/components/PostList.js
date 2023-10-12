@@ -7,16 +7,19 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
 import { Fetch } from "toolbox/Fetch";
-export default function PostList({series}) {
+
+export default function PostList(props) {
   //const { auth } = useContext(AppContext);
   //const isMember = auth?.roles?.includes("member");
- console.log(series);
+  console.log(props)
+ const seriesUrl = `http://localhost:8080/work/anonymous/findById/0000`;
+ console.log(seriesUrl);
   const location = useLocation();
   let state = location.state;
   console.log("PostList param", state);
   function buildUrl(step) {
     console.log("buildUrl(step", step);
-    console.log(series.firstVal);
+  
     if (state.search)
         return `http://localhost:8080/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
     else
@@ -107,10 +110,10 @@ function renderSuccess(postListWithPaging) {
 }
     return (
       <div>
-        {console.log(series)}
+        
         {postListUri}
         {console.log(postListUri)}
-        <Fetch uri={series} renderSuccess={renderSuccess} />
+        <Fetch uri={seriesUrl} renderSuccess={renderSuccess} />
   
       </div>
     )
