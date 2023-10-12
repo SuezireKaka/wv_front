@@ -19,8 +19,8 @@ export default function Series() {
   const postListUri = `http://localhost:8080/work/anonymous/listAllPost/${state.seriesId}/1`;
 
   function SeriesDetailsSuccess(series){
-    console.log("여기가 먼저?")
-    console.log(series)
+    console.log("1, 3")
+    {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
       시리즈
       [썸네일 넣을칸]<br/><br/><br/>
@@ -30,8 +30,8 @@ export default function Series() {
     </>
   }
   function PostSkinListSuccess(postsPage){
-    console.log("여기는 나중?")
-    console.log(postsPage)
+    console.log("2, 4")
+    {/* 이 부분이 두 번째와 네 번째에 실행됨 */}
     return <div>
       {postsPage.length == 0
         ? "로딩중....................."
