@@ -6,15 +6,18 @@ import BBSNav from 'layout/BBSNav';
 import Footer from 'layout/Footer';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom"
+import { AppContextProvider } from 'context/AppContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  
+    <AppContextProvider>
     <Router>
       <BBSNav />
       <App />
     </Router>
-  </React.StrictMode>
+    </AppContextProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

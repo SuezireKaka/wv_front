@@ -8,7 +8,7 @@ export default function Showcase() {
     let state = location.state;
     console.log(state);
 
-    const LIST_ALL_SERIES_URI = `http://localhost:8080/work/anonymous/listAllSeries/${state.boardId}/1`
+    const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/${state.boardId}/1`
 
     const TABLE_STYLE = {
         width: "100%",
