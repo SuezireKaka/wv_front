@@ -16,21 +16,29 @@ export default function Series({data}) {
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
+
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
   const seriesDetailsUri = `http://localhost:8080/work/anonymous/findById/${state.seriesId}`;
   const postListUri = `http://localhost:8080/work/anonymous/listAllPost/${state.seriesId}/1`;
 
   function SeriesDetailsSuccess(series){
     console.log("1, 3")
+    console.log(series.title)
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
+     {console.log(series.title)}
       시리즈
       [썸네일 넣을칸]<br/><br/><br/>
       {series.id}
       제목:{series.title}<br/>
       설명:{series.content}<br/>
       작가:{series.writer?.nick}<br/><br/>
-      <PostList state={{seriesId: series.id, page: 1}}/>
+      {series?.title === 0
+        ? "(게시글이 없습니다)"
+        
+        :  <PostList state={{seriesId: series.id, page:1}}/>
+        }
+
     </>
   }
 
