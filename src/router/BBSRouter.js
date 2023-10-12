@@ -6,7 +6,8 @@ import PostDetails from 'components/PostDetails';
 import Tool from 'components/Tool';
 import Agreement from 'components/Agreement';
 import LoginStage from 'login/LoginStage';
-
+import Register from 'login/Register';
+import UserProfile from 'login/UserProfile';
 
 export default function BBSRouter() {
     return (
@@ -19,6 +20,9 @@ export default function BBSRouter() {
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
           <Route path={"/postd"} element={ <PostDetails/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
+          <Route path={"/register"} element={ <Register/> } />
+          <Route path={"/userProfile"} element={ <UserProfile/> } />
+          
         </Routes>
        
       )
