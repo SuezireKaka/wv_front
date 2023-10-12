@@ -9,17 +9,17 @@ import { Link } from "react-router-dom";
 
 
 export default function Series({data}) {
-  console.log(data);
+
   const location = useLocation();
   let state = location.state;
-  console.log(state);
+
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
 
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-  const seriesDetailsUri = `http://localhost:8080/work/anonymous/findById/${state.seriesId}`;
-  const postListUri = `http://localhost:8080/work/anonymous/listAllPost/${state.seriesId}/1`;
+  const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
+  const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
 
   function SeriesDetailsSuccess(series){
     console.log("1, 3")

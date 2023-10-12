@@ -6,12 +6,12 @@ export const AppContextProvider = ({ children }) => {
     let user = window.sessionStorage.getItem("nowUser");
     console.log(user ? JSON.parse(user) : "야");
     const [codeList, setCodeList] = useState();
-
+    
     return (
-        {/**
-        <AppContext.Provider value={{ auth, setAuth, codeList, setCodeList }}>
+
+        <AppContext.Provider value={{  codeList, setCodeList }}>{/**<AppContext.Provider value={{ auth, setAuth, codeList, setCodeList }}> */}
             {children}
-        </AppContext.Provider> */}
+        </AppContext.Provider> 
     )
 }
 

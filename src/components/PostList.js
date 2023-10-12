@@ -15,14 +15,15 @@ export default function PostList() {
   let state = location.state;
 console.log(state?.seriesId)
 console.log(state)
+console.log(state?.page)
   console.log("PostList param", state);
   function buildUrl(step) {
     console.log("buildUrl(step", step);
   
     if (state.search)
-        return `http://localhost:8080/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
+        return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
     else
-        return `http://localhost:8080/work/anonymous/listAllPost/${state.seriesId}/1`;//${state.boardId}
+        return `/work/anonymous/listAllPost/${state.seriesId}/1`;//${state.boardId}
 }
   const [postListUri, setPostListUri] = useState(buildUrl(222));
     
@@ -76,6 +77,7 @@ function renderSuccess(postListWithPaging) {
   const postList = postListWithPaging?.firstVal;
   const pagenation = postListWithPaging?.secondVal;
   console.log(postList);
+  console.log(pagenation);
   return <>
       <table>
           <thead>
@@ -117,5 +119,5 @@ function renderSuccess(postListWithPaging) {
   
       </div>
     )
-  }
+}
   
