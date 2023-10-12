@@ -21,14 +21,11 @@ export default function ObjectAdress({seriesId, onSelect = f => f}) {
             ? "(제작된 툴이 없습니다)"
             : toolPage.firstVal.map(tool => {
                 return <li>
-                    <ToolButton tool={toolPage?.firstVal[0]} onSelect={onSelect}>{tool.name}</ToolButton>
+                    <ToolButton tool={tool} onSelect={onSelect}>{tool.name}</ToolButton>
                 </li>
                 })
             }
         </div>
-        {/*return toolPage?.firstVal.length == 0
-        ? <p>{"(툴이 존재하지 않습니다.)"}</p>
-        : */}
     }
 
     return <Fetch uri={DEFAULT_TOOLSET_URL} renderSuccess={getDefaultTools}/>

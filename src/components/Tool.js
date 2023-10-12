@@ -1,6 +1,7 @@
 import {React, useState} from "react";
 import { useLocation } from "react-router";
 import ObjectAdress from "component-tool/ObjectAdress";
+import ToolFrame from "component-tool/ToolFrame";
 
 export default function Tool() {
     const location = useLocation();
@@ -13,8 +14,9 @@ export default function Tool() {
     const [tools, setTools] = useState([]);
     const [selectedObject, setSelectedObject] = useState();
 
-    function onSelect(toolId) {
-        setNowAddress(DEFAULT_ADDRESS + toolId + "/")
+    function onSelect(tool) {
+        setNowAddress(DEFAULT_ADDRESS + tool.name)
+        setSelectedTool(tool)
     }
 
     const TABLE_STYLE = {
@@ -50,16 +52,21 @@ export default function Tool() {
                     </td>
                 </tr>
                 <tr>
-                    <td style={SIDE_STYLE}>
-                        {"(대충 근사한 프로퍼티 리스트)"}
-                    </td>
-                    <td style={CENTER_STYLE}>
-                        {"(대충 근사한 커스텀 그래프 관계도)"}
-                    </td>
                     <td style={{...SIDE_STYLE, textAlign : "left"}}>
                         <div style={{margin : "10px"}}>
                             <ObjectAdress seriesId={state.seriesId} onSelect={onSelect}/>
                         </div>
+                    </td>
+                    <td style={CENTER_STYLE}>
+                        <div style={{margin : "10px"}}>
+                            {selectedTool ?
+                            <ToolFrame tool={selectedTool}/>
+                            : "(선택된 툴이 없습니다)"
+                            }
+                        </div>
+                    </td>
+                    <td style={SIDE_STYLE}>
+                        {"(대충 근사한 프로퍼티 리스트)"}
                     </td>
                 </tr>
             </tbody>
