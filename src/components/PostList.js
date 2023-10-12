@@ -14,7 +14,7 @@ export default function PostList() {
   const location = useLocation();
   let state = location.state;
 console.log(state?.seriesId)
-
+console.log(state)
   console.log("PostList param", state);
   function buildUrl(step) {
     console.log("buildUrl(step", step);
@@ -80,9 +80,9 @@ function renderSuccess(postListWithPaging) {
       <table>
           <thead>
               <tr>
-                  <th>포스트리스트</th>
-                  <th> </th>
-                  <th> </th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
                   <th></th>
                   <th></th>
               </tr>
@@ -90,17 +90,17 @@ function renderSuccess(postListWithPaging) {
           <tbody>
               {postList?.map(post => (
                   <tr key={post.id}>
-                      <td>
+                      <td width="75%">
                         {console.log(post)}
                           <Link key={post.id} to={`/postd`}
-                                state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging}}>{/*시리즈아이디필요*/}
+                                state={{ id:post.id, page: 1, search: txtSearch.current?.value, postListWithPaging, parentId:post.parentId}}>{/*시리즈아이디필요*/}
                               &nbsp;&nbsp;{post.title}
                           </Link>
                       </td>
-                      <td>{post.writer ? post.writer.name : ""}</td>
-                      <td>{post.readCnt}</td>
-                      <td>{post.likeCnt}</td>
-                      <td>최종작성일 : <span>{displayDate(post.regDt, post.uptDt)} </span></td>
+                      <td>👦🏻{post.writer ? post.writer.nick : ""}</td>
+                      <td>✔{post.readCount}</td>
+                      <td>🤣{post.likeCount}</td>
+                      <td>🕐{displayDate(post.regDt, post.uptDt)}</td>
                   </tr>
               ))}
           </tbody>
@@ -112,7 +112,7 @@ function renderSuccess(postListWithPaging) {
       <div>
         
         {postListUri}
-        {console.log(postListUri)}
+
         <Fetch uri={postListUri} renderSuccess={renderSuccess} />
   
       </div>
