@@ -7,7 +7,8 @@ import { displayDate } from "toolbox/DateDisplayer";
 import PostList from "./PostList";
 
 
-export default function Series() {
+export default function Series({data}) {
+  console.log(data);
   const location = useLocation();
   let state = location.state;
   console.log(state);
@@ -24,11 +25,14 @@ export default function Series() {
     return <>
       시리즈
       [썸네일 넣을칸]<br/><br/><br/>
+      {series.id}
       제목:{series.title}<br/>
       설명:{series.content}<br/>
       작가:{series.writer?.nick}<br/><br/>
+      <PostList state={{seriesId: series.id, page: 1}}/>
     </>
   }
+
   function PostSkinListSuccess(postsPage){
     console.log("2, 4")
     {/* 이 부분이 두 번째와 네 번째에 실행됨 */}
@@ -51,8 +55,11 @@ export default function Series() {
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
     </div>
     <div>
-      {/*게시글등록링크 만들어야함 - 완성*/}
+      {/*게시글등록링크 만들어야함 - 완성
       <Fetch uri={postListUri} renderSuccess={PostSkinListSuccess}/>
+      
+      */}
+      
     </div>
     
   </>
