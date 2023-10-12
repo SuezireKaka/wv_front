@@ -6,9 +6,11 @@ import { Fetch } from "toolbox/Fetch";
 import { displayDate } from "toolbox/DateDisplayer";
 import PostList from "./PostList";
 
+
 export default function Series() {
   const location = useLocation();
   let state = location.state;
+  console.log(state);
   const [targetBoard, setTargetBoard] = useState(state.boardId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
@@ -19,20 +21,20 @@ export default function Series() {
     return <>
     시리즈
     {console.log(series)}
-
     [썸네일 넣을칸]<br/><br/><br/>
     제목:{series.title}<br/>
     설명:{series.content}<br/>
     작가:{series.writer?.nick}<br/><br/>
     게시글등록링크 만들어야함
-    <PostList series={series}/>
+    {/*console.log(series)
+    <PostList series={series} />*/}
     
     </>
   }
     return (
       <div>
-        {console.log(postListUri)}
         <Fetch uri={postListUri} renderSuccess={RenderSuccess} />
+<<<<<<< HEAD
 
 
         {postList?.map((post, index) => {
@@ -61,5 +63,9 @@ export default function Series() {
   
       </div>)
  
+=======
+      </div>
+      )
+>>>>>>> 4d39e775bd4c1729bfb54fc88b3703c2ff1541fd
   }
   
