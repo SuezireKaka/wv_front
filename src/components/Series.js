@@ -36,7 +36,7 @@ export default function Series({data}) {
       {series?.title === 0
         ? "(게시글이 없습니다)"
         
-        :  <PostList state={{seriesId: series.id, page:1}}/>
+        :  <PostList />
         }
 
     </>
@@ -62,7 +62,7 @@ export default function Series({data}) {
   return <>
     <div>
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
-      <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId}}>
+      <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
         <button>툴킷으로</button>
       </Link>
     </div>

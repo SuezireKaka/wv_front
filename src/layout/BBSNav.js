@@ -8,6 +8,7 @@ export default function BBSNav() {
     <><Link to="/">Home</Link>
     &nbsp;&nbsp;|
     <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
+    <hr></hr>
     </>
   );
   
