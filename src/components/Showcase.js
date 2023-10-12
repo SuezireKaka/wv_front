@@ -4,6 +4,10 @@ import SeriesTable from "../component-showcase/SeriesTable";
 
 export default function Showcase() {
 
+    const location = useLocation();
+    let state = location.state;
+    console.log(state);
+
     const LIST_ALL_SERIES_URI = 'http://localhost:8080/work/anonymous/listAllSeries/0002/1'
 
     const TABLE_STYLE = {
