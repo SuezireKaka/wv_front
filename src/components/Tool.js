@@ -6,8 +6,16 @@ export default function Tool() {
     const location = useLocation();
     let state = location.state;
 
-    const [selectTool, setSelectTool] = useState();
-    const [selectObject, setSelectObject] = useState();
+    const DEFAULT_ADDRESS = "Tool:/"
+
+    const [nowAddress, setNowAddress] = useState(DEFAULT_ADDRESS);
+    const [selectedTool, setSelectedTool] = useState();
+    const [tools, setTools] = useState([]);
+    const [selectedObject, setSelectedObject] = useState();
+
+    function onSelect(toolId) {
+        setNowAddress(DEFAULT_ADDRESS + toolId + "/")
+    }
 
     const TABLE_STYLE = {
         width: "100%",
@@ -32,8 +40,13 @@ export default function Tool() {
                 <tr style={{...CENTER_STYLE, textAlign : "left"}}>
                     <td colSpan={3} style={CENTER_STYLE}>
                         <div style={{margin : "10px"}}>
-                            {"Tool:/"}
+                            {nowAddress}
                         </div>
+                    </td>
+                </tr>
+                <tr style={{...CENTER_STYLE, textAlign : "right"}}>
+                    <td colSpan={3} style={CENTER_STYLE}>
+                        <button>모두 저장</button>
                     </td>
                 </tr>
                 <tr>
@@ -43,8 +56,10 @@ export default function Tool() {
                     <td style={CENTER_STYLE}>
                         {"(대충 근사한 커스텀 그래프 관계도)"}
                     </td>
-                    <td style={SIDE_STYLE}>
-                        <ObjectAdress/>
+                    <td style={{...SIDE_STYLE, textAlign : "left"}}>
+                        <div style={{margin : "10px"}}>
+                            <ObjectAdress seriesId={state.seriesId} onSelect={onSelect}/>
+                        </div>
                     </td>
                 </tr>
             </tbody>

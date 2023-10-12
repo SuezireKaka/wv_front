@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Fetch } from "toolbox/Fetch";
 import { displayDate } from "toolbox/DateDisplayer";
 import PostList from "./PostList";
+import { Link } from "react-router-dom";
 
 
 export default function Series() {
@@ -49,7 +50,11 @@ export default function Series() {
   return <>
     <div>
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
+      <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId}}>
+        <button>툴킷으로</button>
+      </Link>
     </div>
+    <br/>
     <div>
       {/*게시글등록링크 만들어야함 - 완성*/}
       <Fetch uri={postListUri} renderSuccess={PostSkinListSuccess}/>

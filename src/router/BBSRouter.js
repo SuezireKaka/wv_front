@@ -12,7 +12,7 @@ export default function BBSRouter() {
           <Route path="/" element={ <Home /> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
           <Route path={"/series/:seriesId"} element={ <Series/> } />
-          <Route path={"/tool/"} element={ <Tool/> } />
+          <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
           <Route path={"/post/:loginId"} element={ <PostDetails/> } />
         </Routes>
        
