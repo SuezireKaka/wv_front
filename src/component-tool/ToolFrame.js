@@ -21,8 +21,13 @@ export default function ToolFrame({tool}) {
                     [relation.one.xPos + relation.one.xSize / 2, relation.one.yPos + relation.one.ySize / 2]
                 let [otherCenterX, otherCenterY] =
                     [relation.other.xPos + relation.other.xSize / 2, relation.other.yPos + relation.other.ySize / 2]
-                console.log("이거 되니!?")
-                console.log(otherCenterX)
+                let [fartherX, fartherY] =
+                    [relation.xPos, relation.yPos]
+                let [controlX, controlY] =
+                    [2 * fartherX - (oneCenterX + otherCenterX) / 2, 2 * fartherY - (oneCenterY + otherCenterY) / 2]
+                ctx.moveTo(oneCenterX, oneCenterY)
+                ctx.quadraticCurveTo(controlX, controlY, otherCenterX, otherCenterY)
+                ctx.stroke();
             });
             
         }
