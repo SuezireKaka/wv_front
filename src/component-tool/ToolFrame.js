@@ -14,10 +14,10 @@ export default function ToolFrame({tool}) {
             let customRelations = toolWithGraph.customRelationList
             console.log("그래프 그리는 중")
             console.log(customEntities, customRelations)
-            drawGraph(canvas, customEntities, customRelations)
+            {/*drawGraph(canvas, customEntities, customRelations)*/}
         }
         else {
-            drawGraph(canvas, [], [])
+            {/*drawGraph(canvas, [], [])*/}
         }
         return <div>
             {canvas}

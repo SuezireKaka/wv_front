@@ -17,8 +17,8 @@ export default function BBSRouter() {
           <Route path={"/series/:seriesId"} element={ <Series/> } />
 
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
-          <Route path={"postd"} element={ <PostDetails/> } />
-          <Route path={"log-in"} element={ <LoginStage/> } />
+          <Route path={"/postd"} element={ <PostDetails/> } />
+          <Route path={"/log-in"} element={ <LoginStage/> } />
         </Routes>
        
       )

@@ -25,7 +25,7 @@ export default function BBSNav() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">로그인</Dropdown.Item>
+        <Dropdown.Item href="/log-in">로그인</Dropdown.Item>
         <Dropdown.Item href="#/action-2">회원가입</Dropdown.Item>
         <Dropdown.Item href="#/action-3">프로필수정</Dropdown.Item>
       </Dropdown.Menu>
