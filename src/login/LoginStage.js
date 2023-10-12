@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AppContext from 'context/AppContextProvider';
 import { Link } from 'react-router-dom';
-
+import AppContext from 'context/AppContextProvider';
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
 
 const LoginStage = () => {
