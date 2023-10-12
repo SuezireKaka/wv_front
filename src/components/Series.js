@@ -35,6 +35,8 @@ export default function Series() {
     return <div>
       {postsPage.length == 0
         ? "로딩중....................."
+        : postsPage.firstVal.length == 0
+        ? "(게시글이 없습니다)"
         : postsPage.firstVal.map(postSkin => {
           return <div>
             {"제목 : " + postSkin.title} 
@@ -49,7 +51,7 @@ export default function Series() {
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
     </div>
     <div>
-      게시글등록링크 만들어야함
+      {/*게시글등록링크 만들어야함 - 완성*/}
       <Fetch uri={postListUri} renderSuccess={PostSkinListSuccess}/>
     </div>
     
