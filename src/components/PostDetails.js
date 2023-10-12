@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { Fetch } from "toolbox/Fetch";
 import { displayDate } from "toolbox/DateDisplayer";
 import ReplyList from "./ReplyList";
+import AppContext from "context/AppContextProvider";
 
 export default function PostDetails() {
   const thumbnailRequestTarget = ["video", "image"];
 
-  //const { auth } = useContext(AppContext);
+  const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
   console.log(state.parentId)
@@ -25,7 +26,7 @@ export default function PostDetails() {
     function renderSuccess(post) {
       console.log(post)
       return <>
-          
+          {console.log(post)}
           content : <p>{post.content}</p>
           🧑🏻{post.writer ? post.writer.nick : ""}
           {/*<ThumbnailList imgDtoList={post.listAttachFile}/>*/}
@@ -34,12 +35,12 @@ export default function PostDetails() {
           😡<span>{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br/>
           title : <span>{post.title}</span>
-          {/*(post.writer ? post.writer.nick === auth.userNick : false) ?
+          {(post.writer ? post.writer.nick === auth.userNick : false) ?
               <Link
                   to="/post/managePost"
                   state={ {post, state} }
               >수정</Link> : ""
-          */}
+          }
           <br />
           {/*<ReplyList parent={post} />*/}
       </>

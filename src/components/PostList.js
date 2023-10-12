@@ -7,10 +7,11 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
 import { Fetch } from "toolbox/Fetch";
+import AppContext from "context/AppContextProvider";
 
 export default function PostList() {
-  //const { auth } = useContext(AppContext);
-  //const isMember = auth?.roles?.includes("member");
+  const { auth } = useContext(AppContext);
+  const isMember = auth?.roles?.includes("member");
   const location = useLocation();
   let state = location.state;
 console.log(state?.seriesId)
@@ -23,7 +24,7 @@ console.log(state?.page)
     if (state.search)
         return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
     else
-        return `/work/anonymous/listAllPost/${state.seriesId}/1`;//${state.boardId}
+        return `/work/anonymous/listAllPost/${state.seriesId}/${state.page}`;//${state.boardId}
 }
   const [postListUri, setPostListUri] = useState(buildUrl(222));
     
@@ -81,13 +82,7 @@ function renderSuccess(postListWithPaging) {
   return <>
       <table>
           <thead>
-              <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-              </tr>
+
           </thead>
           <tbody>
               {postList?.map(post => (
