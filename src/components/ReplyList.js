@@ -1,8 +1,9 @@
 import axios from 'api/axios';
-import NewReply from 'atom/NewReply';
+import NewReply from './NewReply';
 import AppContext from "context/AppContextProvider";
 import { useContext, useState } from 'react';
 import { displayDate } from "toolbox/DateDisplayer";
+
 
 export default function ReplyList({parent}) {
     const { auth } = useContext(AppContext);
@@ -62,18 +63,24 @@ export default function ReplyList({parent}) {
     justCreatedReplyList.forEach((newReply)=>{appendJustCreatedReply(newReply, parent)})
 
     return <>
-            {auth.userNick ? 
+            {auth.nick ? <>
+            {console.log(parent.id)}
             <button variant="primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
-            </button> :  ""}
-            
-            {openAddReplay.has(parent.id) ? <NewReply auth={auth} reply={parent} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> : ""}
+            </button>
+            </> :  ""}
+            {console.log(parent)}
+            {openAddReplay}
+            {console.log(openAddReplay)}
+            {openAddReplay.has(parent.id) ? 
+            <NewReply auth={auth} reply={parent} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 
+            : ""}
             <ul>
-        {parent.listReply?.map((reply) => {
+        {parent.repliesList?.map((reply) => {
             return <li key={reply.id}>
-                content : <span>{reply.content}</span>
-                최종작성일 : <span>{displayDate(reply.regDt, reply.uptDt)} </span>
-                작성자 : <span>{reply.writer ? reply.writer.nick : ""} </span>
+                ▸▸ <span>{reply.content}</span>
+                &nbsp;&nbsp; <span>{displayDate(reply.regDt, reply.uptDt)} </span>
+                &nbsp;&nbsp; <span>{reply.writer ? reply.writer.nick : ""} </span>
                 <ReplyList parent={reply}/>
             </li>
         })}
