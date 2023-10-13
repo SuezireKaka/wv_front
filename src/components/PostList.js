@@ -89,7 +89,7 @@ function renderSuccess(postListWithPaging) {
                   <tr key={post.id}>
                       <td width="75%">
                         {console.log(post)}
-                          <Link key={post.id} to={`/postd`}
+                          <Link key={post.id} to={`/post/${post.id}`}
                                 state={{ id:post.id, page: 1, search: txtSearch.current?.value, postListWithPaging, parentId:post.parentId}}>{/*시리즈아이디필요*/}
                               &nbsp;&nbsp;{post.title}
                           </Link>

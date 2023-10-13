@@ -29,16 +29,17 @@ export default function Series({data}) {
     console.log(series.title)
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
-     {console.log(series.title)}
+     {console.log(series)}
       시리즈
       [썸네일 넣을칸]<br/><br/><br/>
-      {series.id}
+      시리즈아이디:{series.id}<br/>
       제목:{series.title}<br/>
       설명:{series.content}<br/>
       작가:{series.writer?.nick}<br/><br/>
-      {series?.title === 0
+      <hr/>
+      
+      {series.repliesList == 0 && (!series?.repliesList)
         ? "(게시글이 없습니다)"
-        
         :  <PostList />
         }
 

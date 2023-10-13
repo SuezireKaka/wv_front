@@ -18,9 +18,9 @@ export default function BBSRouter() {
           <Route path={"/agreement"} element={ <Agreement/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
           <Route path={"/series/:seriesId"} element={ <Series/> } />
+          <Route path={"/post/:postId"} element={ <PostDetails/> } />
 
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
-          <Route path={"/postd"} element={ <PostDetails/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/register"} element={ <Register/> } />
           <Route path={"/userProfile"} element={ <UserProfile/> } />
