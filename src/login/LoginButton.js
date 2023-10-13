@@ -27,7 +27,7 @@ export default function LoginButton() {
       {!roles || roles.length === 0?
       <>
       <Dropdown.Item href="/log-in">로그인</Dropdown.Item>
-      <Dropdown.Item href="/register">회원가입</Dropdown.Item>
+      <Dropdown.Item href="/Agreement">회원가입</Dropdown.Item>
       </>
       
       : 

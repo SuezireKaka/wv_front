@@ -6,7 +6,8 @@ export default function CheckBox({ children, disabled, checked, onChange }) {
                 disabled={disabled}
                 checked={checked}
                 onChange={({ target: { checked } }) => onChange(checked)}
-            />
+                
+            />{console.log(checked)}
         {children}
       </label>
     );

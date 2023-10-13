@@ -22,7 +22,10 @@ export default function BBSRouter() {
 
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
+          <Route path={"/Agreement"} element={ <Agreement/> } />
           <Route path={"/register"} element={ <Register/> } />
+          
+
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           
           <Route path={"/MemberList/:ownerId"} element={ <MemberList /> } />
