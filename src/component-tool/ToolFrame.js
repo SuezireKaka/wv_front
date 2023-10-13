@@ -1,18 +1,21 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { Fetch } from "toolbox/Fetch"
-import drawGraph from "./Graph"
 
 export default function ToolFrame({tool}) {
-    const canvasRef = useRef();
-
     const READY_FOR_GRAPH = `http://localhost:8080/tool/anonymous/getToolById/${tool.id}`
 
-    function drawAll(toolWithGraph) {
+    function Graph({toolWithGraph = {}}) {
+        const canvasRef = useRef()
+
+        let customEntities = []
+        let customRelations = []
+        
         console.log("그림 그리는 중")
         console.log(toolWithGraph)
+
         if (toolWithGraph.id) {
-            let customEntities = toolWithGraph.customEntityList
-            let customRelations = toolWithGraph.customRelationList
+            customEntities = toolWithGraph.customEntityList
+            customRelations = toolWithGraph.customRelationList
             console.log("그래프 그리는 중")
             console.log(customEntities, customRelations)
             customRelations.forEach(relation => {
@@ -30,12 +33,20 @@ export default function ToolFrame({tool}) {
                 ctx.quadraticCurveTo(controlX, controlY, otherCenterX, otherCenterY)
                 ctx.stroke();
             });
-            
         }
-        return <div>
+        
+        return <div style={{position: "relative"}}>
+            {customEntities.map(entity =>
+                // 크기에 맞게 버튼 생성
+                <button style={{position: "absolute", // 위치의 절대화
+                    left:entity.xPos, top:entity.yPos, width:entity.xSize, height:entity.ySize
+                }}>
+                    {entity.name}
+                </button>
+            )}
             <canvas ref={canvasRef} style={{border : "1px dotted"}} width={tool.xToolSize} height={tool.yToolSize}/>
         </div>
     }
 
-    return <Fetch uri={READY_FOR_GRAPH} renderSuccess={drawAll}/>
+    return <Fetch uri={READY_FOR_GRAPH} renderSuccess={toolWithGraph => <Graph toolWithGraph={toolWithGraph}></Graph>}/>
 }
