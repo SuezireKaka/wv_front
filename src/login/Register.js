@@ -13,7 +13,7 @@ const Register = () => {
 	const [loginId, setLoginId] = useState('');
 
 	const [passWord, setPassWord] = useState('');
-	
+	const [birthDate, setBirthDate] = useState('');
 	const [matchPwd, setMatchPwd] = useState('');
 	const [validMatch, setValidMatch] = useState();
 
@@ -42,6 +42,12 @@ const Register = () => {
 		listCP.set(cpType, inValue);
 		setListCP(listCP);
 	};
+	const checkDate = (e) => {
+		console.log("checkDate");
+		console.log(e.target.value);
+		console.log(typeof e.target.value);
+	};
+
 
 	const checkSex = (e) => {
 		console.log("checkSex");
@@ -57,7 +63,7 @@ const Register = () => {
 			console.log(response?.data);
 			console.log(JSON.stringify(response))
 		} catch (err) {
-			setErrMsg('jkhgiujhg')
+			setErrMsg('에러')
 		}
 	};
 
@@ -127,6 +133,13 @@ const Register = () => {
 					value={passWord}
 					required
 				/><br/>
+		생년월일:<input type="date"
+					id="birthDate"
+					name="birthDate"
+					onChange={(e) => setBirthDate(e.target.value)}
+					min="1900-01-01"
+					value={birthDate}
+					/><br/>
 		암호확인:<input type="password"
 					id="userMatchPwd"
 					placeholder="패스워드를 다시입력하세요"
@@ -151,102 +164,22 @@ const Register = () => {
 						onChange={checkSex}
 						value={false}
 						id={`inline-radio-2`}
-					/>
+					/><br/>
+
 		{/*codeList.map((cpType) => (<>
 					<form htmlFor={cpType.codeVal}>{cpType.codeVal}:</form>
 					<input
 						type="text"
 						id={cpType.codeVal}
-						onChange={(e) => checkCPValidity(cpType.codeVal, e.target.value)}
+		onChange={(e) => checkCPValidity(cpType.codeVal, e.target.value)}
 					/>
 		</>))*/}
 
 	</form>
-		<button variant="primary" onClick={handleSubmit}>{/* disabled={!validMatch} */}
+		<button variant="primary" onClick={handleSubmit}>{/*disabled={!validMatch}*/}
 			Sign Up
 		</button>
 
-
-
-		{/* success ? (
-		<section>
-			<h1>Success!</h1>
-			<p>
-				<a href="#">Sign In</a>
-			</p>
-		</section>
-	) : ( <Form.Group className="mb-3" >
-				<Form.Label htmlFor="username">이름:</Form.Label>
-				<Form.Control
-					type="text"
-					id="username"
-					onChange={(e) => setUserName(e.target.value)}
-					required
-				/>
-			</Form.Group>
-			<Form.Group className="mb-3" >
-				<Form.Label htmlFor="userNick">사용자 닉:</Form.Label>
-				<Form.Control
-					type="text"
-					id="userNick"
-					onChange={(e) => setUserNick(e.target.value)}
-					required
-					onBlur={onBlurNick}
-				/>
-			</Form.Group>
-
-			<Form.Group className="mb-3" >
-				<Form.Label htmlFor="userPwd">암호:</Form.Label>
-				<Form.Control
-					type="password"
-					id="userPwd"
-					onChange={(e) => setPwd(e.target.value)}
-					value={pwd}
-					required
-				/>
-				<Form.Label htmlFor="userMatchPwd">암호확인:</Form.Label>
-				<Form.Control
-					type="password"
-					id="userMatchPwd"
-					onChange={(e) => setMatchPwd(e.target.value)}
-					value={matchPwd}
-					required
-				/>
-			</Form.Group>
-			<Form.Group className="mb-3" >
-				<Form.Label htmlFor="userSex">성별:</Form.Label>
-				<div key={`inline-radio`} className="mb-3">
-					<Form.Check
-						inline
-						defaultChecked
-						label="남성"
-						name="userSex"
-						type="radio"
-						value={true}
-						onChange={checkSex}
-						id={`inline-radio-1`}
-					/>
-					<Form.Check
-						inline
-						label="여성"
-						name="userSex"
-						type="radio"
-						onChange={checkSex}
-						value={false}
-						id={`inline-radio-2`}
-					/>
-				</div>
-			</Form.Group>
-			<Form.Group className="mb-3" >
-				{codeList.map((cpType) => (<>
-					<Form.Label htmlFor={cpType.codeVal}>{cpType.codeVal}:</Form.Label>
-					<Form.Control
-						type="text"
-						id={cpType.codeVal}
-						onChange={(e) => checkCPValidity(cpType.codeVal, e.target.value)}
-					/>
-				</>))}
-			</Form.Group>*/}
 
 	</>
 	)
