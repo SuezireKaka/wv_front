@@ -42,7 +42,8 @@ export default function PostDetails() {
               >수정</Link> : ""
           }
           <br />
-          {/*<ReplyList parent={post} />*/}
+          {console.log(post)}
+          <ReplyList parent={post} />
       </>
   }
   }
