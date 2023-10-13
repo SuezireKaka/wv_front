@@ -38,12 +38,15 @@ export default function Series({data}) {
       작가:{series.writer?.nick}<br/><br/>
       <hr/>
       
-      {series.repliesList == 0 && (!series?.repliesList)
-        ? "(게시글이 없습니다)"
-        :  <PostList />
-        }
+      {postListShow(series)}
 
     </>
+  }
+  function postListShow(series){
+    return (series.repliesList == 0 && !series?.repliesList)
+      ? "(게시글이 없습니다)"
+      :  <PostList />
+      
   }
 
   function PostSkinListSuccess(postsPage){
