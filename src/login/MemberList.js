@@ -19,14 +19,11 @@ export default function MemberList() {
                         <th>이름</th>
                         <th>생년월일</th>
                         <th>성별</th>
-                        <th>성별</th>
                     </tr>
                 </thead>
                 <tbody>
-
                     <Fetch uri={listAllMemberUri} renderSuccess={RenderSuccess} />
- 
-                </tbody>
+                 </tbody>
             </table>
         </div>
     );

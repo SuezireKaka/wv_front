@@ -55,11 +55,11 @@ const Register = () => {
 		setSex(e.target.value);
 	};
 
-	const onBlurNick = async (e) => {
+	const onBlurLoginId = async (e) => {
 		e.preventDefault();
-		console.log("onBlurNick");
+		console.log("onBlurLoginId");
 		try {
-			const response = await axios.get(`/party/anonymous/checkNick?nick=${e.target.value}`);
+			const response = await axios.get(`/party/anonymous/checkLoginId?loginId=${e.target.value}`);
 			console.log(response?.data);
 			console.log(JSON.stringify(response))
 		} catch (err) {
@@ -119,13 +119,7 @@ const Register = () => {
 					id="userNick"
 					onChange={(e) => setLoginId(e.target.value)}
 					required
-					onBlur={onBlurNick}
-				/><br/>
-		닉네임:<input type="text"
-			id="username"
-			placeholder="닉네임을 정해주세요"
-			onChange={(e) => setNick(e.target.value)}
-			required
+					onBlur={onBlurLoginId}
 				/><br/>
 		패스워드:<input type="password"
 					id="userPwd"
@@ -133,6 +127,19 @@ const Register = () => {
 					value={passWord}
 					required
 				/><br/>
+		패스워드확인:<input type="password"
+					id="userPwd"
+					onChange={(e) => setPassWord(e.target.value)}
+					placeholder="비밀번호확인 필요"
+					value={matchPwd}
+					required
+				/><br/>
+					닉네임:<input type="text"
+						id="username"
+						placeholder="닉네임을 정해주세요"
+						onChange={(e) => setNick(e.target.value)}
+						required
+							/><br/>
 		생년월일:<input type="date"
 					id="birthDate"
 					name="birthDate"
