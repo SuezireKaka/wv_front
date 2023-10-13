@@ -7,7 +7,7 @@ import AppContext from "context/AppContextProvider";
 const Register = () => {
 
 	const { codeList } = useContext(AppContext);
-
+	console.log(codeList)
 	const [name, setName] = useState('');
 	const [nick, setNick] = useState('');
 	const [loginId, setLoginId] = useState('');
