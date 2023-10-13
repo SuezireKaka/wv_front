@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
 import { Fetch } from "toolbox/Fetch";
 import AppContext from "context/AppContextProvider";
+import { Table } from "react-bootstrap";
 
 export default function PostList() {
   const { auth } = useContext(AppContext);
@@ -80,7 +81,7 @@ function renderSuccess(postListWithPaging) {
   console.log(postList);
   console.log(pagenation);
   return <>
-      <table>
+      <Table responsive variant="white">
           <thead>
 
           </thead>
@@ -101,15 +102,13 @@ function renderSuccess(postListWithPaging) {
                   </tr>
               ))}
           </tbody>
-      </table>
+      </Table>
       {pagenation?displayPagination(pagenation):""}
   </>
 }
     return (
       <div>
-        
-        {postListUri}
-
+       
         <Fetch uri={postListUri} renderSuccess={renderSuccess} />
   
       </div>

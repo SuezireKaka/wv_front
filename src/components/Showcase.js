@@ -26,7 +26,7 @@ export default function Showcase() {
             </form>
         </div> 
         <br/>
-        <table style={TABLE_STYLE}>
+        <table responsive variant="white" style={TABLE_STYLE}>
             <tbody>
                 <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={data => {
                     return <SeriesTable data={data.firstVal} colnum={5}/>

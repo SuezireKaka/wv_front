@@ -45,8 +45,8 @@ const LoginStage = () => {
                 const accessToken = data.token;
                 const roles = data.roles;
                 const nick = data.userNick;
-                setAuth({ roles, nick, accessToken });
-                window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken }));
+                setAuth({ roles, nick, accessToken, loginId });
+                window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId }));
                 navigate("/")
             }
             else {

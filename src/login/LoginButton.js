@@ -4,18 +4,20 @@ import AppContext from 'context/AppContextProvider';
 import { useContext } from 'react';
 import UserProfile from './UserProfile';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 export default function LoginButton() {
     const { auth, setAuth } = useContext(AppContext);
     const roles = auth.roles ? auth.roles : [""];
     const [signInResult, setSignInResult] = useState({});
-
+    const navigate = useNavigate();
+  console.log(auth);
   const handleLogout = (e) => {
     e.preventDefault();
     setAuth({nick : "", roles : []});
     window.sessionStorage.setItem("nowUser", JSON.stringify({nick : "", roles : []}));
     setSignInResult({});
-
+    navigate("/")
   }
   return (
     <div>    <Dropdown style={{float: "right", marginRight: "10px"}}>
