@@ -1,13 +1,12 @@
 import axios from 'api/axios';
-import NewReply from 'atom/NewReply';
+import NewReply from './NewReply';
 import AppContext from "context/AppContextProvider";
 import { useContext, useState } from 'react';
 import { displayDate } from "toolbox/DateDisplayer";
 
+
 export default function ReplyList({parent}) {
     const { auth } = useContext(AppContext);
-    console.log(parent);
-    console.log(auth);
 
     const [justCreatedReplyList, setJustCreatedReplyList] = useState([]);
     const [openAddReplay] = useState(new Map());
@@ -64,12 +63,18 @@ export default function ReplyList({parent}) {
     justCreatedReplyList.forEach((newReply)=>{appendJustCreatedReply(newReply, parent)})
 
     return <>
-            {auth.nick ? 
+            {auth.nick ? <>
+            {console.log(parent.id)}
             <button variant="primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
-            </button> :  ""}
-            
-            {openAddReplay.has(parent.id) ? <NewReply auth={auth} reply={parent} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> : ""}
+            </button>
+            </> :  ""}
+            {console.log(parent)}
+            {openAddReplay}
+            {console.log(openAddReplay)}
+            {openAddReplay.has(parent.id) ? 
+            <NewReply auth={auth} reply={parent} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 
+            : ""}
             <ul>
         {parent.repliesList?.map((reply) => {
             return <li key={reply.id}>

@@ -95,7 +95,6 @@ const Register = () => {
 			return;
 
 		let list = [];
-		list = listCP.entries().next((key, value)=>({cpType:key, cpVal:value})).collect();
 		for (let [key, value] of listCP) {
 			list.push({ cpType: key, cpVal: value });
 		}
@@ -215,7 +214,7 @@ const Register = () => {
 		</>))}
 
 	</form>
-		<button variant="primary" onClick={handleSubmit}>{/*disabled={!validMatch}*/}
+		<button variant="primary" onClick={handleSubmit} disabled={!validMatch}>{/*disabled={!validMatch}*/}
 			Sign Up
 		</button>
 
