@@ -137,7 +137,7 @@ const Register = () => {
 			required
 				/><br/>
 		아이디:<input type="text"
-					id="userNick"
+					id="loginId"
 					onChange={(e) => setLoginId(e.target.value)}
 					required
 					onBlur={onBlurLoginId}
@@ -151,7 +151,7 @@ const Register = () => {
 			</p>
 		<br/>
 		패스워드:<input type="password"
-					id="userPwd"
+					id="passWord"
 					onChange={(e) => setPassWord(e.target.value)}
 					value={passWord}
 					required
@@ -165,7 +165,7 @@ const Register = () => {
 					required
 				/><br/>
 		닉네임:<input type="text"
-			id="username"
+			id="nick"
 			placeholder="닉네임을 정해주세요"
 			onChange={(e) => setNick(e.target.value)}
 			required
