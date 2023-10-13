@@ -12,18 +12,19 @@ export default function LoginButton() {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    setAuth({});
+    setAuth({nick : "", roles : []});
+    window.sessionStorage.setItem("nowUser", JSON.stringify({nick : "", roles : []}));
     setSignInResult({});
 
   }
   return (
     <div>    <Dropdown style={{float: "right", marginRight: "10px"}}>
     <Dropdown.Toggle variant="success" id="dropdown-basic" size="sm">
-      {!roles || roles[0] === ""? <>로그인</>: <>{auth.nick}님</>}
+      {!roles || roles.length === 0? <>로그인</>: <>{auth.nick}님</>}
     </Dropdown.Toggle>
 
     <Dropdown.Menu>
-      {!roles || roles[0] === ""?
+      {!roles || roles.length === 0?
       <>
       <Dropdown.Item href="/log-in">로그인</Dropdown.Item>
       <Dropdown.Item href="/register">회원가입</Dropdown.Item>

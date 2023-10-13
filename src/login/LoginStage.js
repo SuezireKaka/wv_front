@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AppContext from 'context/AppContextProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
 
 const LoginStage = () => {
@@ -11,6 +11,8 @@ const LoginStage = () => {
     const [loginId, setLoginId] = useState("");
     const [passWord, setPassWord] = useState("");
     const [signInResult, setSignInResult] = useState({});
+
+    const navigate = useNavigate();
 
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -45,6 +47,7 @@ const LoginStage = () => {
                 const nick = data.userNick;
                 setAuth({ roles, nick, accessToken });
                 window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken }));
+                navigate("/")
             }
             else {
                 alert("아이디 또는 패스워드가 바르지 않습니다!");
