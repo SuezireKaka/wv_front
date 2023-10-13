@@ -22,6 +22,6 @@ export default function Agreement() {
     <br></br>
     <br></br>
     <Link to={"/"}><button>이전으로</button></Link>
-    <Link to={"/register/"}><button disabled>다음으로</button></Link>
+    <Link to={"/register/"}><button>다음으로</button></Link>
     </div>
 }
