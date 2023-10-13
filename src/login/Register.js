@@ -79,7 +79,7 @@ const Register = () => {
 		console.log("onBlurNick");
 		
 		try {
-			const response = await axios.get(`/party/anonymous/checkNick?nick=${e.target.value}`);
+			const response = await axios.get(`/party/anonymous/checkLoginId?loginId=${e.target.value}`);
 			console.log(response?.data);
 			setNickChecked(true);
 			setUniqueNick(response?.data);
