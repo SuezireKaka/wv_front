@@ -104,8 +104,9 @@ const Register = () => {
 			name: name,
 			nick: nick,
 			loginId: loginId,
-			pwd: passWord,
+			passWord: passWord,
 			sex: sex,
+			birthDate: birthDate,
 			listContactPoint: list
 		};
 		console.log(JSON.stringify(bodyData))
@@ -190,7 +191,7 @@ const Register = () => {
 						label="남성"
 						name="userSex"
 						type="radio"
-						value={true}
+						value="남성"
 						onChange={checkSex}
 						id={`inline-radio-1`}
 					/>여
@@ -200,7 +201,7 @@ const Register = () => {
 						name="userSex"
 						type="radio"
 						onChange={checkSex}
-						value={false}
+						value="여성"
 						id={`inline-radio-2`}
 					/><br/>
 
