@@ -12,6 +12,9 @@ export default function Series({data}) {
 
   const location = useLocation();
   let state = location.state;
+  console.log(data);
+  console.log(state);
+
 
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);

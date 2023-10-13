@@ -19,7 +19,7 @@ export default function PostDetails() {
   const postUri = `http://localhost:8080/work/anonymous/findById/${state.id}`;
 
   return <>
-      <Link key={state.parentId} to={`/series/${state.parentId}`} state={state}>목록</Link>
+      <Link key={state.parentId} to={`/series/${state.parentId}`} state={{seriesId:state.parentId, page:1}}>목록</Link>
       <Fetch uri={postUri} renderSuccess={renderSuccess} />
   </>
     
