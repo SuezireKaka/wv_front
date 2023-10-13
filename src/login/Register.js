@@ -9,8 +9,13 @@ const Register = () => {
 	const { codeList } = useContext(AppContext);
 
 	const [name, setName] = useState('');
-	const [nick, setNick] = useState('');
 	const [loginId, setLoginId] = useState('');
+	const [idChecked, setIdChecked] = useState(false);
+    const [uniqueId, setUniqueId] = useState(false);
+
+	const [nick, setNick] = useState('');
+	const [nickChecked, setNickChecked] = useState(false);
+    const [uniqueNick, setUniqueNick] = useState(false);
 
 	const [passWord, setPassWord] = useState('');
 	const [birthDate, setBirthDate] = useState('');
@@ -55,13 +60,29 @@ const Register = () => {
 		setSex(e.target.value);
 	};
 
+	const onBlurLoginId = async (e) => {
+		e.preventDefault();
+		console.log("onBlurNick");
+		
+		try {
+			const response = await axios.get(`/party/anonymous/checkLoginId?loginId=${e.target.value}`);
+			console.log(response?.data);
+			setIdChecked(true);
+			setUniqueId(response?.data);
+		} catch (err) {
+			setErrMsg('에러')
+		}
+	};
+
 	const onBlurNick = async (e) => {
 		e.preventDefault();
 		console.log("onBlurNick");
+		
 		try {
 			const response = await axios.get(`/party/anonymous/checkNick?nick=${e.target.value}`);
 			console.log(response?.data);
-			console.log(JSON.stringify(response))
+			setNickChecked(true);
+			setUniqueNick(response?.data);
 		} catch (err) {
 			setErrMsg('에러')
 		}
@@ -119,27 +140,23 @@ const Register = () => {
 					id="userNick"
 					onChange={(e) => setLoginId(e.target.value)}
 					required
-					onBlur={onBlurNick}
-				/><br/>
-		닉네임:<input type="text"
-			id="username"
-			placeholder="닉네임을 정해주세요"
-			onChange={(e) => setNick(e.target.value)}
-			required
-				/><br/>
+					onBlur={onBlurLoginId}
+				/>
+			<p>
+				{idChecked
+				? uniqueId
+				? "사용 가능한 ID입니다"
+				: "이미 사용중인 ID입니다"
+				: ""}
+			</p>
+		<br/>
 		패스워드:<input type="password"
 					id="userPwd"
 					onChange={(e) => setPassWord(e.target.value)}
 					value={passWord}
 					required
-				/><br/>
-		생년월일:<input type="date"
-					id="birthDate"
-					name="birthDate"
-					onChange={(e) => setBirthDate(e.target.value)}
-					min="1900-01-01"
-					value={birthDate}
-					/><br/>
+				/>
+				<br/>
 		암호확인:<input type="password"
 					id="userMatchPwd"
 					placeholder="패스워드를 다시입력하세요"
@@ -147,6 +164,28 @@ const Register = () => {
 					value={matchPwd}
 					required
 				/><br/>
+		닉네임:<input type="text"
+			id="username"
+			placeholder="닉네임을 정해주세요"
+			onChange={(e) => setNick(e.target.value)}
+			required
+			onBlur={onBlurNick}
+				/>
+			<p>
+				{nickChecked
+				? uniqueNick
+				? "사용 가능한 닉네임입니다"
+				: "이미 사용중인 닉네임입니다"
+				: ""}
+			</p>
+		<br/>
+		생년월일:<input type="date"
+					id="birthDate"
+					name="birthDate"
+					onChange={(e) => setBirthDate(e.target.value)}
+					min="1900-01-01"
+					value={birthDate}
+					/><br/>
 		성별:남<input inline
 						defaultChecked
 						label="남성"
