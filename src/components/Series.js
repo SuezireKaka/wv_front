@@ -46,7 +46,6 @@ export default function Series({data}) {
     return (series.repliesList == 0 && !series?.repliesList)
       ? "(게시글이 없습니다)"
       :  <PostList />
-      
   }
 
   function PostSkinListSuccess(postsPage){

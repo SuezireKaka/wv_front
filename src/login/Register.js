@@ -79,7 +79,7 @@ const Register = () => {
 		console.log("onBlurNick");
 		
 		try {
-			const response = await axios.get(`/party/anonymous/checkLoginId?loginId=${e.target.value}`);
+			const response = await axios.get(`/party/anonymous/checkNick?nick=${e.target.value}`);
 			console.log(response?.data);
 			setNickChecked(true);
 			setUniqueNick(response?.data);
@@ -205,14 +205,14 @@ const Register = () => {
 						id={`inline-radio-2`}
 					/><br/>
 
-		{/*codeList.map((cpType) => (<>
-					<form htmlFor={cpType.codeVal}>{cpType.codeVal}:</form>
+		{codeList?.map((cpType) => (<>
+					{cpType.codeVal}:
 					<input
 						type="text"
 						id={cpType.codeVal}
 		onChange={(e) => checkCPValidity(cpType.codeVal, e.target.value)}
-					/>
-		</>))*/}
+					/><br></br>
+		</>))}
 
 	</form>
 		<button variant="primary" onClick={handleSubmit}>{/*disabled={!validMatch}*/}
