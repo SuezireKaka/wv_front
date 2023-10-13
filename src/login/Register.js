@@ -104,8 +104,9 @@ const Register = () => {
 			name: name,
 			nick: nick,
 			loginId: loginId,
-			pwd: passWord,
+			passWord: passWord,
 			sex: sex,
+			birthDate: birthDate,
 			listContactPoint: list
 		};
 		console.log(JSON.stringify(bodyData))
