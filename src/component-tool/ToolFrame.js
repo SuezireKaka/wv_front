@@ -1,9 +1,9 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { Fetch } from "toolbox/Fetch"
 import drawGraph from "./Graph"
 
 export default function ToolFrame({tool}) {
-    const canvasRef = useRef()
+    const canvasRef = useRef();
 
     const READY_FOR_GRAPH = `http://localhost:8080/tool/anonymous/getToolById/${tool.id}`
 
@@ -17,6 +17,7 @@ export default function ToolFrame({tool}) {
             console.log(customEntities, customRelations)
             customRelations.forEach(relation => {
                 const ctx = canvasRef.current.getContext("2d");
+                ctx.reset();
                 let [oneCenterX, oneCenterY] =
                     [relation.one.xPos + relation.one.xSize / 2, relation.one.yPos + relation.one.ySize / 2]
                 let [otherCenterX, otherCenterY] =
