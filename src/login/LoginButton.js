@@ -20,9 +20,9 @@ export default function LoginButton() {
     navigate("/")
   }
   return (
-    <div>    <Dropdown style={{float: "right", marginRight: "10px"}}>
+    <div>    <Dropdown style={{position: "absolute",left: "90%", float: "right", marginRight: "10px"}}>
     <Dropdown.Toggle variant="success" id="dropdown-basic" size="sm">
-      {!roles || roles.length === 0? <>로그인</>: <>{auth.nick}님</>}
+      {!roles || roles.length === 0? <>SignIn</>: <>{auth.nick}님</>}
     </Dropdown.Toggle>
 
     <Dropdown.Menu>
