@@ -9,7 +9,7 @@ import LoginStage from 'login/LoginStage';
 import Register from 'login/Register';
 import UserProfile from 'login/UserProfile';
 import MemberList from 'login/MemberList';
-
+import PostMng from 'components/PostMng';
 
 export default function BBSRouter() {
     return (
@@ -19,16 +19,16 @@ export default function BBSRouter() {
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
           <Route path={"/series/:seriesId"} element={ <Series/> } />
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
-
+          <Route path={"/series/:seriesId/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
-          <Route path={"/Agreement"} element={ <Agreement/> } />
+          <Route path={"/agreement"} element={ <Agreement/> } />
           <Route path={"/register"} element={ <Register/> } />
           
 
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           
-          <Route path={"/MemberList/:ownerId"} element={ <MemberList /> } />
+          <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
 
         </Routes>
        

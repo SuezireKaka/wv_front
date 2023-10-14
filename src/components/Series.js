@@ -12,7 +12,7 @@ export default function Series({data}) {
 
   const location = useLocation();
   let state = location.state;
-  console.log(data);
+
   console.log(state);
 
 
@@ -26,7 +26,7 @@ export default function Series({data}) {
 
   function SeriesDetailsSuccess(series){
     console.log("1, 3")
-    console.log(series.title)
+    console.log(series?.id)
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
     <Table responsive variant="white">
@@ -34,27 +34,29 @@ export default function Series({data}) {
         <tr>
           <th colSpan='2'>제목:{series.title}</th>
           {/*<th></th>*/}
-
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td rowSpan='3'>[썸네일 넣을칸]</td>
+          <td rowSpan='4'>[썸네일 넣을칸]</td>
           <td>작가:{series.writer?.nick}</td>
-
         </tr>
         <tr>
           {/**<td>2</td> */}
-          <td>설명:{series.content}</td>
-
+          <td rowSpan='2'>설명:{series.content}</td>
         </tr>
         <tr>
-
-          <td><Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
-             <button>툴킷으로</button>
+          
+        </tr>
+        <tr>
+          <td>
+          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, series, state}}>
+             <button>작성</button>
            </Link>
+            <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
+            <button>툴킷으로</button>
+          </Link>
           </td>
-
         </tr>
       </tbody>
     </Table>
@@ -62,8 +64,8 @@ export default function Series({data}) {
     </>
   }
   function postListShow(series){
-    return (series.repliesList == 0 && !series?.repliesList)
-      ? "(게시글이 없습니다)"
+    return (series?.repliesList == 0 && !series?.repliesList)
+      ? series?.length===0?"":""
       :  <PostList />
   }
 
@@ -93,7 +95,6 @@ export default function Series({data}) {
     <div>
       {/*게시글등록링크 만들어야함 - 완성
       <Fetch uri={postListUri} renderSuccess={PostSkinListSuccess}/>
-      
       */}
       
     </div>

@@ -11,27 +11,18 @@ import LoginButton from "login/LoginButton";
 
 export default function BBSNav() {
 
-
-
   const boardListUri = `http://localhost:8080/bb/anonymous/listAll`;
-  return <>
+  return <><LoginButton />
     <Link to="/">Home</Link>
-    &nbsp;&nbsp;|
+    &nbsp;
     <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
-    <Link to="/MemberList/0000">회원정보</Link>
+    <Link to="/memberList/0000">회원정보</Link>
 
 
     {/*isManager ? <Link key="dfhdefh" to={`/member-list/0000`}>
                 회원목록
 </Link> : ""*/}
-    <LoginButton />
-
-
-        
-
- 
-
-
+    
 
   </>;
   

@@ -25,3 +25,25 @@ export default function Agreement() {
       </article>
     );
 }
+
+/*
+<article>
+      <header>
+        <h3>체크박스 그룹</h3>
+      </header>
+      <CheckboxGroup
+        label="좋아하는 색깔은?"
+        values={colors}
+        onChange={setColors}
+      >
+        <Checkbox value="red">빨강</Checkbox>
+        <Checkbox value="yellow">노랑</Checkbox>
+        <Checkbox value="green">초록</Checkbox>
+        <Checkbox value="blue">파랑</Checkbox>
+        <Checkbox value="violet" disabled>
+          보라
+        </Checkbox>
+      </CheckboxGroup>
+      <footer>[{colors.join(",")}]을 좋아하시군요!</footer>
+    </article>
+ */
