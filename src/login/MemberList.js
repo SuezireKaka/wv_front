@@ -19,6 +19,7 @@ export default function MemberList() {
                         <th>이름</th>
                         <th>생년월일</th>
                         <th>성별</th>
+                        <th>회원분류</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,7 @@ function RenderSuccess(memberList) {
                 <td>{member.response?.name}</td>
                 <td>{member.response?.birthDate.substr(0, 10)}</td>
                 <td>{member.response?.sex==="남성" ? "남성" : "여성"}</td>
+                <td>{member.roleList[0]?.role}</td>
             </tr>
             {member.response?.contactPointList?.map(cp => (
             <tr key={member.id + cp.cpType}>

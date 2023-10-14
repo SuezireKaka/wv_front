@@ -22,7 +22,7 @@ const Register = () => {
 	const [matchPwd, setMatchPwd] = useState('');
 	const [validMatch, setValidMatch] = useState();
 
-	const [sex, setSex] = useState();
+	const [sex, setSex] = useState("남성");
 
 	const [listCP, setListCP] = useState(new Map());
 
