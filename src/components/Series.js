@@ -6,7 +6,7 @@ import { Fetch } from "toolbox/Fetch";
 import { displayDate } from "toolbox/DateDisplayer";
 import PostList from "./PostList";
 import { Link } from "react-router-dom";
-
+import { Table } from "react-bootstrap";
 
 export default function Series({data}) {
 
@@ -29,17 +29,36 @@ export default function Series({data}) {
     console.log(series.title)
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
-     {console.log(series)}
-      시리즈
-      [썸네일 넣을칸]<br/><br/><br/>
-      시리즈아이디:{series.id}<br/>
-      제목:{series.title}<br/>
-      설명:{series.content}<br/>
-      작가:{series.writer?.nick}<br/><br/>
-      <hr/>
-      
-      {postListShow(series)}
+    <Table responsive variant="white">
+      <thead>
+        <tr>
+          <th colSpan='2'>제목:{series.title}</th>
+          {/*<th></th>*/}
 
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowSpan='3'>[썸네일 넣을칸]</td>
+          <td>작가:{series.writer?.nick}</td>
+
+        </tr>
+        <tr>
+          {/**<td>2</td> */}
+          <td>설명:{series.content}</td>
+
+        </tr>
+        <tr>
+
+          <td><Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
+             <button>툴킷으로</button>
+           </Link>
+          </td>
+
+        </tr>
+      </tbody>
+    </Table>
+      {postListShow(series)}
     </>
   }
   function postListShow(series){
@@ -68,9 +87,7 @@ export default function Series({data}) {
   return <>
     <div>
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
-      <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
-        <button>툴킷으로</button>
-      </Link>
+      
     </div>
     <br/>
     <div>

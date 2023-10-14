@@ -4,7 +4,7 @@ import Showcase from 'components/Showcase';
 import Series from 'components/Series';
 import PostDetails from 'components/PostDetails';
 import Tool from 'components/Tool';
-import Agreement from 'components/Agreement';
+import Agreement from 'login/Agreement';
 import LoginStage from 'login/LoginStage';
 import Register from 'login/Register';
 import UserProfile from 'login/UserProfile';

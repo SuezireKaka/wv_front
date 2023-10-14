@@ -88,7 +88,7 @@ function renderSuccess(postListWithPaging) {
           <tbody>
               {postList?.map(post => (
                   <tr key={post.id}>
-                      <td width="75%">
+                      <td width="60%">
                         {console.log(post)}
                           <Link key={post.id} to={`/post/${post.id}`}
                                 state={{ id:post.id, page: 1, search: txtSearch.current?.value, postListWithPaging, parentId:post.parentId}}>{/*시리즈아이디필요*/}
