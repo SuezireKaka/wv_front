@@ -7,15 +7,13 @@ import { displayDate } from "toolbox/DateDisplayer";
 import PostList from "./PostList";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
+import React from "react";
+import Checkbox from "toolbox/Checkbox";
 
-export default function Series({data}) {
-
+export default function Series() {
   const location = useLocation();
   let state = location.state;
-
   console.log(state);
-
-
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
@@ -32,7 +30,8 @@ export default function Series({data}) {
     <Table responsive variant="white">
       <thead>
         <tr>
-          <th colSpan='2'>제목:{series.title}</th>
+          <th colSpan='2'>제목:{series.title}
+          </th>
           {/*<th></th>*/}
         </tr>
       </thead>

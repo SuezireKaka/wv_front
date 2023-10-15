@@ -20,7 +20,7 @@ export default function LoginButton() {
     navigate("/")
   }
   return (
-    <div>    <Dropdown style={{position: "absolute",left: "90%"}}>
+    <div>    <Dropdown style={{position: "absolute",right: "10%"}}>
     <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
       {!roles || roles.length === 0? <>Sign</>: <>{auth.nick}님</>}
     </Dropdown.Toggle>

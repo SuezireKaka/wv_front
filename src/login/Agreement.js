@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Checkbox from "login/Checkbox";
-import CheckboxGroup from "login/CheckboxGroup";
+import Checkbox from "toolbox/Checkbox";
+import CheckboxGroup from "toolbox/CheckboxGroup";
 
 
 export default function Agreement() {

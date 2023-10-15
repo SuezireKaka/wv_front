@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {Fetch} from 'toolbox/Fetch';
 import { displayDate } from "toolbox/DateDisplayer";
-import CheckboxGroup from './CheckboxGroup';
-import Checkbox from './Checkbox';
+import CheckboxGroup from '../toolbox/CheckboxGroup';
+import Checkbox from '../toolbox/Checkbox';
 
 export default function MemberList() {
     const { ownerId } = useParams();

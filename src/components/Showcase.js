@@ -29,7 +29,7 @@ export default function Showcase() {
         <table responsive variant="white" style={TABLE_STYLE}>
             <tbody>
                 <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={data => {
-                    return <SeriesTable data={data.firstVal} colnum={5}/>
+                    return <><SeriesTable data={data.firstVal} colnum={5}/>{console.log(data.firstVal)}</>
                 }}/>
             </tbody>
         </table>
