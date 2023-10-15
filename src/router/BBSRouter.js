@@ -10,6 +10,7 @@ import Register from 'login/Register';
 import UserProfile from 'login/UserProfile';
 import MemberList from 'login/MemberList';
 import PostMng from 'components/PostMng';
+import Test1 from 'daumpost/Test1';
 
 export default function BBSRouter() {
     return (
@@ -24,11 +25,12 @@ export default function BBSRouter() {
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
           <Route path={"/register"} element={ <Register/> } />
-          
-
           <Route path={"/userProfile"} element={ <UserProfile/> } />
-          
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
+          
+          <Route path={"/test1"} element={ <Test1/> } />
+
+          
 
         </Routes>
        

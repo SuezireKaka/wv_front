@@ -3,7 +3,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
-
+import DaumTest from "daumpost/DaumTest";
 const Register = () => {
 	
 	const { codeList } = useContext(AppContext);
@@ -27,7 +27,9 @@ const Register = () => {
 	const [sex, setSex] = useState("남성");
 
 	const [listCP, setListCP] = useState(new Map());
-
+	const [fullAddress,setFullAddress] = useState("");
+	const [address, setAddress] = useState("");
+    const [addText, setAddText] = useState("");
 	console.log(listCP);
 	console.log();
 	const [errMsg, setErrMsg] = useState('');
@@ -41,35 +43,28 @@ const Register = () => {
 		setErrMsg('');
 	}, [name, passWord, matchPwd])
 
-	const checkCPValidity = (cpType, inValue) => {
+	const checkCPValidity = (e, cpType, inValue) => {
+		e.preventDefault();
 		if (cpType.validationRe && !(new RegExp(cpType.validationRe).test(inValue))) {
 			return;
 		}
-		//복제하고
-		listCP.set(cpType, inValue);
+
+		listCP.set(cpType, cpType=="home address"?address+inValue:inValue);
 		setListCP(listCP);
 	};
-	const checkDate = (e) => {
-		console.log("checkDate");
-		console.log(e.target.value);
-		console.log(typeof e.target.value);
-	};
-
 
 	const checkSex = (e) => {
 		console.log("checkSex");
 		console.log(e.target.value);
 		setSex(e.target.value);
 	};
+
 	const onBlur = (e)=>{
 		e.preventDefault();
 		isNameBlur(true);
 		console.log(birthDate);
 		if (!birthDate&&birthDate===""){isBirthDateBlur(false);}
 		else{isBirthDateBlur(true);}
-		
-
-
 	}
 	const onBlurLoginId = async (e) => {
 		e.preventDefault();
@@ -223,15 +218,21 @@ const Register = () => {
 		{codeList?.map((cpType) => (<>
 			
 					{cpType.codeVal}:
+					{cpType.codeVal==="home address"?<div>
+        			<DaumTest setAddress={setAddress}/>
+        <input type='text' size='100' value={address+addText} disabled />
+        <input type='text' id={cpType.codeVal}
+		onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)} placeholder="상세주소입력" />
+    </div>:
 					<input
 						type="text"
 						id={cpType.codeVal}
-		onChange={(e) => checkCPValidity(cpType.codeVal, e.target.value)}
-					/><br></br>
+		onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)}
+					/>}<br></br>
 		</>))}
-
+			{console.log(listCP)}
 	</form>
-		<button variant="primary" onClick={handleSubmit} disabled={!(validMatch&&nickChecked&&uniqueNick&&idChecked&&uniqueId&&isNameBlur&&isBirthDateBlur)}>{/*disabled={!validMatch}*/}
+		<button variant="primary" onClick={handleSubmit} disabled={!(validMatch&&nickChecked&&uniqueNick&&idChecked&&uniqueId&&isNameBlur&&isBirthDateBlur)}>
 			Sign Up
 		</button>
 

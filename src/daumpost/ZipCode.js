@@ -18,6 +18,8 @@ export const ZipCode = (props) => {
         }
         console.log(data)
         console.log(fullAddress)
+        props.setAddress(fullAddress)
+       
         console.log(data.zonecode)
         props.onClose()
     }
@@ -29,6 +31,8 @@ export const ZipCode = (props) => {
         width: "600px",
         height: "600px",
         padding: "7px",
+        background : "rgba(0,0,0,0.25)",
+        border: "solid"
       };
  
     return(

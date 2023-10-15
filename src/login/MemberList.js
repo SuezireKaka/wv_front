@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {Fetch} from 'toolbox/Fetch';
 import { displayDate } from "toolbox/DateDisplayer";
+import CheckboxGroup from './CheckboxGroup';
+import Checkbox from './Checkbox';
 
 export default function MemberList() {
     const { ownerId } = useParams();
     console.log(ownerId);
     const listAllMemberUri = `/party/anonymous/listAllAccount/${ownerId}/1`;
     console.log(listAllMemberUri);
+    const [roles, setRoles] = React.useState([]);
     return (
         <div>
+            <CheckboxGroup
+                    values={roles}
+                    onChange={setRoles}
+                    >
+                    <>[{roles.join(",")}]<button disabled={roles==[]}>writer로 변경</button></>
             <table>
                 <thead>
                     <tr>
@@ -19,19 +27,22 @@ export default function MemberList() {
                         <th>이름</th>
                         <th>생년월일</th>
                         <th>성별</th>
-                        <th>회원분류</th>
+                        <th>분류</th>
+                        <th>등업</th>
                     </tr>
                 </thead>
                 <tbody>
                     <Fetch uri={listAllMemberUri} renderSuccess={RenderSuccess} />
                  </tbody>
             </table>
+            </CheckboxGroup>
         </div>
     );
 }
 
 
 function RenderSuccess(memberList) {
+    
     console.log(memberList);
     console.log(memberList.firstVal);
     return memberList.firstVal?.map(member => (
@@ -40,9 +51,10 @@ function RenderSuccess(memberList) {
                 <td>{member.loginId}</td>
                 <td>{member.nick}</td>
                 <td>{member.response?.name}</td>
-                <td>{member.response?.birthDate.substr(0, 10)}</td>
+                <td>{member.response?.birthDate?.substr(0, 10)}</td>
                 <td>{member.response?.sex==="남성" ? "남성" : "여성"}</td>
                 <td>{member.roleList[0]?.role}</td>
+                <td>{member.roleList[0]?.role==="reader"?<Checkbox value={member.id}></Checkbox>:""}</td>
             </tr>
             {member.response?.contactPointList?.map(cp => (
             <tr key={member.id + cp.cpType}>
@@ -51,6 +63,7 @@ function RenderSuccess(memberList) {
                 <td>{cp.cpVal}</td>
             </tr>
             ))}
+
         </>
     ))
 }

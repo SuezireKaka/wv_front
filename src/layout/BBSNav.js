@@ -17,7 +17,7 @@ export default function BBSNav() {
     &nbsp;
     <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
     <Link to="/memberList/0000">회원정보</Link>
-
+    <Link to="/test1">테스트1</Link>
 
     {/*isManager ? <Link key="dfhdefh" to={`/member-list/0000`}>
                 회원목록
