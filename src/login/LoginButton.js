@@ -20,18 +20,17 @@ export default function LoginButton() {
     navigate("/")
   }
   return (
-    <div>    <Dropdown style={{position: "absolute",right: "10%"}}>
+    <div>    
+    <Dropdown style={{position: "absolute",right: "10%"}}>
     <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
       {!roles || roles.length === 0? <>Sign</>: <>{auth.nick}님</>}
     </Dropdown.Toggle>
-
     <Dropdown.Menu>
       {!roles || roles.length === 0?
       <>
       <Dropdown.Item href="/log-in">로그인</Dropdown.Item>
       <Dropdown.Item href="/agreement">회원가입</Dropdown.Item>
       </>
-      
       : 
       <>
       <Dropdown.Item href="#/1">??</Dropdown.Item>
@@ -40,7 +39,6 @@ export default function LoginButton() {
       <Dropdown.Item onClick={handleLogout}>로그아웃</Dropdown.Item>
       </>
       }
-   
     </Dropdown.Menu>
   </Dropdown></div>
   )

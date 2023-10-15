@@ -49,7 +49,7 @@ const Register = () => {
 			return;
 		}
 
-		listCP.set(cpType, cpType=="home address"?address+inValue:inValue);
+		listCP.set(cpType, cpType=="home address"?address+" "+inValue:inValue);
 		setListCP(listCP);
 	};
 

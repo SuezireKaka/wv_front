@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import React from "react";
 import Checkbox from "toolbox/Checkbox";
+import Favorites from "./Favorites";
 
 export default function Series() {
   const location = useLocation();
@@ -30,7 +31,7 @@ export default function Series() {
     <Table responsive variant="white">
       <thead>
         <tr>
-          <th colSpan='2'>제목:{series.title}
+          <th colSpan='2'>제목:{series.title}<Favorites state={series}/>
           </th>
           {/*<th></th>*/}
         </tr>

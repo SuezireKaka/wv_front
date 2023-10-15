@@ -27,8 +27,8 @@ export default function BBSRouter() {
           <Route path={"/register"} element={ <Register/> } />
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
+          <Route path={"/test1"} component={<Test1 />} />
           
-          <Route path={"/test1"} element={ <Test1/> } />
 
           
 

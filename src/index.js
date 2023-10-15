@@ -7,13 +7,14 @@ import Footer from 'layout/Footer';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom"
 import { AppContextProvider } from 'context/AppContextProvider';
-
+import TestNav from 'layout/TestNav';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
     <AppContextProvider>
     <Router>
       <BBSNav />
+      <TestNav />
       <App />
     </Router>
     </AppContextProvider>
