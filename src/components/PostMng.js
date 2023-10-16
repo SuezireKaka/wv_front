@@ -25,9 +25,9 @@ export default function PostMng() {
 	const [title, setTitle] = useState(post.title);
 	const [content, setContent] = useState(post.content);
 	const [listAttach, setListAttach] = useState(post.listAttachFile);
-	
+	const isComplete = useState(1);
+	console.log(isComplete[0]);
 	let hTier = (post?.id).length ==4 ? 0 : 1;
-
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
 		setHasAllContents(title?.trim() ? content?.trim() : false);
@@ -44,7 +44,7 @@ export default function PostMng() {
 		const bodyData = {
 			firstVal : {id:post.parentId,hTier:hTier-1},
 			secondVal : {id:post.id, writer:writer, boardVO:{id:post.boardVO.id},
-			title:title.trim(), content:content.trim(), hTier, listAttachFile:listAttach}
+			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
 		console.log(JSON.stringify(bodyData));
 
