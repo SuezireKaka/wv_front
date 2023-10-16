@@ -10,7 +10,7 @@ import AppContext from "context/AppContextProvider";
 export default function PostMng() {
 	const location = useLocation();
 
-	const post = location.state?.series;
+	const post = location.state?.post;
     const state = location.state?.state;
 
 	const { auth } = useContext(AppContext);
@@ -20,12 +20,14 @@ export default function PostMng() {
 	console.log(state);
 	console.log(auth);
 
-{/** 
+
 	const navigate = useNavigate();
 	const [title, setTitle] = useState(post.title);
 	const [content, setContent] = useState(post.content);
 	const [listAttach, setListAttach] = useState(post.listAttachFile);
 	
+	let hTier = (post?.id).length ==4 ? 0 : 1;
+
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
 		setHasAllContents(title?.trim() ? content?.trim() : false);
@@ -36,29 +38,34 @@ export default function PostMng() {
 		e.preventDefault();
 		if (!hasAllContents)
 			return;
+		
 
-		const writer = {id:auth.userId, name:auth.userName, nick:auth.userNick};
-		const bodyData = {id:post.id, writer:writer, boardVO:{id:post.boardVO.id},
-			title:title.trim(), content:content.trim(), listAttachFile:listAttach};
+		const writer = {id:post.writer.id, nick:auth.nick, loginId:auth.loginId};
+		const bodyData = {
+			firstVal : {id:post.parentId,hTier:hTier-1},
+			secondVal : {id:post.id, writer:writer, boardVO:{id:post.boardVO.id},
+			title:title.trim(), content:content.trim(), hTier, listAttachFile:listAttach}
+		};
 		console.log(JSON.stringify(bodyData));
 
 		try {
 			await axios.post(
-				"/post/mngPost",
+				"/work/manageWork",
 				bodyData,
 				{headers: {
 					'Content-Type': 'application/json',
-					"x-auth-token": `Bearer ${auth.accessToken}`}}
+					"x-auth-token": `Bearer ${auth?.accessToken}`}}
 			);
+			console.log("==============나오나 확인======");
 			console.log('post.id', post.id);
 			if (!post.id) {
 				//글쓰기
 				console.log('//글쓰기 ttt');
-				navigate(`/board`, {state:{boardId:post.boardVO.id, page:1, search:""}});
+				navigate(`/`, {state:{boardId:post.boardVO.id, page:1, search:""}});
 			} else {
 				//수정
 				console.log('수정', post);
-				navigate(`/board`, {state:state});
+				navigate(`/`, {state:state});
 			}
 			
 		} catch (err) {
@@ -70,7 +77,7 @@ export default function PostMng() {
 		e.preventDefault();
 
 		try {
-			const data = await axios.delete(`/post/${post.id}`,
+			const data = await axios.delete(`/work/${post.id}`,
 				{headers: {
 					'Content-Type': 'application/json',
 					"x-auth-token": `Bearer ${auth.accessToken}`}});
@@ -79,7 +86,7 @@ export default function PostMng() {
 		} finally {
 			// navigate state 전달
 			console.log('Delete state', state);
-			navigate(`/board`, {state:state});
+			navigate(`/`, {state:state});
 		}
 	}
 
@@ -109,13 +116,13 @@ export default function PostMng() {
 			/>
 		</Form.Group>
 		{/** <ThumbnailList imgDtoList={listAttach}/>
-		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
+		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>*/}
 		<Button variant="primary" onClick={handleSubmit} disabled={!hasAllContents} >
 			반영
 		</Button>
 		<Button variant="primary" onClick={handleDelete}>
 			삭제
 		</Button>
-	</Form>*/}
+	</Form>
 }
 

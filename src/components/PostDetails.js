@@ -41,8 +41,8 @@ export default function PostDetails() {
           <Link key={state.parentId} to={`/series/${state.parentId}`} state={{seriesId:state.parentId, page:state.page}}>목록</Link>&nbsp;
           {(post.writer ? post.writer.nick === auth.nick : false) ?
               <Link
-                  to="/post/managePost"
-                  state={ {post, state} }
+                  to={`/series/${post.id}/mng`}
+                  state= {{seriesId:state.seriesId, post, state}}
               >수정</Link> : ""
           }
           <br />

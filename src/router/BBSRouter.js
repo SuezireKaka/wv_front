@@ -11,7 +11,7 @@ import UserProfile from 'login/UserProfile';
 import MemberList from 'login/MemberList';
 import PostMng from 'components/PostMng';
 import Test1 from 'components/Test1';
-
+import Test2 from 'components/Test2';
 export default function BBSRouter() {
     return (
         <Routes> 
@@ -28,7 +28,7 @@ export default function BBSRouter() {
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
           <Route path={"/test1"} element={<Test1 />} />
-
+          <Route path={"/test2"} element={<Test2 />} />
         </Routes>
        
       )
