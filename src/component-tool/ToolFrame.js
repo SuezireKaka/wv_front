@@ -4,18 +4,25 @@ import { Fetch } from "toolbox/Fetch"
 export default function ToolFrame({tool}) {
     const READY_FOR_GRAPH = `http://localhost:8080/tool/anonymous/getToolById/${tool.id}`
 
+    console.log("지금 선택된 툴은", tool)
+
     const canvasRef = useRef()
 
     function Graph({toolWithGraph = {customEntityList : [], customRelationList : []}}) {
-
-        console.log("그림 그리는 중")
-        console.log(toolWithGraph)
-
-        const [customEntities, setCustomEntities] = useState([...(toolWithGraph.customEntityList)])
-        const [customRelations, setCustomRelations] = useState([...(toolWithGraph.customRelationList)])
         
+        console.log("이걸 그리는 중입니다", toolWithGraph)
 
-        if (customEntities.length !== 0) {
+        const [customEntities, setCustomEntities] = useState([])
+        const [customRelations, setCustomRelations] = useState([])
+
+        const [selectedObjType, setSelectedObjType] = useState("Entity")
+        const [selectedObjIdx, setSelectedObjIdx] = useState(0)
+        const [selectedXPos, setSelectedXPos] = useState(0)
+        const [selectedYPos, setSelectedYPos] = useState(0)
+        const [selectedXSize, setSelectedXSize] = useState(0)
+        const [selectedYSize, setSelectedYSize] = useState(0)
+        
+        if (null) {
             customRelations.forEach(relation => {
                 const ctx = canvasRef.current.getContext("2d");
                 ctx.reset();

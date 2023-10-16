@@ -53,6 +53,7 @@ export default function Tool() {
                 </tr>
                 <tr style={{...CENTER_STYLE, textAlign : "right"}}>
                     <td colSpan={3} style={CENTER_STYLE}>
+                        <button>현재 툴 저장</button>
                         <button>모두 저장</button>
                     </td>
                 </tr>
