@@ -12,8 +12,8 @@ export default function ToolFrame({tool}) {
         
         console.log("이걸 그리는 중입니다", toolWithGraph)
 
-        const [customEntities, setCustomEntities] = useState([])
-        const [customRelations, setCustomRelations] = useState([])
+        const [customEntities, setCustomEntities] = useState([...(toolWithGraph.customEntityList)])
+        const [customRelations, setCustomRelations] = useState([...(toolWithGraph.customRelationList)])
 
         const [selectedObjType, setSelectedObjType] = useState("Entity")
         const [selectedObjIdx, setSelectedObjIdx] = useState(0)
@@ -53,7 +53,7 @@ export default function ToolFrame({tool}) {
         </div>
     }
 
-    return <Fetch uri={READY_FOR_GRAPH} renderSuccess={toolWithGraph => <Graph toolWithGraph={toolWithGraph} />}
+    return <Fetch uri={READY_FOR_GRAPH} loadingFallBack={<p>loading...</p>} renderSuccess={toolWithGraph => <Graph toolWithGraph={toolWithGraph} />}
         doLog="true"
     />
 }

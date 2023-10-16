@@ -13,9 +13,9 @@ export default function PostMng() {
     const state = location.state?.state;
 	const { auth } = useContext(AppContext);
 
-	console.log(post);
-	console.log(state);
-	console.log(auth);
+	console.log("포스트는", post);
+	console.log("스테이트는", state);
+	console.log("지금 유저 정보는", auth);
 	
 	const navigate = useNavigate();
 	const [title, setTitle] = useState(post?.title);
