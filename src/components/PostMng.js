@@ -9,25 +9,22 @@ import AppContext from "context/AppContextProvider";
 
 export default function PostMng() {
 	const location = useLocation();
-
 	const post = location.state?.post;
     const state = location.state?.state;
-
 	const { auth } = useContext(AppContext);
-	//const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
-	//console.log(seriesDetailsUri);
+
 	console.log(post);
 	console.log(state);
 	console.log(auth);
-
-
+	
 	const navigate = useNavigate();
-	const [title, setTitle] = useState(post.title);
-	const [content, setContent] = useState(post.content);
-	const [listAttach, setListAttach] = useState(post.listAttachFile);
+	const [title, setTitle] = useState(post?.title);
+	const [content, setContent] = useState(post?.content);
+	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
 	console.log(isComplete[0]);
-	let hTier = (post?.id).length ==4 ? 0 : 1;
+	let hTier = (post&&(post?.id).length ===4) ? 0 : 1;
+
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
 		setHasAllContents(title?.trim() ? content?.trim() : false);
@@ -40,10 +37,10 @@ export default function PostMng() {
 			return;
 		
 
-		const writer = {id:post.writer.id, nick:auth.nick, loginId:auth.loginId};
+		const writer = {id:post?.writer?.id, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
-			firstVal : {id:post.parentId,hTier:hTier-1},
-			secondVal : {id:post.id, writer:writer, boardVO:{id:post.boardVO.id},
+			firstVal : {id:post?.parentId,hTier:hTier-1},
+			secondVal : {id:post?.id, writer:writer, boardVO:{id:post?.boardVO.id},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
 		console.log(JSON.stringify(bodyData));
