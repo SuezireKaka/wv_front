@@ -51,9 +51,7 @@ export default function Series() {
         </tr>
         <tr>
           <td>
-          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state}}>
-             <button>신규</button>
-           </Link>
+
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state}}>
              <button>수정</button>
            </Link>
@@ -70,7 +68,13 @@ export default function Series() {
   function postListShow(series){
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
-      :  <PostList />
+      :  <>
+      <Link to={`/series/${state.seriesId}/mng`} >
+      <button>신규</button>
+        </Link>
+      
+      <PostList />
+      </>
   }
 
   function PostSkinListSuccess(postsPage){
@@ -92,6 +96,7 @@ export default function Series() {
 
   return <>
     <div>
+
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
       
     </div>
