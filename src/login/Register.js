@@ -220,7 +220,7 @@ const Register = () => {
 					{cpType.codeVal}:
 					{cpType.codeVal==="home address"?<div>
         			<DaumTest setAddress={setAddress}/>
-        <input type='text' size='70' value={address+addText} disabled />
+        <input type='text' size='50' value={address+addText} disabled />
         <input type='text' id={cpType.codeVal}
 		onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)} placeholder="상세주소입력" />
     </div>:
@@ -228,7 +228,7 @@ const Register = () => {
 						type="text"
 						id={cpType.codeVal}
 		onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)}
-					/>}<br></br>
+					/>}<br/>
 		</>))}
 			{console.log(listCP)}
 	</form>

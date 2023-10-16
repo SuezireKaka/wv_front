@@ -2,19 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import BBSNav from 'layout/BBSNav';
-import Footer from 'layout/Footer';
+
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom"
 import { AppContextProvider } from 'context/AppContextProvider';
-import TestNav from 'layout/TestNav';
+import WVNav from 'layout/WVNav';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
     <AppContextProvider>
     <Router>
-      <BBSNav />
-      <TestNav />
+      
+      <WVNav />
       <App />
     </Router>
     </AppContextProvider>
