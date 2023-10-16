@@ -23,15 +23,16 @@ export default function Series() {
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
   const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
 
-  function SeriesDetailsSuccess(series){
+  function SeriesDetailsSuccess(post){
+    //function SeriesDetailsSuccess(시리즈) <<요부분은 시리즈 대신 포스트로 해서 수정하기 용이하게 함
     console.log("1, 3")
-    console.log(series?.id)
+    console.log(post?.id)
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
     <Table responsive variant="white">
       <thead>
         <tr>
-          <th colSpan='2'>제목:{series.title}<Favorites state={series}/>
+          <th colSpan='2'>제목:{post.title}<Favorites state={post}/>
           </th>
           {/*<th></th>*/}
         </tr>
@@ -39,19 +40,19 @@ export default function Series() {
       <tbody>
         <tr>
           <td rowSpan='4'>[썸네일 넣을칸]</td>
-          <td>작가:{series.writer?.nick}</td>
+          <td>작가:{post.writer?.nick}</td>
         </tr>
         <tr>
           {/**<td>2</td> */}
-          <td rowSpan='2'>설명:{series.content}</td>
+          <td rowSpan='2'>설명:{post.content}</td>
         </tr>
         <tr>
           
         </tr>
         <tr>
           <td>
-          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, series, state}}>
-             <button>작성</button>
+          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state}}>
+             <button>수정</button>
            </Link>
             <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
             <button>툴킷으로</button>
@@ -60,7 +61,7 @@ export default function Series() {
         </tr>
       </tbody>
     </Table>
-      {postListShow(series)}
+      {postListShow(post)}
     </>
   }
   function postListShow(series){
