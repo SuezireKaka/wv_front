@@ -52,6 +52,9 @@ export default function Series() {
         <tr>
           <td>
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state}}>
+             <button>신규</button>
+           </Link>
+          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state}}>
              <button>수정</button>
            </Link>
             <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
