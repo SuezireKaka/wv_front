@@ -103,8 +103,10 @@ function renderSuccess(postListWithPaging) {
                   </tr>
               ))}
           </tbody>
+          <tfoot>
+          </tfoot>
       </Table>
-      {pagenation?displayPagination(pagenation):""}
+      {pagenation?.lastPage>=2?displayPagination(pagenation):""}
   </>
 }
     return (

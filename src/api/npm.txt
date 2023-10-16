@@ -1,12 +1,9 @@
 #npm 설치 모듈 정리
 npm i react-router-dom
-npm i axios
 npm i react-router
+npm i axios
 
 npm install bootstrap@5.3.1
 npm install react-bootstrap bootstrap
 
 npm install react-daum-postcode
-
-#일단 연습
-npm install react-drag-list
