@@ -71,7 +71,7 @@ export default function Series() {
       :  <>
       <Link to={`/series/${state.seriesId}/mng`} >
       <button>신규</button>
-        </Link>
+      </Link>
       
       <PostList />
       </>
