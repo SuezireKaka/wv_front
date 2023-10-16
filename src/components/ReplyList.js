@@ -40,13 +40,14 @@ export default function ReplyList({parent}) {
 
 		try {
 			const response = await axios.post(
-				"/post/createReply",
+				"/work/createReply",
 				bodyData,
 				{headers: {
 					'Content-Type': 'application/json',
 					"x-auth-token": `Bearer ${auth.accessToken}`}}
 			);
             const reply = response.data;
+            console.log(reply);
             setJustCreatedReplyList([reply, ...justCreatedReplyList]);
             replayOnReply.set(parentId, "");
             setRenderCnt(renderCnt + 1);

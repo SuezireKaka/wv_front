@@ -14,7 +14,8 @@ export default function PostList() {
   const { auth } = useContext(AppContext);
   const isMember = auth?.roles?.includes("member");
   const location = useLocation();
-  let state = location.state;
+  const state = location.state;
+
 console.log(state?.seriesId)
 console.log(state)
 console.log(state?.page)
@@ -90,7 +91,7 @@ function renderSuccess(postListWithPaging) {
                   <tr key={post.id}>
                       <td width="60%">
                         {console.log(post)}
-                          <Link key={post.id} to={`/post/${post.id}`}
+                          <Link key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
                                 state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:post.parentId}}>{/*시리즈아이디필요*/}
                               &nbsp;&nbsp;{post.title}
                           </Link>

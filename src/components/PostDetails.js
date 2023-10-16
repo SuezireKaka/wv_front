@@ -6,8 +6,8 @@ import { displayDate } from "toolbox/DateDisplayer";
 import ReplyList from "./ReplyList";
 import AppContext from "context/AppContextProvider";
 import { Accordion } from "react-bootstrap";
-
-export default function PostDetails() {
+import NextPost from "./NextPost";
+export default function PostDetails({postList,txtSearch=f=>f}) {
   const thumbnailRequestTarget = ["video", "image"];
 
   const { auth } = useContext(AppContext);
@@ -19,7 +19,7 @@ export default function PostDetails() {
   console.log(state.page)
   //state={{ id:post.id, boardId:state.boardId, page: currentPage, search: txtSearch.current?.value, postListWithPaging}}>
 
-  const postUri = `http://localhost:8080/work/anonymous/findById/${state.id}`;
+  const postUri = `/work/anonymous/findById/${state.id}`;
 
   return <>
       
@@ -37,7 +37,9 @@ export default function PostDetails() {
           👍<span>{post.likeCount} with button</span>
           😡<span>{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br/>
-          title : <span>{post.title}</span><br/>
+          title : <span>{post.title}</span><br/>{/*{`/post/${post.id}`} */}
+          {console.log(postList)}
+          {/* <Link to={`/post/${postList[1]}`} >11</Link>*/}
           <Link key={state.parentId} to={`/series/${state.parentId}`} state={{seriesId:state.parentId, page:state.page}}>목록</Link>&nbsp;
           {(post.writer ? post.writer.nick === auth.nick : false) ?
               <Link

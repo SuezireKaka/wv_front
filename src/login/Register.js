@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
 import DaumTest from "daumpost/DaumTest";
+import { useNavigate } from "react-router-dom";
+
+
 const Register = () => {
 	
 	const { codeList } = useContext(AppContext);
@@ -34,7 +37,7 @@ const Register = () => {
 	console.log();
 	const [errMsg, setErrMsg] = useState('');
 	const [success, setSuccess] = useState(false);
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		setValidMatch(passWord ? passWord === matchPwd : false);
 	}, [passWord, matchPwd])
@@ -127,6 +130,7 @@ const Register = () => {
 			console.log(response?.data);
 			console.log(JSON.stringify(response))
 			setSuccess(true);
+			navigate(`/log-in`)
 			//clear state and controlled inputs
 			//need value attrib on inputs for this
 		} catch (err) {
@@ -190,7 +194,7 @@ const Register = () => {
 					id="birthDate"
 					name="birthDate"
 					onChange={(e) => setBirthDate(e.target.value)}
-					min="1900-01-01"
+					min="1920-01-01"
 					max="2023-12-31"
 					aria-required="true"
 					value={birthDate}
@@ -232,7 +236,7 @@ const Register = () => {
 		</>))}
 			{console.log(listCP)}
 	</form>
-	<Link to='/'>
+	<Link to='/log-in'>
 		<button variant="primary" onClick={handleSubmit} disabled={!(validMatch&&nickChecked&&uniqueNick&&idChecked&&uniqueId&&isNameBlur&&isBirthDateBlur)}>
 			Sign Up
 		</button>
