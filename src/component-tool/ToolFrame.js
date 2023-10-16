@@ -1,23 +1,21 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { Fetch } from "toolbox/Fetch"
 
 export default function ToolFrame({tool}) {
     const READY_FOR_GRAPH = `http://localhost:8080/tool/anonymous/getToolById/${tool.id}`
 
-    function Graph({toolWithGraph = {}}) {
-        const canvasRef = useRef()
+    const canvasRef = useRef()
 
-        let customEntities = []
-        let customRelations = []
-        
+    function Graph({toolWithGraph = {customEntityList : [], customRelationList : []}}) {
+
         console.log("그림 그리는 중")
         console.log(toolWithGraph)
 
-        if (toolWithGraph.id) {
-            customEntities = toolWithGraph.customEntityList
-            customRelations = toolWithGraph.customRelationList
-            console.log("그래프 그리는 중")
-            console.log(customEntities, customRelations)
+        const [customEntities, setCustomEntities] = useState([...(toolWithGraph.customEntityList)])
+        const [customRelations, setCustomRelations] = useState([...(toolWithGraph.customRelationList)])
+        
+
+        if (customEntities.length !== 0) {
             customRelations.forEach(relation => {
                 const ctx = canvasRef.current.getContext("2d");
                 ctx.reset();
@@ -32,21 +30,23 @@ export default function ToolFrame({tool}) {
                 ctx.moveTo(oneCenterX, oneCenterY)
                 ctx.quadraticCurveTo(controlX, controlY, otherCenterX, otherCenterY)
                 ctx.stroke();
-            });
+            })
         }
         
         return <div style={{position: "relative"}}>
-            {customEntities.map(entity =>
+            {customEntities.length > 0 ? customEntities.map(entity =>
                 // 크기에 맞게 버튼 생성
                 <button style={{position: "absolute", // 위치의 절대화
                     left:entity.xPos, top:entity.yPos, width:entity.xSize, height:entity.ySize
                 }}>
                     {entity.name}
                 </button>
-            )}
+            ) : ""}
             <canvas ref={canvasRef} style={{border : "1px dotted"}} width={tool.xToolSize} height={tool.yToolSize}/>
         </div>
     }
 
-    return <Fetch uri={READY_FOR_GRAPH} renderSuccess={toolWithGraph => <Graph toolWithGraph={toolWithGraph}></Graph>}/>
+    return <Fetch uri={READY_FOR_GRAPH} renderSuccess={toolWithGraph => <Graph toolWithGraph={toolWithGraph} />}
+        doLog="true"
+    />
 }

@@ -2,6 +2,7 @@ import {React, useState} from "react";
 import { useLocation } from "react-router";
 import ObjectAdress from "component-tool/ObjectAdress";
 import ToolFrame from "component-tool/ToolFrame";
+import { Fetch } from "toolbox/Fetch";
 
 export default function Tool() {
     const location = useLocation();
@@ -11,11 +12,15 @@ export default function Tool() {
 
     const [nowAddress, setNowAddress] = useState(DEFAULT_ADDRESS);
     const [selectedTool, setSelectedTool] = useState();
-    const [tools, setTools] = useState([]);
+    const [toolset, setToolset] = useState([]);
     const [selectedObject, setSelectedObject] = useState();
 
+    console.log("누구세요", state)
+
+    const DEFAULT_TOOLSET_URL = `http://localhost:8080/tool/anonymous/listAllFromSeries/${state.seriesId}/1`
+
     function onSelect(tool) {
-        setNowAddress(DEFAULT_ADDRESS + tool.name)
+        setNowAddress(DEFAULT_ADDRESS + selectedTool?.name)
         setSelectedTool(tool)
     }
 
@@ -54,7 +59,12 @@ export default function Tool() {
                 <tr>
                     <td style={{...SIDE_STYLE, textAlign : "left"}}>
                         <div style={{margin : "10px"}}>
-                            <ObjectAdress seriesId={state.seriesId} onSelect={onSelect}/>
+                            <Fetch uri={DEFAULT_TOOLSET_URL} renderSuccess={(toolset) => {
+                                console.log(toolset)
+                                return <ObjectAdress toolset={toolset.firstVal} onSelect={onSelect}/>
+                            }
+                                
+                            }/>
                         </div>
                     </td>
                     <td style={CENTER_STYLE}>
