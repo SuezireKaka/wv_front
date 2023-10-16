@@ -14,6 +14,7 @@ export default function PostDetails({postList,txtSearch=f=>f}) {
   const location = useLocation();
   const state = location.state;
   console.log(auth)
+  console.log("스테이트 상태는", state)
   console.log(state.parentId)
   console.log(state.id)
   console.log(state.page)
@@ -28,6 +29,7 @@ export default function PostDetails({postList,txtSearch=f=>f}) {
     
     function renderSuccess(post) {
       console.log(post)
+      console.log("그래도 다시 한 번", state)
       return <>
           {console.log(post)}
           content : <p>{post.content}</p>
@@ -44,7 +46,7 @@ export default function PostDetails({postList,txtSearch=f=>f}) {
           {(post.writer ? post.writer.nick === auth.nick : false) ?
               <Link
                   to={`/series/${post.id}/mng`}
-                  state= {{seriesId:state.seriesId, post, state}}
+                  state= {{seriesId:state.seriesId, post, state, parentId : state.parentId}}
               >수정</Link> : ""
           }
           <br />
