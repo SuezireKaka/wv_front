@@ -52,7 +52,7 @@ export default function Series() {
         <tr>
           <td>
 
-          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state}}>
+          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : ""}}>
              <button>수정</button>
            </Link>
             <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
@@ -69,7 +69,7 @@ export default function Series() {
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
       :  <>
-      <Link to={`/series/${state.seriesId}/mng`} >
+      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId}}>
       <button>신규</button>
       </Link>
       

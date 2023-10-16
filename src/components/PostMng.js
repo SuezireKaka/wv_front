@@ -39,7 +39,7 @@ export default function PostMng() {
 		
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
-			firstVal : {id:post?.parentId,hTier:hTier-1},
+			firstVal : {id:post?.parentId, hTier:hTier-1},
 			secondVal : {id:post?.id, writer:writer, boardVO:{id:post?.boardVO.id},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
