@@ -42,11 +42,13 @@ const LoginStage = () => {
             console.log(data);
             if (data.code === 0) {
                 setSignInResult(data);
+                console.log(data);
                 const accessToken = data.token;
+                const userId = data.userId;
                 const roles = data.roles;
                 const nick = data.userNick;
-                setAuth({ roles, nick, accessToken, loginId });
-                window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId }));
+                setAuth({ roles, nick, accessToken, loginId, userId });
+                window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId, userId }));
                 navigate("/")
             }
             else {

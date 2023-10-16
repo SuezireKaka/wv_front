@@ -36,8 +36,8 @@ export default function PostMng() {
 		if (!hasAllContents)
 			return;
 		
-
-		const writer = {id:post?.writer?.id, nick:auth?.nick, loginId:auth?.loginId};
+		
+		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
 			firstVal : {id:post?.parentId,hTier:hTier-1},
 			secondVal : {id:post?.id, writer:writer, boardVO:{id:post?.boardVO.id},
@@ -54,11 +54,11 @@ export default function PostMng() {
 					"x-auth-token": `Bearer ${auth?.accessToken}`}}
 			);
 			console.log("==============나오나 확인======");
-			console.log('post.id', post.id);
-			if (!post.id) {
+			console.log('post.id', post?.id);
+			if (!post?.id) {
 				//글쓰기
 				console.log('//글쓰기 ttt');
-				navigate(`/`, {state:{boardId:post.boardVO.id, page:1, search:""}});
+				navigate(`/`, {state:{boardId:post?.boardVO.id, page:1, search:""}});
 			} else {
 				//수정
 				console.log('수정', post);
