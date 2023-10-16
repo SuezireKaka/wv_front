@@ -11,6 +11,7 @@ export default function PostMng() {
 	const location = useLocation();
 	const post = location.state?.post;
     const state = location.state?.state;
+	const parentId = location.state?.parentId;
 	const { auth } = useContext(AppContext);
 
 	console.log("포스트는", post);
@@ -25,6 +26,8 @@ export default function PostMng() {
 	console.log(isComplete[0]);
 	let hTier = (post&&(post?.id).length ===4) ? 0 : 1;
 
+	console.log("부모 아이디는", parentId)
+
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
 		setHasAllContents(title?.trim() ? content?.trim() : false);
@@ -36,10 +39,9 @@ export default function PostMng() {
 		if (!hasAllContents)
 			return;
 		
-		
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
-			firstVal : {id:post?.parentId, hTier:hTier-1},
+			firstVal : {id:parentId, hTier:hTier-1},
 			secondVal : {id:post?.id, writer:writer, boardVO:{id:post?.boardVO.id},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
