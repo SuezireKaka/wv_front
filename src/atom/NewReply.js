@@ -1,7 +1,10 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
+import Button from 'react-bootstrap';
+import Row from 'react-bootstrap';
+import Col from 'react-bootstrap';
 
-
-function NewReply({ auth, reply, replayOnReply, onInputReplyContent, mngReply }) {
+function NewReply({ auth, reply, replayOnReply, onInputReplyContent, mngReply=f=>f }) {
     if (!auth.userNick)
         return;
     return (<>
@@ -10,7 +13,7 @@ function NewReply({ auth, reply, replayOnReply, onInputReplyContent, mngReply })
                         style={{ height: "100%", width: "100%" }}
                         onInput={(e) => onInputReplyContent(e, reply.id)} />
         
-        {/*
+        
         <Container>
             <Row>
                 <Col>댓글 달기</Col>
@@ -22,10 +25,10 @@ function NewReply({ auth, reply, replayOnReply, onInputReplyContent, mngReply })
                         style={{ height: "100%", width: "100%" }}
                         onInput={(e) => onInputReplyContent(e, reply.id)} />
                 </Col>
-                <Col sm><Button variant="primary" onClick={(e) => { mngReply(e, reply.id) }}>적용</Button></Col>
+                <Col sm><Button variant="primary" onClick={(e) => { mngReply(e, reply, reply.id) }}>적용</Button></Col>
             </Row>
         </Container>
-    */}
+    
 
    </> );
 }
