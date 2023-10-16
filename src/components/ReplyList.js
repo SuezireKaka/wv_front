@@ -13,7 +13,7 @@ export default function ReplyList({parent}) {
     console.log(auth)
     console.log(state)
     console.log(parent)
-   
+    console.log(parent.id)
     const [justCreatedReplyList, setJustCreatedReplyList] = useState([]);
     const [openAddReplay] = useState(new Map());
     const [replayOnReply] = useState(new Map());
@@ -31,7 +31,7 @@ export default function ReplyList({parent}) {
         setRenderCnt(renderCnt + 1);
     }
 
-	const mngReply = async (e, parent, parentId) => {
+	const mngReply = async (e, parentId) => {
         // 목적: 재 조회 방지. 성능
         // parent 객체의 댓글 목록 ul을 찾아서 동적으로 강제적으로 넣기
         e.preventDefault();
