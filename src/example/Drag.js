@@ -3,13 +3,13 @@ import React, { useRef, useState } from 'react';
 export default function Drag() {
   const dragItem = useRef();
   const dragOverItem = useRef();
-  const [list, setList] = useState([
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-    'Item 6'
+  const [propList, setPropList] = useState([
+    {propType : 'type 1', propVal : 'val 1'},
+    {propType : 'type 2', propVal : 'val 2'},
+    {propType : 'type 3', propVal : 'val 3'},
+    {propType : 'type 4', propVal : 'val 4'},
+    {propType : 'type 5', propVal : 'val 5'},
+    {propType : 'type 6', propVal : 'val 6'}
   ]);
 
   const dragStart = idx => {
@@ -21,23 +21,25 @@ export default function Drag() {
   };
 
   const drop = () => {
-    const copyListItems = [...list];
-    const dragItemConotent = copyListItems[dragItem.current];
+    const copyListItems = [...propList];
+    const dragItemContent = copyListItems[dragItem.current];
     copyListItems.splice(dragItem.current, 1);
-    copyListItems.splice(dragOverItem.current, 0, dragItemConotent);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
     dragItem.current = null;
     dragOverItem.current = null;
-    setList(copyListItems);
+    setPropList(copyListItems);
     console.log('드랍');
   };
 
   const newProp = () => {
-    setList([...list, 'Item ' + (list.length + 1)])
+    let len = propList.length
+    setPropList([...propList, {propType : 'type ' + (len + 1), propVal : 'val ' + (len + 1)}])
   };
+
   return (
     <>
-      {list &&
-        list.map((item, index) => (
+      {propList &&
+        propList.map((item, index) => (
           <div
             style={{
               backgroundColor: 'lightblue',
@@ -51,7 +53,7 @@ export default function Drag() {
             onDragEnd={drop}
             key={index}
             draggable>
-            {item}
+            {item.propType + " : " + item.propVal}
           </div>
         ))}
         <button onClick={() => newProp()}>+ 추가하기</button>
