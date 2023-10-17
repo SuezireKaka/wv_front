@@ -9,7 +9,7 @@ export default function Drag() {
     'Item 3',
     'Item 4',
     'Item 5',
-    'Item 6',
+    'Item 6'
   ]);
 
   const dragStart = idx => {
@@ -29,6 +29,10 @@ export default function Drag() {
     dragOverItem.current = null;
     setList(copyListItems);
     console.log('드랍');
+  };
+
+  const newProp = () => {
+    setList([...list, 'Item ' + (list.length + 1)])
   };
   return (
     <>
@@ -50,6 +54,7 @@ export default function Drag() {
             {item}
           </div>
         ))}
+        <button onClick={() => newProp()}>+ 추가하기</button>
     </>
   );
 }
