@@ -10,10 +10,14 @@ import { Table } from "react-bootstrap";
 import React from "react";
 import Checkbox from "toolbox/Checkbox";
 import Favorites from "./Favorites";
+import AppContext from "context/AppContextProvider";
+import { useContext } from "react";
 
 export default function Series() {
   const location = useLocation();
   let state = location.state;
+  const { auth } = useContext(AppContext);
+
   console.log(state);
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
@@ -51,10 +55,11 @@ export default function Series() {
         </tr>
         <tr>
           <td>
-
+          {(post.writer ? post.writer.nick === auth.nick : false) ?
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : ""}}>
              <button>수정</button>
            </Link>
+           : ""}
             <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
             <button>툴킷으로</button>
           </Link>
@@ -69,7 +74,7 @@ export default function Series() {
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
       :  <>
-      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId}}>
+      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state}}>
       <button>신규</button>
       </Link>
       

@@ -55,7 +55,7 @@ export default function PostDetails({postList,txtSearch=f=>f}) {
       <Accordion.Item eventKey="0">
         <Accordion.Header>댓글확인</Accordion.Header>
         <Accordion.Body>
-          <ReplyList parent={post} />
+          <ReplyList parent={post} state= {{seriesId:state.seriesId, post, state, parentId : state.parentId}}/>
           </Accordion.Body>
       </Accordion.Item>
     </Accordion>

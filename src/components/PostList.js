@@ -65,12 +65,12 @@ const onSearch = (e) => {
 const displayPagination = (paging) => {
     const pagingBar = [];
     if (paging.prev)
-        pagingBar.push(<button key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</button>);
+        pagingBar.push(<button style={{all:"unset"}} key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</button>);
     for (let i = paging.startPage; i <= paging.lastPage; i++) {
-        pagingBar.push(<button key={i} onClick={(e) => goTo(i)}>{i}</button>);
+        pagingBar.push(<button style={{all:"unset"}} key={i} onClick={(e) => goTo(i)}>[{i}]</button>);
     }
     if (paging.next)
-        pagingBar.push(<button key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</button>);
+        pagingBar.push(<button style={{all:"unset"}} key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</button>);
     return pagingBar;
 }
 
@@ -103,8 +103,10 @@ function renderSuccess(postListWithPaging) {
                   </tr>
               ))}
           </tbody>
+          <tfoot>
+          </tfoot>
       </Table>
-      {pagenation?displayPagination(pagenation):""}
+      {pagenation?.lastPage>=2?displayPagination(pagenation):""}
   </>
 }
     return (

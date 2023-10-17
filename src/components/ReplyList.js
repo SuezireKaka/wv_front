@@ -3,11 +3,17 @@ import NewReply from './NewReply';
 import AppContext from "context/AppContextProvider";
 import { useContext, useState } from 'react';
 import { displayDate } from "toolbox/DateDisplayer";
-
+import { useLocation } from 'react-router';
 
 export default function ReplyList({parent}) {
     const { auth } = useContext(AppContext);
 
+    const location = useLocation();
+    const state = location.state;
+    console.log(auth)
+    console.log(state)
+    console.log(parent)
+    console.log(parent.id)
     const [justCreatedReplyList, setJustCreatedReplyList] = useState([]);
     const [openAddReplay] = useState(new Map());
     const [replayOnReply] = useState(new Map());
@@ -29,18 +35,23 @@ export default function ReplyList({parent}) {
         // 목적: 재 조회 방지. 성능
         // parent 객체의 댓글 목록 ul을 찾아서 동적으로 강제적으로 넣기
         e.preventDefault();
-		if (replayOnReply.get(parentId) === null || replayOnReply.get(parentId).length === 0)
+        console.log(parentId);
+        console.log(parent.id);
+        let hTier = parent?.hTier;
+        console.log(hTier);
+		if (replayOnReply.get(parentId) === null || (replayOnReply&&replayOnReply?.get(parentId)?.length === 0))
 			return;
-        
+        const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
-            firstVal:{id:parentId},
-	        secondVal:{content:replayOnReply.get(parentId)}
+            firstVal:{id:parentId, hTier:hTier-1},
+	        secondVal:{id:parent?.id, writer:writer, boardVO:{id:parent?.boardVO.id},
+            title:"", content:replayOnReply.get(parentId), hTier}
         };
 		console.log(JSON.stringify(bodyData));
 
 		try {
 			const response = await axios.post(
-				"/work/createReply",
+				"/work/manageWork",
 				bodyData,
 				{headers: {
 					'Content-Type': 'application/json',
@@ -57,7 +68,7 @@ export default function ReplyList({parent}) {
 	}
 
     function appendJustCreatedReply(newReply, parent) {
-        if (! parent.listReply.includes(newReply))
+        if (parent.listReply&&!parent?.listReply.includes(newReply))
             parent.listReply = [newReply, ...parent.listReply];
     }
 
@@ -74,7 +85,7 @@ export default function ReplyList({parent}) {
             {openAddReplay}
             {console.log(openAddReplay)}
             {openAddReplay.has(parent.id) ? 
-            <NewReply auth={auth} reply={parent} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 
+            <NewReply auth={auth} reply={parent} state= {{seriesId:state.seriesId, parent, state, parentId : state.parentId}} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 
             : ""}
             <ul>
         {parent.repliesList?.map((reply) => {
