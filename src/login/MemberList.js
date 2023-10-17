@@ -54,7 +54,7 @@ function RenderSuccess(memberList) {
                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                 <td>{member.response?.sex==="남성" ? "남성" : "여성"}</td>
                 <td>{member.roleList[0]?.role}</td>
-                <td>{member.roleList[0]?.role==="reader"?<Checkbox value={member.id}></Checkbox>:""}</td>
+                <td>{member.roleList[0]?.role==="reader"?<Checkbox value={member.id}></Checkbox>:<b>✨</b>}</td>
             </tr>
             {member.response?.contactPointList?.map(cp => (
             <tr key={member.id + cp.cpType}>

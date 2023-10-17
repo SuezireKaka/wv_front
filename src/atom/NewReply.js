@@ -9,9 +9,9 @@ function NewReply({ auth, reply, replayOnReply, onInputReplyContent, mngReply=f=
         return;
     return (<>
  <input placeholder='댓글 달기'
-                        value={replayOnReply.get(reply.id)}
+                        value={replayOnReply.get(reply?.id)}
                         style={{ height: "100%", width: "100%" }}
-                        onInput={(e) => onInputReplyContent(e, reply.id)} />
+                        onInput={(e) => onInputReplyContent(e, reply?.id)} />
         
         
         <Container>
@@ -21,11 +21,11 @@ function NewReply({ auth, reply, replayOnReply, onInputReplyContent, mngReply=f=
             <Row>
                 <Col sm={10}>
                     <input placeholder='댓글 달기'
-                        value={replayOnReply.get(reply.id)}
+                        value={replayOnReply.get(reply?.id)}
                         style={{ height: "100%", width: "100%" }}
-                        onInput={(e) => onInputReplyContent(e, reply.id, false)} />
+                        onInput={(e) => onInputReplyContent(e, reply?.id, false)} />
                 </Col>
-                <Col sm><Button variant="primary" onClick={(e) => { mngReply(e, reply.id) }}>적용</Button></Col>
+                <Col sm><Button variant="primary" onClick={(e) => { mngReply(e, reply?.id) }}>적용</Button></Col>
             </Row>
         </Container>
     

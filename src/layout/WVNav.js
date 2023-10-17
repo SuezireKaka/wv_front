@@ -24,7 +24,7 @@ export default function TestNav() {
             <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
             <Nav.Link><Link style={navMenu} to="/memberList/0000">회원정보</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test1">테스트용</Link></Nav.Link>
-            <Nav.Link><Link style={navMenu} to="/test2">테스트용</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} to="/test2">테스트용2</Link></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

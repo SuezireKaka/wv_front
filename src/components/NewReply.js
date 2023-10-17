@@ -25,7 +25,7 @@ function NewReply({
                   type="text"
                   placeholder="댓글 달기"
                   value={replayOnReply.get(reply.id)}
-                  style={{ height: "100%", width: "100%" }}
+                  style={{ height: "80%", width: "80%" }}
                   onInput={(e) => onInputReplyContent(e, reply.id)}
                 />
                 <Form.Text className="text-muted">

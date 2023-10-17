@@ -6,7 +6,7 @@ export const ZipCode = (props) => {
     const handlePostCode = (data) => {
         let fullAddress = data.address;
         let extraAddress = ''; 
-        
+
         if (data.addressType === 'R') {
           if (data.bname !== '') {
             extraAddress += data.bname;
@@ -22,6 +22,8 @@ export const ZipCode = (props) => {
        
         console.log(data.zonecode)
         props.onClose()
+
+        
     }
  
     const postCodeStyle = {
@@ -34,12 +36,22 @@ export const ZipCode = (props) => {
         background : "rgba(0,0,0,0.25)",
         border: "solid"
       };
- 
+
     return(
         <div>
+<div class="container">
+  <div class="layer-popup show" id="layer-popup">
+    <div class="modal-dialog">
+      <div class="modal-content">
             <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
-
             <button type='button' onClick={() => {props.onClose()}} className='postCode_btn'>닫기</button>
+            
+      </div>
+    </div>
+  </div>
+</div>
+            
+
         </div>
     )
 }
