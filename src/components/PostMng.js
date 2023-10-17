@@ -77,6 +77,7 @@ export default function PostMng() {
 			if (!post?.id) {
 				//글쓰기
 				console.log('//글쓰기 ttt');
+	
 				navigate(`/`, {state:{boardId:post?.boardVO?.id, page:1, search:""}});
 			} else {
 				//수정
