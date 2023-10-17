@@ -12,17 +12,12 @@ export default function ToolFrame({tool}) {
         
         console.log("이걸 그리는 중입니다", toolWithGraph)
 
-        const [customEntities, setCustomEntities] = useState([...(toolWithGraph.customEntityList)])
-        const [customRelations, setCustomRelations] = useState([...(toolWithGraph.customRelationList)])
+        let customEntities = []
+        let customRelations = []
 
-        const [selectedObjType, setSelectedObjType] = useState("Entity")
-        const [selectedObjIdx, setSelectedObjIdx] = useState(0)
-        const [selectedXPos, setSelectedXPos] = useState(0)
-        const [selectedYPos, setSelectedYPos] = useState(0)
-        const [selectedXSize, setSelectedXSize] = useState(0)
-        const [selectedYSize, setSelectedYSize] = useState(0)
-        
-        if (null) {
+        if (toolWithGraph && toolWithGraph?.length > 0) {
+            customEntities = toolWithGraph.customEntityList;
+            customRelations = toolWithGraph.customRelationList;
             customRelations.forEach(relation => {
                 const ctx = canvasRef.current.getContext("2d");
                 ctx.reset();
