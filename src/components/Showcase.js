@@ -35,7 +35,7 @@ export default function Showcase() {
         <table responsive variant="white" style={TABLE_STYLE}>
             <tbody>
 
-            <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId}}>
+            <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : ""}}>
                 <button>신규</button>
             </Link>
 
