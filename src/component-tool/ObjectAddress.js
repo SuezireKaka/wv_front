@@ -1,8 +1,7 @@
 import {React, useState} from "react";
-import { Fetch } from "toolbox/Fetch";
 import ToolButton from "./ToolButton";
 
-export default function ObjectAdress({toolset = [], onSelect = f => f}) {
+export default function ObjectAddress({toolset = [], onSelect = f => f}) {
 
     console.log("모든 툴들은 이렇게 나왔습니다", toolset)
 
