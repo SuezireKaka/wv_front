@@ -25,6 +25,7 @@ export default function TestNav() {
             <Nav.Link><Link style={navMenu} to="/memberList/0000">회원정보</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test1">테스트용</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test2">테스트용2</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} to="/test3">테스트용3</Link></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -64,6 +64,8 @@ export default function ReplyList({parent}) {
             setJustCreatedReplyList([reply, ...justCreatedReplyList]);
             replayOnReply.set(parentId, "");
             setRenderCnt(renderCnt + 1);
+
+            window.location.replace(`/post/${state.id}`);  //페이지 새로고침
 		} catch (err) {
 			console.log('Registration Failed');
 		}

@@ -12,6 +12,7 @@ import MemberList from 'login/MemberList';
 import PostMng from 'components/PostMng';
 import Test1 from 'components/Test1';
 import Test2 from 'example/Test2';
+import Test3 from 'example/Test3';
 
 export default function BBSRouter() {
     return (
@@ -24,7 +25,7 @@ export default function BBSRouter() {
 
           <Route path={"/series/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/mng"} element={ <PostMng/> } />
-          
+
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
@@ -33,6 +34,7 @@ export default function BBSRouter() {
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
+          <Route path={"/test2"} element={<Test3 />} />
         </Routes>
        
       )
