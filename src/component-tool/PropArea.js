@@ -9,13 +9,6 @@ export default function PropArea({selected, selectedName}) {
     console.log("잘먹겠습니다", selected)
 
     const [name, setName] = useState(selectedName);
-    const [propArray, setPropArray] = useState([]);
-
-    function addProperty() {
-        setPropArray([...propArray, {propType : "", propVal : ""}])
-    }
-
-    console.log("더하기도 못 한대요", propArray);
 
     return <>
         {selected && selected.id

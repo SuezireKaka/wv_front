@@ -4,6 +4,10 @@ import CustomProperty from "./CustomProperty"
 export default function PropList({data}) {
     const [propArray, setPropArray] = useState(data);
 
+    function addProperty() {
+        setPropArray([...propArray, {propType : "", propVal : ""}])
+    }
+
     console.log("지금 데이타 실화냐?", propArray)
 
     return <>
