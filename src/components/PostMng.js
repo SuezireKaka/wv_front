@@ -4,8 +4,8 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
-//import AttachedFileList from 'atom/AttachedFileList';
-//import ThumbnailList from 'atom/ThumbnailList';
+import AttachedFileList from 'atom/AttachedFileList';
+import ThumbnailList from 'atom/ThumbnailList';
 
 export default function PostMng() {
 	const location = useLocation();
@@ -114,8 +114,8 @@ export default function PostMng() {
 				required
 			/>
 		</Form.Group>
-		{/** <ThumbnailList imgDtoList={listAttach}/>
-		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>*/}
+		<ThumbnailList imgDtoList={listAttach}/>
+		<AttachedFileList listAttach={listAttach} setListAttach={setListAttach}/>
 		<Button variant="primary" onClick={handleSubmit} disabled={!hasAllContents} >
 			반영
 		</Button>

@@ -11,7 +11,8 @@ import UserProfile from 'login/UserProfile';
 import MemberList from 'login/MemberList';
 import PostMng from 'components/PostMng';
 import Test1 from 'components/Test1';
-import Test2 from 'components/Test2';
+import Test2 from 'example/Test2';
+
 export default function BBSRouter() {
     return (
         <Routes> 
