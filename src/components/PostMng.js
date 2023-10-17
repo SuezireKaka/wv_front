@@ -24,7 +24,8 @@ export default function PostMng() {
 	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
 	console.log(isComplete[0]);
-	let hTier = (post&&(post?.id).length ===4) ? 0 : 1;
+	let hTier;
+	
 
 	console.log("부모 아이디는", parentId)
 
@@ -34,6 +35,22 @@ export default function PostMng() {
 	}, [title, content])
 
 	const handleSubmit = async (e) => {
+		switch(post&&(post?.id).length) {
+			case 4:
+				hTier = 0;
+			  break;
+			case 8:
+				hTier = 1;
+			  break;
+			case 12:
+				hTier = 2;
+			  break;
+			case 16:
+				hTier = 4;
+				break;
+			default:
+				hTier = 0;
+		  }
 		
 		e.preventDefault();
 		if (!hasAllContents)
@@ -42,7 +59,7 @@ export default function PostMng() {
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
 			firstVal : {id:parentId, hTier:hTier-1},
-			secondVal : {id:post?.id, writer:writer, boardVO:{id:post?.boardVO.id},
+			secondVal : {id:post?.id, writer:writer, boardVO:{id:state?.boardId},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
 		console.log(JSON.stringify(bodyData));
@@ -60,7 +77,7 @@ export default function PostMng() {
 			if (!post?.id) {
 				//글쓰기
 				console.log('//글쓰기 ttt');
-				navigate(`/`, {state:{boardId:post?.boardVO.id, page:1, search:""}});
+				navigate(`/`, {state:{boardId:post?.boardVO?.id, page:1, search:""}});
 			} else {
 				//수정
 				console.log('수정', post);

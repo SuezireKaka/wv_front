@@ -41,7 +41,9 @@ export default function AttachedFileList({ writer, listAttach, setListAttach=f=>
     // 동일 key에 여러개 할당 가능?
     console.log("얼마나 실행되나=====111====")
     Array.from(업로드파일기억장치).forEach((file) => {
+      console.log(file);
       formData.append("attachFiles", file);
+      console.log(formData);
     });
     axios.post(`/attach/upload_multi`, formData,
       {

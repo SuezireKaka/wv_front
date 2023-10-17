@@ -90,9 +90,13 @@ function renderSuccess(postListWithPaging) {
               {postList?.map(post => (
                   <tr key={post.id}>
                       <td width="60%">
+                      {console.log("------------------------")}
+                      {console.log("------------------------")}
                         {console.log(post)}
+                        {console.log(state)}
+                        {console.log(state?.boardId)}
                           <Link key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
-                                state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:state?.seriesId}}>{/*시리즈아이디필요*/}
+                                state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
                               &nbsp;&nbsp;{post.title}
                           </Link>
                       </td>

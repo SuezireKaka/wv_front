@@ -17,7 +17,7 @@ export default function Series() {
   const location = useLocation();
   let state = location.state;
   const { auth } = useContext(AppContext);
-
+  console.log("시리즈 state");
   console.log(state);
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
@@ -55,8 +55,9 @@ export default function Series() {
         </tr>
         <tr>
           <td>
+            
           {(post.writer ? post.writer.nick === auth.nick : false) ?
-          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : ""}}>
+          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId}}>
              <button>수정</button>
            </Link>
            : ""}
@@ -74,10 +75,10 @@ export default function Series() {
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
       :  <>
-      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId}}>
+      
+      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId}}>
       <button>신규</button>
       </Link>
-      
       <PostList />
       </>
   }

@@ -9,6 +9,7 @@ export default function Showcase() {
 
     const location = useLocation();
     let state = location.state;
+    console.log("==========")
     console.log(state);
     console.log(state);
     const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/${state.boardId}/1`
@@ -35,12 +36,12 @@ export default function Showcase() {
         <table responsive variant="white" style={TABLE_STYLE}>
             <tbody>
 
-            <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : ""}}>
+            <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId}}>
                 <button>신규</button>
             </Link>
 
                 <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={data => {
-                    return <><SeriesTable data={data.firstVal} colnum={5}/>{console.log(data.firstVal)}</>
+                    return <><SeriesTable data={data.firstVal} colnum={5} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId}}/>{console.log(data.firstVal)}</>
                 }}/>
             </tbody>
         </table>

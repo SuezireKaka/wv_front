@@ -42,7 +42,7 @@ export default function PostDetails({postList,txtSearch=f=>f}) {
           title : <span>{post.title}</span><br/>{/*{`/post/${post.id}`} */}
           {console.log(postList)}
           {/* <Link to={`/post/${postList[1]}`} >11</Link>*/}
-          <Link key={state.parentId} to={`/series/${state.parentId}`} state={{seriesId:state.parentId, page:state.page}}>목록</Link>&nbsp;
+          <Link key={state.parentId} to={`/series/${state.parentId}`} state={{seriesId:state.parentId, page:state.page, boardId:state.boardId}}>목록</Link>&nbsp;
           {(post.writer ? post.writer.nick === auth.nick : false) ?
               <Link
                   to={`/series/${post.id}/mng`}
@@ -55,7 +55,7 @@ export default function PostDetails({postList,txtSearch=f=>f}) {
       <Accordion.Item eventKey="0">
         <Accordion.Header>댓글확인</Accordion.Header>
         <Accordion.Body>
-          <ReplyList parent={post} state= {{seriesId:state.seriesId, post, state, parentId : state.parentId}}/>
+          <ReplyList parent={post} state= {{seriesId:state.seriesId, post, state, parentId : state.parentId, boardId:state.boardId}}/>
           </Accordion.Body>
       </Accordion.Item>
     </Accordion>

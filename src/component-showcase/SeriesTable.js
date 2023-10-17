@@ -1,7 +1,10 @@
 import SeriesSkin from "./SeriesSkin";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Showcase({data = [], colnum = 5}) {
+    const location = useLocation();
+    let state = location.state;
     console.log(data)
 
     const CELL_STYLE = {
@@ -24,7 +27,7 @@ export default function Showcase({data = [], colnum = 5}) {
             return <tr style={CELL_STYLE}>
                 {slice.map(series => {
                     return <td style={CELL_STYLE}>
-                        <Link to={`/series/${series.id}`} state={{ seriesId: series.id, page:1}}>
+                        <Link to={`/series/${series.id}`} state={{ seriesId: series.id, post: state?.post, page:1, boardId:state?.boardId}}>
                             <SeriesSkin series={series}/>
                         </Link>
                     </td>
