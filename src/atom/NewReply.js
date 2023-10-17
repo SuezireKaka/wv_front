@@ -23,7 +23,7 @@ function NewReply({ auth, reply, replayOnReply, onInputReplyContent, mngReply=f=
                     <input placeholder='댓글 달기'
                         value={replayOnReply.get(reply.id)}
                         style={{ height: "100%", width: "100%" }}
-                        onInput={(e) => onInputReplyContent(e, reply.id)} />
+                        onInput={(e) => onInputReplyContent(e, reply.id, false)} />
                 </Col>
                 <Col sm><Button variant="primary" onClick={(e) => { mngReply(e, reply.id) }}>적용</Button></Col>
             </Row>

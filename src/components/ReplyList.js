@@ -31,7 +31,7 @@ export default function ReplyList({parent}) {
         setRenderCnt(renderCnt + 1);
     }
 
-	const mngReply = async (e, parentId) => {
+	const mngReply = async (e, parentId, isEditing) => {
         // 목적: 재 조회 방지. 성능
         // parent 객체의 댓글 목록 ul을 찾아서 동적으로 강제적으로 넣기
         e.preventDefault();
@@ -44,7 +44,7 @@ export default function ReplyList({parent}) {
         const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
             firstVal:{id:parentId, hTier:hTier-1},
-	        secondVal:{id:parent?.id, writer:writer, boardVO:{id:parent?.boardVO.id},
+	        secondVal:{id:isEditing?null:null, writer:writer, boardVO:{id:parent?.boardVO.id},
             title:"", content:replayOnReply.get(parentId), hTier}
         };
 		console.log(JSON.stringify(bodyData));
