@@ -5,7 +5,7 @@ import AttachFile from './AttachFile';
 
 
 
-export default function AttachedFileList({ writer, listAttach, setListAttach }) {
+export default function AttachedFileList({ writer, listAttach, setListAttach=f=>f }) {
 
 
   const thumbnailRequestTarget = ["video", "image"];
@@ -53,8 +53,8 @@ export default function AttachedFileList({ writer, listAttach, setListAttach }) 
         const listDto = res.data;
         console.log("얼마나 실행되나=====222====")
         setImgDtoList(listDto);
-        //setListAttach([...listAttach, ...listDto]); //여기서 에러 발생!!!!
-        setListAttach([...listAttach, ...imgDtoList]); //여기서 에러 발생!!!!
+        setListAttach([...listAttach, ...listDto]); //여기서 에러 발생!!!!
+        //setListAttach([...listAttach, ...imgDtoList]); 
       }).catch((error) => {
         console.log(error);
       }).finally(()=>{
