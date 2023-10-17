@@ -74,7 +74,7 @@ export default function Series() {
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
       :  <>
-      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state}}>
+      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId}}>
       <button>신규</button>
       </Link>
       

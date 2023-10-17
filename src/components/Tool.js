@@ -19,9 +19,14 @@ export default function Tool() {
 
     const DEFAULT_TOOLSET_URL = `http://localhost:8080/tool/anonymous/listAllFromSeries/${state.seriesId}/1`
 
-    function onSelect(tool) {
+    function onSelectTool(tool) {
         setNowAddress(DEFAULT_ADDRESS + selectedTool?.name)
         setSelectedTool(tool)
+    }
+    
+    function onSelectObj(obj) {
+        console.log("지금 이걸 선택했다!", obj)
+        setSelectedObject(obj)
     }
 
     const TABLE_STYLE = {
@@ -62,7 +67,7 @@ export default function Tool() {
                         <div style={{margin : "10px"}}>
                             <Fetch uri={DEFAULT_TOOLSET_URL} renderSuccess={(toolset) => {
                                 console.log(toolset)
-                                return <ObjectAdress toolset={toolset.firstVal} onSelect={onSelect}/>
+                                return <ObjectAdress toolset={toolset.firstVal} onSelect={onSelectTool}/>
                             }
                                 
                             }/>
@@ -71,7 +76,7 @@ export default function Tool() {
                     <td style={CENTER_STYLE}>
                         <div style={{margin : "10px"}}>
                             {selectedTool ?
-                            <ToolFrame tool={selectedTool}/>
+                            <ToolFrame tool={selectedTool} onSelect={onSelectObj}/>
                             : "(선택된 툴이 없습니다)"
                             }
                         </div>
