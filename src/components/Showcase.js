@@ -1,6 +1,7 @@
 import { Fetch } from "toolbox/Fetch";
 import { useLocation } from "react-router";
 import SeriesTable from "../component-showcase/SeriesTable";
+import { Link } from "react-router-dom";
 
 export default function Showcase() {
 
@@ -9,6 +10,7 @@ export default function Showcase() {
     console.log(state);
 
     const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/${state.boardId}/1`
+    const newSeriesUrl = ``
 
     const TABLE_STYLE = {
         width: "100%",
@@ -28,6 +30,9 @@ export default function Showcase() {
         <br/>
         <table responsive variant="white" style={TABLE_STYLE}>
             <tbody>
+            <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : ""}}>
+                <button>신규</button>
+            </Link>
                 <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={data => {
                     return <><SeriesTable data={data.firstVal} colnum={5}/>{console.log(data.firstVal)}</>
                 }}/>
