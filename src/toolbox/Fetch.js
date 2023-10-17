@@ -1,6 +1,6 @@
 import {useFatch, usePost} from "hooks/useFatch.js"
 
-function Fetch({uri, renderSuccess = f=>f,
+function Fetch({uri, renderSuccess = f => f,
     loadingFallBack = <p>loading...</p>,
     renderError = ({error})=>(<pre>{JSON.stringify(error, null, 2)}</pre>),
     doLog = false}) {
@@ -15,6 +15,7 @@ function Fetch({uri, renderSuccess = f=>f,
     if (loading) return loadingFallBack;
     if (error) return renderError({error});
     if (data) {
+        console.log("로딩 끝났다~!");
         return renderSuccess(data);
     }
 }

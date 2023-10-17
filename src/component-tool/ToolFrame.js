@@ -51,7 +51,7 @@ export default function ToolFrame({tool, onSelect = f => f}) {
                 <button style={{position: "absolute", // 위치의 절대화
                     left:relation.xPos - relation.xSize / 2, top:relation.yPos - relation.ySize / 2,
                     width:relation.xSize, height:relation.ySize}}
-                    onClick={e => onSelect(relation)}
+                    onClick={() => onSelect(relation)}
                 >
                     {relation.name}
                 </button>

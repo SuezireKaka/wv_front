@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 import ObjectAdress from "component-tool/ObjectAdress";
 import ToolFrame from "component-tool/ToolFrame";
 import { Fetch } from "toolbox/Fetch";
-import CustomPropertyList from "component-tool/CustomPropertyList";
+import PropArea from "component-tool/PropArea";
 
 export default function Tool() {
     const location = useLocation();
@@ -19,7 +19,7 @@ export default function Tool() {
     const DEFAULT_TOOLSET_URL = `http://localhost:8080/tool/anonymous/listAllFromSeries/${state.seriesId}/1`
 
     function onSelectTool(tool) {
-        setNowAddress(DEFAULT_ADDRESS + selectedTool?.name)
+        setNowAddress(DEFAULT_ADDRESS + tool?.name)
         setSelectedTool(tool)
     }
     
@@ -35,7 +35,8 @@ export default function Tool() {
     }
     const SIDE_STYLE = {
         width: "25%",
-        border: "1px solid"
+        border: "1px solid",
+        verticalAlign: "top"
     }
     const CENTER_STYLE = {
         width: "50%",
@@ -78,8 +79,8 @@ export default function Tool() {
                             }
                         </div>
                     </td>
-                    <td style={SIDE_STYLE}>
-                        <CustomPropertyList selected={selectedObject}/>
+                    <td style={{...SIDE_STYLE}}>
+                        <PropArea selected={selectedObject} name={selectedObject?.name}/>
                     </td>
                 </tr>
             </tbody>
