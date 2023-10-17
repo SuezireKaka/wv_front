@@ -16,8 +16,6 @@ export default function Tool() {
     const [toolset, setToolset] = useState([]);
     const [selectedObject, setSelectedObject] = useState();
 
-    console.log("누구세요", state)
-
     const DEFAULT_TOOLSET_URL = `http://localhost:8080/tool/anonymous/listAllFromSeries/${state.seriesId}/1`
 
     function onSelectTool(tool) {
@@ -26,6 +24,7 @@ export default function Tool() {
     }
     
     function onSelectObj(obj) {
+        console.log("이제 이것을 선택합니다 :", obj)
         setSelectedObject(obj)
     }
 
