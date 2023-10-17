@@ -10,3 +10,4 @@ npm install react-daum-postcode
 
 #일단 연습
 npm install react-drag-list
+npm install react-draggable
