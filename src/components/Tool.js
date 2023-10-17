@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import ObjectAdress from "component-tool/ObjectAdress";
 import ToolFrame from "component-tool/ToolFrame";
 import { Fetch } from "toolbox/Fetch";
+import CustomPropertyList from "component-tool/CustomPropertyList";
 
 export default function Tool() {
     const location = useLocation();
@@ -25,7 +26,6 @@ export default function Tool() {
     }
     
     function onSelectObj(obj) {
-        console.log("지금 이걸 선택했다!", obj)
         setSelectedObject(obj)
     }
 
@@ -68,9 +68,7 @@ export default function Tool() {
                             <Fetch uri={DEFAULT_TOOLSET_URL} renderSuccess={(toolset) => {
                                 console.log(toolset)
                                 return <ObjectAdress toolset={toolset.firstVal} onSelect={onSelectTool}/>
-                            }
-                                
-                            }/>
+                            }}/>
                         </div>
                     </td>
                     <td style={CENTER_STYLE}>
@@ -82,7 +80,7 @@ export default function Tool() {
                         </div>
                     </td>
                     <td style={SIDE_STYLE}>
-                        {"(대충 근사한 프로퍼티 리스트)"}
+                        <CustomPropertyList selected={selectedObject}/>
                     </td>
                 </tr>
             </tbody>
