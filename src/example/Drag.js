@@ -46,7 +46,7 @@ export default function Drag() {
             onDragOver={e => e.preventDefault()}
             onDragEnd={drop}
             key={index}
-            draggable><input type='text' />
+            draggable>
             {item}
           </div>
         ))}
