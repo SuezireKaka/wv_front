@@ -15,7 +15,7 @@ export default function PostList() {
   const isMember = auth?.roles?.includes("member");
   const location = useLocation();
   const state = location.state;
-
+console.log(state.post)
 console.log(state?.seriesId)
 console.log(state)
 console.log(state?.page)

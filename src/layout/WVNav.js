@@ -2,12 +2,16 @@ import LoginButton from "login/LoginButton";
 import { Nav, Navbar } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
-import { Fetch } from "toolbox/Fetch";
+import { AxiosPost, Fetch } from "toolbox/Fetch";
 
 
 
 export default function TestNav() {
-  const boardListUri = `http://localhost:8080/bb/anonymous/listAll`;
+  const boardListUri = `/bb/anonymous/listAll`;
+  const originalFileUri =`/attach/anonymous/getOriginalFile`;
+  const thumbFileFileUri =`/attach/anonymous/displayThumbnail`;
+
+
   const navMenu = {
     color:"grey",
     textDecoration:"none"
@@ -33,6 +37,8 @@ export default function TestNav() {
   </>;
   
   function renderSuccess(boardList) {
+    console.log("=======boardList=========");
+    console.log(boardList);
     return <>
           {boardList.map(board => (
                 <Nav.Link>
@@ -41,7 +47,14 @@ export default function TestNav() {
                 </Nav.Link>
             ))}
     </>
-}
+  }
+  function renderSuccess1(originalFile) {
+    console.log("=======originalFile=========");
+    console.log(originalFile);
+    return (<>
+
+    </>)
+  }
 }
 
 

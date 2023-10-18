@@ -36,7 +36,10 @@ export default function Series() {
     <Table responsive variant="white">
       <thead>
         <tr>
-          <th colSpan='2'>제목:{post.title}<Favorites state={post}/>
+          <th colSpan='2'>제목:{post.title}
+          {(post.writer ? post.writer.nick === auth.nick : false) ?
+          <Favorites user={auth}/>
+          : ""}
           </th>
           {/*<th></th>*/}
         </tr>
@@ -76,7 +79,7 @@ export default function Series() {
       ? series?.length===0?"":""
       :  <>
       
-      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId}}>
+      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
       <button>신규</button>
       </Link>
       <PostList />
