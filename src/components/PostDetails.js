@@ -7,6 +7,9 @@ import ReplyList from "./ReplyList";
 import AppContext from "context/AppContextProvider";
 import { Accordion } from "react-bootstrap";
 import NextPost from "./NextPost";
+import ThumbnailList from "atom/ThumbnailList";
+
+
 export default function PostDetails({postList,txtSearch=f=>f}) {
   const thumbnailRequestTarget = ["video", "image"];
 
@@ -34,7 +37,7 @@ export default function PostDetails({postList,txtSearch=f=>f}) {
           {console.log(post)}
           content : <p>{post.content}</p>
           🧑🏻{post.writer ? post.writer.nick : ""}
-          {/*<ThumbnailList imgDtoList={post.listAttachFile}/>*/}
+          <ThumbnailList imgDtoList={post.listAttachFile}/>
           ✔<span>{post.readCount}</span>
           👍<span>{post.likeCount} with button</span>
           😡<span>{post.dislikeCount}</span>

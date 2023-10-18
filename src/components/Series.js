@@ -79,7 +79,7 @@ export default function Series() {
       ? series?.length===0?"":""
       :  <>
       
-      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId}}>
+      <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
       <button>신규</button>
       </Link>
       <PostList />

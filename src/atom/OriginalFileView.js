@@ -23,7 +23,7 @@ export default function OriginalFileView({imgUrl, afdto}) {
   }
 
   const getOriginalFile = () => {
-    axios.post(`/anonymous/getOriginalFile`, afdto,
+    axios.post(`/attach/anonymous/getOriginalFile`, afdto,
         {
             headers: { "Content-Type": "application/json" },
             responseType: "blob"

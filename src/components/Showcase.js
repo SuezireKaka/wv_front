@@ -14,6 +14,7 @@ export default function Showcase() {
     const [page, setPage] = useState(1);
     const location = useLocation();
     let state = location.state;
+    let [listAttachFile, setListAttachFile] = useState([]);
     console.log("==========")
     console.log(state);
     console.log(state);
@@ -65,7 +66,8 @@ export default function Showcase() {
             <Container>
                     <Row>
                 <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={data => {
-                    return <><SeriesCard data={data.firstVal} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId}}/>{console.log(data.firstVal)}</>
+                    console.log(data)
+                    return <><SeriesCard data={data.firstVal} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[]}}}/>{console.log(data.firstVal)}</>
                 }}/>
                     </Row>
     </Container>
