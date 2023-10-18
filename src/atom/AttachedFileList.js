@@ -35,6 +35,8 @@ export default function AttachedFileList({ writer, listAttach, setListAttach=f=>
   //지정된 파일들을 axios로 Server로 올리기하면 썸네일로 첨부파일들을 목록으로 보여준다.
   const handleAttach = (e) => {
     e.preventDefault();
+    console.log(writer);
+    console.log(writer?.accessToken);
     if (업로드파일기억장치.length === 0)
       return;
     const formData = new FormData();
@@ -55,13 +57,18 @@ export default function AttachedFileList({ writer, listAttach, setListAttach=f=>
         const listDto = res.data;
         console.log("얼마나 실행되나=====222====")
         setImgDtoList(listDto);
+        console.log(listDto);
+        console.log(listAttach);
         setListAttach([...listAttach, ...listDto]); //여기서 에러 발생!!!!
+        console.log(listAttach);
         //setListAttach([...listAttach, ...imgDtoList]); 
       }).catch((error) => {
         console.log(error);
       }).finally(()=>{
         console.log("얼마나 실행되나=====333====")
+        console.log(listAttach);
         set업로드파일기억장치([]);
+        console.log(업로드파일기억장치);
       });
     //      setTimeout(()=>{setImgSrc([...imgSrc, ...collection]);}, 100);
     console.log("handleAttach Done");

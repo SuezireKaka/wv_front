@@ -9,11 +9,15 @@ export default function RadioMember({member}) {
     console.log(member);
     const [value, setValue] =useState(member?.roleList[0]?.role);
     const [roles, setRoles] = React.useState([]);
-
+    const [listCheckMember, setListCheckMember] = useState(new Map());
     const radioMember = async (value, memberId) => {
-       
+      listCheckMember.set(memberId, value);
+
+      setListCheckMember(listCheckMember);
+      console.log(listCheckMember)
         console.log(value);
         console.log(memberId);
+
 
 		const bodyData = {
             role:value,
