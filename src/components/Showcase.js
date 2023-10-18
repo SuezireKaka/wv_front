@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Showcase() {
-
-
+    
     const location = useLocation();
     let state = location.state;
     console.log("==========")
@@ -20,8 +19,6 @@ export default function Showcase() {
         border: "1px solid",
         borderCollapse: "collapse"
     }
-    
-
 
     return <div>
         <br/>
