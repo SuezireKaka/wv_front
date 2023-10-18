@@ -3,13 +3,15 @@ import React from 'react'
 import RadioGroup from 'toolbox/RadioGroup';
 import Radio from 'toolbox/Radio';
 import { useState } from 'react';
-
+import AppContext from 'context/AppContextProvider';
+import { useContext } from 'react';
 export default function RadioMember({member}) {
     console.log("member===========");
     console.log(member);
     const [value, setValue] =useState(member?.roleList[0]?.role);
     const [roles, setRoles] = React.useState([]);
     const [listCheckMember, setListCheckMember] = useState(new Map());
+    const { auth } = useContext(AppContext);
     const radioMember = async (value, memberId) => {
       listCheckMember.set(memberId, value);
 
@@ -30,8 +32,9 @@ export default function RadioMember({member}) {
 				"/party/reRole",
 				bodyData,
 				{headers: {
-					'Content-Type': 'application/json'
-					}}
+					'Content-Type': 'application/json',
+          "x-auth-token": `Bearer ${auth?.accessToken}`}
+					}
 			);
             console.log(response);
             setValue(value);
@@ -64,15 +67,3 @@ export default function RadioMember({member}) {
     </div>
   )
 }
-/*
-                <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        alert(`${e.target.contact.value}를 통해 연락드리겠습니다!`);
-        //<>[{roles.join(",")}]<button disabled={roles==[]}>writer로 변경</button></>
-      }}
-    >
-
-    </form>
-
-*/
