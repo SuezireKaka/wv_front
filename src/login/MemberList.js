@@ -7,20 +7,24 @@ import CheckboxGroup from '../toolbox/CheckboxGroup';
 import Checkbox from '../toolbox/Checkbox';
 import RadioGroup from 'toolbox/RadioGroup';
 import Radio from 'toolbox/Radio';
+import axios from 'api/axios';
+import RadioMember from './RadioMember';
 
 export default function MemberList() {
     const { ownerId } = useParams();
-    const [value, setValue] =useState([]);
+    
 
     console.log(ownerId);
     const listAllMemberUri = `/party/anonymous/listAllAccount/${ownerId}/1`;
     console.log(listAllMemberUri);
-    const [roles, setRoles] = React.useState([]);
+
+    
+
     return (
         <div>
      
             
-                    <>[{roles.join(",")}]<button disabled={roles==[]}>writer로 변경</button></>
+                    
             <table>
                 <thead>
                     <tr>
@@ -35,7 +39,7 @@ export default function MemberList() {
                     </tr>
                 </thead>
                 <tbody>
-                    <Fetch uri={listAllMemberUri} renderSuccess={RenderSuccess} />
+                <Fetch uri={listAllMemberUri} renderSuccess={RenderSuccess} />
                  </tbody>
             </table>
            
@@ -46,7 +50,7 @@ export default function MemberList() {
 
 
 function RenderSuccess(memberList) {
-    
+   
     console.log(memberList);
     console.log(memberList.firstVal);
     return memberList.firstVal?.map(member => (
@@ -60,14 +64,8 @@ function RenderSuccess(memberList) {
                 <td>{member.roleList[0]?.role}</td>
                 <td></td>
                 <td>
-                <RadioGroup label="연락 방법" value="" onChange="{setValue}">
-                {member.roleList[0]?.role==="reader"?
-                    <><Radio value="reader"> name={`${member.id}`} value="reader"  checked="checked"</Radio>reader
-                    <input type="radio" name={`${member.id}`} value="writer"/>writer</>:
-                    <><input type="radio" name={`${member.id}`} value="reader"/>reader
-                    <input type="radio" name={`${member.id}`} value="writer" checked="checked"></input>writer</>}
-                </RadioGroup>
-                    
+                    <RadioMember member={member} />
+
                 </td>
             </tr>
             {member.response?.contactPointList?.map(cp => (

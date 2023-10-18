@@ -9,6 +9,7 @@ import ThumbnailList from 'atom/ThumbnailList';
 
 export default function PostMng() {
 	const location = useLocation();
+
 	const post = location.state?.post;
     const state = location.state?.state;
 	const parentId = location.state?.parentId;
@@ -35,22 +36,6 @@ export default function PostMng() {
 	}, [title, content])
 
 	const handleSubmit = async (e) => {
-		switch(post&&(post?.id).length) {
-			case 4:
-				hTier = 0;
-			  break;
-			case 8:
-				hTier = 1;
-			  break;
-			case 12:
-				hTier = 2;
-			  break;
-			case 16:
-				hTier = 4;
-				break;
-			default:
-				hTier = 0;
-		  }
 		
 		e.preventDefault();
 		if (!hasAllContents)
@@ -133,7 +118,7 @@ export default function PostMng() {
 			/>
 		</Form.Group>
 		<ThumbnailList imgDtoList={listAttach}/>
-		<AttachedFileList listAttach={listAttach} setListAttach={setListAttach}/>
+		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
 		<Button variant="primary" onClick={handleSubmit} disabled={!hasAllContents} >
 			반영
 		</Button>
