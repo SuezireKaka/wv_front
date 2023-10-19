@@ -13,7 +13,7 @@ import PostMng from 'components/PostMng';
 import Test1 from 'example/Test1';
 import Test2 from 'example/Test2';
 import Test3 from 'example/Test3';
-import Redirection from 'example/Redirection';
+import Test4 from 'example/Test4';
 
 export default function BBSRouter() {
     return (
@@ -36,8 +36,8 @@ export default function BBSRouter() {
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
           <Route path={"/Test3"} element={<Test3 />} />
-          <Route exact path='/kakao/callback' element={<Redirection />} />
-    
+          <Route path={"/Test4"} element={<Test4 />} />
+
         </Routes>
        
       )
