@@ -1,94 +1,85 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'api/axios';
+import { displayDate } from "toolbox/DateDisplayer";
 
-const Showcase0 = () => {
+export default function PostListObserver () {
+    const location = useLocation();
+    let state = location.state;
+    console.log("PostListObserver param", state);
 
-    const [totalData, setTotalData] = useState([]); // 렌더링되는 전체 데이터
-    const [isLoading, setIsLoading] = useState(false); // 새로운 데이터를 추가로 불러올 때 로딩처리를 위해
-    const [nextInfo, setNextInfo] = useState({
-        hasNext: false,
-        nextPage: 0,
-    }); // 다음 데이터 존재 여부
+    const [targetBoard, setTargetBoard] = useState(state.boardId);
 
-    useEffect(() => {
-        callData(1); // 초기값 불러오기
-    }, []);
-
-    const observerRef = useRef(null);
-
-    const observer = (node) => {
-
-        if (isLoading) return;
-
-        observerRef.current && observerRef.current.disconnect();
-
-        observerRef.current = new IntersectionObserver(async ([entry]) => {
-            if (entry.isIntersecting && nextInfo.hasNext) {
-                await callData(nextInfo.nextPage);
-            }
-        });
-
-        node && observerRef.current.observe(node);
-
+    const [postList, setPostList] = useState([]);
+    const [page, setPage] = useState(1);
+  
+    const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
+  
+    const getPostListThenSet = async () => {
+        console.log('fetching 함수 호출됨');
+        try {
+            const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/${page}`);
+            console.log("읽어온 게시글 목록", data.firstVal);
+            setPostList(postList.concat(data.firstVal));
+        } catch {
+            console.error('fetching error');
+        }
     };
-
-    const callData = async (pageNum) => { // 데이터 추가로 불러오는 로직
-
-        setIsLoading(true); //로딩 true
-
-        const selectData = await fetch(`/work/anonymous/listAllSeries/0002/${pageNum}`, {
-            headers: {
-                "Content-type": "application/json"
-            }
-        }).then((res) => {
-            if (res.status === 200) {
-                return res.json();
-            }
-        }); // 데이터 불러오기
-
-        setTotalData((prev) => [...prev, ...selectData.data]); // 불러온 데이터 추가
-
-        setNextInfo((prev) => ({
-            ...prev,
-            hasNext: selectData.hasNext,
-            nextPage: selectData.page + 1,
-        })); // 다음 데이터 존재 여부 최신화
-
-        setIsLoading(false);  //로딩 false
-
-    }
-
+  
+    //observer 콜백함수
+    const onIntersect = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          //뷰포트에 마지막 이미지가 들어오고, page값에 1을 더하여 새 fetch 요청을 보내게됨 (useEffect의 dependency배열에 page가 있음)
+          setPage((prev) => prev + 1);
+          // 현재 타겟을 unobserve한다.
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+  
+    useEffect(() => {
+      console.log('page ? ', page);
+      getPostListThenSet();
+    }, [page]);
+  
+    useEffect(() => {
+      //observer 인스턴스를 생성한 후 구독
+      let observer;
+      if (lastIntersectingImage) {
+        observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
+         //observer 생성 시 observe할 target 요소는 불러온 이미지의 마지막아이템(randomImageList 배열의 마지막 아이템)으로 지정
+        observer.observe(lastIntersectingImage);
+      }
+      return () => observer && observer.disconnect();
+    }, [lastIntersectingImage]);
+  
     return (
-
-        <div style={{
-            position: "absolute",
-            width: '50%',
-            height: '500px',
-            overflow: 'auto',
-        }}>
-
-            {
-                totalData.map((dr, idx) => {
-                    return <div key={idx} style={{
-                        width: '200px',
-                        height: '160px',
-                        margin: "20px",
-                        border: "1px solid black"
-                    }}> {dr.name} </div>
-                })
-            }
-
-            {
-               nextInfo.hasNext && <div ref={observer}/>
-            }
-
-            {
-                isLoading && <div> Loading </div>
-            }
-
-        </div>
-
-    )
-
-}
-
-export default Showcase0;
+      <>
+        {postList?.map((post, index) => {
+          if (index === postList.length - 1) {
+            return (
+                <p key={post.id} ref={setLastIntersectingImage}>
+                    <h2>{post.title}</h2>
+                    <h4>{post.writer ? post.writer.name : ""}</h4>
+                    <span>{post.readCnt}</span>
+                    <span>{post.likeCnt}</span>
+                    <h6>최종작성일 : <span>{displayDate(post.regDt, post.uptDt)} </span></h6>
+                </p>
+            );
+          } else {
+            return (
+                <p key={post.id}>
+                    <h2>{post.title}</h2>
+                    <h4>{post.writer ? post.writer.name : ""}</h4>
+                    <span>{post.readCnt}</span>
+                    <span>{post.likeCnt}</span>
+                    <h6>최종작성일 : <span>{displayDate(post.regDt, post.uptDt)} </span></h6>
+                </p>
+            );
+          }
+        })}
+      </>
+    );
+  }

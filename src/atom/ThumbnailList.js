@@ -3,7 +3,7 @@ import axios from 'api/axios';
 import { AxiosPost } from 'toolbox/Fetch';
 import OriginalFileView from './OriginalFileView';
 
-export default function ThumbnailList({  imgDtoList }) {
+export default function ThumbnailList({  imgDtoList, x,y }) {
     console.log("ThumbnailList render ", imgDtoList);
 
     const thumbnailRequestTarget = ["video", "image"];

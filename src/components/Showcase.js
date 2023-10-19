@@ -3,13 +3,16 @@ import { useLocation } from "react-router";
 import SeriesTable from "../component-showcase/SeriesTable";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import SeriesCard from "component-showcase/SeriesCard";
+import SeriesCards from "component-showcase/SeriesCards";
 import { Container } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useRef } from "react";
 import ThumbnailList from "atom/ThumbnailList";
 import OriginalViewList from "atom/OriginalViewList";
+import InfiniteScroll from "react-infinite-scroller";
+import axios from "api/axios";
+import { useEffect } from "react";
 
 export default function ShowcaseList() {
 
@@ -20,18 +23,21 @@ export default function ShowcaseList() {
     console.log("==========")
     console.log(state);
     console.log(state);
-    const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/${state?.boardId}/1`
-    const [postListUri, setPostListUri] = useState(`/post/anonymous/listAll/${state?.boardId}/${page}`);
+    const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/${state?.boardId}/${page}`
+    const [postListUri, setPostListUri] = `/post/anonymous/listAll/${state?.boardId}/${page}`
     const txtSearch = useRef("");
     const [byKeyWord, setByKeyWord] = useState(false);
 
+    const [postList, setPostList] = useState([]);
+
+ 
     const TABLE_STYLE = {
         width: "100%",
         border: "1px solid",
         borderCollapse: "collapse"
     }
     
-
+    
     
     const onSearch = (e) => {
         const search = txtSearch.current.value;
@@ -48,15 +54,13 @@ export default function ShowcaseList() {
         }
 
     };
-    
+
 
 
     const renderSuccess = (data) =>{
         console.log(data)
         return <>
-
-        <SeriesCard data={data.firstVal} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }}}}/>{console.log(data.firstVal)}
-        
+        <SeriesCards data={data.firstVal} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }}}}/>{console.log(data.firstVal)}
         </>
     }
     
@@ -80,12 +84,10 @@ export default function ShowcaseList() {
             <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
                 <button>신규</button><br/><br/>
             </Link>
-            <Container>
-                    <Row>
 
-                <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={renderSuccess}/>
-                    </Row>
-    </Container>
+            <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={renderSuccess}/>
+
+            
     </div>
 }
   
