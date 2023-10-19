@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 const Test4 = ({title}) => {
-    const[query,setQuery] = useState('안드로이드');
+    const[query,setQuery] = useState('웹툰');
     const[page,setPage] = useState(1);
     const[last,setLast] = useState(1);
     const [documents,setDocuments] = useState(null);
