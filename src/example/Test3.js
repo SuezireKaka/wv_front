@@ -1,20 +1,21 @@
+import axios from 'axios';
+import React from 'react'
 
-export default function test3() {
-  //const [value, setValue] = useState();
-  return (<>
-    {/*<article>
-      <header>
-        <h3>제어(Controlled) 라디오 그룹</h3>
-      </header>
-      <RadioGroup label="연락 방법" value={value} onChange={setValue}>
-        <Radio value="EMAIL">이메일</Radio>
-        <Radio value="PHONE">전화</Radio>
-        <Radio value="FAX">팩스</Radio>
-        <Radio value="MAIL" disabled>
-          우편
-        </Radio>
-      </RadioGroup>
-      <footer>{value}을 통해 연락드리겠습니다!</footer>
-    </article>*/}
-    </>);
+const Kakao = axios.create({
+  baseURL: 'https://dapi.kakao.com', // 공통 요청 경로를 지정해준다.
+  headers: {
+    Authorization: 'KakaoAK 248bbf725d08a367356e79cf03f2859a',
+  },
+});
+
+// search book api
+export const bookSearch = (params) => {
+  return Kakao.get('/v3/search/book', { params });
+};
+
+
+export default function Test3() {
+  return (
+    <div><button onClick={bookSearch}>버튼</button></div>
+  )
 }

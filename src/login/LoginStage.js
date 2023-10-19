@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AppContext from 'context/AppContextProvider';
 import { Link, useNavigate } from 'react-router-dom';
+
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
 
 const LoginStage = () => {
@@ -100,6 +101,7 @@ const LoginStage = () => {
         </form>
         <Link to={"/agreement/"}><button>회원가입</button></Link>
         <br></br>
+        
         <button>외부 로그인</button>
     </div>
 };
