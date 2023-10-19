@@ -1,27 +1,31 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import PropTest from './PropTest';
+import axios from 'api/axios';
+import AppContext from "context/AppContextProvider";
 
 export default function Drag() {
+  const { auth } = useContext(AppContext);
+
   const dragItem = useRef();
   const dragOverItem = useRef();
   const lookUpId = useRef();
 
   const PROPERTIES_LIST_URL = "http://localhost:8080/tool/anonymous/listPropertiesOf/"
-  const PROPERTIES_SYNC_URL = "http://localhost:8080/tool/anonymous/syncPropertiesOf/"
+  const PROPERTIES_SYNC_URL = "http://localhost:8080/tool/syncPropertiesOf/"
 
-  /*{propType : 'type 1', propVal : 'val 1', isSafe : true, editType : "R", level : 0},
-  {propType : 'type 2', propVal : 'val 2', isSafe : true, editType : "R", level : 1},
-  {propType : 'type 3', propVal : 'val 3', isSafe : true, editType : "R", level : 2},
-  {propType : 'type 4', propVal : 'val 4', isSafe : true, editType : "R", level : 3}*/
+  /*{propType : 'type 1', propVal : 'val 1', isSafe : true, isEdited : false},
+  {propType : 'type 2', propVal : 'val 2', isSafe : true, isEdited : false},
+  {propType : 'type 3', propVal : 'val 3', isSafe : true, isEdited : false},
+  {propType : 'type 4', propVal : 'val 4', isSafe : true, isEdited : false}*/
 
   const [propList, setPropList] = useState();
+  const [originalList, setOriginalList] = useState(); // 나중에 추가할 기능
 
   // 어떤 때는 인덱스로 해야 하고 어떤 때는 레벨로 해야 하다보니까 난리다 아주
   // 인덱스가 필요한 시점 : create 판단, 정렬시 짝 맞추기
   // 레벨이 필요한 시점 : post시 삭제된 녀석의 정보
 
-  const [initCount, setInitCount] = useState(4);
-  const [deleteCount, setDeleteCount] = useState(0);
+  // -> 그냥 싹 다 화면 순서에 맞출 것
 
   const dragStart = idx => {
     dragItem.current = idx;
@@ -34,19 +38,8 @@ export default function Drag() {
   const drop = () => {
     const copyListItems = [...propList];
     const dragItemContent = copyListItems[dragItem.current];
-    let min = Math.min(dragItem.current, dragOverItem.current);
-    let max = Math.max(dragItem.current, dragOverItem.current);
     copyListItems.splice(dragItem.current, 1);
     copyListItems.splice(dragOverItem.current, 0, dragItemContent);
-    for (let i = min; i <= max; i++) {
-      copyListItems[i].editType = i >= initCount 
-        ? "C" 
-        : min === max
-        ? copyListItems[i].editType
-        : copyListItems[i].editType === "D"
-        ? "D"
-        : "U"
-    }
     dragItem.current = null;
     dragOverItem.current = null;
     setPropList(copyListItems);
@@ -56,69 +49,70 @@ export default function Drag() {
     let uri = PROPERTIES_LIST_URL + id
     fetch(uri).then(response => response.json())
       .then((resData) => {
-        setPropList(resData.map((prop) => {return {...prop, isSafe : true, editType : "R"}}));
-        setInitCount(resData.length)
+        let wrappedData = resData.map(prop => {return {...prop, isSafe : true, isEdited : false}});
+        setPropList(wrappedData);
+        setOriginalList(wrappedData);
       })
-      .catch(setPropList([]));
+      .catch(() => {
+        setPropList([])
+        setOriginalList([])
+      });
   }
 
-  function commit(id) {
+  async function commit(id) {
+    console.log("이 유저가 보냅니다: ", auth)
     let uri = PROPERTIES_SYNC_URL + id
-    
+    console.log("다음 주소로 보냅니다: ", PROPERTIES_SYNC_URL + id)
+    let request = JSON.stringify(propList.map(prop => {
+      return {"propType" : prop.propType, "propVal" : prop.propVal, "isEdited" : prop.isEdited}
+    }))
+    console.log("이것을 보냅니다: ", request)
+    try {
+      const result = await axios.post(uri, request, {
+         headers: {
+           'Content-Type': 'application/json',
+           "x-auth-token": `Bearer ${auth?.accessToken}`
+         }
+      })
+      return result;
+		} catch (err) {
+			alert('뭔가가 잘못되었습니다!')
+		}
   }
 
   const newProp = () => {
-    setPropList([...propList, {propType : "", propVal : "", isSafe : false, editType : "C", level : propList.length}])
+    setPropList([...propList, {propType : "", propVal : "", isSafe : false, isEdited : false}])
   };
 
-  const setType = (level, value) => {
-    let [newList, propTypeList] = editRes(level, "propType", value);
-    let safe = checkQuality(value, propTypeList)
-    if (safe) {
-      newList = newList.map(prop => {
-        let safe = prop.editType === "D" || value !== prop.propType
-        return {...prop, isSafe : safe}
-      })
-    }
-    newList.filter().isSafe = safe && ! propTypeList.includes(value) 
+  const setType = (index, value) => {
+    let newList = editRes(index, "propType", value);
+    let propTypeList = newList.map(prop => prop.propType)
+    newList = newList.map((prop, idx) => {return {...prop, isSafe : checkQuality(idx, prop.propType, propTypeList)}})
+    newList[index].isSafe = checkQuality(index, value, propTypeList)
     setPropList(newList)
   }
 
-  const setVal = (level, value) => {
-    setPropList(editRes(level, "propVal", value)[0])
+  const setVal = (index, value) => {
+    setPropList(editRes(index, "propVal", value))
   }
 
-  const editRes = (level, prop, value) => {
+  const editRes = (index, prop, value) => {
     let newList = [...propList]
-    let propTypeList = newList.filter(prop => prop.editType !== "D").map(prop => prop.propType)
-    newList[level][prop] = value
-    if (index < initCount) {
-      newList[index].editType = "U"
-    }
-    return [newList, propTypeList]
+    newList[index][prop] = value
+    return newList
   }
 
-  function checkQuality(value) {
+  function checkQuality(index, value, propTypeList) {
     // 비어있지 않으면 일단 합격
-    return value !== ""
+    return value !== "" && ! propTypeList.filter((_, idx) => idx !== index).includes(value)
   }
 
-  const onRemove = (level) => {
-    //setPropList([...propList].filter((_, idx) => {return idx !== index})) - 백앤드 최적화 생각 안 하고 짠 코드
-    let copy = [...propList]
-    let target = copy.filter(prop => prop.level === level)[0]
-    if (target.editType === "C") {
-      setPropList(copy.filter(prop => prop.level !== level ))
-    }
-    else {
-      target.editType = "D"
-      setDeleteCount(deleteCount + 1)
-      setPropList(copy)
-    }
-    
+  const onRemove = (index) => {
+    setPropList([...propList].filter((_, idx) => {return idx !== index}))
   }
 
-  // .filter(item => item.editType !== "D") - 유저한테 보일 때 최종적으로 넣기
+  console.log("지금 반영 안 돼?", propList && ! propList.length > 0 &&
+  ! propList.reduce((accumulator, currentValue) => accumulator && currentValue.isSafe, true))
 
   return (
     <>
@@ -126,42 +120,34 @@ export default function Drag() {
       <button onClick={e => lookUp(lookUpId.current.value)}>조회하기</button>
       <br/>
       <button disabled={
-        ! propList.reduce((accumulator, currentValue) => accumulator && currentValue.isSafe, true)
+        propList && propList.length > 0 &&
+        propList.reduce((accumulator, currentValue) => accumulator || ! currentValue.isSafe, false)
       } onClick={e => commit(lookUpId.current.value)}>저장하기</button>
       {propList && propList.length > 0 ?
-        propList.filter(item => item.editType !== "D").map(item => {
-          // 임시 색깔 표시
-          let backgroundColor = item.editType === "C"
-                  ? 'lightgreen'
-                  : item.editType === "R"
-                  ? 'lightblue'
-                  : item.editType === "U"
-                  ? 'pink'
-                  : item.editType === "D"
-                  ? 'grey'
-                  : 'white'
+        propList.map((item, index) => {
+          let bgColor = item.isSafe ? 'lightblue' : 'pink'
           return <div
           style={{
-            backgroundColor: backgroundColor,
+            backgroundColor: bgColor,
             margin: '20px 30%',
             textAlign: 'center',
           }}
-          onDragStart={() => dragStart(item.level)}
-          onDragEnter={() => dragEnter(item.level)}
+          onDragStart={() => dragStart(index)}
+          onDragEnter={() => dragEnter(index)}
           onDragOver={e => e.preventDefault()}
           onDragEnd={drop}
-          key={item.level}
+          key={index}
           draggable>
           {/* 임시 위치 표시*/}
-          <p>{item.level}</p>
-          <PropTest key={item.level} level={item.level}
+          <p>{index}</p>
+          <PropTest key={index} level={index}
             propType={item.propType}
             propVal={item.propVal}
             setType={setType}
             setVal={setVal}
           />
           <br/>
-          <button onClick={() => onRemove(item.level)}>제거하기</button>
+          <button onClick={() => onRemove(index)}>제거하기</button>
           <p style={{color : "#ff0000"}}>
             {item.isSafe
             ? ""
