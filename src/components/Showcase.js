@@ -8,8 +8,10 @@ import { Container } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useRef } from "react";
+import ThumbnailList from "atom/ThumbnailList";
+import OriginalViewList from "atom/OriginalViewList";
 
-export default function Showcase() {
+export default function ShowcaseList() {
 
     const [page, setPage] = useState(1);
     const location = useLocation();
@@ -46,6 +48,21 @@ export default function Showcase() {
         }
 
     };
+    
+
+
+    const renderSuccess = (data) =>{
+        console.log(data)
+        return <>
+
+        <SeriesCard data={data.firstVal} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }}}}/>{console.log(data.firstVal)}
+        
+        </>
+    }
+    
+
+
+
 
     return <div>
         <br/>
@@ -65,10 +82,8 @@ export default function Showcase() {
             </Link>
             <Container>
                     <Row>
-                <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={data => {
-                    console.log(data)
-                    return <><SeriesCard data={data.firstVal} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[]}}}/>{console.log(data.firstVal)}</>
-                }}/>
+
+                <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={renderSuccess}/>
                     </Row>
     </Container>
     </div>
