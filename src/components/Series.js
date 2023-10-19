@@ -12,7 +12,7 @@ import Checkbox from "toolbox/Checkbox";
 import Favorites from "./Favorites";
 import AppContext from "context/AppContextProvider";
 import { useContext } from "react";
-
+import OriginalViewList from "atom/OriginalViewList";
 export default function Series() {
   const location = useLocation();
   let state = location.state;
@@ -46,7 +46,7 @@ export default function Series() {
       </thead>
       <tbody>
         <tr>
-          <td rowSpan='4'>[썸네일 넣을칸]</td>
+          <td rowSpan='4'><OriginalViewList imgDtoList={post.listAttachFile}/></td>
           <td>작가:{post.writer?.nick}</td>
         </tr>
         <tr>

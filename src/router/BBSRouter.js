@@ -34,7 +34,7 @@ export default function BBSRouter() {
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
-          <Route path={"/test3"} element={<Test3 />} />
+          <Route path={"/Showcase0"} element={<Test3 />} />
         </Routes>
        
       )

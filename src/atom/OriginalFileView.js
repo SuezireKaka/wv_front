@@ -47,7 +47,6 @@ export default function OriginalFileView({imgUrl, afdto}) {
                 {afdto.contentType === "image" ? <img src={originalFileUrl}/>:
                 afdto.contentType === "video" ? <video src={originalFileUrl} controls autoPlay/>: null
                 }
-                
             </Form.Group>
           </Form>
         </Modal.Body>

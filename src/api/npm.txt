@@ -18,3 +18,7 @@ npm install react-kakao-maps-sdk
 
 파스타
 npm i react-icons
+
+스크롤링? 아래 둘다 실패
+npm i react-virtualized
+npm i react-infinite-scroller

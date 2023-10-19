@@ -92,9 +92,9 @@ export default function Drag() {
     let newList = [...propList]
     let propTypeList = newList.filter(prop => prop.editType !== "D").map(prop => prop.propType)
     newList[level][prop] = value
-    if (index < initCount) {
-      newList[index].editType = "U"
-    }
+   // if (index < initCount) {
+    //  newList[index].editType = "U"
+    //}
     return [newList, propTypeList]
   }
 
