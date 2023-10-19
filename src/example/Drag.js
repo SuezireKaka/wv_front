@@ -98,17 +98,8 @@ export default function Drag() {
 
   const editRes = (index, prop, value) => {
     let newList = [...propList]
-<<<<<<< HEAD
     newList[index][prop] = value
     return newList
-=======
-    let propTypeList = newList.filter(prop => prop.editType !== "D").map(prop => prop.propType)
-    newList[level][prop] = value
-   // if (index < initCount) {
-    //  newList[index].editType = "U"
-    //}
-    return [newList, propTypeList]
->>>>>>> cae1d1ed494694f8e1884664f9a8c60408a47601
   }
 
   function checkQuality(index, value, propTypeList) {

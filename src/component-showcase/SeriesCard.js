@@ -10,6 +10,7 @@ import OriginalFileView from "atom/OriginalFileView";
 import OriginalViewList from "atom/OriginalViewList";
 import { useEffect } from "react";
 import { useState } from "react";
+import OriginalViewOne from "atom/OriginalViewOne";
 
 export default function SeriesCard({data = []}) {
     const location = useLocation();
@@ -30,7 +31,8 @@ export default function SeriesCard({data = []}) {
                 return <>
                 <Col xs={{ order: 12 }}><Card id ={series?.id} style={{ width: '18rem' }}>
                 <Link to={`/series/${series.id}`} state={{ seriesId: series.id, post: state?.post, page:1, boardId:state?.boardId}}>
-                    <Card.Img variant="top" src={series.listAttachFile} />{series?.id}
+
+                <OriginalViewOne imgDtoList={series.listAttachFile} x="200" y="200"/>
                       </Link>
                     <Card.Body>
                       <Card.Title>{series?.title}</Card.Title>

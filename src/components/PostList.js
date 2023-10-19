@@ -9,7 +9,7 @@ import { displayDate } from "toolbox/DateDisplayer";
 import { Fetch } from "toolbox/Fetch";
 import AppContext from "context/AppContextProvider";
 import { Table } from "react-bootstrap";
-
+import ThumbnailList from "atom/ThumbnailList";
 export default function PostList() {
   const { auth } = useContext(AppContext);
   const isMember = auth?.roles?.includes("member");
@@ -89,6 +89,8 @@ function renderSuccess(postListWithPaging) {
           <tbody>
               {postList?.map(post => (
                   <tr key={post.id}>
+                    {console.log(post)}
+                      <td><ThumbnailList imgDtoList={post?.listAttachFile}/></td>
                       <td width="60%">
                       {console.log("------------------------")}
                       {console.log("------------------------")}
