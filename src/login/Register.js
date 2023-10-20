@@ -142,7 +142,8 @@ const Register = () => {
 	return (<>
 	<form>
 	<InputGroup className="mb-3">
-		<p>회원가입</p><br/>
+	<InputGroup.Text id="basic-addon0">회원가입</InputGroup.Text></InputGroup>
+		<InputGroup className="mb-3">
 		<InputGroup.Text id="basic-addon1">이름</InputGroup.Text>
 		<Form.Control type="text"
 			id="name"
@@ -150,13 +151,14 @@ const Register = () => {
 			required
 			onBlur={onBlur}
 				/></InputGroup>
+		<InputGroup className="mb-3">
 		<InputGroup.Text id="basic-addon2">아이디</InputGroup.Text>
 		<Form.Control type="text"
 					id="loginId"
 					onChange={(e) => setLoginId(e.target.value)}
 					required
 					onBlur={onBlurLoginId}
-				/> 
+				/> </InputGroup>
 			<p>
 				{idChecked
 				? uniqueId
@@ -164,28 +166,32 @@ const Register = () => {
 				: "이미 사용중인 ID입니다"
 				: ""}
 			</p>
-		<br/>
-		패스워드:<input type="password"
+		<InputGroup className="mb-3">
+		<InputGroup.Text id="basic-addon2">패스워드</InputGroup.Text>
+		<Form.Control input type="password"
 					id="passWord"
 					onChange={(e) => setPassWord(e.target.value)}
 					value={passWord}
 					required
-				/>
-				<br/>
-		암호확인:<input type="password"
+				/> </InputGroup>
+		<InputGroup className="mb-3">
+		<InputGroup.Text id="basic-addon2">암호확인</InputGroup.Text>
+		<Form.Control type="password"
 					id="userMatchPwd"
 					placeholder="패스워드를 다시입력하세요"
 					onChange={(e) => setMatchPwd(e.target.value)}
 					value={matchPwd}
 					required
-				/><br/>
-		닉네임:<input type="text"
+				/></InputGroup>
+		<InputGroup className="mb-3">
+		<InputGroup.Text id="basic-addon2">닉네임</InputGroup.Text>
+		<Form.Control type="text"
 			id="nick"
 			placeholder="닉네임을 정해주세요"
 			onChange={(e) => setNick(e.target.value)}
 			required
 			onBlur={onBlurNick}
-				/>
+				/></InputGroup>
 			<p>
 				{nickChecked
 				? uniqueNick
@@ -193,8 +199,9 @@ const Register = () => {
 				: "이미 사용중인 닉네임입니다"
 				: ""}
 			</p>
-		<br/>
-		생년월일:<input type="date"
+		<InputGroup className="mb-3">
+		<InputGroup.Text id="basic-addon2">생년월일</InputGroup.Text>
+		<input type="date"
 					id="birthDate"
 					name="birthDate"
 					onChange={(e) => setBirthDate(e.target.value)}
@@ -203,8 +210,13 @@ const Register = () => {
 					aria-required="true"
 					value={birthDate}
 					onBlur={onBlur}
-					/><br/>
-		성별:남<input inline
+					/></InputGroup>
+
+		<InputGroup className="mb-3">
+		<InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
+		<InputGroup.Text id="basic-addon2">남</InputGroup.Text>
+
+		<input inline
 						defaultChecked
 						label="남성"
 						name="userSex"
@@ -212,7 +224,8 @@ const Register = () => {
 						value="남성"
 						onChange={checkSex}
 						id={`inline-radio-1`}
-					/>여
+					/>
+		<InputGroup.Text id="basic-addon2">여</InputGroup.Text>
 
 		<input inline
 						label="여성"
@@ -221,26 +234,31 @@ const Register = () => {
 						onChange={checkSex}
 						value="여성"
 						id={`inline-radio-2`}
-					/><br/>
+					/>
+		</InputGroup>
+		<br/>
 		
 		{codeList?.map((cpType) => (<>
-			
-					{cpType.codeVal}:
+			<InputGroup className="mb-3">
+		<InputGroup.Text id="basic-addon2">{cpType.codeVal}</InputGroup.Text>
+					
 					{cpType.codeVal==="home address"?<div>
-        			<DaumTest setAddress={setAddress}/>
-        <input type='text' size='50' value={address+addText} disabled />
-        <input type='text' id={cpType.codeVal}
+						
+					<Form.Control  type='text' value={address+addText} disabled />
+					<Form.Control  type='text' id={cpType.codeVal}
 		onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)} placeholder="상세주소입력" />
     </div>:
-					<input
-						type="text"
-						id={cpType.codeVal}
-		onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)}
+					<Form.Control 
+					type="text"
+					id={cpType.codeVal}
+					onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)}
 					/>}<br/>
-		</>))}
+		</InputGroup></>))}
+					<DaumTest setAddress={setAddress}/>
 			{console.log(listCP)}
 	</form>
 	<Link to='/log-in'>
+		<br/>
 		<button variant="primary" onClick={handleSubmit} disabled={!(validMatch&&nickChecked&&uniqueNick&&idChecked&&uniqueId&&isNameBlur&&isBirthDateBlur)}>
 			Sign Up
 		</button>
