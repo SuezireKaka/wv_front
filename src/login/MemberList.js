@@ -9,7 +9,7 @@ import RadioGroup from 'toolbox/RadioGroup';
 import Radio from 'toolbox/Radio';
 import axios from 'api/axios';
 import RadioMember from './RadioMember';
-
+import { Table } from 'react-bootstrap';
 export default function MemberList() {
     const { ownerId } = useParams();
     
@@ -25,7 +25,7 @@ export default function MemberList() {
      
             
                     
-            <table>
+            <Table responsive variant="white">
                 <thead>
                     <tr>
                         <th>아이디</th>
@@ -41,7 +41,7 @@ export default function MemberList() {
                 <tbody>
                 <Fetch uri={listAllMemberUri} renderSuccess={RenderSuccess} />
                  </tbody>
-            </table>
+            </Table>
            
                 
         </div>
@@ -63,10 +63,10 @@ function RenderSuccess(memberList) {
                 <td>{member.response?.sex==="남성" ? "남성" : "여성"}</td>
                 <td>{member.roleList[0]?.role}</td>
                 <td></td>
-                <td>
+                
                     <RadioMember member={member} />
 
-                </td>
+                
             </tr>
             {member.response?.contactPointList?.map(cp => (
             <tr key={member.id + cp.cpType}>
