@@ -10,7 +10,6 @@ import Row from "react-bootstrap/Row";
 import { useRef } from "react";
 import ThumbnailList from "atom/ThumbnailList";
 import OriginalViewList from "atom/OriginalViewList";
-import InfiniteScroll from "react-infinite-scroller";
 import axios from "api/axios";
 import { useEffect } from "react";
 
