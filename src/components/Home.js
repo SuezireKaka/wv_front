@@ -16,12 +16,38 @@ export default function Home() {
   const renderSuccess = (data) =>{
     console.log(data)
     console.log(data?.firstVal)
-    return <> {data?.firstVal.map((series)=>{
-      console.log(series.id)
-      console.log(series)
-  })}
-</>
+    return <> <Carousel>
+    <Carousel.Item>
+        <div className='slidercontents'>
+            <div className='wrapText'>
+                <h1>시작화면 넘기기</h1>
+                <div className="d-none d-md-block">
+                    <p>1111111111111111111111111
+                      1111111111111111
+                      11111111111111111
+                    </p>
+                </div>
 
+            </div>
+        </div>
+    </Carousel.Item>
+    <Carousel.Item>
+    <div className='slidercontents'>
+            <div className='wrapText'>
+                <h1>시작화면 넘기기</h1>
+                <div className="d-none d-md-block">
+                    <p>222222222222222
+                      22222222222
+                      2222222222
+
+                    </p>
+                </div>
+ 
+            </div>
+        </div>
+    </Carousel.Item>
+</Carousel>
+</>
   }
 
 
