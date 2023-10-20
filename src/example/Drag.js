@@ -59,25 +59,25 @@ export default function Drag() {
       });
   }
 
-  async function commit(id) {
+  function commit(id) {
     console.log("이 유저가 보냅니다: ", auth)
     let uri = PROPERTIES_SYNC_URL + id
     console.log("다음 주소로 보냅니다: ", PROPERTIES_SYNC_URL + id)
-    let request = JSON.stringify(propList.map(prop => {
+    let request = propList.map( prop => {
       return {"propType" : prop.propType, "propVal" : prop.propVal, "isEdited" : prop.isEdited}
-    }))
+    })
     console.log("이것을 보냅니다: ", request)
-    try {
-      const result = await axios.post(uri, request, {
-         headers: {
-           'Content-Type': 'application/json',
-           "x-auth-token": `Bearer ${auth?.accessToken}`
-         }
-      })
-      return result;
-		} catch (err) {
-			alert('뭔가가 잘못되었습니다!')
-		}
+    // 다 때려치고 JSON.stringify가 채고인 거시다!!!
+    axios.post(uri, JSON.stringify(request), {
+      headers: {
+        'Content-Type': 'application/json',
+        "x-auth-token": `Bearer ${auth?.accessToken}`
+      }
+    })
+    .then(() => {
+      setOriginalList([...propList])
+    })
+    .catch((error) => {console.log(error)})
   }
 
   const newProp = () => {

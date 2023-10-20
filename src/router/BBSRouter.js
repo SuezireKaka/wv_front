@@ -13,6 +13,7 @@ import PostMng from 'components/PostMng';
 import Test1 from 'components/Test1';
 import Test2 from 'example/Test2';
 import Test3 from 'example/Test3';
+import Test4 from 'example/Test4';
 
 export default function BBSRouter() {
     return (
@@ -35,6 +36,7 @@ export default function BBSRouter() {
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
           <Route path={"/Showcase0"} element={<Test3 />} />
+          <Route path={"/test4"} element={<Test4 />} />
         </Routes>
        
       )
