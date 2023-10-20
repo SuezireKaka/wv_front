@@ -13,6 +13,8 @@ import Favorites from "./Favorites";
 import AppContext from "context/AppContextProvider";
 import { useContext } from "react";
 import OriginalViewList from "atom/OriginalViewList";
+import OriginalViewOne from "atom/OriginalViewOne";
+
 export default function Series() {
   const location = useLocation();
   let state = location.state;
@@ -38,7 +40,7 @@ export default function Series() {
         <tr>
           <th colSpan='2'>제목:{post.title}
           {(post.writer ? post.writer.nick === auth.nick : false) ?
-          <Favorites user={auth}/>
+          <Favorites user={auth} state={{seriesId:post.id}}/>
           : ""}
           </th>
           {/*<th></th>*/}
@@ -46,7 +48,7 @@ export default function Series() {
       </thead>
       <tbody>
         <tr>
-          <td rowSpan='4'><OriginalViewList imgDtoList={post.listAttachFile}/></td>
+          <td rowSpan='4'><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="300"/></td>
           <td>작가:{post.writer?.nick}</td>
         </tr>
         <tr>

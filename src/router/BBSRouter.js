@@ -10,17 +10,21 @@ import Register from 'login/Register';
 import UserProfile from 'login/UserProfile';
 import MemberList from 'login/MemberList';
 import PostMng from 'components/PostMng';
-import Test1 from 'components/Test1';
+import Test1 from 'example/Test1';
 import Test2 from 'example/Test2';
 import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
 
+import Test5 from 'example/Test5';
+import PostList from 'components/PostList';
+import Post from 'components/Post';
 export default function BBSRouter() {
     return (
         <Routes> 
           <Route path="/" element={ <Home /> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
-          <Route path={"/board/:boardId"} element={ <Showcase/> } />
+          <Route path={"/board/0001"} element={ <Post/> } />
+          <Route path={"/board/0002"} element={ <Showcase/> } />
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
 
@@ -35,8 +39,10 @@ export default function BBSRouter() {
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
-          <Route path={"/Showcase0"} element={<Test3 />} />
           <Route path={"/test4"} element={<Test4 />} />
+          <Route path={"/Test3"} element={<Test3 />} />
+          
+          <Route path={"/Test5"} element={<Test5 />} />
         </Routes>
        
       )

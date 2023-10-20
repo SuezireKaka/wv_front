@@ -29,8 +29,15 @@ export default function TestNav() {
             <Nav.Link><Link style={navMenu} to="/memberList/0000">회원정보</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test1">테스트용</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test2">테스트용2</Link></Nav.Link>
+<<<<<<< HEAD
             <Nav.Link><Link style={navMenu} to="/Showcase0" state={{ boardId: "0002", page: 1 }}>테스트용3</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test4" state={{seriesId: "0000"}}>테스트용4</Link></Nav.Link>
+=======
+            <Nav.Link><Link style={navMenu} to="/Test3" >테스트용3</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} to="/Test4" >테스트용4</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} to="/Test5" >테스트용5</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} to="/kakao/callback" >리다</Link></Nav.Link>
+>>>>>>> 72aad818208b3b97d0cbb7b285f26f98c228ae9b
           </Nav>
         </Navbar.Collapse>
       </Container>

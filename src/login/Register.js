@@ -5,7 +5,8 @@ import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
 import DaumTest from "daumpost/DaumTest";
 import { useNavigate } from "react-router-dom";
-
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const Register = () => {
 	
@@ -140,19 +141,22 @@ const Register = () => {
 
 	return (<>
 	<form>
-		<p>회원가입</p>
-		이름:<input type="text"
+	<InputGroup className="mb-3">
+		<p>회원가입</p><br/>
+		<InputGroup.Text id="basic-addon1">이름</InputGroup.Text>
+		<Form.Control type="text"
 			id="name"
 			onChange={(e) => setName(e.target.value)}
 			required
 			onBlur={onBlur}
-				/><br/>
-		아이디:<input type="text"
+				/></InputGroup>
+		<InputGroup.Text id="basic-addon2">아이디</InputGroup.Text>
+		<Form.Control type="text"
 					id="loginId"
 					onChange={(e) => setLoginId(e.target.value)}
 					required
 					onBlur={onBlurLoginId}
-				/>
+				/> 
 			<p>
 				{idChecked
 				? uniqueId
