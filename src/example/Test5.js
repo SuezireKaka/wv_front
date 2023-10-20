@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const Test4 = ({title}) => {
+const Test5 = ({title}) => {
     const[query,setQuery] = useState('웹툰');
     const[page,setPage] = useState(1);
     const[last,setLast] = useState(1);
@@ -57,4 +57,4 @@ if(documents===null){
 </div>
   )
 }
-export default Test4
+export default Test5

@@ -1,5 +1,6 @@
 //코드 : s8RSZRXjVAVEo89ooY-W8_5Ppvvm77gVJHDNceiUA1dyijaLB31_CBysguoKKiVPAAABi0g273CSBpCp5rpDbg
 //인가코드 : DtPobRyRaxcUjwWaVViDAHoB0TQEuydNcMopEkso3fcQvCmSeuWVy16rnhwKPXRpAAABi0hssXXDukuslKNZWg
+//일회성?
 const code = new URL(window.location.href).searchParams.get("code");
 const Test3 = ()=>
 
