@@ -22,9 +22,7 @@ export default function MemberList() {
 
     return (
         <div>
-     
-            
-                    
+ 
             <Table responsive variant="white">
                 <thead>
                     <tr>
