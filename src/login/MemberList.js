@@ -23,17 +23,15 @@ export default function MemberList() {
     return (
         <div>
  
-            <Table responsive variant="white">
+            <Table striped bordered hover>
                 <thead>
-                    <tr>
+                    <tr background-color="red">
                         <th>아이디</th>
                         <th>닉</th>
                         <th>이름</th>
                         <th>생년월일</th>
                         <th>성별</th>
                         <th>분류</th>
-                        <th>등급</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,32 +46,25 @@ export default function MemberList() {
 
 
 function RenderSuccess(memberList) {
-   
     console.log(memberList);
     console.log(memberList.firstVal);
     return memberList.firstVal?.map(member => (
         <>
             <tr key={member.id}>
-                <td>{member.loginId}</td>
-                <td>{member.nick}</td>
-                <td>{member.response?.name}</td>
+                <td><b>{member.loginId}</b></td>
+                <td><b>{member.nick}</b></td>
+                <td><b>{member.response?.name}</b></td>
                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                 <td>{member.response?.sex==="남성" ? "남성" : "여성"}</td>
-                <td>{member.roleList[0]?.role}</td>
-                <td></td>
-                
-                    <RadioMember member={member} />
-
-                
+                <td><RadioMember member={member} /></td>
             </tr>
             {member.response?.contactPointList?.map(cp => (
             <tr key={member.id + cp.cpType}>
                 <td></td>
                 <td>{cp.cpType}</td>
-                <td>{cp.cpVal}</td>
+                <td colSpan='4' align="left">{cp.cpVal}</td>
             </tr>
             ))}
-
         </>
     ))
 }
