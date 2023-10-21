@@ -214,7 +214,7 @@ const Register = () => {
 
 		<InputGroup className="mb-3">
 		<InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
-		<InputGroup.Text id="basic-addon2">남</InputGroup.Text>
+		<InputGroup.Text id="basic-addon2">남
 
 		<input inline
 						defaultChecked
@@ -224,8 +224,8 @@ const Register = () => {
 						value="남성"
 						onChange={checkSex}
 						id={`inline-radio-1`}
-					/>
-		<InputGroup.Text id="basic-addon2">여</InputGroup.Text>
+					/></InputGroup.Text>
+		<InputGroup.Text id="basic-addon2">여
 
 		<input inline
 						label="여성"
@@ -234,7 +234,7 @@ const Register = () => {
 						onChange={checkSex}
 						value="여성"
 						id={`inline-radio-2`}
-					/>
+					/></InputGroup.Text>
 		</InputGroup>
 		<br/>
 		
@@ -242,19 +242,19 @@ const Register = () => {
 			<InputGroup className="mb-3">
 		<InputGroup.Text id="basic-addon2">{cpType.codeVal}</InputGroup.Text>
 					
-					{cpType.codeVal==="home address"?<div>
+					{cpType.codeVal==="home address"?<><DaumTest setAddress={setAddress}/><div style={{width:"100%"}}>
 						
 					<Form.Control  type='text' value={address+addText} disabled />
 					<Form.Control  type='text' id={cpType.codeVal}
 		onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)} placeholder="상세주소입력" />
-    </div>:
+    </div></>:
 					<Form.Control 
 					type="text"
 					id={cpType.codeVal}
 					onChange={(e) => checkCPValidity(e, cpType.codeVal, e.target.value)}
 					/>}<br/>
 		</InputGroup></>))}
-					<DaumTest setAddress={setAddress}/>
+					
 			{console.log(listCP)}
 	</form>
 	<Link to='/log-in'>
