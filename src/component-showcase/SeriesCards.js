@@ -14,7 +14,7 @@ import OriginalViewOne from "atom/OriginalViewOne";
 import axios from "api/axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-
+import Badge from 'react-bootstrap/Badge';
 export default function SeriesCards({data = []}) {
   const location = useLocation();
   let state = location.state;
@@ -81,7 +81,7 @@ export default function SeriesCards({data = []}) {
                 <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="350"/>
                     <Card.Body>
                       <Card.Title>{post?.title}</Card.Title>
-                      <Card.Text>{post?.writer?.nick}</Card.Text>
+                      {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                     </Card.Body>
                    </Link>   
                   </Card><br/>
@@ -98,7 +98,7 @@ export default function SeriesCards({data = []}) {
                 <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250"/>
                     <Card.Body>
                       <Card.Title>{post?.title}</Card.Title>
-                      <Card.Text>{post?.writer?.nick}</Card.Text>
+                      {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                     </Card.Body>
                    </Link>   
                   </Card><br/>

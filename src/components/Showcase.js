@@ -78,15 +78,10 @@ export default function ShowcaseList() {
             </form>
         </div> 
         <br/>
-
-
             <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
                 <button>신규</button><br/><br/>
             </Link>
-
             <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={renderSuccess}/>
-
-            
     </div>
 }
   
