@@ -36,7 +36,7 @@ function NewReply({
           </Col>
           <Col sm>
             <Button
-              variant="primary"
+              variant="light"
               onClick={(e) => {
                 mngReply(e, reply.id);
               }}

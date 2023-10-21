@@ -51,9 +51,9 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
     console.log("그래도 다시 한 번", state)
     return <>
       <ListGroup as="ul">
-        <ListGroup.Item variant="light" as="li" active>
+        <ListGroup.Item variant="light" as="li">
           {post.content}</ListGroup.Item>
-        <ListGroup.Item as="li" disabled><OriginalViewList imgDtoList={post?.listAttachFile} /></ListGroup.Item>
+        <ListGroup.Item as="li" disabled><OriginalViewList imgDtoList={post?.listAttachFile} x="70%" y="70%" /></ListGroup.Item>
         <ListGroup.Item>
           🧑🏻{post.writer ? post.writer.nick : ""}
           ✔<span>{post.readCount}</span>

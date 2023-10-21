@@ -4,7 +4,7 @@ import { AxiosPost } from 'toolbox/Fetch';
 import OriginalFileView from './OriginalFileView';
 
 //개량판
-export default function OriginalViewList({ imgDtoList }) {
+export default function OriginalViewList({ imgDtoList, x, y }) {
     console.log("ThumbnailList render ", imgDtoList);
 
     const thumbnailRequestTarget = ["video", "image"];
@@ -14,7 +14,7 @@ export default function OriginalViewList({ imgDtoList }) {
         console.log("blob", blob);
         const thumbFile = new File([blob.data], "image");
         const imgUrl = (window.URL || window.webkitURL).createObjectURL(thumbFile);
-        return  <img src={imgUrl}/>
+        return  <img src={imgUrl} width={x} height={y}/>
     }
 
     return <>

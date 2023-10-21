@@ -25,13 +25,13 @@ export default function MemberList() {
  
             <Table striped bordered hover>
                 <thead>
-                    <tr background-color="red">
-                        <th>아이디</th>
-                        <th>닉</th>
-                        <th>이름</th>
-                        <th>생년월일</th>
-                        <th>성별</th>
-                        <th>분류</th>
+                    <tr  style={{ backgroundColor: "#eeffdd" }}>
+                        <th style={{ backgroundColor: "#eeffdd" }}>아이디</th>
+                        <th style={{ backgroundColor: "#eeffdd" }}>닉</th>
+                        <th style={{ backgroundColor: "#eeffdd" }}>이름</th>
+                        <th style={{ backgroundColor: "#eeffdd" }}>생년월일</th>
+                        <th style={{ backgroundColor: "#eeffdd" }}>성별</th>
+                        <th style={{ backgroundColor: "#eeffdd" }}>분류</th>
                     </tr>
                 </thead>
                 <tbody>
