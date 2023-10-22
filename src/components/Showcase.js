@@ -23,7 +23,7 @@ export default function ShowcaseList() {
     console.log(state);
     console.log(state);
     const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/${state?.boardId}/${page}`
-    const [postListUri, setPostListUri] = `/post/anonymous/listAll/${state?.boardId}/${page}`
+    const [postListUri, setPostListUri] = `/work/anonymous/listAll/${state?.boardId}/${page}`
     const txtSearch = useRef("");
     const [byKeyWord, setByKeyWord] = useState(false);
 

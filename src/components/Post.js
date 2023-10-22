@@ -1,54 +1,133 @@
-import AppContext from "context/AppContextProvider";
-import { useContext, useState } from "react";
 import { useLocation } from "react-router";
+import { useState } from "react";
+import axios from "api/axios";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { displayDate } from "toolbox/DateDisplayer";
 import { Fetch } from "toolbox/Fetch";
-import PostList from "./PostList";
+import AppContext from "context/AppContextProvider";
+import { Table } from "react-bootstrap";
+import ThumbnailList from "atom/ThumbnailList";
+import { Pagination } from "react-bootstrap";
 
 export default function Post() {
-  const location = useLocation();
-  let state = location.state;
   const { auth } = useContext(AppContext);
-  console.log("시리즈 state");
-  console.log(state);
-  const [targetBoard, setTargetBoard] = useState(state.seriesId);
-  const [postList, setPostList] = useState([]);
-  const [page, setPage] = useState(1);
 
-  const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-  const seriesDetailsUri = `/work/anonymous/findById/${state.boardId}`;
-  const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
+  const location = useLocation();
+  const state = location.state;
+console.log(state.post)
+console.log(state?.seriesId)
+console.log(state)
+console.log(state?.page)
+  console.log("PostList param", state);
+  function buildUrl(step) {
+    console.log("buildUrl(step", step);
+  
+    if (state.search)
+        return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
+    else
+        return `/work/anonymous/listAllPost/${state.boardId}/${state.page}`;//${state.boardId}
+}
+  const [postListUri, setPostListUri] = useState(buildUrl(222));
+    
+  const [targetBoard, setTargetBoard] = useState(state.boardId);
+  console.log("saved targetBoard", targetBoard);
 
-  function SeriesDetailsSuccess(post){
-    //function SeriesDetailsSuccess(시리즈) <<요부분은 시리즈 대신 포스트로 해서 수정하기 용이하게 함
-    console.log("1, 3")
-    console.log(post?.id)
-    {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
-    return <>
-   
-      {postListShow(post)}
-    </>
-  }
-  function postListShow(series){
-    return (series?.repliesList == 0 && !series?.repliesList)
-      ? series?.length===0?"":""
-      :  <>
-      
-      <Link to={`/post/0001${state.boardId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
-      <button>신규</button>
-      </Link>
-      <PostList />
-      </>
-  }
 
+  if (targetBoard !== state.boardId) {
+    console.log("targetBoard changing", state.boardId);
+    setTargetBoard(state.boardId);
+    setPostListUri(buildUrl());
+    console.log(postListUri);
+    console.log("다시 그리기 시작해");
+}
+
+function goTo(chosenPage) {
+    state.postListWithPaging = null;
+    state.page = chosenPage;
+
+    setPostListUri(buildUrl());
+}
+
+const txtSearch = useRef();
+
+const onSearch = (e) => {
+    e.preventDefault();
+    let search = txtSearch.current.value;
+
+    state.postListWithPaging = null;
+    state.search = search;
+    state.page = 1;
+
+    setPostListUri(buildUrl());
+}
+
+const displayPagination = (paging) => {
+    const pagingBar = [];
+    if (paging.prev)
+        pagingBar.push(<Pagination.Item key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</Pagination.Item>);
+    for (let i = paging.startPage; i <= paging.lastPage; i++) {
+        pagingBar.push(<Pagination.Item key={i} onClick={(e) => goTo(i)}>{i}</Pagination.Item>);
+    }
+    if (paging.next)
+        pagingBar.push(<Pagination.Item key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</Pagination.Item>);
+    return pagingBar;
+}
+
+function renderSuccess(postListWithPaging) {
+
+  console.log(postListWithPaging);
+  const postList = postListWithPaging?.firstVal;
+  const pagenation = postListWithPaging?.secondVal;
+  console.log(postList);
+  console.log(pagenation);
   return <>
-    <div>
+      <Table responsive variant="white">
+          <thead>
 
-      <Fetch uri={postListUri} renderSuccess={SeriesDetailsSuccess} />
-      
-    </div>
-
-
+          </thead>
+          <tbody>
+              {postList?.map(post => (
+                <tr key={post.id}>
+                    {console.log(post)}
+                      <td><ThumbnailList imgDtoList={post?.listAttachFile}/></td>
+                      <td width="60%">
+                    <Link style={{all:"unset"}} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
+                          state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
+                      {console.log("------------------------")}
+                      {console.log("------------------------")}
+                        {console.log(post)}
+                        {console.log(state)}
+                        {console.log(state?.boardId)}
+                             {post.title}</Link>
+                      </td>
+                         
+                      <td>👦🏻{post.writer ? post.writer.nick : ""}</td>
+                      <td>✔{post.readCount}</td>
+                      <td>🤣{post.likeCount}</td>
+                      <td>🕐{displayDate(post.regDt, post.uptDt)}</td>
+                  </tr> 
+              ))}
+          </tbody>
+          <tfoot>
+          </tfoot>
+      </Table>
+      <div  style={{Align:"center"}}>
+      <Pagination>
+      {pagenation?.lastPage>=2?displayPagination(pagenation):""}
+      </Pagination>
+      </div>
   </>
 }
+    return (
+      <div>
+      <Link to={`/series/${state.boardId}/mng`} state={{seriesId:state.boardId, parentId : state.boardId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
+      <button>신규</button>
+      </Link>
+        <Fetch uri={postListUri} renderSuccess={renderSuccess} />
   
+      </div>
+    )
+}
