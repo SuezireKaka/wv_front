@@ -64,9 +64,14 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
         {console.log(postList)}
         {/* <Link to={`/post/${postList[1]}`} >11</Link>*/}
       </ListGroup>
-
-
-      <Link key={state.parentId} to={`/series/${state.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>&nbsp;
+      {/* <PostListCanvas state={{ seriesId: state.seriesId, post, state, parentId: state.parentId, boardId: state.boardId }} />*/}
+      {console.log(state)}
+      {state?.boardId==="0001"
+      ?<Link key={state.parentId} to={`/board/0001`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>
+      :<Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>}
+      
+      
+      &nbsp;&nbsp;
       {(post.writer ? post.writer.nick === auth.nick : false) ?
         <Link
           to={`/series/${post.id}/mng`}

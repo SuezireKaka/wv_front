@@ -14,7 +14,7 @@ import { Pagination } from "react-bootstrap";
 
 export default function PostList() {
   const { auth } = useContext(AppContext);
-  const isMember = auth?.roles?.includes("member");
+
   const location = useLocation();
   const state = location.state;
 console.log(state.post)
