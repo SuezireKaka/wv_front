@@ -45,7 +45,27 @@ export default function Home() {
   return (
     <div>
       <p class="border border-danger-subtle">
-      <Fetch uri={postUri} renderSuccess={renderSuccess} />
+      <Carousel>
+
+    <Carousel.Item>
+       
+        <h3>First slide label</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+
+    </Carousel.Item>
+    <Carousel.Item>
+       
+        <h3>First slide label</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+
+    </Carousel.Item>
+    <Carousel.Item>
+       
+       <h3>First slide label</h3>
+       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+
+   </Carousel.Item>
+    </Carousel>
       
       </p>
     </div>
