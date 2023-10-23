@@ -9,8 +9,6 @@ export default function ThumbnailList({  imgDtoList, x,y }) {
     const thumbnailRequestTarget = ["video", "image"];
 
     function renderImg(afdto, blob) {
-        console.log("afdto", afdto);
-        console.log("blob", blob);
         const thumbFile = new File([blob.data], "image");
         const imgUrl = (window.URL || window.webkitURL).createObjectURL(thumbFile);
         return <OriginalFileView imgUrl={imgUrl} afdto={afdto}/>
@@ -23,11 +21,9 @@ export default function ThumbnailList({  imgDtoList, x,y }) {
                     renderSuccess={renderImg} />
             } else if (afdto.contentType === "audio") {
                 const imgUrl = process.env.PUBLIC_URL + "/images/audio.png";
-                console.log("imgUrl", imgUrl);
                 return <img src={imgUrl} />;
             } else {
                 const imgUrl = process.env.PUBLIC_URL + "/images/unknown.png";
-                console.log("imgUrl", imgUrl);
                 return <img src={imgUrl} />;
             }
         })}

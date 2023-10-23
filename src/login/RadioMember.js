@@ -6,8 +6,6 @@ import { useState } from 'react';
 import AppContext from 'context/AppContextProvider';
 import { useContext } from 'react';
 export default function RadioMember({member}) {
-    console.log("member===========");
-    console.log(member);
     const [value, setValue] =useState(member?.roleList[0]?.role);
     const [roles, setRoles] = React.useState([]);
     const [listCheckMember, setListCheckMember] = useState(new Map());
@@ -16,10 +14,6 @@ export default function RadioMember({member}) {
       listCheckMember.set(memberId, value);
 
       setListCheckMember(listCheckMember);
-      console.log(listCheckMember)
-        console.log(value);
-        console.log(memberId);
-
 
 		const bodyData = {
             role:value,
@@ -36,7 +30,6 @@ export default function RadioMember({member}) {
           "x-auth-token": `Bearer ${auth?.accessToken}`}
 					}
 			);
-            console.log(response);
             setValue(value);
             // reply = response.data;
             //console.log(reply);

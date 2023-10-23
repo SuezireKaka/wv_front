@@ -5,8 +5,6 @@ import { useLocation } from "react-router-dom";
 export default function Showcase({data = [], colnum = 5}) {
     const location = useLocation();
     let state = location.state;
-    console.log(data)
-
     const CELL_STYLE = {
         width: "20%",
         border: "1px solid"

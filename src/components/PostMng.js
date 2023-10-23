@@ -14,17 +14,11 @@ export default function PostMng() {
     const state = location.state?.state;
 	const parentId = location.state?.parentId;
 	const { auth } = useContext(AppContext);
-
-	console.log("포스트는", post);
-	console.log("스테이트는", state);
-	console.log("지금 유저 정보는", auth);
-	
 	const navigate = useNavigate();
 	const [title, setTitle] = useState(post?.title);
 	const [content, setContent] = useState(post?.content);
 	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
-	console.log(isComplete[0]);
 	let hTier;
 	
 
@@ -57,12 +51,10 @@ export default function PostMng() {
 					'Content-Type': 'application/json',
 					"x-auth-token": `Bearer ${auth?.accessToken}`}}
 			);
-			console.log("==============나오나 확인======");
-			console.log('post.id', post?.id);
+
 			if (!post?.id) {
 				//글쓰기
 				console.log('//글쓰기 ttt');
-	
 				navigate(-1, {state:{boardId:post?.boardVO?.id, page:1, search:""}});
 			} else {
 				//수정

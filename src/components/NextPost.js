@@ -9,7 +9,7 @@ export default function NextPost({parentId,post,postListWithPaging,txtSearch=f=>
     const { auth } = useContext(AppContext);
     const location = useLocation();
     let state = location.state;
-    console.log(state);
+
     const postUri = `http://localhost:8080/work/anonymous/findById/${state.id}`;
     let navigate = useNavigate();
 
