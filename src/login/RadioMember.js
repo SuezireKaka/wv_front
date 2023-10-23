@@ -51,16 +51,18 @@ export default function RadioMember({member}) {
   return (
     <div><article>
         {console.log(value)}
+        <td>
             <RadioGroup value={value} onChange={setValue}>
                 {member?.roleList[0]?.role==="writer"?
                     <><Radio name={`${member.id}`} value="writer" checked>writer</Radio>
                     <Radio name={`${member.id}`} value="reader">reader</Radio></>:
                     <><Radio name={`${member.id}`} value="writer" >writer</Radio>
                     <Radio name={`${member.id}`} value="reader" checked>reader</Radio></>}
-            </RadioGroup>
+            </RadioGroup></td>
+            <td>
             <button variant="primary" onClick={(e)=>{radioMember(value, member.id)}}>
                 변경
-            </button>
+            </button></td>
     </article>
 
 

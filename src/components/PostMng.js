@@ -63,11 +63,11 @@ export default function PostMng() {
 				//글쓰기
 				console.log('//글쓰기 ttt');
 	
-				navigate(`/`, {state:{boardId:post?.boardVO?.id, page:1, search:""}});
+				navigate(-1, {state:{boardId:post?.boardVO?.id, page:1, search:""}});
 			} else {
 				//수정
 				console.log('수정', post);
-				navigate(`/`, {state:state});
+				navigate(-1, {state:state});
 			}
 			
 		} catch (err) {
@@ -88,7 +88,7 @@ export default function PostMng() {
 		} finally {
 			// navigate state 전달
 			console.log('Delete state', state);
-			navigate(`/`, {state:state});
+			navigate(-1, {state:state});
 		}
 	}
 

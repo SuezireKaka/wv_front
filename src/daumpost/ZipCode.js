@@ -21,7 +21,7 @@ export const ZipCode = (props) => {
         props.setAddress(fullAddress)
        
         console.log(data.zonecode)
-        props.onClose()
+
 
         
     }
@@ -44,7 +44,7 @@ export const ZipCode = (props) => {
     <div class="modal-dialog">
       <div class="modal-content">
             <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
-            <button type='button' onClick={() => {props.onClose()}} className='postCode_btn'>닫기</button>
+           
             
       </div>
     </div>

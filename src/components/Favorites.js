@@ -39,7 +39,7 @@ export default function Favorites() {
   
       try {
         await axios.post(
-          "/party/favoritesInput",
+          "/party/favorites",
           bodyData,
           {headers: {
             'Content-Type': 'application/json',

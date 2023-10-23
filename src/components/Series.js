@@ -14,6 +14,7 @@ import AppContext from "context/AppContextProvider";
 import { useContext } from "react";
 import OriginalViewList from "atom/OriginalViewList";
 import OriginalViewOne from "atom/OriginalViewOne";
+import Badge from 'react-bootstrap/Badge';
 
 export default function Series() {
   const location = useLocation();
@@ -38,7 +39,7 @@ export default function Series() {
     <Table responsive variant="white">
       <thead>
         <tr>
-          <th colSpan='2'>제목:{post.title}
+          <th colSpan='2'>{post.title}&nbsp;&nbsp;
           {(post.writer ? post.writer.nick === auth.nick : false) ?
           <Favorites user={auth} state={{seriesId:post.id}}/>
           : ""}
@@ -48,7 +49,7 @@ export default function Series() {
       </thead>
       <tbody>
         <tr>
-          <td rowSpan='4'><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="300"/></td>
+          <td rowSpan='4' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="300"/></td>
           <td>작가:{post.writer?.nick}</td>
         </tr>
         <tr>

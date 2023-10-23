@@ -6,55 +6,46 @@ import { Fetch } from "toolbox/Fetch";
 import Carousel from 'react-bootstrap/Carousel';
 import Series from "./Series";
 
+import OriginalViewOne from "atom/OriginalViewOne";
 
 export default function Home() {
   const [index, setIndex] = useState(0);
-  const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/0002/1`
+  const postUri = `/work/anonymous/findById/000e`;
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
   const renderSuccess = (data) =>{
     console.log(data)
-    console.log(data?.firstVal)
+
     return <> <Carousel>
-    <Carousel.Item>
-        <div className='slidercontents'>
-            <div className='wrapText'>
-                <h1>시작화면 넘기기</h1>
-                <div className="d-none d-md-block">
-                    <p>1111111111111111111111111
-                      1111111111111111
-                      11111111111111111
-                    </p>
-                </div>
 
-            </div>
-        </div>
+    <Carousel.Item>
+       
+        <h3>First slide label</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+
     </Carousel.Item>
     <Carousel.Item>
-    <div className='slidercontents'>
-            <div className='wrapText'>
-                <h1>시작화면 넘기기</h1>
-                <div className="d-none d-md-block">
-                    <p>222222222222222
-                      22222222222
-                      2222222222
+       
+        <h3>First slide label</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
 
-                    </p>
-                </div>
- 
-            </div>
-        </div>
     </Carousel.Item>
-</Carousel>
-</>
+    <Carousel.Item>
+       
+       <h3>First slide label</h3>
+       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+
+   </Carousel.Item>
+    </Carousel>
+    </>
   }
 
 
   return (
     <div>
       <p class="border border-danger-subtle">
-      <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={renderSuccess}/>
+      <Fetch uri={postUri} renderSuccess={renderSuccess} />
       
       </p>
     </div>

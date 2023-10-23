@@ -4,6 +4,7 @@ import AppContext from "context/AppContextProvider";
 import { useContext, useState } from 'react';
 import { displayDate } from "toolbox/DateDisplayer";
 import { useLocation } from 'react-router';
+import { Button } from 'react-bootstrap';
 
 export default function ReplyList({parent}) {
     const { auth } = useContext(AppContext);
@@ -81,9 +82,9 @@ export default function ReplyList({parent}) {
     return <>
             {auth.nick ? <>
             {console.log(parent.id)}
-            <button variant="primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
+            <Button variant="light" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
-            </button>
+            </Button>
             </> :  ""}
             {console.log(parent)}
             {openAddReplay}
@@ -93,13 +94,13 @@ export default function ReplyList({parent}) {
             : ""}
             <ul>
         {parent.repliesList?.map((reply) => {
-            return <li key={reply.id}>
-                ▸▸ <span>{reply.content}</span>
+            return <li key={reply.id}  align="left">
+                <span>{reply.content}</span>
                 &nbsp;&nbsp; <span>{displayDate(reply.regDt, reply.uptDt)} </span>
                 &nbsp;&nbsp; <span>{reply.writer ? reply.writer.nick : ""} </span>
                 <ReplyList parent={reply}/>
             </li>
-        })}
+            })}
     </ul>
     </>
 }

@@ -10,9 +10,11 @@ import { Fetch } from "toolbox/Fetch";
 import AppContext from "context/AppContextProvider";
 import { Table } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";
+import { Pagination } from "react-bootstrap";
+
 export default function PostList() {
   const { auth } = useContext(AppContext);
-  const isMember = auth?.roles?.includes("member");
+
   const location = useLocation();
   const state = location.state;
 console.log(state.post)
@@ -65,12 +67,12 @@ const onSearch = (e) => {
 const displayPagination = (paging) => {
     const pagingBar = [];
     if (paging.prev)
-        pagingBar.push(<button style={{all:"unset"}} key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</button>);
+        pagingBar.push(<Pagination.Item key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</Pagination.Item>);
     for (let i = paging.startPage; i <= paging.lastPage; i++) {
-        pagingBar.push(<button style={{all:"unset"}} key={i} onClick={(e) => goTo(i)}>[{i}]</button>);
+        pagingBar.push(<Pagination.Item key={i} onClick={(e) => goTo(i)}>{i}</Pagination.Item>);
     }
     if (paging.next)
-        pagingBar.push(<button style={{all:"unset"}} key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</button>);
+        pagingBar.push(<Pagination.Item key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</Pagination.Item>);
     return pagingBar;
 }
 
@@ -88,31 +90,35 @@ function renderSuccess(postListWithPaging) {
           </thead>
           <tbody>
               {postList?.map(post => (
-                  <tr key={post.id}>
+                <tr key={post.id}>
                     {console.log(post)}
                       <td><ThumbnailList imgDtoList={post?.listAttachFile}/></td>
                       <td width="60%">
+                    <Link style={{all:"unset"}} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
+                          state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
                       {console.log("------------------------")}
                       {console.log("------------------------")}
                         {console.log(post)}
                         {console.log(state)}
                         {console.log(state?.boardId)}
-                          <Link key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
-                                state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
-                              &nbsp;&nbsp;{post.title}
-                          </Link>
+                             {post.title}</Link>
                       </td>
+                         
                       <td>👦🏻{post.writer ? post.writer.nick : ""}</td>
                       <td>✔{post.readCount}</td>
                       <td>🤣{post.likeCount}</td>
                       <td>🕐{displayDate(post.regDt, post.uptDt)}</td>
-                  </tr>
+                  </tr> 
               ))}
           </tbody>
           <tfoot>
           </tfoot>
       </Table>
+      <div  style={{Align:"center"}}>
+      <Pagination>
       {pagenation?.lastPage>=2?displayPagination(pagenation):""}
+      </Pagination>
+      </div>
   </>
 }
     return (
