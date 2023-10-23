@@ -69,9 +69,8 @@ export default function Diagram() {
                         backgroundColor:entity.innerColor, borderColor:entity.outerColor
                     }}
                     onDragStart={() => {setSelectedId(entity.id)}}
-                    onDrag={() => {
-                        let newCustomEntityList = [...customEntityList]
-                            .filter(entity => entity.id !== selectedId)
+                    onDragEnd={(e) => {
+                        setSelectedId(entity.id)
                     }}
                     draggable
                 >
@@ -87,6 +86,9 @@ export default function Diagram() {
                         backgroundColor:relation.innerColor, borderColor:relation.outerColor
                     }}
                     onDragStart={() => {setSelectedId(relation.id)}}
+                    onDragEnd={(e) => {
+                        setSelectedId(relation.id)
+                    }}
                     draggable
                 >
                     {relation.name}
