@@ -40,9 +40,8 @@ export default function Favorites({favorites, setFavorites=f=>f}) {
       console.log(JSON.stringify(bodyData));
   
       try {
-        await axios.post(
-          "/party/favorites",
-          bodyData,
+        await axios.get(
+          `/work/toggleFavorites/${state.seriesId}`,
           {headers: {
             'Content-Type': 'application/json',
             "x-auth-token": `Bearer ${auth?.accessToken}`}}
