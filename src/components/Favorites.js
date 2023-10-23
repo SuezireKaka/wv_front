@@ -7,13 +7,15 @@ import CheckboxGroup from 'toolbox/CheckboxGroup';
 import { FaStar } from "react-icons/fa"
 import axios from 'api/axios';
 
-export default function Favorites() {
+export default function Favorites({favorites, setFavorites=f=>f}) {
     const location = useLocation();
     let state = location.state;
+    console.log("favorites");
+    console.log(favorites);
 
-    const [color,setColor] = useState("blue");
+    const [color,setColor] = useState(favorites?"blue":"gray");
     const { auth } = useContext(AppContext);
-    const[favorites, setFavorites] = useState(false);
+
     console.log(state);
     console.log(auth);
 
