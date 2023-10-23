@@ -1,12 +1,11 @@
-import ImageUploadExample from './ImageUploadExample'
-import Diagram from './Diagram'
-
+import {UseGestureList} from "./UseGestureTest"
 
 export default function Test4() {
+    
 
     return <>
         테스트4
         <br/>
-        <Diagram />
+        <UseGestureList/>
     </>
 }

@@ -24,3 +24,7 @@ npm i react-icons
         npm i react-virtualized
         npm i react-infinite-scroller
         npm install react-kakao-login
+
+드래그 앤 드롭 - 뭐가 더 좋은건지 모르겠어서 일단 다 넣고 있
+npm i react-use-gesture
+npm i react-spring --save
