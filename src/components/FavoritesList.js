@@ -8,16 +8,16 @@ import AppContext from 'context/AppContextProvider';
 export default function FavoritesList() {
   const { auth } = useContext(AppContext);
   console.log(auth);
-  const url = `/work/favoritesAll`
-  function renderSuccess(data){
-    console.log(data)
-    return <>adf</>
-  }
+  const url = `/work/favoritesAll/1`
 
+  function renderSuccess(_, data){
+    console.log(data)
+    return <p>adf</p>
+  }
 
   return (
         <>
-             <AxiosAuth url={url} auth={auth} renderSuccess={renderSuccess}/>
+             <AxiosAuth uri={url} auth={auth} renderSuccess={renderSuccess}/>
         </>
   )
 }
