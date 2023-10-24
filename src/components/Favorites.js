@@ -10,10 +10,9 @@ import axios from 'api/axios';
 export default function Favorites({favorites, setFavorites=f=>f}) {
     const location = useLocation();
     let state = location.state;
-    console.log("favorites");
-    console.log(favorites);
+    console.log("favorites", favorites);
 
-    const [color,setColor] = useState(favorites?"blue":"gray");
+    const [color, setColor] = useState(favorites?"blue":"gray");
     const { auth } = useContext(AppContext);
 
     console.log(state);
@@ -21,7 +20,7 @@ export default function Favorites({favorites, setFavorites=f=>f}) {
 
     const onPress = async (e)=>{
       e.preventDefault();
-      if(favorites===false){
+      if(!favorites){
         setColor("gray")
         setFavorites(true)
       }else{

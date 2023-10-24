@@ -1,4 +1,4 @@
-import {useFatch, usePost} from "hooks/useFatch.js"
+import {useFatch, usePost, useAuth} from "hooks/useFatch.js"
 
 function Fetch({uri, renderSuccess = f => f,
     loadingFallBack = <p>loading...</p>,
@@ -33,4 +33,17 @@ function AxiosPost({uri, body, renderSuccess = f=>f,
     }
 }
 
-export {Fetch, AxiosPost};
+function AxiosAuth({uri, auth, renderSuccess = f=>f,
+    loadingFallBack = <p>loading...</p>,
+    renderError = ({error})=>(<pre>{JSON.stringify(error, null, 2)}</pre>)}) {
+
+    const {loading, data, error} = useAuth(uri, auth);
+
+    if (loading) return loadingFallBack;
+    if (error) return renderError({error});
+    if (data) {
+        return renderSuccess(auth, data);
+    }
+}
+
+export {Fetch, AxiosPost, AxiosAuth};
