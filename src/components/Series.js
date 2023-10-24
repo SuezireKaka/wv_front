@@ -15,6 +15,7 @@ import { useContext } from "react";
 import OriginalViewList from "atom/OriginalViewList";
 import OriginalViewOne from "atom/OriginalViewOne";
 import Badge from 'react-bootstrap/Badge';
+import { FaBullhorn } from "react-icons/fa";
 
 export default function Series() {
   const location = useLocation();
@@ -71,9 +72,16 @@ export default function Series() {
              <button>수정</button>
            </Link>
            : ""}
-            <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
+          <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
             <button>툴킷으로</button>
           </Link>
+          {auth && auth.nick
+          ? <Link to={`/series/${state.seriesId}/report`} state={{ seriesId: state.seriesId , page:1}}>
+            <button>{"신고하기 "}<FaBullhorn color="tomato"/></button>
+          </Link>
+          :""
+          }
+          
           </td>
         </tr>
       </tbody>

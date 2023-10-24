@@ -54,19 +54,6 @@ export default function ShowcaseList() {
 
     };
 
-
-
-    const renderSuccess = (data) =>{
-        console.log(data)
-        return <>
-        <SeriesCards data={data.firstVal} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }}}}/>{console.log(data.firstVal)}
-        </>
-    }
-    
-
-
-
-
     return <div>
         <br/>
         <div className="Question">
@@ -81,7 +68,7 @@ export default function ShowcaseList() {
             <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
                 <button>신규</button><br/><br/>
             </Link>
-            <Fetch uri={LIST_ALL_SERIES_URI} renderSuccess={renderSuccess}/>
+            <SeriesCards state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }}}}/>
     </div>
 }
   

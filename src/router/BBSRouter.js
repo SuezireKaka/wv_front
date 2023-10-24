@@ -2,6 +2,7 @@ import Home from 'components/Home';
 import { Route, Routes } from 'react-router';
 import Showcase from 'components/Showcase';
 import Series from 'components/Series';
+import ReportMng from 'components/ReportMng';
 import PostDetails from 'components/PostDetails';
 import Tool from 'components/Tool';
 import Agreement from 'login/Agreement';
@@ -14,7 +15,6 @@ import Test1 from 'example/Test1';
 import Test2 from 'example/Test2';
 import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
-
 import Test5 from 'example/Test5';
 import PostList from 'components/PostList';
 import Post from 'components/Post';
@@ -30,6 +30,8 @@ export default function BBSRouter() {
 
           <Route path={"/series/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/mng"} element={ <PostMng/> } />
+
+          <Route path={"/series/:seriesId/report/"} element={ <ReportMng/> } />
 
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
