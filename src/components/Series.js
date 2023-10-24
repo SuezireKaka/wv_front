@@ -21,11 +21,10 @@ export default function Series() {
   const location = useLocation();
   let state = location.state;
   const { auth } = useContext(AppContext);
-
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
-  const [favorites, setFavorites] = useState();
+  console.log(auth);
 
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
@@ -42,12 +41,12 @@ export default function Series() {
         <tr>
           <th colSpan='2'>{post.title}&nbsp;&nbsp;
           {/**/}
-          {(post.writer ? post.writer.nick === auth.nick : false && favorites !== null) ?
+          {!auth.roles || auth.roles.length === 0?"":
             <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
-              return <Favorites favorites={res?.data} setFavorites={setFavorites}/>
-            }}/>
+              return <><Favorites favorites={res?.data}/></>
+            }}/>}
             
-          : ""}
+          
           </th>
           {/*<th></th>*/}
         </tr>

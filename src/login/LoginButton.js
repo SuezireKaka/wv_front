@@ -33,7 +33,7 @@ export default function LoginButton() {
       </>
       : 
       <>
-
+      <Dropdown.Item href="/favoriteslist">즐겨찾기</Dropdown.Item>
       <Dropdown.Item href="/userProfile">프로필수정</Dropdown.Item>
       <Dropdown.Item onClick={handleLogout}>로그아웃</Dropdown.Item>
       </>
