@@ -13,7 +13,7 @@ export default function Favorites({favorites, setFavorites=f=>f}) {
     console.log("☆favorites");
     console.log(favorites);
 
-    const [color,setColor] = useState(favorites?"blue":"gray");
+    const [color, setColor] = useState(favorites?"blue":"gray");
     const { auth } = useContext(AppContext);
 
     const onPress = async (e)=>{

@@ -45,4 +45,26 @@ function usePost(uri, body) {
     return { loading, data, error };
 }
 
-export { useFatch, usePost };
+function useAuth(uri, auth) {
+    const [data, setData] = useState();
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!uri || !auth) return;
+        console.log("지금 auth 누구야?", auth)
+        axios.get(uri, 
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "x-auth-token": `Bearer ${auth?.accessToken}`
+                }
+            })
+            .then(setData)
+            .then(setLoading(false))
+            .catch(setError);
+    }, [uri, auth]);
+    return { loading, data, error };
+}
+
+export { useFatch, usePost, useAuth };

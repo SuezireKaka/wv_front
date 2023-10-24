@@ -2,7 +2,7 @@ import { useLocation } from "react-router";
 import { useState } from "react";
 import axios from 'api/axios';
 import { useEffect } from "react";
-import { Fetch } from "toolbox/Fetch";
+import { Fetch, AxiosPost, AxiosAuth } from "toolbox/Fetch";
 import { displayDate } from "toolbox/DateDisplayer";
 import PostList from "./PostList";
 import { Link } from "react-router-dom";
@@ -24,11 +24,12 @@ export default function Series() {
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
-  const[favorites, setFavorites] = useState();
+  const [favorites, setFavorites] = useState();
 
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
   const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
+  const favoriteCheckUri = `/work/isFavorites/${state.seriesId}`;
 
   function SeriesDetailsSuccess(post){
     //function SeriesDetailsSuccess(시리즈) <<요부분은 시리즈 대신 포스트로 해서 수정하기 용이하게 함
@@ -39,8 +40,13 @@ export default function Series() {
       <thead>
         <tr>
           <th colSpan='2'>{post.title}&nbsp;&nbsp;
-          {(post.writer ? post.writer.nick === auth.nick : false) ?
-          <Favorites favorites={post.favorites} setFavorites={setFavorites}/>
+          {/*<Favorites favorites={favorites} setFavorites={setFavorites}/>*/}
+          {(post.writer ? post.writer.nick === auth.nick : false && favorites !== null) ?
+            <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
+              console.log("여기 그 결과다!", res)
+              return <p>성공!</p>
+            }}/>
+            
           : ""}
           </th>
           {/*<th></th>*/}
