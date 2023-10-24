@@ -14,10 +14,12 @@ import Test1 from 'example/Test1';
 import Test2 from 'example/Test2';
 import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
-
 import Test5 from 'example/Test5';
 import PostList from 'components/PostList';
 import Post from 'components/Post';
+import FavoritesList from 'components/FavoritesList';
+
+
 export default function BBSRouter() {
     return (
         <Routes> 
@@ -35,13 +37,13 @@ export default function BBSRouter() {
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
           <Route path={"/register"} element={ <Register/> } />
+          <Route path={"/favoritesList"} element={ <FavoritesList/> } />
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
-          <Route path={"/test4"} element={<Test4 />} />
           <Route path={"/Test3"} element={<Test3 />} />
-          
+          <Route path={"/test4"} element={<Test4 />} />
           <Route path={"/Test5"} element={<Test5 />} />
         </Routes>
        
