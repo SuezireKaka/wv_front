@@ -43,7 +43,7 @@ export default function Series() {
           {/**/}
           {(post.writer ? post.writer.nick === auth.nick : false && favorites !== null) ?
             <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
-              return res?.data? <Favorites favorites={favorites} setFavorites={setFavorites}/> : ""
+              return <Favorites favorites={res?.data} setFavorites={setFavorites}/>
             }}/>
             
           : ""}
