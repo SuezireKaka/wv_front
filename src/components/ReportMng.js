@@ -5,9 +5,16 @@ import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
 import AttachedFileList from 'atom/AttachedFileList';
 import ThumbnailList from 'atom/ThumbnailList';
-
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import {Fetch} from 'toolbox/Fetch';
+import CheckboxGroup from "toolbox/CheckboxGroup";
+import Checkbox from "toolbox/Checkbox";
+ 
 
 export default function ReportMng() {
+    const [reportDetails, setReportDetails] = React.useState([]);
     const { auth } = useContext(AppContext);
 
     const location = useLocation();
@@ -30,16 +37,22 @@ export default function ReportMng() {
 
     const STYLE = {width : "50px 30%"}
 
-    return <Form style={STYLE}>
+    return <> <CheckboxGroup
+    values={reportDetails}
+    onChange={setReportDetails}
+    >
+    <>[{reportDetails.join(",")}]<button disabled={reportDetails==[]}>체크박스에 담기</button></>
+    <Form style={STYLE}>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>신고사유를 선택해주세요</Form.Label>
             <br/>
-            {reportCauseArray.map((cause, index) => <Form.Check
+            
+            {reportCauseArray.map((cause, index) => <><Checkbox value={index}></Checkbox><Form.Check
                 inline
                 label={cause.rptType}
                 type="checkbox"
                 id={`inline-checkbox-${index}`}
-            />)}
+            /></>)}
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>신고사유를 구체적으로 적어주세요</Form.Label>
@@ -51,5 +64,5 @@ export default function ReportMng() {
 		<Button variant="primary" style={{backgroundColor:"tomato", borderColor:"tomato"}}>
 			신고하기
 		</Button>
-    </Form>
+    </Form> </CheckboxGroup></>
 }

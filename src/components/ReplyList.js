@@ -71,7 +71,6 @@ export default function ReplyList({parent}) {
 
     return <>
             {auth.nick ? <>
-            {console.log(parent.id)}
             <Button variant="light" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
             </Button>
