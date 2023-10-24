@@ -40,11 +40,10 @@ export default function Series() {
       <thead>
         <tr>
           <th colSpan='2'>{post.title}&nbsp;&nbsp;
-          {/*<Favorites favorites={favorites} setFavorites={setFavorites}/>*/}
+          {/**/}
           {(post.writer ? post.writer.nick === auth.nick : false && favorites !== null) ?
             <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
-              console.log("여기 그 결과다!", res)
-              return <p>성공!</p>
+              return res?.data? <Favorites favorites={favorites} setFavorites={setFavorites}/> : ""
             }}/>
             
           : ""}
