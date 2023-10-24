@@ -12,14 +12,7 @@ import RadioMember from './RadioMember';
 import { Table } from 'react-bootstrap';
 export default function MemberList() {
     const { ownerId } = useParams();
-    
-
-    console.log(ownerId);
     const listAllMemberUri = `/party/anonymous/listAllAccount/${ownerId}/1`;
-    console.log(listAllMemberUri);
-
-    
-
     return (
         <div>
  
@@ -46,8 +39,7 @@ export default function MemberList() {
 
 
 function RenderSuccess(memberList) {
-    console.log(memberList);
-    console.log(memberList.firstVal);
+
     return memberList.firstVal?.map(member => (
         <>
             <tr key={member.id}>

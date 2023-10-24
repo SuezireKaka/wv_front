@@ -20,8 +20,7 @@ export default function Series() {
   const location = useLocation();
   let state = location.state;
   const { auth } = useContext(AppContext);
-  console.log("시리즈 state");
-  console.log(state);
+
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
@@ -34,9 +33,7 @@ export default function Series() {
 
   function SeriesDetailsSuccess(post){
     //function SeriesDetailsSuccess(시리즈) <<요부분은 시리즈 대신 포스트로 해서 수정하기 용이하게 함
-    console.log(post);
-    console.log("1, 3")
-    console.log(post?.id)
+
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
     <Table responsive variant="white">
@@ -120,14 +117,7 @@ export default function Series() {
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
       
     </div>
-    <br/>
-    <div>
-      {/*게시글등록링크 만들어야함 - 완성
-      <Fetch uri={postListUri} renderSuccess={PostSkinListSuccess}/>
-      */}
-      
-    </div>
-    
+     
   </>
 }
   

@@ -17,13 +17,9 @@ export default function Post() {
 
   const location = useLocation();
   const state = location.state;
-console.log(state.post)
-console.log(state?.seriesId)
-console.log(state)
-console.log(state?.page)
-  console.log("PostList param", state);
+
+
   function buildUrl(step) {
-    console.log("buildUrl(step", step);
   
     if (state.search)
         return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
@@ -33,15 +29,14 @@ console.log(state?.page)
   const [postListUri, setPostListUri] = useState(buildUrl(222));
     
   const [targetBoard, setTargetBoard] = useState(state.boardId);
-  console.log("saved targetBoard", targetBoard);
+
 
 
   if (targetBoard !== state.boardId) {
-    console.log("targetBoard changing", state.boardId);
+
     setTargetBoard(state.boardId);
     setPostListUri(buildUrl());
-    console.log(postListUri);
-    console.log("다시 그리기 시작해");
+
 }
 
 function goTo(chosenPage) {
@@ -78,11 +73,9 @@ const displayPagination = (paging) => {
 
 function renderSuccess(postListWithPaging) {
 
-  console.log(postListWithPaging);
   const postList = postListWithPaging?.firstVal;
   const pagenation = postListWithPaging?.secondVal;
-  console.log(postList);
-  console.log(pagenation);
+
   return <>
       <Table responsive variant="white">
           <thead>
@@ -96,11 +89,6 @@ function renderSuccess(postListWithPaging) {
                       <td width="60%">
                     <Link style={{all:"unset"}} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
                           state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging,seriesId:state?.seriesId, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
-                      {console.log("------------------------")}
-                      {console.log("------------------------")}
-                        {console.log(post)}
-                        {console.log(state)}
-                        {console.log(state?.boardId)}
                              {post.title}</Link>
                       </td>
                          

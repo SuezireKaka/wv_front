@@ -28,11 +28,10 @@ export default function SeriesCards({data = []}) {
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
 
   const getPostListThenSet = async () => {
-      console.log('fetching 함수 호출됨');
       try {
           const { data } = await axios.get(`/work/anonymous/listAllSeries/${targetBoard}/${page}`);
-          console.log("읽어온 게시글 목록", data.firstVal);
-          setPostList(postList.concat(data.firstVal));
+          console.log("읽어온 게시글 목록", data?.firstVal);
+          setPostList(postList.concat(data?.firstVal));
       } catch {
           console.error('fetching error');
       }
@@ -112,70 +111,3 @@ export default function SeriesCards({data = []}) {
   );
 }
 
-
-
-/*
-                <Card id ={post?.id} style={{ width: '18rem' }} >
-                <Link style={{ textDecoration: "none", color:"black" } }to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page:1, boardId:state?.boardId}}>
-
-                <OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="200"/>
-                    <Card.Body>
-                      <Card.Title>{post?.title}</Card.Title>
-                      <Card.Text>{post?.writer?.nick}</Card.Text>
-                    </Card.Body>
-                   </Link>   
-                  </Card><br/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<Container>
-                    <Row ref={setLastIntersectingImage}>
-                <Col xs={{ order: 12 }}><Card id ={series?.id} style={{ width: '18rem' }} >
-                <Link style={{ textDecoration: "none", color:"black" } }to={`/series/${series.id}`} state={{ seriesId: series.id, post: state?.post, page:1, boardId:state?.boardId}}>
-
-                <OriginalViewOne imgDtoList={series.listAttachFile} x="200" y="200"/>
-                    <Card.Body>
-                      <Card.Title>{series?.title}</Card.Title>
-                      <Card.Text>{series?.writer?.nick}</Card.Text>
-                    </Card.Body>
-                   </Link>   
-                  </Card><br/></Col>
-                  </Row>
-            </Container>
-                </>);} else {
-                  return (<>
-                              <Container>
-                    <Row >
-                <Col xs={{ order: 12 }}><Card id ={series?.id} style={{ width: '18rem' }} >
-                <Link style={{ textDecoration: "none", color:"black" } }to={`/series/${series.id}`} state={{ seriesId: series.id, post: state?.post, page:1, boardId:state?.boardId}}>
-
-                <OriginalViewOne imgDtoList={series.listAttachFile} x="200" y="200"/>
-                    <Card.Body>
-                      <Card.Title>{series?.title}</Card.Title>
-                      <Card.Text>{series?.writer?.nick}</Card.Text>
-                    </Card.Body>
-                   </Link>   
-                  </Card><br/></Col>
-                  </Row>
-            </Container>
-
-
-*/

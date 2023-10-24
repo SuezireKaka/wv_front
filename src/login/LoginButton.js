@@ -11,7 +11,7 @@ export default function LoginButton() {
     const roles = auth.roles ? auth.roles : [""];
     const [signInResult, setSignInResult] = useState({});
     const navigate = useNavigate();
-  console.log(auth);
+
   const handleLogout = (e) => {
     e.preventDefault();
     setAuth({nick : "", roles : []});

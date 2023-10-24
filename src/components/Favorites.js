@@ -10,34 +10,30 @@ import axios from 'api/axios';
 export default function Favorites({favorites, setFavorites=f=>f}) {
     const location = useLocation();
     let state = location.state;
-    console.log("favorites", favorites);
+    console.log("☆favorites");
+    console.log(favorites);
 
     const [color, setColor] = useState(favorites?"blue":"gray");
     const { auth } = useContext(AppContext);
 
-    console.log(state);
-    console.log(auth);
-
     const onPress = async (e)=>{
-      e.preventDefault();
-      if(!favorites){
-        setColor("gray")
+      //e.preventDefault();
+      if(favorites===false){
+        setColor("yellow")
         setFavorites(true)
       }else{
-        setColor("blue")
+        setColor("red")
         setFavorites(false)
       }
-      console.log("시리즈 아이디 : "+ state.seriesId)
-      console.log("유저 아이디 : "+ auth.userId)
       console.log(favorites)
-
+/*
       const bodyData = {
         writer:auth?.userId,
         id:state?.seriesId,
         favorites:favorites
       };
       console.log(JSON.stringify(bodyData));
-  
+*/
       try {
         await axios.get(
           `/work/toggleFavorites/${state.seriesId}`,

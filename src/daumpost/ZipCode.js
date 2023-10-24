@@ -19,11 +19,7 @@ export const ZipCode = (props) => {
         console.log(data)
         console.log(fullAddress)
         props.setAddress(fullAddress)
-       
-        console.log(data.zonecode)
 
-
-        
     }
  
     const postCodeStyle = {

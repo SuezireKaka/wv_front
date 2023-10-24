@@ -9,34 +9,28 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 const Register = () => {
   const { codeList } = useContext(AppContext);
-  console.log(codeList);
   const [name, setName] = useState("");
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState("");
   const [idChecked, setIdChecked] = useState(false);
   const [uniqueId, setUniqueId] = useState(false);
-
   const [nick, setNick] = useState("");
   const [nickChecked, setNickChecked] = useState(false);
   const [uniqueNick, setUniqueNick] = useState(false);
-
   const [passWord, setPassWord] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [birthDateBlur, isBirthDateBlur] = useState(false);
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState();
-
   const [sex, setSex] = useState("남성");
-
   const [listCP, setListCP] = useState(new Map());
   const [fullAddress, setFullAddress] = useState("");
   const [address, setAddress] = useState("");
   const [addText, setAddText] = useState("");
-  console.log(listCP);
-  console.log();
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  
   useEffect(() => {
     setValidMatch(passWord ? passWord === matchPwd : false);
   }, [passWord, matchPwd]);
