@@ -51,8 +51,8 @@ function useAuth(uri, auth) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log("여기를 통과했음", uri, auth)
         if (!uri || !auth) return;
-        console.log("지금 auth 누구야?", auth)
         axios.get(uri, 
             {
                 headers: {
