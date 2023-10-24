@@ -76,8 +76,8 @@ export default function MemberList() {
                 if (index === memberList.length - 1) {
                     return (
                         <>
-                            <tr key={member.id}>
-                                <td ref={setLastIntersectingImage}><b>{member.loginId}</b></td>
+                            <tr key={member.id} ref={setLastIntersectingImage}>
+                                <td><b>{member.loginId}</b></td>
                                 <td><b>{member.nick}</b></td>
                                 <td><b>{member.response?.name}</b></td>
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
