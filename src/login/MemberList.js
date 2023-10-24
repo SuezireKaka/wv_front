@@ -59,7 +59,7 @@ export default function MemberList() {
         }
         return () => observer && observer.disconnect();
     }, [lastIntersectingImage]);
-    return <Table className='react-bootstrap-table'>
+    return <Table className='react-bootstrap-table' style={{width:"100%"}}>
         <thead>
             <tr style={{ backgroundColor: "#eeffdd" }}>
                 <th style={{ backgroundColor: "#eeffdd" }}>아이디</th>
