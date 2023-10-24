@@ -4,7 +4,7 @@ import axios from 'api/axios';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import AppContext from 'context/AppContextProvider';
-import SeriesCardsFavorites from 'component-showcase/SeriesCardsFavorites';
+import FavoritesSeriesCards from './FavoritesSeriesCards';
 import { useState } from 'react';
 import { useLocation } from 'react-router';
 import Row from "react-bootstrap/Row";
@@ -21,25 +21,7 @@ export default function FavoritesList() {
   const { auth } = useContext(AppContext);
   const uri = `/work/favoritesAll/1`
   const [postList, setPostList] = useState([]);
-
-
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
 
-
-
-  function renderSuccess(_, data){
-    console.log(data)
-    console.log(data?.data)
-    console.log(data?.data?.firstVal)
-    const series = data?.data?.firstVal;
-    return (
-      <SeriesCardsFavorites series={series}/>
-    );
-  }
-
-  return (
-        <>
-             <AxiosAuth uri={uri} auth={auth} renderSuccess={renderSuccess}/>
-        </>
-  )
+  return <FavoritesSeriesCards />
 }

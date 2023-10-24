@@ -14,8 +14,7 @@ import OriginalViewOne from "atom/OriginalViewOne";
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 
-export default function SeriesCardsFavorites({series}) {
-  const [page, setPage] = useState(1);
+export default function FavoritesSeriesCards() {
   const location = useLocation();
   let state = location.state;
   const { auth } = useContext(AppContext);
@@ -24,14 +23,24 @@ export default function SeriesCardsFavorites({series}) {
 
 
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
+  const [page, setPage] = useState(1);
 
 
   const getPostListThenSet = async () => {
     try {
-      const { data } = await axios.get(`/work/favoritesAll/${page}`);
-      console.log("읽어온 게시글 목록===%%%%%%%%%");
-      console.log("읽어온 게시글 목록", data?.data.firstVal);
-      setPostList(postList.concat(data?.data?.firstVal));
+      console.log("31줄",page);
+      const { data } = await axios.get(
+        `/work/favoritesAll/${page}`,
+        {
+          headers : {
+            'Content-Type': 'application/json',
+            "x-auth-token": `Bearer ${auth?.accessToken}`
+          }
+        }
+      );
+      console.log("읽어온 게시글 목록===%%%%%%%%%", data);
+      console.log("읽어온 게시글 목록", data?.firstVal);
+      setPostList(postList.concat(data?.firstVal));
     } catch {
       console.error('fetching error');
     }
@@ -72,11 +81,11 @@ export default function SeriesCardsFavorites({series}) {
       <Container>
         <Row>
   
-          {series?.map((post, index) => {
-            if (index === series.length - 1) {
+          {postList?.map((post, index) => {
+            if (index === postList.length - 1) {
               return (
-  
                 <Col id={post?.id} ref={setLastIntersectingImage}>
+                  {console.log("79줄",page)}
                   {console.log(post)}
                   <Card id={post?.id} style={{ width: '18rem' }} ><br />
                     <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: post.boardVO.id }}>
@@ -93,8 +102,8 @@ export default function SeriesCardsFavorites({series}) {
               );
             } else {
               return (
-  
                 <Col id={post?.id}>
+                  {console.log("97줄",page)}
   
                   <Card id={post?.id} style={{ width: '18rem' }} ><br />
                     <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: post.boardVO.id }}>
