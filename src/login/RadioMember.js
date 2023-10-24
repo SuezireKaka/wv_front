@@ -17,13 +17,12 @@ export default function RadioMember({member}) {
 
 		const bodyData = {
             role:value,
-            writer:memberId
         };
 		console.log(JSON.stringify(bodyData));
 
 		try {
-			const response = await axios.post(
-				"/party/reRole",
+			const response = await axios.get(
+				`/party/reRole/${memberId}`,
 				bodyData,
 				{headers: {
 					'Content-Type': 'application/json',
@@ -31,11 +30,6 @@ export default function RadioMember({member}) {
 					}
 			);
             setValue(value);
-            // reply = response.data;
-            //console.log(reply);
-            //setJustCreatedReplyList([reply, ...justCreatedReplyList]);
-            //replayOnReply.set(parentId, "");
-            //setRenderCnt(renderCnt + 1);
 		} catch (err) {
 			console.log('Registration Failed');
 		}

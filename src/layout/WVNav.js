@@ -25,7 +25,7 @@ export default function TestNav() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto  my-2 my-lg-0">
             <LoginButton  className="me-auto  my-2 my-lg-0"/>
-
+            <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
             <Nav.Link><Link style={navMenu} to="/memberList/0000">회원정보</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test1">테스트용</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test2">테스트용2</Link></Nav.Link>
@@ -38,7 +38,25 @@ export default function TestNav() {
       </Container>
     </Navbar>
   </>;
+    function renderSuccess(boardList) {
+      console.log("=======boardList=========");
+      console.log(boardList);
+      return <>
+            {boardList.map(board => (
+                  <Nav.Link>
+                      <Link style={navMenu}  key={board.id} to={`/board/${board.id}`}
+                      state={{ boardId: board.id, page: 1 }}>{board.name}</Link>
+                  </Nav.Link>
+              ))}
+      </>
+    }
+    function renderSuccess1(originalFile) {
+      console.log("=======originalFile=========");
+      console.log(originalFile);
+      return (<>
   
+      </>)
+    }
 }
 
 
