@@ -229,7 +229,7 @@ const Register = () => {
           />
         </InputGroup>
 
-        <InputGroup className="mb-3">
+        <InputGroup className="mb-3" >
           <InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
           <InputGroup.Text id="basic-addon2">
             남

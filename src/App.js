@@ -6,15 +6,18 @@ import AppContext from 'context/AppContextProvider';
 // 연동 잘 되는지 테스트해보자
 
 
-const getCodeList = async (setCodeList) => {
-  const response = await axios.get("/framework/anonymous/listAllContactPointType");
+const getCodeList = async (uri, setCodeList) => {
+  const response = await axios.get(uri);
   setCodeList(response?.data);
 }
 
 export default function App() {
-  const { codeList, setCodeList } = useContext(AppContext);
+  const { codeList, setCodeList, rptCodeList, setRptCodeList } = useContext(AppContext);
   if (!codeList) {
-    getCodeList(setCodeList);
+    getCodeList("/framework/anonymous/listAllContactPointType", setCodeList);
+  }
+  if (!rptCodeList) {
+    getCodeList("/report/anonymous/listAllReportCodes", setRptCodeList);
   }
   return (
     <div className="App">
