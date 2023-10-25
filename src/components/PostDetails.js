@@ -30,10 +30,6 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
 
   const postUri = `/work/anonymous/findById/${state.id}`;
   const postListUri = `/work/anonymous/findById/${state.parentId}`;
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [refreshKey, setRefreshKey] = useState(0);
 
   /* useEffect(() => {
      onLike()
