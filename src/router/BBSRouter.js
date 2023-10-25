@@ -17,8 +17,10 @@ import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
 import Test5 from 'example/Test5';
 import PostList from 'components/PostList';
+import ReportList from 'components/ReportList';
 import Post from 'components/Post';
 import FavoritesList from 'components/FavoritesList';
+
 
 
 export default function BBSRouter() {
@@ -37,6 +39,9 @@ export default function BBSRouter() {
           <Route path={"/series/:seriesId/report/"} element={ <ReportMng/> } />
 
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
+
+          <Route path={"/reportList"} element={ <ReportList/> } />
+
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
           <Route path={"/register"} element={ <Register/> } />

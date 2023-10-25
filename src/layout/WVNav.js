@@ -1,9 +1,10 @@
 import LoginButton from "login/LoginButton";
 import { Nav, Navbar } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AxiosPost, Fetch } from "toolbox/Fetch";
-
+import AppContext from "context/AppContextProvider";
 
 
 export default function TestNav() {
@@ -11,6 +12,7 @@ export default function TestNav() {
   const originalFileUri =`/attach/anonymous/getOriginalFile`;
   const thumbFileFileUri =`/attach/anonymous/displayThumbnail`;
 
+  const { auth } = useContext(AppContext);
 
   const navMenu = {
     color:"grey",
@@ -31,7 +33,11 @@ export default function TestNav() {
             <Nav.Link><Link style={navMenu} to="/test2">테스트용2</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/Test3" >테스트용3</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/Test4" >테스트용4</Link></Nav.Link>
-            <Nav.Link><Link style={navMenu} to="/Test5" >테스트용5</Link></Nav.Link>
+            {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
+              ? <Nav.Link><Link style={navMenu} to="/Test5" >테스트용5</Link></Nav.Link>
+              : ""
+            }
+            
 
           </Nav>
         </Navbar.Collapse>
