@@ -1,6 +1,10 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import AppContext from 'context/AppContextProvider';
 import { Link, useNavigate } from 'react-router-dom';
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import { Button } from 'react-bootstrap';
+
 
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
 
@@ -19,6 +23,11 @@ const LoginStage = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const formCenter = {
+        display: "inline-block",
+        align: "center",
+        width:"50%"
+    }
     useEffect(() => {
         setErrorMessage('');
     }, [loginId, passWord])
@@ -79,30 +88,35 @@ const LoginStage = () => {
             {error
             ? <p>{errorMessage}</p>
             : null}
-            <form onSubmit={signIn}>
-                login id : <input type="text"
+            
+            <form style={formCenter}>
+                <br/>
+            <InputGroup className="mb-3">
+                <InputGroup.Text id="basic-addon1">아이디</InputGroup.Text>
+                <Form.Control type="text"
                 id="loginId"
                 ref={loginIdRef}
                 autoComplete="off"
                 onChange={(e) => setLoginId(e.target.value)}
                 value={loginId}
                 required
-            />
-            <br></br>
-            password : <input type="password"
+            /></InputGroup>
+            <InputGroup className="mb-3">
+                <InputGroup.Text id="basic-addon1">패스워드</InputGroup.Text>
+                <Form.Control  type="password"
                 id="passWord"
                 ref={passWordRef}
                 onChange={(e) => setPassWord(e.target.value)}
                 value={passWord}
                 required
-            />
-            <br></br><br></br>
-            <button onClick={f => f}>로그인</button>
+            /></InputGroup>
+
         </form>
-        <Link to={"/agreement/"}><button>회원가입</button></Link>
-        <br></br>
+            <Button onClick={signIn} variant="success">로그인</Button><br/>
+        <Link to={"/agreement/"}><Button variant="info">회원가입</Button></Link>
+        <br/>
         
-        <button>외부 로그인</button>
+        <Button variant="outline-warning">외부로그인</Button>
     </div>
 };
 
