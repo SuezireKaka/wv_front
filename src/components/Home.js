@@ -16,30 +16,38 @@ import Row from "react-bootstrap/Col";
 import CarouselFadeExample from "./CarouselFadeExample";
 export default function Home() {
   const [index, setIndex] = useState(0);
-  const seriesUri = `/work/anonymous/findById/0000`;
+  const seriesUri = `/work/anonymous/listAllSeries/0002/1`;
 
 
 
 
   const renderSuccess = (data) =>{
-    console.log(data)
-    console.log(data.listAttachFile)
-    const seriesfile = data?.listAttachFile;
+    console.log(data.firstVal);
     //<OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250" />
-    return <> <CarouselFadeExample seriesfile={seriesfile}/>  </>
-    
+    return <>     
+
+<Carousel fade>
+    {data.firstVal?.map((post)=>{      
+      return <Carousel.Item interval={1500}>
+      <div className='slidercontents'>
+      <div className='wrapText'>
+        <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="600" y="auto" />  
+      </div>
+      </div>
+    </Carousel.Item>
+        })}
+    </Carousel> 
+    </>
   }
 
 
   return (
     <div>
-      홈화면
+        <Fetch uri={seriesUri} renderSuccess={renderSuccess} />
     </div>
   )
 }
 /*
 
-<Container>
-        <Fetch uri={seriesUri} renderSuccess={renderSuccess} />
-      </Container>
+
  */
