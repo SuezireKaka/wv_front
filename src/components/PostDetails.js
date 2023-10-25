@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Fetch } from "toolbox/Fetch";
@@ -16,7 +16,8 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import PostList from "./PostList";
 import PostListCanvas from "./PostListCanvas";
-
+import axios from "api/axios";
+import { useRef } from "react";
 export default function PostDetails({ postList, txtSearch = f => f }) {
   const thumbnailRequestTarget = ["video", "image"];
 
@@ -24,26 +25,48 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
   const location = useLocation();
   const state = location.state;
 
+  console.log(state)
   //state={{ id:post.id, boardId:state.boardId, page: currentPage, search: txtSearch.current?.value, postListWithPaging}}>
 
   const postUri = `/work/anonymous/findById/${state.id}`;
   const postListUri = `/work/anonymous/findById/${state.parentId}`;
   const [show, setShow] = useState(false);
-
+  const [like, setLike] = useState(0);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [refreshKey, setRefreshKey] = useState(0);
 
-
-
-
+ /* useEffect(() => {
+    onLike()
+  }, [like]);
+*/
+  const onLike = async(id, like)=>{
+    console.log(id)
+    try{
+      await axios.get(
+        `/work/anonymous/onLike?id=${id}`,
+        {
+          headers : {
+            'Content-Type': 'application/json',
+				}
+      }).then((res)=>{
+        console.log("잘 다녀왔는지 보자", res)
+        
+        setLike(like++)
+      })
+      
+    }catch (err){
+      console.log(err);
+    }
+  }
+  console.log("밖에서 잘 그리고 있니?")
   return <>
-
-
     <Fetch uri={postUri} renderSuccess={renderSuccess} />
   </>
 
   function renderSuccess(post) {
-
+    //setLike(post.likeCount)
+    console.log("안에서 잘 그리고 있니?")
     return <>
       <ListGroup as="ul">
         <ListGroup.Item variant="light" as="li">
@@ -52,7 +75,7 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
         <ListGroup.Item>
           🧑🏻{post.writer ? post.writer.nick : ""}
           ✔<span>{post.readCount}</span>
-          👍<span>{post.likeCount} with button</span>
+          <span onClick={()=>{onLike(post.id, like)}}>👍{like}</span>
           😡<span>{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
         <ListGroup.Item>title : <span>{post.title}</span><br />{/*{`/post/${post.id}`} */}</ListGroup.Item>
