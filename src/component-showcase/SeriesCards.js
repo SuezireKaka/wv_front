@@ -77,7 +77,7 @@ export default function SeriesCards({data = []}) {
                 <Card id ={post?.id} style={{ width: '18rem' }} ><br/>
                 <Link style={{ textDecoration: "none", color:"black" } }to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page:1, boardId:state?.boardId}}>
 
-                <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="350"/>
+                <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="auto"/>
                     <Card.Body>
                       <Card.Title>{post?.title}</Card.Title>
                       {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}

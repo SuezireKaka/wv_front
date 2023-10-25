@@ -6,6 +6,7 @@ import DaumTest from "daumpost/DaumTest";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { Button } from 'react-bootstrap';
 
 const Register = () => {
   const { codeList } = useContext(AppContext);
@@ -303,8 +304,8 @@ const Register = () => {
       </form>
       <Link to="/log-in">
         <br />
-        <button
-          variant="primary"
+        <Button
+          variant="success"
           onClick={handleSubmit}
           disabled={
             !(
@@ -319,7 +320,7 @@ const Register = () => {
           }
         >
           Sign Up
-        </button>
+        </Button>
       </Link>
     </>
   );

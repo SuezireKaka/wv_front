@@ -53,7 +53,7 @@ export default function Series() {
       </thead>
       <tbody>
         <tr>
-          <td rowSpan='4' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="300"/></td>
+          <td rowSpan='4' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="auto"/></td>
           <td>작가:{post.writer?.nick}</td>
         </tr>
         <tr>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Checkbox from "toolbox/Checkbox";
 import CheckboxGroup from "toolbox/CheckboxGroup";
-
+import { Button } from 'react-bootstrap';
 
 export default function Agreement() {
     const [service, setService] = React.useState(false);
@@ -19,12 +19,13 @@ export default function Agreement() {
         </Checkbox>
         </body>
         <footer>
-        <Link to={"/"}><button>이전으로</button></Link>
-        <Link to={"/register/"}><button disabled={!service}>회원 가입</button></Link>
+        <Link to={"/"}><Button variant="danger">이전으로</Button></Link>
+        <Link to={"/register/"}><Button disabled={!service} variant="success">회원 가입</Button></Link>
         </footer>
       </article>
     );
 }
+
 
 /*
 <article>
