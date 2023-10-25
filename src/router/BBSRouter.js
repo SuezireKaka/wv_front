@@ -40,7 +40,7 @@ export default function BBSRouter() {
 
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
 
-          <Route path={"/reportList"} element={ <ReportList/> } />
+          <Route path={"/report"} element={ <ReportList/> } />
 
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/agreement"} element={ <Agreement/> } />

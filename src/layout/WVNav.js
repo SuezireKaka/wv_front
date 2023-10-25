@@ -28,17 +28,19 @@ export default function TestNav() {
           <Nav className="me-auto  my-2 my-lg-0">
             <LoginButton  className="me-auto  my-2 my-lg-0"/>
             <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
-            <Nav.Link><Link style={navMenu} to="/memberList/0000">회원정보</Link></Nav.Link>
+            
+            {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
+              ? <>
+                <Nav.Link><Link style={navMenu} to="/memberList/0000">회원정보</Link></Nav.Link>
+                <Nav.Link><Link style={navMenu} to="/report">신고사항</Link></Nav.Link>
+              </>
+              : ""
+            }
             <Nav.Link><Link style={navMenu} to="/test1">테스트용</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/test2">테스트용2</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/Test3" >테스트용3</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} to="/Test4" >테스트용4</Link></Nav.Link>
-            {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
-              ? <Nav.Link><Link style={navMenu} to="/Test5" >테스트용5</Link></Nav.Link>
-              : ""
-            }
-            
-
+            <Nav.Link><Link style={navMenu} to="/Test5" >테스트용5</Link></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
