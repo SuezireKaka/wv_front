@@ -111,10 +111,10 @@ export default function PostMng() {
 		</Form.Group>
 		<ThumbnailList imgDtoList={listAttach}/>
 		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
-		<Button variant="primary" onClick={handleSubmit} disabled={!hasAllContents} >
+		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents} >
 			반영
 		</Button>
-		<Button variant="primary" onClick={handleDelete}>
+		<Button variant="outline-dark" onClick={handleDelete}>
 			삭제
 		</Button>
 	</Form>

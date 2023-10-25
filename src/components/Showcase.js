@@ -12,6 +12,8 @@ import ThumbnailList from "atom/ThumbnailList";
 import OriginalViewList from "atom/OriginalViewList";
 import axios from "api/axios";
 import { useEffect } from "react";
+import Button from "react-bootstrap/Button";
+
 
 export default function ShowcaseList() {
 
@@ -66,7 +68,7 @@ export default function ShowcaseList() {
         </div> 
         <br/>
             <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
-                <button>신규</button><br/><br/>
+            <Button variant="outline-primary">신규</Button><br/><br/>
             </Link>
             <SeriesCards state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }}}}/>
     </div>

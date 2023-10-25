@@ -11,6 +11,8 @@ import AppContext from "context/AppContextProvider";
 import { Table } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";
 import { Pagination } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+
 
 export default function Post() {
   const { auth } = useContext(AppContext);
@@ -118,7 +120,7 @@ function renderSuccess(postListWithPaging) {
     return (
       <div>
       <Link to={`/series/${state.boardId}/mng`} state={{seriesId:state.boardId, parentId : state.boardId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
-      <button>신규</button>
+      <Button variant="outline-primary">신규</Button>
       </Link>
         <Fetch uri={postListUri} renderSuccess={renderSuccess} />
   

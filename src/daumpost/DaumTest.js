@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PopupDom from './PopupDom ';
 import { ZipCode } from './ZipCode';
- 
+import { Button } from 'react-bootstrap';
 const DaumTest = ({setAddress=f=>f}) => {
 	// 팝업창 상태 관리
     const [postButtonText, setPostButtonText] = useState("우편번호 검색")
@@ -21,7 +21,7 @@ const DaumTest = ({setAddress=f=>f}) => {
     return(
         <div>
         	
-            <button type='button' onClick={openPostCode}>{postButtonText}</button>
+            <Button type='button' onClick={openPostCode} variant="outline-info">{postButtonText}</Button>
             
             <div id='popupDom'>
                 {isPopupOpen && (

@@ -16,6 +16,9 @@ import OriginalViewList from "atom/OriginalViewList";
 import OriginalViewOne from "atom/OriginalViewOne";
 import Badge from 'react-bootstrap/Badge';
 import { FaBullhorn } from "react-icons/fa";
+import Button from "react-bootstrap/Button";
+import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function Series() {
   const location = useLocation();
@@ -25,11 +28,28 @@ export default function Series() {
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
   console.log(auth);
-
+	const navigate = useNavigate();
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
   const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
   const favoriteCheckUri = `/work/isFavorites/${state.seriesId}`;
+  	
+	const handleDelete = async (e) => {
+		e.preventDefault();
+
+		try {
+			const data = await axios.delete(`/work/${state.seriesId}`,
+				{headers: {
+					'Content-Type': 'application/json',
+					"x-auth-token": `Bearer ${auth.accessToken}`}});
+		} catch (err) {
+			console.log('Delete Failed', err);
+		} finally {
+			// navigate state 전달
+			console.log('Delete state', state);
+			navigate(-1, {state:state});
+		}
+	}
 
   function SeriesDetailsSuccess(post){
     //function SeriesDetailsSuccess(시리즈) <<요부분은 시리즈 대신 포스트로 해서 수정하기 용이하게 함
@@ -66,17 +86,17 @@ export default function Series() {
         <tr>
           <td>
             
-          {(post.writer ? post.writer.nick === auth.nick : false) ?
+          {(post.writer ? post.writer.nick === auth.nick : false) ?<>
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId}}>
-             <button>수정</button>
-           </Link>
+             <Button variant="outline-info">수정</Button>
+           </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button></>
            : ""}
           <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
-            <button>툴킷으로</button>
+            <Button variant="outline-success">툴킷으로</Button>
           </Link>
           {auth && auth.nick
           ? <Link to={`/series/${state.seriesId}/report`} state={{ seriesId: state.seriesId , page:1}}>
-            <button>{"신고하기 "}<FaBullhorn color="tomato"/></button>
+            <Button variant="outline-danger">{"신고하기 "}<FaBullhorn color="tomato"/></Button>
           </Link>
           :""
           }
@@ -94,8 +114,9 @@ export default function Series() {
       :  <>
       
       <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
-      <button>신규</button>
+      <Button variant="outline-primary">신규</Button>
       </Link>
+      <hr/>
       <PostList />
       </>
   }

@@ -18,9 +18,12 @@ import PostList from "./PostList";
 import PostListCanvas from "./PostListCanvas";
 import axios from "api/axios";
 import { useRef } from "react";
+import { useNavigate } from "react-router";
+
+
 export default function PostDetails({ postList, txtSearch = f => f }) {
   const thumbnailRequestTarget = ["video", "image"];
-
+	const navigate = useNavigate();
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
@@ -36,6 +39,8 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
    }, [like]);
  */
 
+
+   
   console.log("밖에서 잘 그리고 있니?")
   return <>
     <Fetch uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
@@ -67,6 +72,25 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
       setLike(like++)
     }
 
+    const handleDelete = async (e) => {
+      e.preventDefault();
+  
+      try {
+        const data = await axios.delete(`/work/${post.id}`,
+          {headers: {
+            'Content-Type': 'application/json',
+            "x-auth-token": `Bearer ${auth.accessToken}`}});
+      } catch (err) {
+        console.log('Delete Failed', err);
+      } finally {
+        // navigate state 전달
+        console.log('Delete state', state);
+        navigate(-1, {state:state});
+      }
+    }
+
+
+
     console.log("안에서 잘 그리고 있니?")
     return <>
       <ListGroup as="ul">
@@ -86,16 +110,16 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
       {/* <PostListCanvas state={{ seriesId: state.seriesId, post, state, parentId: state.parentId, boardId: state.boardId }} />*/}
       {console.log(state)}
       {state?.boardId === "0001"
-        ? <Link key={state.parentId} to={`/board/0001`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>
-        : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>}
+        ? <Link key={state.parentId} to={`/board/0001`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
+        : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
 
 
       &nbsp;&nbsp;
-      {(post.writer ? post.writer.nick === auth.nick : false) ?
+      {(post.writer ? post.writer.nick === auth.nick : false) ?<>
         <Link
           to={`/series/${post.id}/mng`}
           state={{ seriesId: state.seriesId, post, state, parentId: state.parentId }}
-        >수정</Link> : ""
+        ><Button variant="outline-info">수정</Button></Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button></> : ""
       }
       <br />
 

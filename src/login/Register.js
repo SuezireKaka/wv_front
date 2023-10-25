@@ -145,8 +145,10 @@ const Register = () => {
   return (
     <>
       <form>
-        <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon0">회원가입</InputGroup.Text>
+        <InputGroup className="mb-3" style={{display: "inline-block",
+        align: "center", width:"50%", backgroundColor:""}}>
+          <InputGroup.Text id="basic-addon0"style={{display: "inline-block",
+        textAlign: "center"}}>회원가입</InputGroup.Text>
         </InputGroup>
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">이름</InputGroup.Text>
@@ -305,7 +307,7 @@ const Register = () => {
       <Link to="/log-in">
         <br />
         <Button
-          variant="success"
+          variant="outline-primary"
           onClick={handleSubmit}
           disabled={
             !(

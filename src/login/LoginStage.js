@@ -112,11 +112,11 @@ const LoginStage = () => {
             /></InputGroup>
 
         </form>
-            <Button onClick={signIn} variant="success">로그인</Button><br/>
-        <Link to={"/agreement/"}><Button variant="info">회원가입</Button></Link>
+            <Button onClick={signIn} variant="outline-success">로그인</Button><br/>
+        <Link to={"/agreement/"}><Button variant="outline-primary">회원가입</Button></Link>
         <br/>
         
-        <Button variant="outline-warning">외부로그인</Button>
+        <Button variant="outline-secondary">외부로그인</Button>
     </div>
 };
 

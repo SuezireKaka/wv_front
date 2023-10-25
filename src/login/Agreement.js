@@ -19,8 +19,8 @@ export default function Agreement() {
         </Checkbox>
         </body>
         <footer>
-        <Link to={"/"}><Button variant="danger">이전으로</Button></Link>
-        <Link to={"/register/"}><Button disabled={!service} variant="success">회원 가입</Button></Link>
+        <Link to={"/"}><Button variant="outline-warning">이전으로</Button></Link>
+        <Link to={"/register/"}><Button disabled={!service} variant="outline-success">회원 가입</Button></Link>
         </footer>
       </article>
     );
