@@ -8,7 +8,7 @@ import Checkbox from '../toolbox/Checkbox';
 import RadioGroup from 'toolbox/RadioGroup';
 import Radio from 'toolbox/Radio';
 import axios from 'api/axios';
-import RadioMember from './RadioMember';
+import MemberRoleList from './MemberRoleList';
 import { Table } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -68,6 +68,7 @@ export default function MemberList() {
                 <th style={{ backgroundColor: "#eeffdd" }}>생년월일</th>
                 <th style={{ backgroundColor: "#eeffdd" }}>성별</th>
                 <th style={{ backgroundColor: "#eeffdd" }}>분류</th>
+               
             </tr>
         </thead>
         <tbody>
@@ -82,7 +83,8 @@ export default function MemberList() {
                                 <td><b>{member.response?.name}</b></td>
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex === "남성" ? "남성" : "여성"}</td>
-                                <td><RadioMember member={member} /></td>
+                                <td>{member?.roleList[0]?.role}</td>{/*<MemberRoleList member={member} /> */}
+                         
                             </tr>
                             {member.response?.contactPointList?.map(cp => (
                                 <tr key={member.id + cp.cpType}>
@@ -102,7 +104,8 @@ export default function MemberList() {
                                 <td><b>{member.response?.name}</b></td>
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex === "남성" ? "남성" : "여성"}</td>
-                                <td><RadioMember member={member} /></td>
+                                <td>{member?.roleList[0]?.role}</td>{/*<MemberRoleList member={member} /> */}
+                                
                             </tr>
                             {member.response?.contactPointList?.map(cp => (
                                 <tr key={member.id + cp.cpType}>

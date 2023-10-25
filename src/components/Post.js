@@ -88,7 +88,7 @@ function renderSuccess(postListWithPaging) {
                       <td><ThumbnailList imgDtoList={post?.listAttachFile}/></td>
                       <td width="60%">
                     <Link style={{all:"unset"}} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
-                          state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging,seriesId:state?.seriesId, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
+                          state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging,seriesId:state?.seriesId, parentId:state?.seriesId, boardId:post?.boardVO?.id, likeCount:post.likeCount}}>{/*시리즈아이디필요*/}
                              {post.title}</Link>
                       </td>
                          
