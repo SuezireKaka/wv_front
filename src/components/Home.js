@@ -26,7 +26,7 @@ export default function Home() {
     //<OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250" />
     return <>     
 
-<Carousel fade>
+    <Carousel fade>
     {data.firstVal?.map((post)=>{      
       return <Carousel.Item interval={1500}>
       <div className='slidercontents'>
