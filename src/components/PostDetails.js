@@ -31,41 +31,46 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
   const postUri = `/work/anonymous/findById/${state.id}`;
   const postListUri = `/work/anonymous/findById/${state.parentId}`;
   const [show, setShow] = useState(false);
-  const [like, setLike] = useState(0);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [refreshKey, setRefreshKey] = useState(0);
 
- /* useEffect(() => {
-    onLike()
-  }, [like]);
-*/
-  const onLike = async(id, like)=>{
-    console.log(id)
-    try{
-      await axios.get(
-        `/work/anonymous/onLike?id=${id}`,
-        {
-          headers : {
-            'Content-Type': 'application/json',
-				}
-      }).then((res)=>{
-        console.log("잘 다녀왔는지 보자", res)
-        
-        setLike(like++)
-      })
-      
-    }catch (err){
-      console.log(err);
-    }
-  }
+  /* useEffect(() => {
+     onLike()
+   }, [like]);
+ */
+
   console.log("밖에서 잘 그리고 있니?")
   return <>
-    <Fetch uri={postUri} renderSuccess={renderSuccess} />
+    <Fetch uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
   </>
 
-  function renderSuccess(post) {
+  function RenderSuccess({ post }) {
+    console.log("뭘 받았니?", post)
     //setLike(post.likeCount)
+    const [nowlike, setLike] = useState(post?.likeCount);
+
+    const onLike = async (id, like) => {
+      let newLike = like++;
+      console.log("예상치 : ", newLike)
+      console.log(id)
+      try {
+        await axios.get(
+          `/work/anonymous/onLike?id=${id}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }).then((res) => {
+            console.log("잘 다녀왔는지 보자", res)
+          })
+
+      } catch (err) {
+        console.log(err);
+      }
+      setLike(like++)
+    }
+
     console.log("안에서 잘 그리고 있니?")
     return <>
       <ListGroup as="ul">
@@ -75,7 +80,7 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
         <ListGroup.Item>
           🧑🏻{post.writer ? post.writer.nick : ""}
           ✔<span>{post.readCount}</span>
-          <span onClick={()=>{onLike(post.id, like)}}>👍{like}</span>
+          <span onClick={() => { onLike(post.id, nowlike) }}>👍{nowlike}</span>
           😡<span>{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
         <ListGroup.Item>title : <span>{post.title}</span><br />{/*{`/post/${post.id}`} */}</ListGroup.Item>
@@ -84,11 +89,11 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
       </ListGroup>
       {/* <PostListCanvas state={{ seriesId: state.seriesId, post, state, parentId: state.parentId, boardId: state.boardId }} />*/}
       {console.log(state)}
-      {state?.boardId==="0001"
-      ?<Link key={state.parentId} to={`/board/0001`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>
-      :<Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>}
-      
-      
+      {state?.boardId === "0001"
+        ? <Link key={state.parentId} to={`/board/0001`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>
+        : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}>목록</Link>}
+
+
       &nbsp;&nbsp;
       {(post.writer ? post.writer.nick === auth.nick : false) ?
         <Link
