@@ -28,6 +28,7 @@ export default function BBSRouter() {
         <Routes> 
           <Route path="/" element={ <Home /> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
+          <Route path={"/board/0000"} element={ <Post/> } />
           <Route path={"/board/0001"} element={ <Post/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>

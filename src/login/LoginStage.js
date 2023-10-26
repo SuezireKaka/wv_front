@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap';
 
 
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
+const code = new URL(window.location.href).searchParams.get("code");
 
 const LoginStage = () => {
     const { setAuth } = useContext(AppContext);
@@ -23,11 +24,23 @@ const LoginStage = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const Rest_api_key='248bbf725d08a367356e79cf03f2859a' //REST API KEY
+    const redirect_uri = 'http://localhost:3000/LoginStage' //Redirect URI
+    // oauth 요청 URL
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
+    const handleKakaoLogin = ()=>{
+        window.location.href = kakaoURL
+    }
+    console.log(code)
+    let 코드 = new URL(window.location.href).searchParams.get('DtPobRyRaxcUjwWaVViDAHoB0TQEuydNcMopEkso3fcQvCmSeuWVy16rnhwKPXRpAAABi0hssXXDukuslKNZWg')
+    console.log(코드)
+
     const formCenter = {
         display: "inline-block",
         align: "center",
         width:"50%"
     }
+    
     useEffect(() => {
         setErrorMessage('');
     }, [loginId, passWord])
@@ -116,9 +129,7 @@ const LoginStage = () => {
         </form>
             <Button onClick={signIn} variant="outline-success">로그인</Button><br/>
         <Link to={"/agreement/"}><Button variant="outline-primary">회원가입</Button></Link>
-        <br/>
-        
-        <Button variant="outline-secondary">외부로그인</Button>
+        <Button variant="outline-warning" onClick={handleKakaoLogin}>카카오 로그인</Button>
     </div>
 };
 

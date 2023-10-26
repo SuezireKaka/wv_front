@@ -12,11 +12,14 @@ import MemberRoleList from './MemberRoleList';
 import { Table } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import AppContext from "context/AppContextProvider";
+import { useContext } from 'react';
 
 export default function MemberList() {
     const { ownerId } = useParams();
     const location = useLocation();
     let state = location.state;
+    const {auth} = useContext(AppContext);
     //const [targetBoard, setTargetBoard] = useState(state.boardId);
     const [memberList, setMemberList] = useState([]);
     const [page, setPage] = useState(1);
@@ -25,6 +28,13 @@ export default function MemberList() {
     const getPostListThenSet = async () => {
         try {
             const { data } = await axios.get(`/party/anonymous/listAllAccount/0000/${page}`);
+             /* 백엔드 아직 안받은 상태라서  주석처리함
+            const { data } = await axios.get(`/party/listAllAccount/0000/${page}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "x-auth-token": `Bearer ${auth?.accessToken}`
+                }
+            });*/
             console.log("읽어온 멤버 목록", data?.firstVal);
             setMemberList(memberList.concat(data?.firstVal));
         } catch {
