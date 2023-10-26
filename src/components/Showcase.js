@@ -25,7 +25,7 @@ export default function ShowcaseList() {
     console.log(state);
     console.log(state);
     const LIST_ALL_SERIES_URI = `/work/anonymous/listAllSeries/${state?.boardId}/${page}`
-    const [postListUri, setPostListUri] = `/work/anonymous/listAll/${state?.boardId}/${page}`
+    const [seriesListUri, setSeriesListUri] = `/work/anonymous/listAllSeries/${state?.boardId}/${page}`
     const txtSearch = useRef("");
     const [byKeyWord, setByKeyWord] = useState(false);
 
@@ -48,10 +48,10 @@ export default function ShowcaseList() {
         if(search.trim()){
             setByKeyWord(true)
             const postSearchListUri = `/work/anonymous/search/${state?.boardId}/${search}/${page}`;
-            setPostListUri(postSearchListUri);
+            setSeriesListUri(postSearchListUri);
         } else {
             setByKeyWord(false)
-            setPostListUri(`/work/anonymous/listAll/${state?.boardId}/${page}`);
+            setSeriesListUri(`/work/anonymous/listAllSeries/${state?.boardId}/${page}`);
         }
 
     };
@@ -60,8 +60,6 @@ export default function ShowcaseList() {
         <br/>
         <div className="Question">
             <form>
-                <label>검색 :</label> {" "}
-                {/* <input placeholder="찾으시는 제목을 입력하세요" type="text"/> */} {" "}
                 <input placeholder="검색어" ref={txtSearch}></input>
                 <button onClick={onSearch}>검색</button>
             </form>

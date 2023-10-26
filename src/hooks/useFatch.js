@@ -6,11 +6,11 @@ function useFatch(uri, doLog) {
     const [data, setData] = useState([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(true);
+    console.log(uri)
     useEffect(() => {
         if (!uri) {
             return;
         }
-
         fetch(uri).then(response => response.json())
             .then((resData) => {
                 setData(resData);

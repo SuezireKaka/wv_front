@@ -15,7 +15,8 @@ import axios from "api/axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Badge from 'react-bootstrap/Badge';
-export default function SeriesCards({data = []}) {
+
+export default function SeriesCards({ data = [], onSearch = f => f }) {
   const location = useLocation();
   let state = location.state;
   console.log("PostListObserver param", state);
@@ -28,13 +29,13 @@ export default function SeriesCards({data = []}) {
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
 
   const getPostListThenSet = async () => {
-      try {
-          const { data } = await axios.get(`/work/anonymous/listAllSeries/${targetBoard}/${page}`);
-          console.log("읽어온 게시글 목록", data?.firstVal);
-          setPostList(postList.concat(data?.firstVal));
-      } catch {
-          console.error('fetching error');
-      }
+    try {
+      const { data } = await axios.get(`/work/anonymous/listAllSeries/${targetBoard}/${page}`);
+      console.log("읽어온 게시글 목록", data?.firstVal);
+      setPostList(postList.concat(data?.firstVal));
+    } catch {
+      console.error('fetching error');
+    }
   };
 
   //observer 콜백함수
@@ -59,7 +60,7 @@ export default function SeriesCards({data = []}) {
     let observer;
     if (lastIntersectingImage) {
       observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-       //observer 생성 시 observe할 target 요소는 불러온 이미지의 마지막아이템(randomImageList 배열의 마지막 아이템)으로 지정
+      //observer 생성 시 observe할 target 요소는 불러온 이미지의 마지막아이템(randomImageList 배열의 마지막 아이템)으로 지정
       observer.observe(lastIntersectingImage);
     }
     return () => observer && observer.disconnect();
@@ -68,44 +69,44 @@ export default function SeriesCards({data = []}) {
 
   return (
     <Container>
-    <Row>
-      {postList?.map((post, index) => {
-        if (index === postList.length - 1) {
-          return (
-    
-                <Col id ={post?.id} ref={setLastIntersectingImage}>
-                <Card id ={post?.id} style={{ width: '18rem' }} ><br/>
-                <Link style={{ textDecoration: "none", color:"black" } }to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page:1, boardId:state?.boardId}}>
+      <Row>
+        {postList?.map((post, index) => {
+          if (index === postList.length - 1) {
+            return (
 
-                <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="auto"/>
+              <Col id={post?.id} ref={setLastIntersectingImage}>
+                <Card id={post?.id} style={{ width: '18rem' }} ><br />
+                  <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
+
+                    <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="auto" />
                     <Card.Body>
                       <Card.Title>{post?.title}</Card.Title>
                       {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                     </Card.Body>
-                   </Link>   
-                  </Card><br/>
-                  </Col>
+                  </Link>
+                </Card><br />
+              </Col>
 
-          );
-        } else {
-          return (
-              
-        <Col id ={post?.id}>
-        <Card id ={post?.id} style={{ width: '18rem' }} ><br/>
-                <Link style={{ textDecoration: "none", color:"black" } }to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page:1, boardId:state?.boardId}}>
+            );
+          } else {
+            return (
 
-                <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250"/>
+              <Col id={post?.id}>
+                <Card id={post?.id} style={{ width: '18rem' }} ><br />
+                  <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
+
+                    <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250" />
                     <Card.Body>
                       <Card.Title>{post?.title}</Card.Title>
                       {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                     </Card.Body>
-                   </Link>   
-                  </Card><br/>
-                  </Col>
+                  </Link>
+                </Card><br />
+              </Col>
 
-          );
-        }
-      })}
+            );
+          }
+        })}
       </Row>
     </Container>
   );

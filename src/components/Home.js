@@ -20,7 +20,6 @@ export default function Home() {
   const [index, setIndex] = useState(0);
   const seriesUri = `/work/anonymous/listAllSeries/0002/1`;
 
-
   const renderSuccess = (data) =>{
     console.log(data.firstVal);
     //<OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250" />
@@ -31,9 +30,7 @@ export default function Home() {
     </Carousel.Item>
         })}
     </Carousel> 
-
   }
-
 
   return (
         <Fetch uri={seriesUri} renderSuccess={renderSuccess} />

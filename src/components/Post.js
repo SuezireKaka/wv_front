@@ -16,20 +16,16 @@ import Button from "react-bootstrap/Button";
 
 export default function Post() {
   const { auth } = useContext(AppContext);
-
   const location = useLocation();
   const state = location.state;
 
-
   function buildUrl(step) {
-  
     if (state.search)
-        return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
+      return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
     else
-        return `/work/anonymous/listAllPost/${state.boardId}/${state.page}`;//${state.boardId}
-}
+      return `/work/anonymous/listAllPost/${state.boardId}/${state.page}`;//${state.boardId}
+  }
   const [postListUri, setPostListUri] = useState(buildUrl(222));
-    
   const [targetBoard, setTargetBoard] = useState(state.boardId);
 
 
@@ -39,91 +35,95 @@ export default function Post() {
     setTargetBoard(state.boardId);
     setPostListUri(buildUrl());
 
-}
+  }
 
-function goTo(chosenPage) {
+  function goTo(chosenPage) {
     state.postListWithPaging = null;
     state.page = chosenPage;
 
     setPostListUri(buildUrl());
-}
+  }
 
-const txtSearch = useRef();
+  const txtSearch = useRef();
 
-const onSearch = (e) => {
+  const onSearch = (e) => {
     e.preventDefault();
     let search = txtSearch.current.value;
-
+    console.log(search)
     state.postListWithPaging = null;
     state.search = search;
     state.page = 1;
 
     setPostListUri(buildUrl());
-}
+  }
 
-const displayPagination = (paging) => {
+  const displayPagination = (paging) => {
     const pagingBar = [];
     if (paging.prev)
-        pagingBar.push(<Pagination.Item key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</Pagination.Item>);
+      pagingBar.push(<Pagination.Item key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</Pagination.Item>);
     for (let i = paging.startPage; i <= paging.lastPage; i++) {
-        pagingBar.push(<Pagination.Item key={i} onClick={(e) => goTo(i)}>{i}</Pagination.Item>);
+      pagingBar.push(<Pagination.Item key={i} onClick={(e) => goTo(i)}>{i}</Pagination.Item>);
     }
     if (paging.next)
-        pagingBar.push(<Pagination.Item key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</Pagination.Item>);
+      pagingBar.push(<Pagination.Item key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</Pagination.Item>);
     return pagingBar;
-}
+  }
 
-function renderSuccess(postListWithPaging) {
+  function renderSuccess(postListWithPaging) {
+    const postList = postListWithPaging?.firstVal;
+    const pagenation = postListWithPaging?.secondVal;
 
-  const postList = postListWithPaging?.firstVal;
-  const pagenation = postListWithPaging?.secondVal;
-
-  return <>
-      <Table responsive variant="white">
-          <thead>
-                <th><p></p></th>
-                <th><p>게시글</p></th>
-                <th><p>👦🏻</p></th>
-                <th><p>✔</p></th>
-                <th><p>🤣</p></th>
-                <th><p>🕐</p></th>
-          </thead>
-          <tbody>
-            
-              {postList?.map(post => (
-                <tr key={post.id}>
-                    {console.log(post)}
-                      <td><ThumbnailList imgDtoList={post?.listAttachFile}/></td>
-                      <td width="60%">
-                        <Link style={{all:"unset"}} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
-                          state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging,seriesId:state?.seriesId, parentId:state?.seriesId, boardId:post?.boardVO?.id, likeCount:post.likeCount}}>{/*시리즈아이디필요*/}
-                             {post.title}</Link>
-                      </td>
-                         
-                      <td>{post.writer ? post.writer.nick : ""}</td>
-                      <td>{post.readCount}</td>
-                      <td>{post.likeCount}</td>
-                      <td>{displayDate(post.regDt, post.uptDt)}</td>
-                  </tr> 
-              ))}
-          </tbody>
-          <tfoot>
-          </tfoot>
-      </Table>
-      <div  style={{Align:"center"}}>
-      <Pagination>
-      {pagenation?.lastPage>=2?displayPagination(pagenation):""}
-      </Pagination>
-      </div>
-  </>
-}
-    return (
+    return <>
       <div>
-      <Link to={`/series/${state.boardId}/mng`} state={{seriesId:state.boardId, parentId : state.boardId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
-      <Button variant="outline-primary">신규</Button>
-      </Link>
-        <Fetch uri={postListUri} renderSuccess={renderSuccess} />
-  
+        <input placeholder="검색어" ref={txtSearch}></input>
+        &nbsp;
+        <Button variant="outline-danger" onClick={onSearch}>
+          검색
+        </Button>
       </div>
-    )
+      <Table responsive variant="white">
+        <thead>
+          <th><p></p></th>
+          <th><p>게시글</p></th>
+          <th><p>👦🏻</p></th>
+          <th><p>✔</p></th>
+          <th><p>🤣</p></th>
+          <th><p>🕐</p></th>
+        </thead>
+        <tbody>
+          {postList?.map(post => (
+            <tr key={post.id}>
+              <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
+              <td width="60%">
+                <Link style={{ all: "unset" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
+                  state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, seriesId: state?.seriesId, parentId: state?.seriesId, boardId: post?.boardVO?.id, likeCount: post.likeCount }}>{/*시리즈아이디필요*/}
+                  {post.title}</Link>
+              </td>
+
+              <td>{post.writer ? post.writer.nick : ""}</td>
+              <td>{post.readCount}</td>
+              <td>{post.likeCount}</td>
+              <td>{displayDate(post.regDt, post.uptDt)}</td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+        </tfoot>
+      </Table>
+      <div style={{ Align: "center" }}>
+        <Pagination>
+          {pagenation?.lastPage >= 2 ? displayPagination(pagenation) : ""}
+        </Pagination>
+      </div>
+    </>
+  }
+  return (
+    <div>
+      <Link to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
+        <Button variant="outline-primary">신규</Button>
+      </Link>
+      <Fetch uri={postListUri} renderSuccess={renderSuccess} />
+
+    </div>
+  )
 }

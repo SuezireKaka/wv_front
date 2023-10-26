@@ -17,12 +17,9 @@ import { InputGroup } from "react-bootstrap";
 
 export default function ReportMng() {
     const { auth, rptCodeList } = useContext(AppContext);
-
     const location = useLocation();
     let state = location.state;
-
     const [reportDetails, setReportDetails] = useState([]);
-
     const [type, setType] = useState();
     const [content, setContent] = useState();
     const [listAttach, setListAttach] = useState();

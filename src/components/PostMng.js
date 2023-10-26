@@ -12,6 +12,8 @@ export default function PostMng() {
 
 	const post = location.state?.post;
     const state = location.state?.state;
+	console.log(post)
+	console.log(state)
 	const parentId = location.state?.parentId;
 	const { auth } = useContext(AppContext);
 	const navigate = useNavigate();
@@ -36,9 +38,10 @@ export default function PostMng() {
 			return;
 		
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
+		console.log(post?.boardVO?.id)
 		const bodyData = {
 			firstVal : {id:parentId, hTier:hTier-1},
-			secondVal : {id:post?.id, writer:writer, boardVO:{id:state?.boardId},
+			secondVal : {id:post?.id, writer:writer, boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
 		console.log(JSON.stringify(bodyData));
