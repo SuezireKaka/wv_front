@@ -20,7 +20,7 @@ import PostList from 'components/PostList';
 import ReportList from 'components/ReportList';
 import Post from 'components/Post';
 import FavoritesList from 'components/FavoritesList';
-
+import Books from 'components/Books';
 
 
 export default function BBSRouter() {
@@ -48,6 +48,8 @@ export default function BBSRouter() {
           <Route path={"/favoritesList"} element={ <FavoritesList/> } />
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
+
+          <Route path={"/Books"} element={<Books />} />
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
           <Route path={"/Test3"} element={<Test3 />} />

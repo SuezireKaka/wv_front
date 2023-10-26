@@ -9,9 +9,8 @@ export default function Agreement() {
     const [marketing, setMarketing] = React.useState(false);
     return (
       <article>
-        <header>
-          <h3>Wondervatory 가입 페이지</h3>
-        </header>
+        <fieldset>
+            <legend>약관 동의</legend>
         <body>
         입하시려면 아래 사항들에 동의해주세요!<br/>
         <Checkbox checked={service} onChange={setService}>
@@ -22,6 +21,7 @@ export default function Agreement() {
         <Link to={"/"}><Button variant="outline-warning">이전으로</Button></Link>
         <Link to={"/register/"}><Button disabled={!service} variant="outline-success">회원 가입</Button></Link>
         </footer>
+        </fieldset>
       </article>
     );
 }

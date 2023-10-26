@@ -91,6 +91,8 @@ const LoginStage = () => {
             
             <form style={formCenter}>
                 <br/>
+            <fieldset>
+            <legend>로그인</legend>
             <InputGroup className="mb-3">
                 <InputGroup.Text id="basic-addon1">아이디</InputGroup.Text>
                 <Form.Control type="text"
@@ -110,7 +112,7 @@ const LoginStage = () => {
                 value={passWord}
                 required
             /></InputGroup>
-
+        </fieldset>
         </form>
             <Button onClick={signIn} variant="outline-success">로그인</Button><br/>
         <Link to={"/agreement/"}><Button variant="outline-primary">회원가입</Button></Link>
