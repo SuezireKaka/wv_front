@@ -1,33 +1,27 @@
-import { Fetch } from "toolbox/Fetch";
-import { useLocation } from "react-router";
-import SeriesTable from "../component-showcase/SeriesTable";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import SeriesCards from "component-showcase/SeriesCards";
+import OriginalViewOne from "atom/OriginalViewOne";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { useRef } from "react";
-import ThumbnailList from "atom/ThumbnailList";
-import OriginalViewList from "atom/OriginalViewList";
-import axios from "api/axios";
-import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
-import OriginalViewOne from "atom/OriginalViewOne";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import { Fetch } from "toolbox/Fetch";
+import axios from "api/axios";
 
-export default function Showcase() {
+export default function ShowcaseTest() {
 
     const [page, setPage] = useState(1);
     const location = useLocation();
     let state = location.state;
-
-    const [seriesListUri, setSeriesListUri] = useState(`/work/anonymous/listAllSeries/${state?.boardId}/${page}`);
+    const [seriesListUri, setSeriesListUri] = useState(`/work/anonymous/listAllSeries/0003/${page}`);
     const txtSearch = useRef("");
     const [byKeyWord, setByKeyWord] = useState(false);
     const [postList, setPostList] = useState([]);
-    console.log(seriesListUri);
     console.log(state);
+    console.log(seriesListUri);
+
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
 
     const TABLE_STYLE = {
@@ -151,5 +145,6 @@ export default function Showcase() {
     )
 
 
+
+
 }
-  

@@ -21,7 +21,7 @@ import ReportList from 'components/ReportList';
 import Post from 'components/Post';
 import FavoritesList from 'components/FavoritesList';
 import Books from 'components/Books';
-
+import ShowcaseTest from 'components/ShowcaseTest';
 
 export default function BBSRouter() {
     return (
@@ -31,6 +31,7 @@ export default function BBSRouter() {
           <Route path={"/board/0000"} element={ <Post/> } />
           <Route path={"/board/0001"} element={ <Post/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
+
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
 
