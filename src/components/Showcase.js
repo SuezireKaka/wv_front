@@ -15,9 +15,11 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
 import OriginalViewOne from "atom/OriginalViewOne";
+import AppContext from "context/AppContextProvider";
+import { useContext } from "react";
 
 export default function Showcase() {
-
+    const { auth } = useContext(AppContext);
     const [page, setPage] = useState(1);
     const location = useLocation();
     let state = location.state;
@@ -142,9 +144,10 @@ export default function Showcase() {
                     <input placeholder="검색어" ref={txtSearch}></input>
                     <button onClick={onSearch}>검색</button>
                 </form>
+                {!auth.roles || auth.roles.length === 0?"":
                 <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
                     <Button variant="outline-primary">신규</Button><br /><br />
-                </Link>
+                </Link>}
                 <Fetch uri={seriesListUri} renderSuccess={renderSuccess} />
             </div>
         </>
