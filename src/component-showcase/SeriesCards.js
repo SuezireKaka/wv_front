@@ -94,7 +94,9 @@ export default function SeriesCards() {
     <div className="Question">
       <form>
         <input placeholder="검색어" ref={txtSearch}></input>
-        <button onClick={onSearch}>검색</button>
+        <Button variant="outline-danger" onClick={onSearch}>
+          검색
+        </Button>
       </form>
     </div>
     <Container>
