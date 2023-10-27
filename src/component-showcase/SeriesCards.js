@@ -8,7 +8,7 @@ import ThumbnailList from "atom/ThumbnailList";
 import { AxiosPost } from "toolbox/Fetch";
 import OriginalFileView from "atom/OriginalFileView";
 import OriginalViewList from "atom/OriginalViewList";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import OriginalViewOne from "atom/OriginalViewOne";
 import axios from "api/axios";
@@ -16,23 +16,47 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Badge from 'react-bootstrap/Badge';
 
-export default function SeriesCards({ data = [], onSearch = f => f }) {
+export default function SeriesCards() {
   const location = useLocation();
   let state = location.state;
   console.log("PostListObserver param", state);
 
   const [targetBoard, setTargetBoard] = useState(state.boardId);
 
+  const txtSearch = useRef();
+
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
 
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
+    
+  const [byKeyWord, setByKeyWord] = useState(false);
 
-  const getPostListThenSet = async () => {
+  const onSearch = (e) => {
+    const search = txtSearch.current.value;
+    window.scrollTo({ top: 0 });
+    e.preventDefault();
+    setPostList([]);
+    setPage(1);
+    console.log(search); 
+  };
+
+  useEffect(() =>  {
+    let search = txtSearch.current.value
+    if (search.trim()) {
+      getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
+      setByKeyWord(true)
+    } else {
+      getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}`);
+      setByKeyWord(false)
+    }}, [page])
+
+  const getPostListThenSet = async (seriesListUri, isReset) => {
+    console.log("여기다 보내고 있네요 : ", seriesListUri + `/${page}`)
     try {
-      const { data } = await axios.get(`/work/anonymous/listAllSeries/${targetBoard}/${page}`);
+      const { data } = await axios.get(seriesListUri + `/${page}`);
       console.log("읽어온 게시글 목록", data?.firstVal);
-      setPostList(postList.concat(data?.firstVal));
+      setPostList(isReset ? data?.firstVal : postList.concat(data?.firstVal));
     } catch {
       console.error('fetching error');
     }
@@ -66,8 +90,13 @@ export default function SeriesCards({ data = [], onSearch = f => f }) {
     return () => observer && observer.disconnect();
   }, [lastIntersectingImage]);
 
-
-  return (
+  return <>
+    <div className="Question">
+      <form>
+        <input placeholder="검색어" ref={txtSearch}></input>
+        <button onClick={onSearch}>검색</button>
+      </form>
+    </div>
     <Container>
       <Row>
         {postList?.map((post, index) => {
@@ -107,6 +136,6 @@ export default function SeriesCards({ data = [], onSearch = f => f }) {
         })}
       </Row>
     </Container>
-  );
+  </>
 }
 
