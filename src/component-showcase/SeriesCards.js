@@ -91,13 +91,11 @@ export default function SeriesCards() {
   }, [lastIntersectingImage]);
 
   return <>
-    <div className="Question">
-      <form>
+    <div>
         <input placeholder="검색어" ref={txtSearch}></input>
         <Button variant="outline-danger" onClick={onSearch}>
           검색
         </Button>
-      </form>
     </div>
     <Container>
       <Row>

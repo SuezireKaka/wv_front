@@ -22,7 +22,7 @@ export default function UserProfile() {
     console.log(owner)
     const [nick, setNick] = useState(state?.nick);
     const [name, setName] = useState(response.name);
-    const [birthDate, setBirthDate] = useState(response.birthDate);
+    const [birthDate, setBirthDate] = useState(response.birthDate.substring(0, 10));
     const [sex, setSex] = useState(response.sex);
 
     const handleSubmit =() =>{}
@@ -32,7 +32,7 @@ export default function UserProfile() {
     const { codeList } = useContext(AppContext);
 
     const [nameBlur, isNameBlur] = useState(false);
-    const [loginId, setLoginId] = useState("");
+    const [loginId, setLoginId] = useState(state.loginId);
     const [idChecked, setIdChecked] = useState(false);
     const [uniqueId, setUniqueId] = useState(false);
 
@@ -75,13 +75,14 @@ export default function UserProfile() {
 		<form>
         <InputGroup className="mb-3" style={{display: "inline-block", align: "center", width:"50%", backgroundColor:""}}>
         </InputGroup>
+
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">이름</InputGroup.Text>
           <Form.Control
             type="text"
             id="name"
             value={name}
-            disabled
+
           /></InputGroup>
 
         <InputGroup className="mb-3">
@@ -93,6 +94,15 @@ export default function UserProfile() {
             value={nick}
             onChange={(e) => setNick(e.target.value)}
             required
+          /></InputGroup>
+
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">아이디</InputGroup.Text>
+          <Form.Control
+            type="text"
+            id="loginId"
+            value={loginId}
+            disabled
           /></InputGroup>
 
         <InputGroup className="mb-3">

@@ -113,6 +113,10 @@ export default function Post() {
   }
   return (
     <div>
+      {!auth.roles || auth.roles.length === 0?"":
+      <Link to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
+        <Button variant="outline-primary">신규</Button>
+      </Link>}<br/><br/>
       <div>
         <input placeholder="검색어" ref={txtSearch}></input>
         &nbsp;
@@ -120,10 +124,6 @@ export default function Post() {
           검색
         </Button>
       </div>
-      {!auth.roles || auth.roles.length === 0?"":
-      <Link to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
-        <Button variant="outline-primary">신규</Button>
-      </Link>}
       <Fetch uri={postListUri} renderSuccess={renderSuccess} />
 
     </div>

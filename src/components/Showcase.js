@@ -15,10 +15,13 @@ import OriginalViewList from "atom/OriginalViewList";
 import axios from "api/axios";
 import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
-
+import AppContext from "context/AppContextProvider";
+import { useContext } from "react";
 
 export default function ShowcaseList() {
     const location = useLocation();
+    const { auth } = useContext(AppContext);
+
     let state = location.state;
     console.log("==========")
     console.log(state);
@@ -32,10 +35,10 @@ export default function ShowcaseList() {
     }
 
     return <div>
-        <br/>
+        {!auth.roles || auth.roles.length === 0?"":
             <Link to={`/series/mng`} state={{seriesId:state.seriesId, state, parentId : "", boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
             <Button variant="outline-primary">신규</Button><br/><br/>
-            </Link>
+            </Link>}
             <SeriesCards />
     </div>
 }
