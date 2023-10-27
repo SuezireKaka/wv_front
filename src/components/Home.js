@@ -25,8 +25,8 @@ export default function Home() {
     //<OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250" />
     return <Carousel fade>
     {data.firstVal?.map((post)=>{      
-      return <Carousel.Item interval={1500}>
-        <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="600" y="auto" />  
+      return <Carousel.Item interval={1000}>
+        <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="550" y="auto" />  
     </Carousel.Item>
         })}
     </Carousel> 
