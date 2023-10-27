@@ -109,13 +109,14 @@ export default function Series() {
     </>
   }
   function postListShow(series){
+    {console.log(series)}
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
       :  <>
-      
+      {(series.writer ? series.writer.nick === auth.nick : false) ?
       <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
       <Button variant="outline-primary">신규</Button>
-      </Link>
+      </Link>:""}
       <hr/>
       <PostList />
       </>
@@ -140,9 +141,7 @@ export default function Series() {
 
   return <>
     <div>
-
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
-      
     </div>
      
   </>

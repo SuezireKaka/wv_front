@@ -5,7 +5,7 @@ import OriginalFileView from './OriginalFileView';
 
 //개량판
 export default function OriginalViewOne({ imgDtoList, x,y }) {
-    console.log("ThumbnailList render ", imgDtoList);
+    //console.log("ThumbnailList render ", imgDtoList);
 
     const thumbnailRequestTarget = ["video", "image"];
 

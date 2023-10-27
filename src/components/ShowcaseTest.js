@@ -1,45 +1,36 @@
-import { Fetch } from "toolbox/Fetch";
-import { useLocation } from "react-router";
-import SeriesTable from "../component-showcase/SeriesTable";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import SeriesCards from "component-showcase/SeriesCards";
+import OriginalViewOne from "atom/OriginalViewOne";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { useRef } from "react";
-import ThumbnailList from "atom/ThumbnailList";
-import OriginalViewList from "atom/OriginalViewList";
-import axios from "api/axios";
-import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
-import OriginalViewOne from "atom/OriginalViewOne";
-import AppContext from "context/AppContextProvider";
-import { useContext } from "react";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import { Fetch } from "toolbox/Fetch";
+import axios from "api/axios";
 
-export default function Showcase() {
-    const { auth } = useContext(AppContext);
+export default function ShowcaseTest() {
+
     const [page, setPage] = useState(1);
     const location = useLocation();
     let state = location.state;
-    console.log(page)
-    const [seriesListUri, setSeriesListUri] = useState(`/work/anonymous/listAllSeries/${state?.boardId}/${page}`);
+    const [seriesListUri, setSeriesListUri] = useState(`/work/anonymous/listAllSeries/0003/${page}`);
     const txtSearch = useRef("");
     const [byKeyWord, setByKeyWord] = useState(false);
     const [postList, setPostList] = useState([]);
-    console.log(seriesListUri);
     console.log(state);
+    console.log(seriesListUri);
+
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-    console.log(page)
+
     const TABLE_STYLE = {
         width: "100%",
         border: "1px solid",
         borderCollapse: "collapse"
     }
-    console.log(page)
+
     const getPostListThenSet = async () => {
-        console.log(page)
         try {
             const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/${page}`);
             console.log("읽어온 게시글 목록", data?.firstVal);
@@ -51,7 +42,6 @@ export default function Showcase() {
 
     //observer 콜백함수
     const onIntersect = (entries, observer) => {
-        console.log(page)
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 //뷰포트에 마지막 이미지가 들어오고, page값에 1을 더하여 새 fetch 요청을 보내게됨 (useEffect의 dependency배열에 page가 있음)
@@ -94,7 +84,6 @@ export default function Showcase() {
     };
 
     const renderSuccess = (data) => {
-        console.log(data)
         const postList = data?.firstVal;
         console.log(postList);
         return (
@@ -122,7 +111,7 @@ export default function Showcase() {
                                     {console.log(post)}
                                     <Card id={post?.id} style={{ width: '18rem' }} ><br />
                                         <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
-                                            <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="auto" />
+                                            <OriginalViewOne imgDtoList={post.listAttachFile} x="250" y="250" />
                                             <Card.Body>
                                                 <Card.Title>{post?.title}</Card.Title>
                                                 {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
@@ -147,15 +136,15 @@ export default function Showcase() {
                     <input placeholder="검색어" ref={txtSearch}></input>
                     <button onClick={onSearch}>검색</button>
                 </form>
-                {!auth.roles || auth.roles.length === 0?"":
                 <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
                     <Button variant="outline-primary">신규</Button><br /><br />
-                </Link>}
+                </Link>
                 <Fetch uri={seriesListUri} renderSuccess={renderSuccess} />
             </div>
         </>
     )
 
 
+
+
 }
-  

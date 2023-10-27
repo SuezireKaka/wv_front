@@ -27,14 +27,14 @@ export default function MemberList() {
 
     const getPostListThenSet = async () => {
         try {
-            const { data } = await axios.get(`/party/anonymous/listAllAccount/0000/${page}`);
-             /* 백엔드 아직 안받은 상태라서  주석처리함
+            //const { data } = await axios.get(`/party/anonymous/listAllAccount/0000/${page}`);
+            
             const { data } = await axios.get(`/party/listAllAccount/0000/${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "x-auth-token": `Bearer ${auth?.accessToken}`
                 }
-            });*/
+            });
             console.log("읽어온 멤버 목록", data?.firstVal);
             setMemberList(memberList.concat(data?.firstVal));
         } catch {

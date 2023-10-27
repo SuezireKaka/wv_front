@@ -74,13 +74,7 @@ export default function Post() {
     const pagenation = postListWithPaging?.secondVal;
 
     return <>
-      <div>
-        <input placeholder="검색어" ref={txtSearch}></input>
-        &nbsp;
-        <Button variant="outline-danger" onClick={onSearch}>
-          검색
-        </Button>
-      </div>
+
       <Table responsive variant="white">
         <thead>
           <th><p></p></th>
@@ -119,9 +113,17 @@ export default function Post() {
   }
   return (
     <div>
+      <div>
+        <input placeholder="검색어" ref={txtSearch}></input>
+        &nbsp;
+        <Button variant="outline-danger" onClick={onSearch}>
+          검색
+        </Button>
+      </div>
+      {!auth.roles || auth.roles.length === 0?"":
       <Link to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
         <Button variant="outline-primary">신규</Button>
-      </Link>
+      </Link>}
       <Fetch uri={postListUri} renderSuccess={renderSuccess} />
 
     </div>
