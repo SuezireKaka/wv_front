@@ -30,7 +30,7 @@ export default function UserProfile() {
     const hasAllContents =() =>{}
 
     const { codeList } = useContext(AppContext);
-    //const [name, setName] = useState(auth.name);
+
     const [nameBlur, isNameBlur] = useState(false);
     const [loginId, setLoginId] = useState("");
     const [idChecked, setIdChecked] = useState(false);
@@ -70,6 +70,7 @@ export default function UserProfile() {
   };
 
     return (<Form>
+        
 		<h4>프로필보기</h4>
 		<form>
         <InputGroup className="mb-3" style={{display: "inline-block", align: "center", width:"50%", backgroundColor:""}}>
@@ -80,6 +81,7 @@ export default function UserProfile() {
             type="text"
             id="name"
             value={name}
+            disabled
           /></InputGroup>
 
         <InputGroup className="mb-3">
@@ -116,7 +118,6 @@ export default function UserProfile() {
             required
           />
         </InputGroup>
-
         <p>
           {nickChecked
             ? uniqueNick
@@ -187,77 +188,53 @@ export default function UserProfile() {
         </InputGroup>
         <br />
 
-        {codeList?.map((cpType) => (
-          <>
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon2">
-                {cpType.codeVal}
-              </InputGroup.Text>
+        {response.contactPointList?.map((cp) => (
+            
+          <>    {console.log(codeList)}
+          <InputGroup className="mb-3">
+            <InputGroup.Text id="basic-addon2">
+              {cp.cpType}
+            </InputGroup.Text>
 
-              {cpType.codeVal === "home address" ? (
-                <>
-                  <DaumTest setAddress={setAddress} />
-                  <div style={{ width: "100%" }}>
-                    <Form.Control
-                      type="text"
-                      value={address + addText}
-                      disabled
-                    />
-                    <Form.Control
-                      type="text"
-                      id={cpType.codeVal}
-                      onChange={(e) =>
-                        checkCPValidity(e, cpType.codeVal, e.target.value)
-                      }
-                      placeholder="상세주소입력"
-                    />
-                  </div>
-                </>
-              ) : (
-                <Form.Control
-                  type="text"
-                  id={cpType.codeVal}
-                  onChange={(e) =>
-                    checkCPValidity(e, cpType.codeVal, e.target.value)
-                  }
-                />
-              )}
-              <br />
-            </InputGroup>
+            {cp.cpType === "home address" ? (
+              <>
+                <DaumTest setAddress={setAddress} />
+                <div style={{ width: "100%" }}>
+                  <Form.Control
+                    type="text"
+                    value={cp.cpVal}
+                    disabled
+                  />
+                  <Form.Control
+                    type="text"
+                    id={cp.cpType}
+                    
+                    placeholder="상세주소입력"
+                  />
+                </div>
+              </>
+            ) : (
+              <Form.Control
+                type="text"
+                id={cp.cpType}
+                value={cp.cpVal}
+                
+              />
+            )}
+            <br />
+          </InputGroup>
           </>
+
         ))}
 
         {console.log(listCP)}
       </form>
-      <Link to="/log-in">
-        <br />
-        <Button
-          variant="outline-primary"
-          onClick={handleSubmit}
-          disabled={
-            !(
-              validMatch &&
-              nickChecked &&
-              uniqueNick &&
-              idChecked &&
-              uniqueId &&
-              isNameBlur &&
-              isBirthDateBlur
-            )
-          }
-        >
-          Sign Up
-        </Button>
-      </Link>
-
-
-
 
 		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents} >
 			반영
 		</Button>
 		<Button variant="outline-dark" onClick={handleDelete}>
-			삭제
+			탈퇴
 		</Button>
 	</Form >)
     };
