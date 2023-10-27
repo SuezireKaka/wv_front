@@ -62,9 +62,6 @@ export default function ReportList() {
           <thead>
             <th>작성일</th>
             <th>신고자</th>
-            <th>대상</th>
-            <th>분류</th>
-            <th>목록</th>
             <th>첨부</th>
           </thead>
           <tbody>
@@ -74,13 +71,9 @@ export default function ReportList() {
             <tr ref={setLastIntersectingImage}>
                 <td>{displayDate(report.regDt, report.uptDt)}</td>
                 <td>{report.reporter.nick}</td>
-                <td>{report.suspect.nick}</td>
-                <td>{report.suspect.ksuspectType}</td>
-                <td><b>{report.suspect.id}</b></td>
-                <td>{(report.suspect.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
+                <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>
-                <td>{report.cause}</td>
                 <td colSpan={5}>{report.rptTypesList.map((type)=>(
                   <>{type.rptType}  </>))}</td>
             </tr> 
@@ -89,13 +82,9 @@ export default function ReportList() {
                 <tr>
                 <td>{displayDate(report.regDt, report.uptDt)}</td>
                 <td>{report.reporter.nick}</td>
-                <td>{report.suspect.nick}</td>
-                <td>{report.suspect.ksuspectType}</td>
-                <td><b>{report.suspect.id}</b></td>
-                <td>{(report.suspect.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
+                <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>
-                <td>{report.cause}</td>
                 <td colSpan={5}>{report.rptTypesList.map((type)=>(
                   <>{type.rptType}  </>))}</td>
             </tr> 

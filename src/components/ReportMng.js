@@ -18,9 +18,13 @@ export default function ReportMng() {
     const location = useLocation();
     const navigate = useNavigate();
     let state = location.state;
+    console.log("상태는 어때?", state);
     const report = state?.report;
-    const suspect = state?.suspect;
-    console.log(report);
+    const suspectId = state?.suspectId;
+    const suspectTable = state?.suspectTable;
+    console.log("나는 나다!", report);
+    console.log("넌 누구냣!", suspectId);
+    console.log("어디 사는데?", suspectTable);
 
     const [reportTypes, setReportTypes] = useState([]);
     const [cause, setCause] = useState();
@@ -41,10 +45,10 @@ export default function ReportMng() {
 		
 		const reporter = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
-            reporter : reporter,
-            suspect : suspect,
-            cause : cause,
-            rptTypesList : reportTypes.map(rpt => {})
+            reporter, suspectId, suspectTable, cause,
+            rptTypesList : reportTypes.map(rpt => {
+                return {rptType : rpt}
+            })
 		};
 		console.log(JSON.stringify(bodyData));
 
@@ -88,12 +92,18 @@ export default function ReportMng() {
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>신고사유를 구체적으로 적어주세요</Form.Label>
-                <Form.Control as="textarea" style={{ resize: "none" }} rows={6} />
+                <Form.Control as="textarea"
+                    style={{ resize: "none" }}
+                    rows={6}
+				    value={cause}
+                    onChange={(e) => setCause(e.target.value)}
+                />
             </Form.Group>
             <label>증거가 될 만한 첨부파일이 있다면 올려주세요</label>
             <ThumbnailList imgDtoList={listAttach} />
             <AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach} />
-            <Button variant="outline-danger" onClick={handleSubmit}>
+            <Button variant="outline-danger" onClick={handleSubmit}
+                disabled={!reportTypes || reportTypes?.length === 0 || ! cause}>
                 신고하기
             </Button>
         </Form>

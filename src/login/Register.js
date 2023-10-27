@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap';
 
 const Register = () => {
   const { codeList } = useContext(AppContext);
+  console.log("너 뭐냐고!!!", codeList)
   const [name, setName] = useState("");
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState("");
