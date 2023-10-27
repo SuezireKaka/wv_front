@@ -17,8 +17,7 @@ export default function TestNav() {
   const navMenu = {
     color:"grey",
     textDecoration:"none"
-
-}
+  }
   return <>
    <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
