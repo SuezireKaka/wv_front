@@ -14,7 +14,7 @@ export function UseGestureList({
 
     function center({x_pos, y_pos, x_size, y_size}) {
         // x축은 3.3배정도, y축은 5.1배 정도 길이 but why?
-        let result = [x_pos + x_size / 2, y_pos + y_size / 2]
+        let result = [x_pos + x_size/2, y_pos + y_size/2]
         console.log("여기가 지금 중점이라며?", ...result)
         return result
     }
@@ -46,7 +46,7 @@ export function UseGestureList({
     useMemo(redraw, [nowVertices])
 
     return <div style={{position:"relative", width:"1024px", height:"768px", margin: "0 auto"}}>
-        <canvas class="Canvas" ref={canvasRef} style={{width:"1024px", height:"768px", borderColor:"#000000", border: "1px dotted"}}/>
+        <canvas class="Canvas" ref={canvasRef} width="1024px" height="768px" style={{ borderColor:"#000000", border: "1px dotted"}}/>
         {nowVertices.map((vertex, index) =>
             <UseGestureElement
                 init={init[index]}
