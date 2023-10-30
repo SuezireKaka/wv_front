@@ -310,10 +310,10 @@ export default function UserProfile() {
           </InputGroup.Text>
         </InputGroup>
         <br />
-
+          
         {response.contactPointList?.map((cp) => (
             
-          <>    {console.log(codeList)}
+          <>{console.log(codeList)}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon2">
               {cp.cpType}
@@ -325,7 +325,7 @@ export default function UserProfile() {
                 <div style={{ width: "100%" }}>
                   <Form.Control
                     type="text"
-                    defaultValue={cp.cpVal}
+
                     value={address + addText}
                     disabled
                   />
