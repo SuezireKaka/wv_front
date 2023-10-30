@@ -52,8 +52,6 @@ export default function UserProfile() {
 
     const userSeriesUrl = `/work/anonymous/listUserSeries/${auth.nick}/1`
 
-
-
     useEffect(() => {
       setValidMatch(passWord ? passWord === matchPwd : false);
     }, [passWord, matchPwd]);
@@ -263,9 +261,7 @@ export default function UserProfile() {
             aria-required="true"
             value={birthDate}
           />
-        </InputGroup>
 
-        <InputGroup className="mb-3" >
           <InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
           <InputGroup.Text id="basic-addon2">
             남

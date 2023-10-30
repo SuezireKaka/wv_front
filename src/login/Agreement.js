@@ -19,7 +19,7 @@ export default function Agreement() {
         </body>
         <footer>
         <Link to={"/"}><Button variant="outline-secondary">이전으로</Button></Link>
-        <Link to={"/register/"}><Button disabled={!service} variant="outline-success">회원 가입</Button></Link>
+        <Button disabled={!service} variant="outline-success"><Link to={"/register/"} style={{textDecoration:"none"}}>회원 가입</Link></Button>
         </footer>
         </fieldset>
       </article>

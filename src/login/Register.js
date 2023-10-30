@@ -231,9 +231,7 @@ const Register = () => {
             value={birthDate}
             onBlur={onBlur}
           />
-        </InputGroup>
 
-        <InputGroup className="mb-3" >
           <InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
           <InputGroup.Text id="basic-addon2">
             남
