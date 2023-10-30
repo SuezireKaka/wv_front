@@ -316,30 +316,30 @@ export default function UserProfile() {
           </InputGroup.Text>
         </InputGroup>
         <br />
-          
-
-        {response.contactPointList?.map((cp) => (
-          <>{console.log(codeList)}
+        {codeList?.map((cp, index) => {
+          let rcpType = response.contactPointList.length > index ? response.contactPointList[index].cpType : ""
+          let rcpVal = response.contactPointList.length > index ? response.contactPointList[index].cpVal : ""
+          return <>{console.log(codeList)}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon2">
-              {cp.cpType}
+              {rcpType}
             </InputGroup.Text>
 
-            {cp.cpType === "home address" ? (
+            {rcpType === "home address" ? (
               <>
                 <DaumTest setAddress={setAddress} />
                 <div style={{ width: "100%" }}>
                   <Form.Control
                     type="text"
-                    defaultValue={cp.cpVal}
+                    defaultValue={rcpVal}
                     value={address}
                     disabled
                   />
                   <Form.Control
                     type="text"
-                    id={cp.cpType}
+                    id={rcpType}
                     onChange={(e) =>
-                        checkCPValidity(e, cp.cpType, e.target.value)
+                        checkCPValidity(e, rcpType, e.target.value)
                       }
                     placeholder="상세주소입력"
                   />
@@ -349,7 +349,7 @@ export default function UserProfile() {
               <Form.Control
                 type="text"
                 id={cp.cpType}
-                defaultValue={cp.cpVal}
+                defaultValue={rcpVal}
                 onChange={(e) =>
                   checkCPValidity(e, cp.cpType, e.target.value)
                 }
@@ -358,7 +358,7 @@ export default function UserProfile() {
             <br />
           </InputGroup>
           </>
-        ))}
+        })}
 
 
        
