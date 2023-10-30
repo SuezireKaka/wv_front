@@ -142,7 +142,7 @@ export default function UserProfile() {
 
     try {
       const response = await axios.post(
-        "/party/anonymous/createMember",
+        "/party/anonymous/mngMember",
         JSON.stringify(bodyData),
         {
           headers: { "Content-Type": "application/json" },
@@ -163,10 +163,11 @@ export default function UserProfile() {
 		e.preventDefault();
 
 		try {
-			const data = await axios.get(`/party/anonymous/deleteMember/${auth.nick}`,
+			const data = await axios.get(`/party/deleteMember/${auth.nick}`,
 				{headers: {
 					'Content-Type': 'application/json',
-					}});//"x-auth-token": `Bearer ${auth.accessToken}`
+          "x-auth-token": `Bearer ${auth.accessToken}`
+					}});
 
 		} catch (err) {
 			console.log('Delete Failed', err);
