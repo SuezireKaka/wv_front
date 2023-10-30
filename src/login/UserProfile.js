@@ -311,8 +311,8 @@ export default function UserProfile() {
         </InputGroup>
         <br />
           
+
         {response.contactPointList?.map((cp) => (
-            
           <>{console.log(codeList)}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon2">
@@ -352,10 +352,10 @@ export default function UserProfile() {
             <br />
           </InputGroup>
           </>
-
         ))}
 
-        {console.log(listCP)}
+
+       
       </form>
 
 		<Button variant="outline-primary"

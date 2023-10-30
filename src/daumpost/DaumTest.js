@@ -21,7 +21,7 @@ const DaumTest = ({setAddress=f=>f}) => {
     return(
         <div>
         	
-            <Button type='button' onClick={openPostCode} variant="outline-info">{postButtonText}</Button>
+            <Button type='button' onClick={openPostCode} variant="outline-danger">{postButtonText}</Button>
             
             <div id='popupDom'>
                 {isPopupOpen && (
