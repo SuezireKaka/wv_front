@@ -44,7 +44,7 @@ export default function UserProfile() {
     const [validMatch, setValidMatch] = useState();
     const [listCP, setListCP] = useState(new Map());
     const [fullAddress, setFullAddress] = useState("");
-    const [address, setAddress] = useState("");
+    const [address, setAddress] = useState(state.contactPointList?.filter(cp => cp.cpType === "home address")[0]);
     const [addText, setAddText] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
@@ -107,7 +107,7 @@ export default function UserProfile() {
       return;
     }
     console.log(cpType);
-    console.log(inValue);
+    console.log("확인해봅시다", inValue);
     listCP.set(
       cpType,
       cpType == "home address" ? address + " " + inValue : inValue
@@ -128,6 +128,8 @@ export default function UserProfile() {
 
     const bodyData = {
       organization: { id: "0000" },
+      accountId: state.id,
+      partyId: response.id,
       name: name,
       nick: nick,
       loginId: loginId,
@@ -140,10 +142,14 @@ export default function UserProfile() {
 
     try {
       const response = await axios.post(
-        "/party/anonymous/mngMember",
+        "/party/updateMember",
         JSON.stringify(bodyData),
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": `Bearer ${auth.accessToken}`
+          },
+          
         }
       );
       console.log(response?.data);
@@ -165,7 +171,7 @@ export default function UserProfile() {
 				{headers: {
 					'Content-Type': 'application/json',
           "x-auth-token": `Bearer ${auth.accessToken}`
-					}});
+				}});
 
 		} catch (err) {
 			console.log('Delete Failed', err);
@@ -326,7 +332,7 @@ export default function UserProfile() {
                   <Form.Control
                     type="text"
                     defaultValue={cp.cpVal}
-                    value={address + addText}
+                    value={address}
                     disabled
                   />
                   <Form.Control
