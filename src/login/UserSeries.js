@@ -101,9 +101,10 @@ export default function UserSeries() {
                                     <tr key={post.id}>
                                         <td><OriginalViewOne imgDtoList={post?.listAttachFile} x="100" y="auto" /></td>
                                         <td>{post.boardVO.id}</td>
-                                        <td width="60%">
-                                            <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
-                                                {post.title}</Link>
+                                        <td width="60%">{post.title}<br/>
+                                            
+                                                <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>작품보러가기</Link>
+                                                <Link style={{ textDecoration: "none", color: "black" }} >통계보기</Link>
                                         </td>
                                         <td>✔{post.readCount}</td>
                                         <td>🕐{displayDate(post.regDt, post.uptDt)}</td>

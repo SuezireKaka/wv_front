@@ -83,9 +83,15 @@ export default function UserProfile() {
         const response = await axios.get(
           `/party/anonymous/checkNick?nick=${e.target.value}`
         );
-        console.log(response?.data);
+        if(auth.nick===e.target.value){
         setNickChecked(true);
-        setUniqueNick(response?.data);
+        setUniqueNick(true);
+        }else if(!e.target.value && e.target.value === ""){
+          setNickChecked(false);
+          setUniqueNick(false);
+        }else{
+        setNickChecked(true);
+        setUniqueNick(response?.data);}
       } catch (err) {
         setErrMsg("에러");
       }
@@ -206,11 +212,10 @@ export default function UserProfile() {
             onBlur={onBlurNick}
             required
           /></InputGroup>
-        <p>{auth.nick===response.nick?"":
-          nickChecked
+        <p>{nickChecked
             ? uniqueNick
               ? "사용 가능한 닉네임입니다"
-              : auth.nick===response.nick?"":"이미 사용중인 닉네임입니다"
+              :"이미 사용중인 닉네임입니다"
             : ""}
         </p>
         <InputGroup className="mb-3">
@@ -372,7 +377,7 @@ export default function UserProfile() {
 		<Button variant="outline-dark" onClick={handleDelete}>
 			탈퇴
 		</Button>
-    <UserSeries />
+    
 
 	</Form >)
 };
