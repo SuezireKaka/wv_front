@@ -316,10 +316,10 @@ export default function UserProfile() {
           </InputGroup.Text>
         </InputGroup>
         <br />
+          
 
         {response.contactPointList?.map((cp) => (
-            
-          <>    {console.log(codeList)}
+          <>{console.log(codeList)}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon2">
               {cp.cpType}
@@ -358,10 +358,10 @@ export default function UserProfile() {
             <br />
           </InputGroup>
           </>
-
         ))}
 
-        {console.log(listCP)}
+
+       
       </form>
 
 		<Button variant="outline-primary"

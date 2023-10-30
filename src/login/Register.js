@@ -94,9 +94,13 @@ const Register = () => {
       const response = await axios.get(
         `/party/anonymous/checkNick?nick=${e.target.value}`
       );
+      if(!e.target.value && e.target.value === ""){
+        setNickChecked(false);
+        setUniqueNick(false);
+      }else{
       console.log(response?.data);
       setNickChecked(true);
-      setUniqueNick(response?.data);
+      setUniqueNick(response?.data);}
     } catch (err) {
       setErrMsg("에러");
     }
