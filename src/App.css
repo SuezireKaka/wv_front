@@ -15,6 +15,11 @@
   align-items: left;
 }
 
+.Canvas {
+  width: 1024;
+  height: 768;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
