@@ -22,6 +22,7 @@ import Post from 'components/Post';
 import FavoritesList from 'components/FavoritesList';
 import Books from 'components/Books';
 import ShowcaseTest from 'components/ShowcaseTest';
+import UserSeries from 'login/UserSeries';
 
 export default function BBSRouter() {
     return (
@@ -49,6 +50,8 @@ export default function BBSRouter() {
           <Route path={"/register"} element={ <Register/> } />
           <Route path={"/favoritesList"} element={ <FavoritesList/> } />
           <Route path={"/userProfile"} element={ <UserProfile/> } />
+          <Route path={"/UserSeries"} element={ <UserSeries /> } />
+          
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
 
           <Route path={"/Books"} element={<Books />} />

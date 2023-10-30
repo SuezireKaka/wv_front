@@ -305,7 +305,7 @@ const Register = () => {
 
         {console.log(listCP)}
       </form>
-      <Link to="/log-in">
+
         <br />
         <Button
           variant="outline-primary"
@@ -324,7 +324,7 @@ const Register = () => {
         >
           Sign Up
         </Button>
-      </Link>
+
     </>
   );
 };

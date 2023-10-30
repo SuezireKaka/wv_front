@@ -11,6 +11,7 @@ import DaumTest from "daumpost/DaumTest";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import UserSeries from "./UserSeries";
 
 export default function UserProfile() {
   const { auth, setAuth } = useContext(AppContext);
@@ -27,10 +28,7 @@ export default function UserProfile() {
     const [signInResult, setSignInResult] = useState({});
     const [birthDate, setBirthDate] = useState(response.birthDate.substring(0, 10));
     const [sex, setSex] = useState(response.sex);
-
-
     const hasAllContents =() =>{}
-
     const { codeList } = useContext(AppContext);
 
     const [nameBlur, isNameBlur] = useState(false);
@@ -51,6 +49,9 @@ export default function UserProfile() {
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+
+    const userSeriesUrl = `/work/anonymous/listUserSeries/${auth.nick}/1`
+
 
 
     useEffect(() => {
@@ -82,9 +83,15 @@ export default function UserProfile() {
         const response = await axios.get(
           `/party/anonymous/checkNick?nick=${e.target.value}`
         );
-        console.log(response?.data);
+        if(auth.nick===e.target.value){
         setNickChecked(true);
-        setUniqueNick(response?.data);
+        setUniqueNick(true);
+        }else if(!e.target.value && e.target.value === ""){
+          setNickChecked(false);
+          setUniqueNick(false);
+        }else{
+        setNickChecked(true);
+        setUniqueNick(response?.data);}
       } catch (err) {
         setErrMsg("에러");
       }
@@ -107,6 +114,7 @@ export default function UserProfile() {
       cpType,
       cpType == "home address" ? address + " " + inValue : inValue
     );
+    console.log(listCP)
     setListCP(listCP);
   };
 
@@ -172,6 +180,10 @@ export default function UserProfile() {
 		}
 	}
 
+
+
+
+
     return (<Form>
         
 		<h4>프로필보기</h4>
@@ -200,11 +212,10 @@ export default function UserProfile() {
             onBlur={onBlurNick}
             required
           /></InputGroup>
-        <p>
-          {nickChecked
+        <p>{nickChecked
             ? uniqueNick
               ? "사용 가능한 닉네임입니다"
-              : "이미 사용중인 닉네임입니다"
+              :"이미 사용중인 닉네임입니다"
             : ""}
         </p>
         <InputGroup className="mb-3">
@@ -324,7 +335,9 @@ export default function UserProfile() {
                   <Form.Control
                     type="text"
                     id={cp.cpType}
-                    
+                    onChange={(e) =>
+                        checkCPValidity(e, cp.cpType, e.target.value)
+                      }
                     placeholder="상세주소입력"
                   />
                 </div>
@@ -364,6 +377,8 @@ export default function UserProfile() {
 		<Button variant="outline-dark" onClick={handleDelete}>
 			탈퇴
 		</Button>
+    
+
 	</Form >)
 };
 
