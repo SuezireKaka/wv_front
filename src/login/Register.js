@@ -126,7 +126,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "/party/anonymous/mngMember",
+        "/party/anonymous/createMember",
         JSON.stringify(bodyData),
         {
           headers: { "Content-Type": "application/json" },
