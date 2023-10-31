@@ -8,9 +8,15 @@ export const AppContextProvider = ({ children }) => {
     const [auth, setAuth] = useState(user ? JSON.parse(user) : {nick : "", roles : []});
     const [codeList, setCodeList] = useState();
     const [rptCodeList, setRptCodeList] = useState();
+    const [relationRemocon, setRelationRemocon] = useState();
     
     return (
-        <AppContext.Provider value={{ auth, setAuth, codeList, setCodeList, rptCodeList, setRptCodeList }}>
+        <AppContext.Provider value={{
+            auth, setAuth,
+            codeList, setCodeList,
+            rptCodeList, setRptCodeList,
+            relationRemocon, setRelationRemocon
+        }}>
             {children}
         </AppContext.Provider> 
     )

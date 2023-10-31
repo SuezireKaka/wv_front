@@ -42,7 +42,7 @@ export default function UserProfile() {
     const [birthDateBlur, isBirthDateBlur] = useState(false);
     const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState();
-    const [listCP, setListCP] = useState(new Map());
+    const [listCP, setListCP] = useState(new Map(response.contactPointList.map(cp => [cp.cpType, cp.cpVal])));
     const [fullAddress, setFullAddress] = useState("");
     const [address, setAddress] = useState(state.contactPointList?.filter(cp => cp.cpType === "home address")[0]);
     const [addText, setAddText] = useState("");
@@ -125,7 +125,7 @@ export default function UserProfile() {
     for (let [key, value] of listCP) {
       list.push({ cpType: key, cpVal: value });
     }
-    console.log(list);
+    
     const bodyData = {
       organization: { id: "0000" },
       accountId: state.id,
@@ -188,7 +188,7 @@ export default function UserProfile() {
 
 
 
-
+    console.log("지금 우리가 뭘 던지려고 하는 거야?", listCP);
     return (<Form>
         
 		<h4>프로필보기</h4>
@@ -316,15 +316,15 @@ export default function UserProfile() {
           </InputGroup.Text>
         </InputGroup>
         <br />
-        {codeList?.map((cp, index) => {
-          let rcpVal = response.contactPointList.length > index ? response.contactPointList[index].cpVal : ""
-          return <>{console.log(codeList)}{console.log(cp)}{console.log(rcpVal)}
+        {codeList?.map((code) => {
+          let rcpVal = Array(...listCP.keys()).includes(code.codeVal) ? listCP.get(code.codeVal) : ""
+          return <>{console.log(Array(...listCP.keys()))}{console.log(code)}{console.log(rcpVal)}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon2">
-              {cp.codeVal}
+              {code.codeVal}
             </InputGroup.Text>
 
-            {cp.codeVal === "home address" ? (
+            {code.codeVal === "home address" ? (
               <>
                 <DaumTest setAddress={setAddress} />
                 <div style={{ width: "100%" }}>
@@ -336,9 +336,9 @@ export default function UserProfile() {
                   />
                   <Form.Control
                     type="text"
-                    id={cp.cpType}
+                    id={code.codeType}
                     onChange={(e) =>
-                        checkCPValidity(e, cp, e.target.value)
+                        checkCPValidity(e, code, e.target.value)
                       }
                     placeholder="상세주소입력"
                   />
@@ -347,10 +347,10 @@ export default function UserProfile() {
             ) : (
               <Form.Control
                 type="text"
-                id={cp.cpType}
+                id={code.codeVal}
                 defaultValue={rcpVal}
                 onChange={(e) =>
-                  checkCPValidity(e, cp, e.target.value)
+                  checkCPValidity(e, code, e.target.value)
                 }
               />
             )}

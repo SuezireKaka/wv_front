@@ -10,14 +10,24 @@ const getCodeList = async (uri, setCodeList) => {
   const response = await axios.get(uri);
   setCodeList(response?.data);
 }
+const getRemocon = async (uri, setRemocon) => {
+  const response = await axios.get(uri);
+  setRemocon(response?.data);
+}
 
 export default function App() {
-  const { codeList, setCodeList, rptCodeList, setRptCodeList } = useContext(AppContext);
+  const {
+    codeList, setCodeList,
+    rptCodeList, setRptCodeList, 
+    relationRemocon, setRelationRemocon} = useContext(AppContext);
   if (!codeList) {
     getCodeList("/framework/anonymous/listAllContactPointType", setCodeList);
   }
   if (!rptCodeList) {
     getCodeList("/report/anonymous/listAllReportCodes", setRptCodeList);
+  }
+  if (!relationRemocon) {
+    getRemocon("/framework/anonymous/getRemoconByName/relation_remocon", setRelationRemocon);
   }
   return (
     <div className="App">
