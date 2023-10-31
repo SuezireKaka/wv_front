@@ -12,7 +12,6 @@ root.render(
   
     <AppContextProvider>
     <Router>
-      
       <WVNav />
       <App />
     </Router>

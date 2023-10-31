@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Col } from 'react-bootstrap';
 
 const Books = ({title}) => {
     const[query,setQuery] = useState('웹툰');
@@ -39,6 +40,7 @@ if(documents===null){
         <input type="text" placeholder='검색어' value={query} onChange={(e)=>setQuery(e.target.value)}/>
         <button>검색</button>
     </form>
+    <Col>
     <div className='documents'>
         {documents.map(d=>(
             <div className='box'>
@@ -47,7 +49,7 @@ if(documents===null){
                 <div className='ellipsis'>{d.authors[0]}</div>
             </div>
         ))}
-    </div>
+    </div></Col>
     <div>
         <button onClick={()=>setPage(page-1)} disabled={page===1}>이전</button>
         <span style={{margin:'10px'}}>{page}/{last}</span>

@@ -14,14 +14,17 @@ export default function TestNav() {
 
   const { auth } = useContext(AppContext);
 
+
   const navMenu = {
     color:"grey",
-    textDecoration:"none"
+    textDecoration:"none",
+    
   }
+  
   return <>
    <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/"><Link style={navMenu}to='/'>WonderVatory</Link></Navbar.Brand>
+        <Navbar.Brand href="/"><Link style={navMenu}to='/' class="jb-nav">WonderVatory</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto  my-2 my-lg-0">
@@ -30,17 +33,19 @@ export default function TestNav() {
             
             {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
               ? <>
-                <Nav.Link><Link style={navMenu} to="/memberList/0000">회원정보</Link></Nav.Link>
-                <Nav.Link><Link style={navMenu} to="/report">신고사항</Link></Nav.Link>
+                <Nav.Link><Link style={navMenu} class="jb-nav" to="/memberList/0000">회원정보</Link></Nav.Link>
+                <Nav.Link><Link style={navMenu} class="jb-nav" to="/report">신고사항</Link></Nav.Link>
               </>
               : ""
             }
-            <Nav.Link><Link style={navMenu} to="/Books" >북</Link></Nav.Link>
-            <Nav.Link><Link style={navMenu} to="/test1">테스트용</Link></Nav.Link>
-            <Nav.Link><Link style={navMenu} to="/test2">테스트용2</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/Books" >북</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/test1">테스트용</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/test2">테스트용2</Link></Nav.Link>
             {/* <Nav.Link><Link style={navMenu} to="/Test3" >테스트용3</Link></Nav.Link> */}
-            <Nav.Link><Link style={navMenu} to="/Test4" >테스트용3</Link></Nav.Link>
-            {/* <Nav.Link><Link style={navMenu} to="/Test5" >테스트용5</Link></Nav.Link> */}
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test4" >테스트용3</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test5"><div>테스트용5</div></Link></Nav.Link>
+
+ 
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -52,7 +57,7 @@ export default function TestNav() {
       return <>
             {boardList.map(board => (
                   <Nav.Link>
-                      <Link style={navMenu}  key={board.id} to={`/board/${board.id}`}
+                      <Link style={navMenu} class="jb-nav"  key={board.id} to={`/board/${board.id}`}
                       state={{ boardId: board.id, page: 1 }}>{board.name}</Link>
                   </Nav.Link>
               ))}

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from 'react-bootstrap';
+import SocialKakao from 'example/SocialKakao';
 
 
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
@@ -24,6 +25,7 @@ const LoginStage = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    
     const Rest_api_key='248bbf725d08a367356e79cf03f2859a' //REST API KEY
     const redirect_uri = 'http://localhost:3000/LoginStage' //Redirect URI
     // oauth 요청 URL
@@ -129,7 +131,8 @@ const LoginStage = () => {
         </form>
             <Button onClick={signIn} variant="outline-success">로그인</Button><br/>
         <Link to={"/agreement/"}><Button variant="outline-primary">회원가입</Button></Link>
-        <Button variant="outline-warning" onClick={handleKakaoLogin}>카카오 로그인</Button>
+        <SocialKakao />
+
     </div>
 };
 
