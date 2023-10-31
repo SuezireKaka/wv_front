@@ -101,20 +101,22 @@ export default function UserProfile() {
         setSex(e.target.value);
       };
     
-  const checkCPValidity = (e, cpType, inValue) => {
-    e.preventDefault();
-    if (cpType.validationRe && !new RegExp(cpType.validationRe).test(inValue)) {
-      return;
-    }
-    console.log(cpType);
-    console.log("확인해봅시다", inValue);
-    listCP.set(
-      cpType,
-      cpType == "home address" ? address + " " + inValue : inValue
-    );
-    console.log(listCP)
-    setListCP(listCP);
-  };
+      const checkCPValidity = (e, code, inValue) => {
+        console.log(code);
+        console.log(inValue);
+        e.preventDefault();
+        if (code.validationRe && !new RegExp(code.validationRe).test(inValue)) {
+          return;
+        }
+    
+        listCP.set(
+          code.codeVal,
+          code.codeVal == "home address" ? address + " " + inValue : inValue
+        );
+        console.log(listCP);
+        setListCP(listCP);
+        console.log(listCP);
+      };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -125,7 +127,7 @@ export default function UserProfile() {
     for (let [key, value] of listCP) {
       list.push({ cpType: key, cpVal: value });
     }
-
+    console.log(list);
     const bodyData = {
       organization: { id: "0000" },
       accountId: state.id,
@@ -155,7 +157,7 @@ export default function UserProfile() {
       console.log(response?.data);
       console.log(JSON.stringify(response));
       setSuccess(true);
-      navigate(`/log-in`);
+      navigate(`/`);
       //clear state and controlled inputs
       //need value attrib on inputs for this
     } catch (err) {
@@ -318,13 +320,13 @@ export default function UserProfile() {
         <br />
         {codeList?.map((cp, index) => {
           let rcpVal = response.contactPointList.length > index ? response.contactPointList[index].cpVal : ""
-          return <>{console.log(codeList)}
+          return <>{console.log(codeList)}{console.log(cp)}{console.log(rcpVal)}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon2">
-              {cp.cpType}
+              {cp.codeVal}
             </InputGroup.Text>
 
-            {cp.cpType === "home address" ? (
+            {cp.codeVal === "home address" ? (
               <>
                 <DaumTest setAddress={setAddress} />
                 <div style={{ width: "100%" }}>
@@ -338,7 +340,11 @@ export default function UserProfile() {
                     type="text"
                     id={cp.cpType}
                     onChange={(e) =>
+<<<<<<< HEAD
                         checkCPValidity(e, cp.cpType, e.target.value)
+=======
+                        checkCPValidity(e, cp, e.target.value)
+>>>>>>> eea873cd3bb410fdd38b7a872adc9278d3b80428
                       }
                     placeholder="상세주소입력"
                   />
@@ -350,7 +356,7 @@ export default function UserProfile() {
                 id={cp.cpType}
                 defaultValue={rcpVal}
                 onChange={(e) =>
-                  checkCPValidity(e, cp.cpType, e.target.value)
+                  checkCPValidity(e, cp, e.target.value)
                 }
               />
             )}
