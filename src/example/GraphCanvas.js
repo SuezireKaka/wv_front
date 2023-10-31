@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { useDrag } from 'react-use-gesture';
-import Remocon from './Remocon';
+import RelRemocon from './RelRemocon';
 
 export function GraphCanvas({
     initVertices = [
@@ -17,7 +17,6 @@ export function GraphCanvas({
     const [nowVertices, setNowVertices] = useState(initVertices)
     const [nowEdges, setNowEdges] = useState(initEdges)
 
-    const funcArray = ["선택", "+객체", "+관계", "-객체", "-관계", "복사", "붙여넣기"]
     const [nowFunc, setNowFunc] = useState(0)
 
     function center(xPos, yPos, xSize, ySize) {
@@ -91,6 +90,10 @@ export function GraphCanvas({
             }
         }
     }
+    
+    function onSelect(index, use) {
+        setNowFunc(index)
+    }
 
     // 무조건 한 번 다시 그리고
     useEffect(redraw, [])
@@ -99,7 +102,7 @@ export function GraphCanvas({
     useMemo(redraw, [nowVertices, nowEdges])
 
     return <>
-        <Remocon funcArray={funcArray} index={nowFunc} setNowIndex={setNowFunc}/>
+        <RelRemocon index={nowFunc} onSelect={onSelect}/>
         <br/>
         <div style={{ position: "relative", width: "1024px", height: "768px", margin: "0 auto" }}>
             <canvas class="Canvas" ref={canvasRef} width="1024px" height="768px"
