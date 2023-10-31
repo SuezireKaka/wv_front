@@ -92,7 +92,7 @@ export default function MemberList() {
                                 <td><b>{member.response?.name}</b></td>
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex === "남성" ? "남성" : "여성"}</td>
-                                <td>{member?.roleList[0]?.role}</td>{/*<MemberRoleList member={member} /> */}
+                                <td><MemberRoleList member={member} /></td>
                          
                             </tr>
                             {member.response?.contactPointList?.map(cp => (
@@ -113,7 +113,7 @@ export default function MemberList() {
                                 <td><b>{member.response?.name}</b></td>
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex === "남성" ? "남성" : "여성"}</td>
-                                <td>{member?.roleList[0]?.role}</td>{/*<MemberRoleList member={member} /> */}
+                                <td><MemberRoleList member={member} /></td>
                                 
                             </tr>
                             {member.response?.contactPointList?.map(cp => (
