@@ -340,11 +340,7 @@ export default function UserProfile() {
                     type="text"
                     id={cp.cpType}
                     onChange={(e) =>
-<<<<<<< HEAD
-                        checkCPValidity(e, cp.cpType, e.target.value)
-=======
                         checkCPValidity(e, cp, e.target.value)
->>>>>>> eea873cd3bb410fdd38b7a872adc9278d3b80428
                       }
                     placeholder="상세주소입력"
                   />
