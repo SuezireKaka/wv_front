@@ -19,6 +19,7 @@ const Box = styled.div`
 
   return (
     <>
+      <SocialKakao />
       <Box ref={ref} />
       {hover ? <div>ToolTip!</div> : null}
         <div class='jb-nav'>text</div>
@@ -26,7 +27,6 @@ const Box = styled.div`
 
         <div class="jb-title">Lorem ipsum dolor</div>
       <div class="jb-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br/> eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-
     </>
   );
 };
