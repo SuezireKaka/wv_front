@@ -317,15 +317,14 @@ export default function UserProfile() {
         </InputGroup>
         <br />
         {codeList?.map((cp, index) => {
-          let rcpType = response.contactPointList.length > index ? response.contactPointList[index].cpType : ""
           let rcpVal = response.contactPointList.length > index ? response.contactPointList[index].cpVal : ""
           return <>{console.log(codeList)}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon2">
-              {rcpType}
+              {cp.cpType}
             </InputGroup.Text>
 
-            {rcpType === "home address" ? (
+            {cp.cpType === "home address" ? (
               <>
                 <DaumTest setAddress={setAddress} />
                 <div style={{ width: "100%" }}>
@@ -337,9 +336,9 @@ export default function UserProfile() {
                   />
                   <Form.Control
                     type="text"
-                    id={rcpType}
+                    id={cp.cpType}
                     onChange={(e) =>
-                        checkCPValidity(e, rcpType, e.target.value)
+                        checkCPValidity(e, cp.cpType, e.target.value)
                       }
                     placeholder="상세주소입력"
                   />
