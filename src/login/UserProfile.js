@@ -24,9 +24,9 @@ export default function UserProfile() {
     console.log(response)
     console.log(owner)
     const [nick, setNick] = useState(state?.nick);
-    const [name, setName] = useState(response.name);
+    const [name, setName] = useState(response?.name);
     const [signInResult, setSignInResult] = useState({});
-    const [birthDate, setBirthDate] = useState(response.birthDate.substring(0, 10));
+    const [birthDate, setBirthDate] = useState(response?.birthDate.substring(0, 10));
     const [sex, setSex] = useState(response.sex);
     const hasAllContents =() =>{}
     const { codeList } = useContext(AppContext);
@@ -49,8 +49,6 @@ export default function UserProfile() {
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
-
-    const userSeriesUrl = `/work/anonymous/listUserSeries/${auth.nick}/1`
 
     useEffect(() => {
       setValidMatch(passWord ? passWord === matchPwd : false);

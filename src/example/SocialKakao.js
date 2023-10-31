@@ -2,27 +2,24 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 const code = new URL(window.location.href).searchParams.get("code");
-
-const SocialKakao = ()=>
-
-{
-    const Rest_api_key='248bbf725d08a367356e79cf03f2859a' //REST API KEY
-    const redirect_uri = 'http://localhost:3000/' //Redirect URI
-    // oauth 요청 URL
-    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
-    const kakaoURL2 = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Rest_api_key}&redirect_uri=${redirect_uri}`
-
-    const handleLogin = ()=>{
-        window.location.href = kakaoURL
-        window.location.href = kakaoURL2
-
-
-    }
-    return(
+const SocialKakao = ()=> {
+    const CLIENT_ID = process.env.REACT_APP_REST_API_KEY;
+    const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URL;
+    
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+     return(
     <>
-    <button onClick={handleLogin}>카카오 로그인</button>
+    <a href={KAKAO_AUTH_URL} className="kakaobtn">
+    <img src={process.env.PUBLIC_URL + `/images/kakao_login_small.png`} />
+    </a>
+    &nbsp;&nbsp;
+    <a href={"/login/oauth/callback/kakao"} className="kakaobtn">
+    <img src={process.env.PUBLIC_URL + `/images/kakao_login_medium_narrow.png`} />
+    </a>
+
+    
     </>
     )
 }
-console.log(code)  //iG19UD4deaUvgboI5XRJI0gxCrspahntJB-qY_14rftjqAeukjkKD0rE4RAKPXLqAAABi0e--pLSDh85zpcCzQ
+console.log(code)  
 export default SocialKakao

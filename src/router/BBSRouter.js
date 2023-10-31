@@ -23,6 +23,7 @@ import FavoritesList from 'components/FavoritesList';
 import Books from 'components/Books';
 import ShowcaseTest from 'components/ShowcaseTest';
 import UserSeries from 'login/UserSeries';
+import LoginHandeler from 'example/LoginHandeler';
 
 export default function BBSRouter() {
     return (
@@ -46,14 +47,15 @@ export default function BBSRouter() {
           <Route path={"/report"} element={ <ReportList/> } />
 
           <Route path={"/log-in"} element={ <LoginStage/> } />
-          <Route path={"/agreement"} element={ <Agreement/> } />
+
           <Route path={"/register"} element={ <Register/> } />
           <Route path={"/favoritesList"} element={ <FavoritesList/> } />
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           <Route path={"/UserSeries"} element={ <UserSeries /> } />
           
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
-
+          <Route path={"/login/oauth/callback/kakao"}  element={<LoginHandeler />}  />
+            {/* redirect_url//당신이 redirect_url에 맞춰 꾸밀 컴포넌트*/}
           <Route path={"/Books"} element={<Books />} />
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
