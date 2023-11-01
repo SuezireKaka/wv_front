@@ -31,7 +31,7 @@ export default function MemberList() {
     
     const getPostListThenSet = async () => {
         try {
-            const { data } = await axios.get(`/party/listAllAccount/0000/${page}`, {
+            const { data } = await axios.get(`/party/listAllAccount/0000/${page}/id`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "x-auth-token": `Bearer ${auth?.accessToken}`

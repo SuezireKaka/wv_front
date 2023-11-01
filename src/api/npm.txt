@@ -31,3 +31,6 @@ npm i react-use-gesture
 
 호버
 npm i @emotion/styled 
+
+리액트 테이블
+npm i react-table

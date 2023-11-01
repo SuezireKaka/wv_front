@@ -27,9 +27,7 @@ export default function LoginButton() {
     window.sessionStorage.setItem("nowUser", JSON.stringify({nick : "", roles : []}));
     setSignInResult({});
     navigate("/")
-    return <Alert variant='dark'>
-          로그아웃 합니다
-        </Alert>
+
   }
   function renderSuccess(profile) {
     console.log("=======boardList=========");
