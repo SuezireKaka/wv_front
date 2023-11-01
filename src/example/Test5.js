@@ -19,19 +19,7 @@ const Box = styled.div`
 
   return (
     <>
-      <SocialKakao />
-
-      .env
-      #REACT_APP_SERVICE_KEY= "인증키"
-REACT_APP_REST_API_KEY="248bbf725d08a367356e79cf03f2859a"
-REACT_APP_REDIRECT_URL="http://localhost:8080/oauth/anonymous/callback/kakao"
-
-
-
-
-
-
-
+      <SocialKakao /><br/><br/><br/><br/><br/><br/>
 
       <Box ref={ref} />
       {hover ? <div>ToolTip!</div> : null}
