@@ -20,10 +20,12 @@ export default function MemberList() {
     const location = useLocation();
     let state = location.state;
     const {auth} = useContext(AppContext);
-    //const [targetBoard, setTargetBoard] = useState(state.boardId);
     const [memberList, setMemberList] = useState([]);
     const [page, setPage] = useState(1);
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
+    const backgroundColorTD = {
+        backgroundColor: "#00CDFF"
+    }
 
     const getPostListThenSet = async () => {
         try {
@@ -70,13 +72,13 @@ export default function MemberList() {
     
     return <Table className='react-bootstrap-table' style={{width:"100%"}}>
         <thead>
-            <tr style={{ backgroundColor: "#eeffdd" }}>
-                <th style={{ backgroundColor: "#eeffdd" }}>아이디</th>
-                <th style={{ backgroundColor: "#eeffdd" }}>닉</th>
-                <th style={{ backgroundColor: "#eeffdd" }}>이름</th>
-                <th style={{ backgroundColor: "#eeffdd" }}>생년월일</th>
-                <th style={{ backgroundColor: "#eeffdd" }}>성별</th>
-                <th style={{ backgroundColor: "#eeffdd" }}>분류</th>
+            <tr>
+                <th style={backgroundColorTD}>아이디</th>
+                <th style={backgroundColorTD}>닉</th>
+                <th style={backgroundColorTD}>이름</th>
+                <th style={backgroundColorTD}>생년월일</th>
+                <th style={backgroundColorTD}>성별</th>
+                <th style={backgroundColorTD}>분류</th>
                
             </tr>
         </thead>
@@ -114,7 +116,6 @@ export default function MemberList() {
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex === "남성" ? "남성" : "여성"}</td>
                                 <td><MemberRoleList member={member} /></td>
-                                
                             </tr>
                             {member.response?.contactPointList?.map(cp => (
                                 <tr key={member.id + cp.cpType}>

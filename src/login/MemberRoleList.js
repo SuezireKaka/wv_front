@@ -11,15 +11,9 @@ import { Button } from 'react-bootstrap';
 
 export default function MemberRoleList({ member }) {
   const [value, setValue] = useState(member?.roleList[0]?.role);
-  console.log(value);
   const [roles, setRoles] = React.useState([]);
   const [listCheckMember, setListCheckMember] = useState(new Map());
   const { auth } = useContext(AppContext);
-  console.log(member)
-
-
-
-
 
   const reRole = async (e, value, memberId) => {
     e.preventDefault();
@@ -58,10 +52,7 @@ export default function MemberRoleList({ member }) {
           <Radio value="manager" checked={role === "manager"}>Manager</Radio>
           <Radio value="admin" checked={role === "admin"} disabled>Admin</Radio>
         </RadioGroup>      </>))}
-
         <Button onClick={(e)=>reRole(e,value, member.id)} variant="outline-success">변경</Button>
-        
-
     </div>
   )
 }

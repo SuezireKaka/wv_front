@@ -1,20 +1,16 @@
-import SeriesSkin from "./SeriesSkin";
+
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Col } from "react-bootstrap";
-import ThumbnailList from "atom/ThumbnailList";
-import { AxiosPost } from "toolbox/Fetch";
-import OriginalFileView from "atom/OriginalFileView";
-import OriginalViewList from "atom/OriginalViewList";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import OriginalViewOne from "atom/OriginalViewOne";
 import axios from "api/axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Badge from 'react-bootstrap/Badge';
+
 
 export default function SeriesCards() {
   const location = useLocation();

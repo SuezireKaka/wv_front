@@ -5,7 +5,6 @@ export default function Footer() {
     <footer>
         <hr />
         Footer is here
-
     </footer>
     
   )

@@ -34,8 +34,6 @@ export default function Favorites({favorites}) {
       }
     }
 
-
-    
   return (
           <>
               <FaStar color={color} onClick={()=>{onPress()}}/>

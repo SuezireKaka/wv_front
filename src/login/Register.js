@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "api/axios";
 import AppContext from "context/AppContextProvider";
-import DaumTest from "daumpost/DaumTest";
+import DaumPost from "daumpost/DaumPost";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -267,7 +267,7 @@ const Register = () => {
 
               {cpType.codeVal === "home address" ? (
                 <>
-                  <DaumTest setAddress={setAddress} />
+                  <DaumPost setAddress={setAddress} />
                   <div style={{ width: "100%" }}>
                     <Form.Control
                       type="text"

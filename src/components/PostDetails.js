@@ -6,7 +6,6 @@ import { displayDate } from "toolbox/DateDisplayer";
 import ReplyList from "./ReplyList";
 import AppContext from "context/AppContextProvider";
 import { Accordion } from "react-bootstrap";
-import NextPost from "./NextPost";
 import ThumbnailList from "atom/ThumbnailList";
 import OriginalViewList from "atom/OriginalViewList";
 import ListGroupItem from "react-bootstrap";
@@ -19,12 +18,12 @@ import PostListCanvas from "./PostListCanvas";
 import axios from "api/axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router";
-import PostPN from "./PostPN";
+import PostPrevNext from "./PostPrevNext";
 
 
 export default function PostDetails() {
   const thumbnailRequestTarget = ["video", "image"];
-	const navigate = useNavigate();
+  const navigate = useNavigate();
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
@@ -69,18 +68,21 @@ export default function PostDetails() {
 
     const handleDelete = async (e) => {
       e.preventDefault();
-  
+
       try {
         const data = await axios.delete(`/work/${post.id}`,
-          {headers: {
-            'Content-Type': 'application/json',
-            "x-auth-token": `Bearer ${auth.accessToken}`}});
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              "x-auth-token": `Bearer ${auth.accessToken}`
+            }
+          });
       } catch (err) {
         console.log('Delete Failed', err);
       } finally {
         // navigate state 전달
         console.log('Delete state', state);
-        navigate(-1, {state:state});
+        navigate(-1, { state: state });
       }
     }
 
@@ -98,8 +100,8 @@ export default function PostDetails() {
           <span onClick={() => { onLike(post.id, nowlike) }}>👍{nowlike}</span>
           😡<span>{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
-        <ListGroup.Item> <PostPN post={post} state={{parentId:state.parentId, boardId:state.boardId, page: state.page, postListWithPaging: state.postListWithPaging}}/></ListGroup.Item>
-  
+        <ListGroup.Item> <PostPrevNext post={post} state={{ parentId: state.parentId, boardId: state.boardId, page: state.page, postListWithPaging: state.postListWithPaging }} /></ListGroup.Item>
+
         {/* <Link to={`/post/${postList[1]}`} >11</Link>*/}
       </ListGroup>
       {/* <PostListCanvas state={{ seriesId: state.seriesId, post, state, parentId: state.parentId, boardId: state.boardId }} />*/}
@@ -108,13 +110,13 @@ export default function PostDetails() {
         ? <Link key={state.parentId} to={`/board/${state.boardId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
         : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
       &nbsp;
-      {(post.writer ? post.writer.nick === auth.nick : false) ?<>
+      {(post.writer ? post.writer.nick === auth.nick : false) ? <>
         <Link
           to={`/series/${post.id}/mng`}
           state={{ seriesId: state.seriesId, post, state, parentId: state.parentId }}
-        ><Button variant="outline-info">수정</Button></Link>&nbsp;<Button variant="outline-dark" onClick={handleDelete}>삭제</Button></> : "" }
-      <br/>
-     
+        ><Button variant="outline-info">수정</Button></Link>&nbsp;<Button variant="outline-dark" onClick={handleDelete}>삭제</Button></> : ""}
+      <br />
+
 
       <Accordion>
         <Accordion.Item eventKey="0">

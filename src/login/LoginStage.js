@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from 'react-bootstrap';
-import SocialKakao from 'example/SocialKakao';
+import SocialKakao from 'kakao-login/SocialKakao';
 
 
 const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
@@ -14,28 +14,13 @@ const LoginStage = () => {
     const { setAuth } = useContext(AppContext);
     const loginIdRef = useRef();
     const passWordRef = useRef();
-
     const [loginId, setLoginId] = useState("");
     const [passWord, setPassWord] = useState("");
     const [signInResult, setSignInResult] = useState({});
-
     const navigate = useNavigate();
-
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
-    
-    const Rest_api_key='248bbf725d08a367356e79cf03f2859a' //REST API KEY
-    const redirect_uri = 'http://localhost:3000/LoginStage' //Redirect URI
-    // oauth 요청 URL
-    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
-    const handleKakaoLogin = ()=>{
-        window.location.href = kakaoURL
-    }
-    console.log(code)
-    let 코드 = new URL(window.location.href).searchParams.get('DtPobRyRaxcUjwWaVViDAHoB0TQEuydNcMopEkso3fcQvCmSeuWVy16rnhwKPXRpAAABi0hssXXDukuslKNZWg')
-    console.log(코드)
 
     const formCenter = {
         display: "inline-block",

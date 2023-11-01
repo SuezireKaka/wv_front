@@ -29,5 +29,5 @@ npm i react-icons
 npm i react-use-gesture
         npm i react-spring --save
 
-호버 일단 보류 
-        npm i @emotion/styled 
+호버
+npm i @emotion/styled 

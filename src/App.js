@@ -1,10 +1,10 @@
 import './App.css';
-import BBSRouter from 'router/BBSRouter';
+
 import axios from 'api/axios';
 import { useContext } from 'react';
 import AppContext from 'context/AppContextProvider';
 // 연동 잘 되는지 테스트해보자
-
+import WVRouter from 'router/WVRouter';
 
 const getCodeList = async (uri, setCodeList) => {
   const response = await axios.get(uri);
@@ -31,7 +31,7 @@ export default function App() {
   }
   return (
     <div className="App">
-      <BBSRouter/>
+      <WVRouter/>
     </div>
   );
 }

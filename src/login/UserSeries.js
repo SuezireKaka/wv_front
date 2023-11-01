@@ -14,15 +14,11 @@ import Button from "react-bootstrap/Button";
 export default function UserSeries() {
     const { auth, setAuth } = useContext(AppContext);
     const location = useLocation();
-
     let state = location.state;
-    console.log(auth);
     const [page, setPage] = useState(1);
     const userSeriesUrl = `/work/anonymous/listUserSeries/${auth.nick}/1`
     const [seriesList, setSeriesList] = useState([]);
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-
-
     const getPostListThenSet = async () => {
         try {
             const { data } = await axios.get(`/work/anonymous/listUserSeries/${auth.nick}/${page}`, {
@@ -66,11 +62,8 @@ export default function UserSeries() {
         return () => observer && observer.disconnect();
     }, [lastIntersectingImage]);
 
-
-
-
     return (
-        <div>{console.log(seriesList)}
+        <div>
             {seriesList.length===0?"":
             <Table responsive variant="white">
                 <thead>
@@ -88,7 +81,6 @@ export default function UserSeries() {
                                     <td><OriginalViewOne imgDtoList={post?.listAttachFile} x="100" y="auto" /></td>
                                     <td>{post.boardVO.id}</td>
                                     <td width="60%"><Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>{post.title}<br/>
-                                            
                                             <Button variant="outline-primary" size="sm">작품확인</Button></Link>
                                             <Link style={{ textDecoration: "none", color: "black" }} ><Button variant="outline-warning" size="sm">통계보기</Button></Link>
                                     </td>
@@ -103,7 +95,6 @@ export default function UserSeries() {
                                         <td><OriginalViewOne imgDtoList={post?.listAttachFile} x="100" y="auto" /></td>
                                         <td>{post.boardVO.id}</td>
                                         <td width="60%"><Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>{post.title}<br/>
-                                            
                                                 <Button variant="outline-primary" size="sm">작품확인</Button></Link>
                                                 <Link style={{ textDecoration: "none", color: "black" }} ><Button variant="outline-warning" size="sm">통계보기</Button></Link>
                                         </td>

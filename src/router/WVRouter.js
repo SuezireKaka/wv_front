@@ -21,11 +21,10 @@ import ReportList from 'components/ReportList';
 import Post from 'components/Post';
 import FavoritesList from 'components/FavoritesList';
 import Books from 'components/Books';
-import ShowcaseTest from 'components/ShowcaseTest';
 import UserSeries from 'login/UserSeries';
-import LoginHandeler from 'example/LoginHandeler';
+import LoginHandeler from 'kakao-login/LoginHandeler';
 
-export default function BBSRouter() {
+export default function WVRouter() {
     return (
         <Routes> 
           <Route path="/" element={ <Home /> } />

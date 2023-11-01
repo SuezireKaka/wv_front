@@ -35,7 +35,6 @@ export default function LoginButton() {
     </>
   }
 
-
   return (
     <div>    
     <Dropdown style={{position: "absolute",right: "10%"}}>

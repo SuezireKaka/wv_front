@@ -7,7 +7,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import DaumTest from "daumpost/DaumTest";
+import DaumPost from "daumpost/DaumPost";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -326,7 +326,7 @@ export default function UserProfile() {
 
             {code.codeVal === "home address" ? (
               <>
-                <DaumTest setAddress={setAddress} />
+                <DaumPost setAddress={setAddress} />
                 <div style={{ width: "100%" }}>
                   <Form.Control
                     type="text"
