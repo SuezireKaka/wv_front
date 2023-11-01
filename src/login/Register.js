@@ -10,7 +10,6 @@ import { Button } from 'react-bootstrap';
 
 const Register = () => {
   const { codeList } = useContext(AppContext);
-  console.log("너 뭐냐고!!!", codeList)
   const [name, setName] = useState("");
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState("");
@@ -26,7 +25,6 @@ const Register = () => {
   const [validMatch, setValidMatch] = useState();
   const [sex, setSex] = useState("남성");
   const [listCP, setListCP] = useState(new Map());
-  const [fullAddress, setFullAddress] = useState("");
   const [address, setAddress] = useState("");
   const [addText, setAddText] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -136,12 +134,8 @@ const Register = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(response?.data);
-      console.log(JSON.stringify(response));
       setSuccess(true);
       navigate(`/log-in`);
-      //clear state and controlled inputs
-      //need value attrib on inputs for this
     } catch (err) {
       setErrMsg("Registration Failed");
     }
@@ -184,8 +178,7 @@ const Register = () => {
         </p>
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon2">패스워드</InputGroup.Text>
-          <Form.Control
-            input
+          <Form.Control input
             type="password"
             id="passWord"
             onChange={(e) => setPassWord(e.target.value)}

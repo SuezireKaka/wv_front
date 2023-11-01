@@ -19,9 +19,10 @@ import PostListCanvas from "./PostListCanvas";
 import axios from "api/axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router";
+import PostPN from "./PostPN";
 
 
-export default function PostDetails({ postList, txtSearch = f => f }) {
+export default function PostDetails() {
   const thumbnailRequestTarget = ["video", "image"];
 	const navigate = useNavigate();
   const { auth } = useContext(AppContext);
@@ -29,18 +30,12 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
   const state = location.state;
 
   console.log(state)
+  const postlist = location.state?.postListWithPaging?.firstVal;
   //state={{ id:post.id, boardId:state.boardId, page: currentPage, search: txtSearch.current?.value, postListWithPaging}}>
-
+  console.log(postlist)
   const postUri = `/work/anonymous/findById/${state.id}`;
   const postListUri = `/work/anonymous/findById/${state.parentId}`;
 
-  /* useEffect(() => {
-     onLike()
-   }, [like]);
- */
-
-
-   
   console.log("밖에서 잘 그리고 있니?")
   return <>
     <Fetch uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
@@ -103,25 +98,23 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
           <span onClick={() => { onLike(post.id, nowlike) }}>👍{nowlike}</span>
           😡<span>{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
-        <ListGroup.Item>title : <span>{post.title}</span><br />{/*{`/post/${post.id}`} */}</ListGroup.Item>
-        {console.log(postList)}
+        <ListGroup.Item> <PostPN post={post} state={{parentId:state.parentId, boardId:state.boardId, page: state.page, postListWithPaging: state.postListWithPaging}}/></ListGroup.Item>
+  
         {/* <Link to={`/post/${postList[1]}`} >11</Link>*/}
       </ListGroup>
       {/* <PostListCanvas state={{ seriesId: state.seriesId, post, state, parentId: state.parentId, boardId: state.boardId }} />*/}
-      {console.log(state)}
-      {state?.boardId === "0001"
-        ? <Link key={state.parentId} to={`/board/0001`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
+
+      {(state?.boardId === "0001" || state?.boardId === "0000")
+        ? <Link key={state.parentId} to={`/board/${state.boardId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
         : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
-
-
-      &nbsp;&nbsp;
+      &nbsp;
       {(post.writer ? post.writer.nick === auth.nick : false) ?<>
         <Link
           to={`/series/${post.id}/mng`}
           state={{ seriesId: state.seriesId, post, state, parentId: state.parentId }}
-        ><Button variant="outline-info">수정</Button></Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button></> : ""
-      }
-      <br />
+        ><Button variant="outline-info">수정</Button></Link>&nbsp;<Button variant="outline-dark" onClick={handleDelete}>삭제</Button></> : "" }
+      <br/>
+     
 
       <Accordion>
         <Accordion.Item eventKey="0">
@@ -133,7 +126,4 @@ export default function PostDetails({ postList, txtSearch = f => f }) {
       </Accordion>
     </>
   }
-
-
-
 }
