@@ -3,17 +3,8 @@ import RelRemocon from './RelRemocon';
 import UseGestureElement from './UseGestureElement';
 
 export default function GraphCanvas({
-    vertices = [
-        { id: "0000", name: "ssss1", xPos: 0, yPos: 0, xSize: 100, ySize: 100 },
-        { id: "0001", name: "ssss2", xPos: 200, yPos: 170, xSize: 100, ySize: 100 },
-        { id: "0002", name: "ssss3", xPos: 550, yPos: 250, xSize: 100, ySize: 100 },
-    ],
-    edges = [
-        { id: "0003", name: "rel1", xPos: 100, yPos: 500, xSize: 50, ySize: 50, one: { id: "0000" }, other: { id: "0001" } },
-        { id: "0004", name: "rel2", xPos: 300, yPos: 350, xSize: 50, ySize: 50, one: { id: "0001" }, other: { id: "0002" } },
-        { id: "0005", name: "rel3", xPos: 500, yPos: 630, xSize: 50, ySize: 50, one: { id: "0002" }, other: { id: "0004" } },
-        { id: "0006", name: "rel4", xPos: 800, yPos: 300, xSize: 50, ySize: 50, one: { id: "0002" }, other: { id: "0002" } }
-    ]
+    vertices = [],
+    edges = []
 }) {
     const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
             DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE,
@@ -36,6 +27,10 @@ export default function GraphCanvas({
     const [summonedCnt, setSummonedCnt] = useState(0)
 
     const [selectedId, setSelectedId] = useState()
+    const [copiedId, setCopiedId] = useState()
+
+    // 재귀함수로 삭제할 때 이미 삭제할 것으로 정해진 애들을 기억해서 무시할 수 있도록 하는 용도
+    const [memo, setMemo] = useState([])
 
     function onSelect(index, name, clickCnt) {
         setNowFunc(index)
@@ -212,43 +207,50 @@ export default function GraphCanvas({
                 break
             }
             case "제거" : {
-                if (type === "edge") {
-                    let filteredInitEdges = initEdges
-                        .filter(edge => (
-                            // 삭제되는 것과 연결된 것도 다 삭제
-                            edge.id !== targetId
-                            && edge.one.id !== targetId
-                            && edge.other.id !== targetId
-                        ))
-                    let filteredNowEdges = nowEdges
-                        .filter(edge => (
-                            // 삭제되는 것과 연결된 것도 다 삭제
-                            edge.id !== targetId
-                            && edge.one.id !== targetId
-                            && edge.other.id !== targetId
-                    ))
-                    setInitEdges(filteredInitEdges)
-                    setNowEdges(filteredNowEdges)
-                    break
-                }
-                else {
-                    let filteredInitVertices = initVertices.filter(vertex => vertex.id !== targetId)
-                    let filteredNowVertices = nowVertices.filter(vertex => vertex.id !== targetId)
-                    let filteredInitEdges =
-                        initEdges.filter(edge => edge.one.id !== targetId && edge.other.id !== targetId)
-                    let filteredNowEdges =
-                        nowEdges.filter(edge => edge.one.id !== targetId && edge.other.id !== targetId)
-                    setInitVertices(filteredInitVertices)
-                    setNowVertices(filteredNowVertices)
-                    setInitEdges(filteredInitEdges)
-                    setNowEdges(filteredNowEdges)
-                }
+                [...nowVertices, ...nowEdges]
+                    .forEach(obj => {console.log("이거 삭제할 거야?", obj.id, isToDelete(obj.id, targetId))})
+                console.log("얘내들 삭제하는 거 맞지?", memo)
+                // 기억 못 하는 애들만 남기고 다 지워!!!
+                removeAllMemorized(memo, nowVertices, setNowVertices)
+                removeAllMemorized(memo, initVertices, setInitVertices)
+                removeAllMemorized(memo, nowEdges, setNowEdges)
+                removeAllMemorized(memo, initEdges, setInitEdges)
+                
+                // 다 지웠으니까 기억 초기화
+                setMemo(memo.filter(() => false))
                 break
             }
             default : {
                 console.log("아무 일도 없었다")
             }
         }
+    }
+
+    function isToDelete(objId, targetId) {
+        // 한 번 지우기로 메모했으면 무조건 지움
+        if (memo.includes(objId)) {
+            console.log("기억났어!")
+            return true
+        }
+        let obj = findById(objId)
+        console.log("누군지 기억이 가물가물...", obj)
+        let result = objId === targetId // 타겟 자신이면 무조건 지움
+            // 타겟을 one이나 other로 직접 갖고 있는 애도 다 지움
+            || (obj.one && obj.other && (obj.one.id === targetId || obj.other.id === targetId
+            // 간접적으로 갖고 있는 애도
+            || isToDelete(obj.one?.id, targetId)
+            || isToDelete(obj.other?.id, targetId)))
+        if (result) {
+            // 다시 안 그리면서 상태변경하려고 가변함수 push 사용
+            memo.push(objId)
+        }
+        console.log(objId + "는 " + result + "라고 기억해야지")
+        return result
+    }
+
+    function removeAllMemorized(memo, searchArray, removeCallback = f => f) {
+        let filteredArray = searchArray.filter(elem => (! memo.includes(elem.id)))
+        removeCallback(filteredArray)
     }
 
     // 무조건 한 번 그리고
@@ -264,6 +266,11 @@ export default function GraphCanvas({
         <br/>
         {selectedId
         ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
+        : null
+        }
+        <br/>
+        {copiedId
+        ? <p>{"복사 중인 id는 " + copiedId + "입니다."}</p>
         : null
         }
         <div style={{ position: "relative", width: canvasWidth, height: canvasHeight, margin: "0 auto" }}>
