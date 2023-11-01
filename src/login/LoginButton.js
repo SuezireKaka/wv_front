@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Fetch } from 'toolbox/Fetch';
 import { Link } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 
 export default function LoginButton() {
     const { auth, setAuth } = useContext(AppContext);
@@ -26,6 +27,9 @@ export default function LoginButton() {
     window.sessionStorage.setItem("nowUser", JSON.stringify({nick : "", roles : []}));
     setSignInResult({});
     navigate("/")
+    return <Alert variant='dark'>
+          로그아웃 합니다
+        </Alert>
   }
   function renderSuccess(profile) {
     console.log("=======boardList=========");

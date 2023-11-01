@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import AppContext from "context/AppContextProvider";
 import { useContext } from 'react';
 
+
 export default function MemberList() {
     const { ownerId } = useParams();
     const location = useLocation();
@@ -27,6 +28,7 @@ export default function MemberList() {
         backgroundColor: "#00CDFF"
     }
 
+    
     const getPostListThenSet = async () => {
         try {
             const { data } = await axios.get(`/party/listAllAccount/0000/${page}`, {
