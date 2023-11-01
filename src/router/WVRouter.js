@@ -32,26 +32,18 @@ export default function WVRouter() {
           <Route path={"/board/0000"} element={ <Post/> } />
           <Route path={"/board/0001"} element={ <Post/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
- 
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
-
           <Route path={"/series/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/mng"} element={ <PostMng/> } />
-
           <Route path={"/series/:seriesId/report/"} element={ <ReportMng/> } />
-
           <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
-
           <Route path={"/report"} element={ <ReportList/> } />
-
           <Route path={"/log-in"} element={ <LoginStage/> } />
-
           <Route path={"/register"} element={ <Register/> } />
           <Route path={"/favoritesList"} element={ <FavoritesList/> } />
           <Route path={"/userProfile"} element={ <UserProfile/> } />
           <Route path={"/UserSeries"} element={ <UserSeries /> } />
-          
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
           <Route path={"/login/oauth/callback/kakao"}  element={<LoginHandeler />}  />
             {/* redirect_url//당신이 redirect_url에 맞춰 꾸밀 컴포넌트*/}

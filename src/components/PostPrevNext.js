@@ -11,22 +11,23 @@ export default function PostPN({ post, state }) {
     console.log(post.id)
     console.log(state.id)
     console.log("스테이트", state)
+
     function renderSuccess(data) {
         console.log(data)
         const prev = data?.firstVal
         const next = data?.secondVal
         console.log(prev?.id)
         console.log(next?.id)
-
+    
         return <>
         {prev===null?<Button variant="outline-dark" disabled>이전화 X</Button>:
-        <Button variant="outline-dark">
+        <Button variant="outline-success">
         <Link style={{all:"unset"}} key={post.id} to={`/post/${prev?.id}`}
                           state={{ id:prev?.id, page: state.page, seriesId:state?.parentId, parentId:state?.parentId, boardId:post?.boardVO?.id}}>
                              이전화<AiOutlineCaretLeft color="red" /></Link></Button>}
-                             {post.title}
+                             &nbsp;&nbsp;&nbsp;&nbsp;<b>{post.title}</b>&nbsp;&nbsp;&nbsp;&nbsp;
         {next===null?<Button variant="outline-dark" disabled>X 다음화</Button>:                
-        <Button variant="outline-dark"><Link style={{all:"unset"}} key={post.id} to={`/post/${next?.id}`}
+        <Button variant="outline-success"><Link style={{all:"unset"}} key={post.id} to={`/post/${next?.id}`}
                           state={{ id:next?.id, page: state.page, seriesId:state?.parentId, parentId:state?.parentId, boardId:post?.boardVO?.id}}>
                              <AiOutlineCaretRight color="red" />다음화</Link></Button>}
         </>
@@ -36,6 +37,7 @@ export default function PostPN({ post, state }) {
     return (
         <div>
             <Fetch uri={uri} renderSuccess={renderSuccess} />
+            
         </div>
     )
 }

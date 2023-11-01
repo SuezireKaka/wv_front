@@ -1,25 +1,41 @@
-//코드 : s8RSZRXjVAVEo89ooY-W8_5Ppvvm77gVJHDNceiUA1dyijaLB31_CBysguoKKiVPAAABi0g273CSBpCp5rpDbg
-//인가코드 : DtPobRyRaxcUjwWaVViDAHoB0TQEuydNcMopEkso3fcQvCmSeuWVy16rnhwKPXRpAAABi0hssXXDukuslKNZWg
-//일회성?
-const code = new URL(window.location.href).searchParams.get("code");
-const Test3 = ()=>
+import React from 'react'
+import { useState } from 'react';
+export default function Test3() {
+    const [data, updateData] = useState([
+        { firstName: "Irakli", lastName: "Tcigladze" },
+        { firstName: "George", lastName: "Smith" },
+        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },
+        { firstName: "Casey", lastName: "Dawson" }
+      ]);
+      const onSort = (event, sortKey) => {
+        const tempData = [...data];
+        updateData(tempData.sort((a, b) => a[sortKey].localeCompare(b[sortKey])));
+      };
+  return (
+    <div>
+        <table className="m-table">
+        <thead>
+          <tr>
+            <th onClick={(e) => onSort(e, "firstName")}>First Name</th>
+            <th onClick={(e) => onSort(e, "lastName")}>Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map(function (person, index) {
+            return (
+              <tr key={index} data-item={person}>
+                <td data-title="firstName">{person.firstName}</td>
+                <td data-title="lastName">{person.lastName}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+    </table>
 
-{
-    const Rest_api_key='248bbf725d08a367356e79cf03f2859a' //REST API KEY
-    const redirect_uri = 'http://localhost:3000/Test3' //Redirect URI
-    // oauth 요청 URL
-    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
-    const handleLogin = ()=>{
-        window.location.href = kakaoURL
-    }
-    console.log(code)
-    let 코드 = new URL(window.location.href).searchParams.get('DtPobRyRaxcUjwWaVViDAHoB0TQEuydNcMopEkso3fcQvCmSeuWVy16rnhwKPXRpAAABi0hssXXDukuslKNZWg')
-    console.log(코드)
-    return(
-    <>
 
-    <button onClick={handleLogin}>카카오 로그인</button>
-    </>
-    )
+
+    </div>
+  )
 }
-export default Test3
