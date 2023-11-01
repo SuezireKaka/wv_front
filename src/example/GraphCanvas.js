@@ -1,42 +1,76 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
-import { useDrag } from 'react-use-gesture';
 import RelRemocon from './RelRemocon';
+import UseGestureElement from './UseGestureElement';
 
-export function GraphCanvas({
-    initVertices = [
+export default function GraphCanvas({
+    vertices = [
         { id: "0000", name: "ssss1", xPos: 0, yPos: 0, xSize: 100, ySize: 100 },
         { id: "0001", name: "ssss2", xPos: 200, yPos: 170, xSize: 100, ySize: 100 },
-        { id: "0002", name: "ssss3", xPos: 500, yPos: 50, xSize: 100, ySize: 100 },
+        { id: "0002", name: "ssss3", xPos: 550, yPos: 250, xSize: 100, ySize: 100 },
     ],
-    initEdges = [
-        { id: "0004", name: "rel1", xPos: 100, yPos: 500, xSize: 50, ySize: 50, one: { id: "0000" }, other: { id: "0001" } },
-        { id: "0005", name: "rel2", xPos: 300, yPos: 350, xSize: 50, ySize: 50, one: { id: "0001" }, other: { id: "0002" } }
+    edges = [
+        { id: "0003", name: "rel1", xPos: 100, yPos: 500, xSize: 50, ySize: 50, one: { id: "0000" }, other: { id: "0001" } },
+        { id: "0004", name: "rel2", xPos: 300, yPos: 350, xSize: 50, ySize: 50, one: { id: "0001" }, other: { id: "0002" } },
+        { id: "0005", name: "rel3", xPos: 500, yPos: 630, xSize: 50, ySize: 50, one: { id: "0002" }, other: { id: "0004" } },
+        { id: "0006", name: "rel4", xPos: 800, yPos: 300, xSize: 50, ySize: 50, one: { id: "0002" }, other: { id: "0002" } }
     ]
 }) {
+    const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
+            DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE,
+            DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST]
+            = [100, 100, 50, 50, 150, 150]
+    const [canvasWidth, canvasHeight] = [1024, 768]
     const canvasRef = useRef()
-    const [nowVertices, setNowVertices] = useState(initVertices)
-    const [nowEdges, setNowEdges] = useState(initEdges)
+
+    const [initVertices, setInitVertices] = useState(vertices)
+    const [initEdges, setInitEdges] = useState(edges)
+
+    const [nowVertices, setNowVertices] = useState(vertices)
+    const [nowEdges, setNowEdges] = useState(edges)
 
     const [nowFunc, setNowFunc] = useState(0)
+    const [nowFuncName, setNowFuncName] = useState("선택")
+    const [remainCnt, setRemainCnt] = useState(1)
+    // 위에는 id랑, 아래는 이름이랑 엮기 - 복붙시 위에만 증가
+    const [realSummonedCnt, setRealSummonedCnt] = useState(0)
+    const [summonedCnt, setSummonedCnt] = useState(0)
+
+    const [selectedId, setSelectedId] = useState()
+
+    function onSelect(index, name, clickCnt) {
+        setNowFunc(index)
+        setNowFuncName(name)
+        setRemainCnt(clickCnt)
+        setSelectedId()
+    }
+
+    function findCenterOf(selectedId) {
+        let selected = findById(selectedId)
+        if (selected) {
+            return center(selected.xPos, selected.yPos, selected.xSize, selected.ySize)
+        }
+        else {
+            return null
+        }
+    }
+
+    function findById(selectedId) {
+        let filteredArray = [...nowVertices, ...nowEdges].filter(obj => obj.id === selectedId)
+        console.log("이 어레이는 뭐야?", filteredArray)
+        if (filteredArray && filteredArray.length > 0) {
+            let selected = filteredArray[0]
+            return selected
+        }
+        else {
+            return null
+        }
+    }
 
     function center(xPos, yPos, xSize, ySize) {
         // x축은 3.3배정도, y축은 5.1배 정도 길이 but why?
         let result = [xPos + xSize / 2, yPos + ySize / 2]
         console.log("여기가 지금 중점이라며?", ...result)
         return result
-    }
-
-    function findCenterOf(vertexId) {
-        let filteredArray = nowVertices.filter(vertex => vertex.id === vertexId)
-        console.log("이 어레이는 뭐야?", filteredArray)
-        if (filteredArray && filteredArray.length > 0) {
-            let selected = filteredArray[0]
-            console.log("뭐가 선택된 거야?", selected)
-            return center(selected.xPos, selected.yPos, selected.xSize, selected.ySize)
-        }
-        else {
-            return null
-        }
     }
 
     function redraw() {
@@ -47,17 +81,43 @@ export function GraphCanvas({
         ctx?.beginPath()
         nowEdges.forEach((relation) => {
             console.log("지금부터 이거 그릴게요", relation)
-            let [oneCenterX, oneCenterY] = findCenterOf(relation.one.id)
-            let [otherCenterX, otherCenterY] = findCenterOf(relation.other.id)
-            let [fartherX, fartherY] = center(relation.xPos, relation.yPos, relation.xSize, relation.ySize)
-            // 베지에 커브를 미분해서 역으로 풀면 이렇게 나옴
-            let [controlX, controlY] =
-                [2 * fartherX - (oneCenterX + otherCenterX) / 2, 2 * fartherY - (oneCenterY + otherCenterY) / 2]
-            console.log("여보세요", ...(findCenterOf(relation.one.id)))
-            ctx?.moveTo(...(findCenterOf(relation.one.id)))
-            ctx?.quadraticCurveTo(controlX, controlY, ...(findCenterOf(relation.other.id)))
+            let oneId = relation?.one.id
+            let otherId = relation?.other.id
+            // edge의 양 끝 대상의 id가 같다면 원 그리기
+            if (oneId === otherId) {
+                drawCircle(ctx,
+                    findCenterOf(relation.one.id),
+                    center(relation.xPos, relation.yPos, relation.xSize, relation.ySize)
+                )
+            } // 다르다면 2차 베지에 그리기
+            else {
+                drawQuadraticCurve(ctx,
+                    findCenterOf(relation.one.id),
+                    findCenterOf(relation.other.id),
+                    center(relation.xPos, relation.yPos, relation.xSize, relation.ySize)
+                )
+            }
         })
         ctx?.stroke();
+    }
+
+    function drawCircle(ctx, [oneCenterX, oneCenterY], [fartherX, fartherY]) {
+        //원의 중점과 반지름을 이용
+        console.log("뭐가 온 거야?", oneCenterX, oneCenterY, fartherX, fartherY)
+        let [circleCenterX, circleCenterY] = [(oneCenterX + fartherX) / 2, (oneCenterY + fartherY) / 2]
+        let radius = Math.sqrt((oneCenterX - circleCenterX) ** 2 + (oneCenterY - circleCenterY) ** 2)
+        console.log("반지름 줘 봐", radius)
+        // 라디안은 전설이다......
+        ctx?.moveTo(circleCenterX + radius, circleCenterY)
+        ctx?.arc(circleCenterX, circleCenterY, radius, 0, (360 * Math.PI) / 180, true)
+    }
+
+    function drawQuadraticCurve(ctx, [oneCenterX, oneCenterY], [otherCenterX, otherCenterY], [fartherX, fartherY]) {
+        // 베지에 커브를 미분해서 역으로 풀면 이렇게 나옴
+        let [controlX, controlY] =
+        [2 * fartherX - (oneCenterX + otherCenterX) / 2, 2 * fartherY - (oneCenterY + otherCenterY) / 2]
+        ctx?.moveTo(oneCenterX, oneCenterY)
+        ctx?.quadraticCurveTo(controlX, controlY, otherCenterX, otherCenterY)
     }
 
     function onMove(set, type, index, newPoint) {
@@ -71,18 +131,27 @@ export function GraphCanvas({
         }
     }
 
-    function graphExecute(func, e) {
+    function canvasExecute(funcName, e) {
         let rect = e.target.getBoundingClientRect();
         let clkX = e.clientX - rect.left;
         let clkY = e.clientY - rect.top;
-        switch (func) {
-            case 0 : {
-                
+        switch (funcName) {
+            case "선택" : {
                 console.log("지금 클릭한 좌표는", clkX, clkY)
                 break
             }
-            case 1 : {
-                
+            case "객체 추가" : {
+                // 가로 세로 각각 2등분해서 안쪽에 소환
+                let newX = clkX - ( clkX > canvasWidth / 2 ? DEFAULT_VERTEX_X_SIZE : 0 )
+                let newY = clkY - ( clkY > canvasHeight / 2 ? DEFAULT_VERTEX_Y_SIZE : 0 )
+                let newId = "----" + (realSummonedCnt + 1)
+                let newName = "object - " + (summonedCnt + 1)
+                let newVertex = {id : newId, name : newName, xPos : newX, yPos: newY,
+                    xSize: DEFAULT_VERTEX_X_SIZE, ySize: DEFAULT_VERTEX_Y_SIZE}
+                setNowVertices(nowVertices.concat(newVertex))
+                setInitVertices(initVertices.concat(newVertex))
+                setSummonedCnt(summonedCnt + 1)
+                setRealSummonedCnt(realSummonedCnt + 1)
                 break
             }
             default : {
@@ -90,75 +159,144 @@ export function GraphCanvas({
             }
         }
     }
-    
-    function onSelect(index, use) {
-        setNowFunc(index)
+
+    function objectExecute(funcName, e, type) {
+        let targetId = e.target.id
+        console.log("중점이랑 이름 보여줘",  findCenterOf(targetId), findById(targetId).name)
+        switch (funcName) {
+            case "선택" : {
+                console.log("지금 선택된 대상은", findById(targetId))
+                setSelectedId(targetId)
+                break
+            }
+            case "관계 추가" : {
+                // 이미 선택을 한 상태로 실행시 접수 후 객체 추가
+                if (selectedId) {
+                    let newId = "----" + (realSummonedCnt + 1)
+                    let newName = "rel - " + (summonedCnt + 1)
+                    let [newX, newY] =
+                        targetId === selectedId // loop edge인가?
+                        // loop edge이면
+                        ? findCenterOf(targetId).map((c, i) => {
+                            return (
+                                c - (
+                                    c > [canvasWidth, canvasHeight][i] / 2 // 가로 세로를 각각 2등분해서 어디있는지 보고
+                                    // 안쪽에다 열심히 소환
+                                    ? [DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST][i]
+                                    : [-DEFAULT_LOOP_X_DIST, -DEFAULT_LOOP_Y_DIST][i]
+                                ) - [DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE][i] / 2
+                            )
+                        })
+                        // loop edge가 아니면 두 object 중점 사이가 중점이 되도록 소환
+                        : findCenterOf(targetId).map((c, i) => {
+                            return (
+                                (c + findCenterOf(selectedId)[i]) / 2
+                                    - [DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE][i] / 2
+                            )
+                        })
+                    let newEdge = { id : newId, name : newName, xPos : newX, yPos : newY,
+                        xSize : DEFAULT_EDGE_X_SIZE, ySize : DEFAULT_EDGE_Y_SIZE,
+                        // 먼저 선택한 걸 one에, 나중에 선택한 걸 other에
+                        one : {id : selectedId}, other : {id : targetId}
+                    }
+                    setSummonedCnt(summonedCnt + 1)
+                    setRealSummonedCnt(realSummonedCnt + 1)
+                    setNowEdges(nowEdges.concat(newEdge))
+                    setInitEdges(initEdges.concat(newEdge))
+                    // 선택했다는 정보를 초기화
+                    setSelectedId()
+                }
+                else {
+                    setSelectedId(targetId)
+                }
+                break
+            }
+            case "제거" : {
+                if (type === "edge") {
+                    let filteredInitEdges = initEdges
+                        .filter(edge => (
+                            // 삭제되는 것과 연결된 것도 다 삭제
+                            edge.id !== targetId
+                            && edge.one.id !== targetId
+                            && edge.other.id !== targetId
+                        ))
+                    let filteredNowEdges = nowEdges
+                        .filter(edge => (
+                            // 삭제되는 것과 연결된 것도 다 삭제
+                            edge.id !== targetId
+                            && edge.one.id !== targetId
+                            && edge.other.id !== targetId
+                    ))
+                    setInitEdges(filteredInitEdges)
+                    setNowEdges(filteredNowEdges)
+                    break
+                }
+                else {
+                    let filteredInitVertices = initVertices.filter(vertex => vertex.id !== targetId)
+                    let filteredNowVertices = nowVertices.filter(vertex => vertex.id !== targetId)
+                    let filteredInitEdges =
+                        initEdges.filter(edge => edge.one.id !== targetId && edge.other.id !== targetId)
+                    let filteredNowEdges =
+                        nowEdges.filter(edge => edge.one.id !== targetId && edge.other.id !== targetId)
+                    setInitVertices(filteredInitVertices)
+                    setNowVertices(filteredNowVertices)
+                    setInitEdges(filteredInitEdges)
+                    setNowEdges(filteredNowEdges)
+                }
+                break
+            }
+            default : {
+                console.log("아무 일도 없었다")
+            }
+        }
     }
 
-    // 무조건 한 번 다시 그리고
+    // 무조건 한 번 그리고
     useEffect(redraw, [])
 
     // 움직이면 다시 그려라
     useMemo(redraw, [nowVertices, nowEdges])
 
+    console.log("지금 선택된 아이디 나와!", nowVertices, nowEdges)
+
     return <>
-        <RelRemocon index={nowFunc} onSelect={onSelect}/>
+        <RelRemocon index={nowFunc} remain={remainCnt} onSelect={onSelect}/>
         <br/>
-        <div style={{ position: "relative", width: "1024px", height: "768px", margin: "0 auto" }}>
-            <canvas class="Canvas" ref={canvasRef} width="1024px" height="768px"
+        {selectedId
+        ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
+        : null
+        }
+        <div style={{ position: "relative", width: canvasWidth, height: canvasHeight, margin: "0 auto" }}>
+            <canvas class="Canvas" ref={canvasRef} width={canvasWidth} height={canvasHeight}
                 style={{ borderColor: "#000000", border: "1px dotted" }}
-                onClick={(e) => graphExecute(nowFunc, e)}
+                onClick={(e) => canvasExecute(nowFuncName, e)}
             />
             {nowEdges.map((edge, index) =>
                 <UseGestureElement
+                    id={edge.id}
+                    canvasSize={[canvasWidth, canvasHeight]}
                     init={initEdges[index]}
                     pos={edge}
                     set={nowEdges}
                     type="edge"
                     index={index}
                     onMove={onMove}
+                    onClick={(e) => objectExecute(nowFuncName, e, "edge")}
                 />)
             }
             {nowVertices.map((vertex, index) =>
                 <UseGestureElement
+                    id={vertex.id}
+                    canvasSize={[canvasWidth, canvasHeight]}
                     init={initVertices[index]}
                     pos={vertex}
                     set={nowVertices}
                     type="vertex"
                     index={index}
                     onMove={onMove}
+                    onClick={(e) => objectExecute(nowFuncName, e, "vertex")}
                 />)
             }
         </div>
     </>
-}
-
-export function UseGestureElement({ init, pos, set, type, index, onMove = f => f }) {
-
-    const bindPos = useDrag((params) => {
-        onMove(set, type, index, {
-            ...pos,
-            xPos: params.offset[0] + init.xPos,
-            yPos: params.offset[1] + init.yPos
-        })
-    }, {
-        bounds: {
-            left: 0 - init.xPos,
-            right: 1024 - pos.xSize - init.xPos,
-            top: 0 - init.yPos,
-            bottom: 768 - pos.ySize - init.yPos
-        }
-    });
-
-    return <button {...bindPos()}
-        style={{ /*MODIFIED!*/
-            position: "absolute",
-            left: pos.xPos,
-            top: pos.yPos,
-            width: pos.xSize,
-            height: pos.ySize
-        }}
-    >
-        {pos.name}
-    </button>
 }

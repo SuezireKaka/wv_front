@@ -1,4 +1,4 @@
-import {GraphCanvas} from "./GraphCanvas"
+import GraphCanvas from "./GraphCanvas"
 
 export default function Test4() {
     
