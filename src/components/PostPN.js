@@ -19,16 +19,16 @@ export default function PostPN({ post, state }) {
         console.log(next?.id)
 
         return <>
-        {prev===null?"이전화가 없습니다.":
-        <Button>
+        {prev===null?<Button variant="outline-dark" disabled>이전화 X</Button>:
+        <Button variant="outline-dark">
         <Link style={{all:"unset"}} key={post.id} to={`/post/${prev?.id}`}
-                          state={{ id:prev?.id, page: state.page, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>
+                          state={{ id:prev?.id, page: state.page, seriesId:state?.parentId, parentId:state?.parentId, boardId:post?.boardVO?.id}}>
                              이전화<AiOutlineCaretLeft color="red" /></Link></Button>}
                              {post.title}
-        {next===null?"다음화가 없습니다.":                
-        <Button><Link style={{all:"unset"}} key={post.id} to={`/post/${next?.id}`}
-                          state={{ id:next?.id, page: state.page, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>
-                             <AiOutlineCaretRight color="blue" />다음화</Link></Button>}
+        {next===null?<Button variant="outline-dark" disabled>X 다음화</Button>:                
+        <Button variant="outline-dark"><Link style={{all:"unset"}} key={post.id} to={`/post/${next?.id}`}
+                          state={{ id:next?.id, page: state.page, seriesId:state?.parentId, parentId:state?.parentId, boardId:post?.boardVO?.id}}>
+                             <AiOutlineCaretRight color="red" />다음화</Link></Button>}
         </>
     }
 
