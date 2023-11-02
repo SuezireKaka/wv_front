@@ -30,14 +30,11 @@ export default function UserProfile() {
   const [signInResult, setSignInResult] = useState({});
   const [birthDate, setBirthDate] = useState(response?.birthDate.substring(0, 10));
   const [sex, setSex] = useState(response.sex);
-  const hasAllContents = () => { }
   const { codeList } = useContext(AppContext);
-
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState(state.loginId);
   const [idChecked, setIdChecked] = useState(false);
   const [uniqueId, setUniqueId] = useState(false);
-
   const [nickChecked, setNickChecked] = useState(false);
   const [uniqueNick, setUniqueNick] = useState(false);
   const [passWord, setPassWord] = useState("");
@@ -45,9 +42,7 @@ export default function UserProfile() {
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState();
   const [listCP, setListCP] = useState(new Map(response.contactPointList.map(cp => [cp.cpType, cp.cpVal])));
-  const [fullAddress, setFullAddress] = useState("");
   const [address, setAddress] = useState(state.contactPointList?.filter(cp => cp.cpType === "home address")[0]);
-  const [addText, setAddText] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
@@ -71,33 +66,31 @@ export default function UserProfile() {
     }
   };
 
-  const onBlurNick = async (e) => {
+  const onBlurVal = async (e, type) => {
     e.preventDefault();
-    console.log("onBlurNick");
-
+    
     try {
       const response = await axios.get(
-        `/party/anonymous/checkNick?nick=${e.target.value}`
+        `/party/anonymous/checkUiqueVal/${type}/${e.target.value}`
       );
-      if (auth.nick === e.target.value) {
-        setNickChecked(true);
-        setUniqueNick(true);
-      } else if (!e.target.value && e.target.value === "") {
-        setNickChecked(false);
-        setUniqueNick(false);
-      } else {
-        setNickChecked(true);
-        setUniqueNick(response?.data);
+      if (type==="login_id"){
+      console.log(response?.data);
+      setIdChecked(true);
+      setUniqueId(response?.data);
       }
+      if (type==="nick"){
+        if(!e.target.value && e.target.value === ""){
+          setNickChecked(false);
+          setUniqueNick(false);
+        }else{
+        console.log(response?.data);
+        setNickChecked(true);
+        setUniqueNick(response?.data);}
+        }
+
     } catch (err) {
       setErrMsg("에러");
     }
-  };
-
-  const checkSex = (e) => {
-    console.log("checkSex");
-    console.log(e.target.value);
-    setSex(e.target.value);
   };
 
   const checkCPValidity = (e, code, inValue) => {
@@ -150,9 +143,7 @@ export default function UserProfile() {
             "Content-Type": "application/json",
             "x-auth-token": `Bearer ${auth.accessToken}`
           },
-
         }
-
       );
       console.log(response?.data);
       console.log(JSON.stringify(response));
@@ -170,7 +161,6 @@ export default function UserProfile() {
 
   const handleDelete = async (e) => {
     e.preventDefault();
-
     try {
       const data = await axios.get(`/party/deleteMember/${auth.nick}`,
         {
@@ -193,36 +183,30 @@ export default function UserProfile() {
   }
   console.log("지금 우리가 뭘 던지려고 하는 거야?", listCP);
   return (<Form>
-
     <h4>프로필</h4>
     <Form>
-
       <FloatingLabel
         controlId="floatingInput"
         label="이름"
         className="mb-3"
-      >
-        <Form.Control
+      ><Form.Control
           type="text"
           id="name"
           onChange={(e) => setName(e.target.value)}
           value={name}
           onBlur={onBlur}
         /></FloatingLabel>
-
-
       <FloatingLabel
         controlId="floatingInput"
         label="닉네임"
         className="mb-3"
-      >
-        <Form.Control
+      ><Form.Control
           type="text"
           id="nick"
           placeholder="닉네임을 정해주세요"
           value={nick}
           onChange={(e) => setNick(e.target.value)}
-          onBlur={onBlurNick}
+          onBlur={(e) => onBlurVal(e , "nick")}
           required
         /></FloatingLabel>
       <p>{nickChecked
@@ -235,20 +219,17 @@ export default function UserProfile() {
         controlId="floatingInput"
         label="아이디"
         className="mb-3"
-      >
-        <Form.Control
+      ><Form.Control
           type="text"
           id="loginId"
           value={loginId}
           disabled
         /></FloatingLabel>
-
       <FloatingLabel
         controlId="floatingInput"
         label="패스워드"
         className="mb-3"
-      >
-        <Form.Control
+      ><Form.Control
           input
           type="password"
           id="passWord"
@@ -261,8 +242,7 @@ export default function UserProfile() {
         controlId="floatingInput"
         label="암호확인"
         className="mb-3"
-      >
-        <Form.Control
+      ><Form.Control
           type="password"
           id="userMatchPwd"
 
@@ -270,8 +250,7 @@ export default function UserProfile() {
           onChange={(e) => setMatchPwd(e.target.value)}
           value={matchPwd}
           required
-        />
-      </FloatingLabel>
+        /></FloatingLabel>
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon2">생년월일</InputGroup.Text>
         <input
@@ -294,7 +273,7 @@ export default function UserProfile() {
               label="남성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="남성"
               id={`inline-radio-1`}
             /> : <input
@@ -302,7 +281,7 @@ export default function UserProfile() {
               label="남성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="남성"
               id={`inline-radio-1`}
             />}
@@ -316,7 +295,7 @@ export default function UserProfile() {
               label="여성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="여성"
               id={`inline-radio-1`}
             /> : <input
@@ -324,7 +303,7 @@ export default function UserProfile() {
               label="여성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="여성"
               id={`inline-radio-1`}
             />}
@@ -336,8 +315,7 @@ export default function UserProfile() {
           <FloatingLabel
             controlId="floatingInput"
             label={code.codeVal}
-            className="mb-3"
-          >
+            className="mb-3">
             {code.codeVal === "home address" ? (
               <>
                 <DaumPost setAddress={setAddress} />
@@ -364,9 +342,7 @@ export default function UserProfile() {
                 id={code.codeVal}
                 defaultValue={rcpVal}
                 onChange={(e) =>
-                  checkCPValidity(e, code, e.target.value)
-                }
-              />
+                  checkCPValidity(e, code, e.target.value)}/>
             )}
           </FloatingLabel>
         </>
@@ -381,8 +357,7 @@ export default function UserProfile() {
           uniqueNick &&
           isNameBlur &&
           isBirthDateBlur
-        )
-      } >
+        )} >
       반영
     </Button>
     <Button variant="outline-dark" onClick={handleDelete}>
@@ -390,5 +365,3 @@ export default function UserProfile() {
     </Button>
   </Form >)
 };
-
-

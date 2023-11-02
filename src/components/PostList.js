@@ -99,7 +99,7 @@ function renderSuccess(postListWithPaging) {
           <tfoot>
           </tfoot>
       </Table>
-      <div  style={{Align:"center"}}>
+      <div style={{ Align: "center", display: "inline-block"}}>
       <Pagination>
       {pagenation?.lastPage>=2?displayPagination(pagenation):""}
       </Pagination>

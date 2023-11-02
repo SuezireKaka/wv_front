@@ -87,6 +87,7 @@ export default function Post() {
         <tbody>
           {postList?.map(post => (
             <tr key={post.id}>
+              
               <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
               <td width="60%">
                 <Link style={{ all: "unset", cursor:"pointer" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
@@ -103,7 +104,7 @@ export default function Post() {
         <tfoot>
         </tfoot>
       </Table>
-      <div style={{ Align: "center" }}>
+      <div style={{ Align: "center", display: "inline-block"}}>
         <Pagination>
           {pagenation?.lastPage >= 2 ? displayPagination(pagenation) : ""}
         </Pagination>
