@@ -1,7 +1,7 @@
 import React from 'react'
 import SocialKakao from 'kakao-login/SocialKakao';
 import styled from "@emotion/styled";
-import useHover from 'toolbox/useHover';
+import useHover from 'hooks/useHover';
 
 
 // 시각적인 효과를 위해 BOX컴포넌트 사용

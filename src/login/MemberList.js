@@ -27,7 +27,6 @@ export default function MemberList() {
     const backgroundColorTD = {
         backgroundColor: "#00CDFF"
     }
-
     
     const getPostListThenSet = async () => {
         try {
@@ -81,7 +80,6 @@ export default function MemberList() {
                 <th style={backgroundColorTD}>생년월일</th>
                 <th style={backgroundColorTD}>성별</th>
                 <th style={backgroundColorTD}>분류</th>
-               
             </tr>
         </thead>
         <tbody>
@@ -97,7 +95,6 @@ export default function MemberList() {
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex === "남성" ? "남성" : "여성"}</td>
                                 <td><MemberRoleList member={member} /></td>
-                         
                             </tr>
                             {member.response?.contactPointList?.map(cp => (
                                 <tr key={member.id + cp.cpType}>

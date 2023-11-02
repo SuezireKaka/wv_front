@@ -1,6 +1,6 @@
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import SeriesCards from "component-showcase/SeriesCards";
+import SeriesCards from "./SeriesCards";
 import Button from "react-bootstrap/Button";
 import AppContext from "context/AppContextProvider";
 import { useContext } from "react";
