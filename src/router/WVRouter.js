@@ -47,7 +47,7 @@ export default function WVRouter() {
           <Route path={"/UserSeries"} element={ <UserSeries /> } />
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
           <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
-          <Route path={"/login/oauth2/code/kakao?code=:code"}  element={<LoginHandeler />}  />
+          <Route path={"/login/oauth2/code/kakao"}  element={<LoginHandeler />}  />
             {/* redirect_url//당신이 redirect_url에 맞춰 꾸밀 컴포넌트*/}
           <Route path={"/Books"} element={<Books />} />
           <Route path={"/test1"} element={<Test1 />} />
