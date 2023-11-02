@@ -37,7 +37,7 @@ export default function Test4({toolDetail = {
             </td>
             <td style={{ width: "100%" }}>
                 <PropAccordion
-                    objList = {nowObjectList}
+                    nowObjectList = {nowObjectList} setNowObjectList={setNowObjectList}
                 />
             </td>
         </table>
