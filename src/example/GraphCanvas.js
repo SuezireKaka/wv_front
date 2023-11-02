@@ -3,14 +3,13 @@ import RelRemocon from './RelRemocon';
 import UseGestureElement from './UseGestureElement';
 
 export default function GraphCanvas({
-    vertices = [],
-    edges = []
+    vertices = [], edges = [], xToolSize = 1024, yToolSize = 768,
+    onSummonVertex = f => f
 }) {
     const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
-            DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE,
-            DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST]
-            = [100, 100, 50, 50, 150, 150]
-    const [canvasWidth, canvasHeight] = [1024, 768]
+        DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE,
+        DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST]
+        = [100, 100, 50, 50, 150, 150]
     const canvasRef = useRef()
 
     const [initVertices, setInitVertices] = useState(vertices)
@@ -110,7 +109,7 @@ export default function GraphCanvas({
     function drawQuadraticCurve(ctx, [oneCenterX, oneCenterY], [otherCenterX, otherCenterY], [fartherX, fartherY]) {
         // 베지에 커브를 미분해서 역으로 풀면 이렇게 나옴
         let [controlX, controlY] =
-        [2 * fartherX - (oneCenterX + otherCenterX) / 2, 2 * fartherY - (oneCenterY + otherCenterY) / 2]
+            [2 * fartherX - (oneCenterX + otherCenterX) / 2, 2 * fartherY - (oneCenterY + otherCenterY) / 2]
         ctx?.moveTo(oneCenterX, oneCenterY)
         ctx?.quadraticCurveTo(controlX, controlY, otherCenterX, otherCenterY)
     }
@@ -131,25 +130,28 @@ export default function GraphCanvas({
         let clkX = e.clientX - rect.left;
         let clkY = e.clientY - rect.top;
         switch (funcName) {
-            case "선택" : {
+            case "선택": {
                 console.log("지금 클릭한 좌표는", clkX, clkY)
                 break
             }
-            case "객체 추가" : {
+            case "객체 추가": {
                 // 가로 세로 각각 2등분해서 안쪽에 소환
-                let newX = clkX - ( clkX > canvasWidth / 2 ? DEFAULT_VERTEX_X_SIZE : 0 )
-                let newY = clkY - ( clkY > canvasHeight / 2 ? DEFAULT_VERTEX_Y_SIZE : 0 )
+                let newX = clkX - (clkX > xToolSize / 2 ? DEFAULT_VERTEX_X_SIZE : 0)
+                let newY = clkY - (clkY > yToolSize / 2 ? DEFAULT_VERTEX_Y_SIZE : 0)
                 let newId = "----" + (realSummonedCnt + 1)
                 let newName = "object - " + (summonedCnt + 1)
-                let newVertex = {id : newId, name : newName, xPos : newX, yPos: newY,
-                    xSize: DEFAULT_VERTEX_X_SIZE, ySize: DEFAULT_VERTEX_Y_SIZE}
+                let newVertex = {
+                    id: newId, name: newName, xPos: newX, yPos: newY,
+                    xSize: DEFAULT_VERTEX_X_SIZE, ySize: DEFAULT_VERTEX_Y_SIZE
+                }
                 setNowVertices(nowVertices.concat(newVertex))
                 setInitVertices(initVertices.concat(newVertex))
                 setSummonedCnt(summonedCnt + 1)
                 setRealSummonedCnt(realSummonedCnt + 1)
+                onSummonVertex({id : newId, name : newName, customPropertiesList : []})
                 break
             }
-            default : {
+            default: {
                 console.log("아무 일도 없었다")
             }
         }
@@ -157,42 +159,43 @@ export default function GraphCanvas({
 
     function objectExecute(funcName, e, type) {
         let targetId = e.target.id
-        console.log("중점이랑 이름 보여줘",  findCenterOf(targetId), findById(targetId).name)
+        console.log("중점이랑 이름 보여줘", findCenterOf(targetId), findById(targetId).name)
         switch (funcName) {
-            case "선택" : {
+            case "선택": {
                 console.log("지금 선택된 대상은", findById(targetId))
                 setSelectedId(targetId)
                 break
             }
-            case "관계 추가" : {
+            case "관계 추가": {
                 // 이미 선택을 한 상태로 실행시 접수 후 객체 추가
                 if (selectedId) {
                     let newId = "----" + (realSummonedCnt + 1)
                     let newName = "rel - " + (summonedCnt + 1)
                     let [newX, newY] =
                         targetId === selectedId // loop edge인가?
-                        // loop edge이면
-                        ? findCenterOf(targetId).map((c, i) => {
-                            return (
-                                c - (
-                                    c > [canvasWidth, canvasHeight][i] / 2 // 가로 세로를 각각 2등분해서 어디있는지 보고
-                                    // 안쪽에다 열심히 소환
-                                    ? [DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST][i]
-                                    : [-DEFAULT_LOOP_X_DIST, -DEFAULT_LOOP_Y_DIST][i]
-                                ) - [DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE][i] / 2
-                            )
-                        })
-                        // loop edge가 아니면 두 object 중점 사이가 중점이 되도록 소환
-                        : findCenterOf(targetId).map((c, i) => {
-                            return (
-                                (c + findCenterOf(selectedId)[i]) / 2
+                            // loop edge이면
+                            ? findCenterOf(targetId).map((c, i) => {
+                                return (
+                                    c - (
+                                        c > [xToolSize, yToolSize][i] / 2 // 가로 세로를 각각 2등분해서 어디있는지 보고
+                                            // 안쪽에다 열심히 소환
+                                            ? [DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST][i]
+                                            : [-DEFAULT_LOOP_X_DIST, -DEFAULT_LOOP_Y_DIST][i]
+                                    ) - [DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE][i] / 2
+                                )
+                            })
+                            // loop edge가 아니면 두 object 중점 사이가 중점이 되도록 소환
+                            : findCenterOf(targetId).map((c, i) => {
+                                return (
+                                    (c + findCenterOf(selectedId)[i]) / 2
                                     - [DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE][i] / 2
-                            )
-                        })
-                    let newEdge = { id : newId, name : newName, xPos : newX, yPos : newY,
-                        xSize : DEFAULT_EDGE_X_SIZE, ySize : DEFAULT_EDGE_Y_SIZE,
+                                )
+                            })
+                    let newEdge = {
+                        id: newId, name: newName, xPos: newX, yPos: newY,
+                        xSize: DEFAULT_EDGE_X_SIZE, ySize: DEFAULT_EDGE_Y_SIZE,
                         // 먼저 선택한 걸 one에, 나중에 선택한 걸 other에
-                        one : {id : selectedId}, other : {id : targetId}
+                        one: { id: selectedId }, other: { id: targetId }
                     }
                     setSummonedCnt(summonedCnt + 1)
                     setRealSummonedCnt(realSummonedCnt + 1)
@@ -206,21 +209,21 @@ export default function GraphCanvas({
                 }
                 break
             }
-            case "제거" : {
+            case "제거": {
                 [...nowVertices, ...nowEdges]
-                    .forEach(obj => {console.log("이거 삭제할 거야?", obj.id, isToDelete(obj.id, targetId))})
+                    .forEach(obj => { console.log("이거 삭제할 거야?", obj.id, isToDelete(obj.id, targetId)) })
                 console.log("얘내들 삭제하는 거 맞지?", memo)
                 // 기억 못 하는 애들만 남기고 다 지워!!!
                 removeAllMemorized(memo, nowVertices, setNowVertices)
                 removeAllMemorized(memo, initVertices, setInitVertices)
                 removeAllMemorized(memo, nowEdges, setNowEdges)
                 removeAllMemorized(memo, initEdges, setInitEdges)
-                
+
                 // 다 지웠으니까 기억 초기화
                 setMemo(memo.filter(() => false))
                 break
             }
-            default : {
+            default: {
                 console.log("아무 일도 없었다")
             }
         }
@@ -237,9 +240,9 @@ export default function GraphCanvas({
         let result = objId === targetId // 타겟 자신이면 무조건 지움
             // 타겟을 one이나 other로 직접 갖고 있는 애도 다 지움
             || (obj.one && obj.other && (obj.one.id === targetId || obj.other.id === targetId
-            // 간접적으로 갖고 있는 애도
-            || isToDelete(obj.one?.id, targetId)
-            || isToDelete(obj.other?.id, targetId)))
+                // 간접적으로 갖고 있는 애도
+                || isToDelete(obj.one?.id, targetId)
+                || isToDelete(obj.other?.id, targetId)))
         if (result) {
             // 다시 안 그리면서 상태변경하려고 가변함수 push 사용
             memo.push(objId)
@@ -249,7 +252,7 @@ export default function GraphCanvas({
     }
 
     function removeAllMemorized(memo, searchArray, removeCallback = f => f) {
-        let filteredArray = searchArray.filter(elem => (! memo.includes(elem.id)))
+        let filteredArray = searchArray.filter(elem => (!memo.includes(elem.id)))
         removeCallback(filteredArray)
     }
 
@@ -261,27 +264,27 @@ export default function GraphCanvas({
 
     console.log("지금 선택된 아이디 나와!", nowVertices, nowEdges)
 
-    return <>
-        <RelRemocon index={nowFunc} remain={remainCnt} onSelect={onSelect}/>
-        <br/>
+    return <div>
+        <RelRemocon index={nowFunc} remain={remainCnt} onSelect={onSelect} />
+        <br />
         {selectedId
-        ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
-        : null
+            ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
+            : null
         }
-        <br/>
+        <br />
         {copiedId
-        ? <p>{"복사 중인 id는 " + copiedId + "입니다."}</p>
-        : null
+            ? <p>{"복사 중인 id는 " + copiedId + "입니다."}</p>
+            : null
         }
-        <div style={{ position: "relative", width: canvasWidth, height: canvasHeight, margin: "0 auto" }}>
-            <canvas class="Canvas" ref={canvasRef} width={canvasWidth} height={canvasHeight}
+        <div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
+            <canvas class="Canvas" ref={canvasRef} width={xToolSize} height={yToolSize}
                 style={{ borderColor: "#000000", border: "1px dotted" }}
                 onClick={(e) => canvasExecute(nowFuncName, e)}
             />
             {nowEdges.map((edge, index) =>
                 <UseGestureElement
                     id={edge.id}
-                    canvasSize={[canvasWidth, canvasHeight]}
+                    canvasSize={[xToolSize, yToolSize]}
                     init={initEdges[index]}
                     pos={edge}
                     set={nowEdges}
@@ -294,7 +297,7 @@ export default function GraphCanvas({
             {nowVertices.map((vertex, index) =>
                 <UseGestureElement
                     id={vertex.id}
-                    canvasSize={[canvasWidth, canvasHeight]}
+                    canvasSize={[xToolSize, yToolSize]}
                     init={initVertices[index]}
                     pos={vertex}
                     set={nowVertices}
@@ -305,5 +308,6 @@ export default function GraphCanvas({
                 />)
             }
         </div>
-    </>
+    </div>
+
 }

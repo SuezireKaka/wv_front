@@ -3,7 +3,7 @@ import PropTest from './PropTest';
 import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
 
-export default function Drag() {
+export default function Drag({initPropList = []}) {
   const { auth } = useContext(AppContext);
 
   const dragItem = useRef();
@@ -18,8 +18,8 @@ export default function Drag() {
   {propType : 'type 3', propVal : 'val 3', isSafe : true, isEdited : false},
   {propType : 'type 4', propVal : 'val 4', isSafe : true, isEdited : false}*/
 
-  const [propList, setPropList] = useState();
-  const [originalList, setOriginalList] = useState(); // 나중에 추가할 기능
+  const [propList, setPropList] = useState(initPropList);
+  const [originalList, setOriginalList] = useState(initPropList); // 나중에 추가할 기능
 
   // 어떤 때는 인덱스로 해야 하고 어떤 때는 레벨로 해야 하다보니까 난리다 아주
   // 인덱스가 필요한 시점 : create 판단, 정렬시 짝 맞추기
