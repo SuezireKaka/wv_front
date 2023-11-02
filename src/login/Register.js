@@ -19,7 +19,7 @@ const Register = () => {
   const [nickChecked, setNickChecked] = useState(false);
   const [uniqueNick, setUniqueNick] = useState(false);
   const [passWord, setPassWord] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState("2000-01-01");
   const [birthDateBlur, isBirthDateBlur] = useState(false);
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState();
@@ -30,7 +30,8 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  
+
+
   useEffect(() => {
     setValidMatch(passWord ? passWord === matchPwd : false);
   }, [passWord, matchPwd]);
@@ -52,12 +53,6 @@ const Register = () => {
     setListCP(listCP);
   };
 
-  const checkSex = (e) => {
-    console.log("checkSex");
-    console.log(e.target.value);
-    setSex(e.target.value);
-  };
-
   const onBlur = (e) => {
     e.preventDefault();
     isNameBlur(true);
@@ -68,37 +63,29 @@ const Register = () => {
       isBirthDateBlur(true);
     }
   };
-  const onBlurLoginId = async (e) => {
-    e.preventDefault();
-    console.log("onBlurNick");
 
+  const onBlurVal = async (e, type) => {
+    e.preventDefault();
+    
     try {
       const response = await axios.get(
-        `/party/anonymous/checkLoginId?loginId=${e.target.value}`
+        `/party/anonymous/checkUiqueVal/${type}/${e.target.value}`
       );
+      if (type==="login_id"){
       console.log(response?.data);
       setIdChecked(true);
       setUniqueId(response?.data);
-    } catch (err) {
-      setErrMsg("에러");
-    }
-  };
+      }
+      if (type==="nick"){
+        if(!e.target.value && e.target.value === ""){
+          setNickChecked(false);
+          setUniqueNick(false);
+        }else{
+        console.log(response?.data);
+        setNickChecked(true);
+        setUniqueNick(response?.data);}
+        }
 
-  const onBlurNick = async (e) => {
-    e.preventDefault();
-    console.log("onBlurNick");
-
-    try {
-      const response = await axios.get(
-        `/party/anonymous/checkNick?nick=${e.target.value}`
-      );
-      if(!e.target.value && e.target.value === ""){
-        setNickChecked(false);
-        setUniqueNick(false);
-      }else{
-      console.log(response?.data);
-      setNickChecked(true);
-      setUniqueNick(response?.data);}
     } catch (err) {
       setErrMsg("에러");
     }
@@ -166,14 +153,14 @@ const Register = () => {
             id="loginId"
             onChange={(e) => setLoginId(e.target.value)}
             required
-            onBlur={onBlurLoginId}
+            onBlur={(e) => onBlurVal(e , "login_id")}
           />{" "}
         </InputGroup>
         <p>
           {idChecked
             ? uniqueId
-              ? "사용 가능한 ID입니다"
-              : "이미 사용중인 ID입니다"
+              ? <>사용 가능한 ID입니다</>
+              : <div style={{color:"red"}}>이미 사용중인 ID입니다</div>
             : ""}
         </p>
         <InputGroup className="mb-3">
@@ -205,7 +192,7 @@ const Register = () => {
             placeholder="닉네임을 정해주세요"
             onChange={(e) => setNick(e.target.value)}
             required
-            onBlur={onBlurNick}
+            onBlur={(e) => onBlurVal(e , "nick")}
           />
         </InputGroup>
         <p>
@@ -224,6 +211,7 @@ const Register = () => {
             onChange={(e) => setBirthDate(e.target.value)}
             min="1920-01-01"
             max="2023-12-31"
+            
             aria-required="true"
             value={birthDate}
             onBlur={onBlur}
@@ -239,7 +227,7 @@ const Register = () => {
               name="userSex"
               type="radio"
               value="남성"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               id={`inline-radio-1`}
             />
           </InputGroup.Text>
@@ -250,7 +238,7 @@ const Register = () => {
               label="여성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="여성"
               id={`inline-radio-2`}
             />

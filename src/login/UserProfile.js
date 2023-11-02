@@ -71,34 +71,35 @@ export default function UserProfile() {
     }
   };
 
-  const onBlurNick = async (e) => {
+  const onBlurVal = async (e, type) => {
     e.preventDefault();
-    console.log("onBlurNick");
-
+    
     try {
       const response = await axios.get(
-        `/party/anonymous/checkNick?nick=${e.target.value}`
+        `/party/anonymous/checkUiqueVal/${type}/${e.target.value}`
       );
-      if (auth.nick === e.target.value) {
-        setNickChecked(true);
-        setUniqueNick(true);
-      } else if (!e.target.value && e.target.value === "") {
-        setNickChecked(false);
-        setUniqueNick(false);
-      } else {
-        setNickChecked(true);
-        setUniqueNick(response?.data);
+      if (type==="login_id"){
+      console.log(response?.data);
+      setIdChecked(true);
+      setUniqueId(response?.data);
       }
+      if (type==="nick"){
+        if(!e.target.value && e.target.value === ""){
+          setNickChecked(false);
+          setUniqueNick(false);
+        }else{
+        console.log(response?.data);
+        setNickChecked(true);
+        setUniqueNick(response?.data);}
+        }
+
     } catch (err) {
       setErrMsg("에러");
     }
   };
 
-  const checkSex = (e) => {
-    console.log("checkSex");
-    console.log(e.target.value);
-    setSex(e.target.value);
-  };
+
+  
 
   const checkCPValidity = (e, code, inValue) => {
     console.log(code);
@@ -222,7 +223,7 @@ export default function UserProfile() {
           placeholder="닉네임을 정해주세요"
           value={nick}
           onChange={(e) => setNick(e.target.value)}
-          onBlur={onBlurNick}
+          onBlur={(e) => onBlurVal(e , "nick")}
           required
         /></FloatingLabel>
       <p>{nickChecked
@@ -294,7 +295,7 @@ export default function UserProfile() {
               label="남성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="남성"
               id={`inline-radio-1`}
             /> : <input
@@ -302,7 +303,7 @@ export default function UserProfile() {
               label="남성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="남성"
               id={`inline-radio-1`}
             />}
@@ -316,7 +317,7 @@ export default function UserProfile() {
               label="여성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="여성"
               id={`inline-radio-1`}
             /> : <input
@@ -324,7 +325,7 @@ export default function UserProfile() {
               label="여성"
               name="userSex"
               type="radio"
-              onChange={checkSex}
+              onChange={(e) =>setSex(e.target.value)}
               value="여성"
               id={`inline-radio-1`}
             />}

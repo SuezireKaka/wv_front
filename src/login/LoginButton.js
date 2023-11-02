@@ -33,7 +33,7 @@ export default function LoginButton() {
     console.log("=======boardList=========");
     console.log(profile);
     return <>
-       <Dropdown.Item href="/userProfile"><Link style={navMenu} key={profile.id} to="/userProfile" state={profile}>프로필수정</Link></Dropdown.Item>
+       <Dropdown.Item href="/userProfile"><Link style={navMenu} key={profile.id} to="/userProfile" state={profile}>프로필</Link></Dropdown.Item>
     </>
   }
 

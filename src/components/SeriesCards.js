@@ -10,13 +10,13 @@ import OriginalViewOne from "atom/OriginalViewOne";
 import axios from "api/axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-
+import Image from 'react-bootstrap/Image';
 
 export default function SeriesCards() {
   const location = useLocation();
   let state = location.state;
   console.log("PostListObserver param", state);
-
+  console.log("PostListObserver param", state.boardId);
   const [targetBoard, setTargetBoard] = useState(state.boardId);
 
   const txtSearch = useRef();
@@ -38,12 +38,13 @@ export default function SeriesCards() {
   };
 
   useEffect(() =>  {
+    console.log(state)
     let search = txtSearch.current.value
     if (search.trim()) {
       getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
       setByKeyWord(true)
     } else {
-      getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}`);
+      getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}`);
       setByKeyWord(false)
     }}, [page])
 
@@ -102,7 +103,9 @@ export default function SeriesCards() {
               <Col id={post?.id} ref={setLastIntersectingImage}>
                 <Card id={post?.id} style={{ width: '15rem' }} ><br />
                   <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
-                    <OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />
+                  {post.listAttachFile.length===0?
+                  <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
+                   :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
                     <Card.Body>
                       <Card.Title>{post?.title}</Card.Title>
                       {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
@@ -118,7 +121,9 @@ export default function SeriesCards() {
               <Col id={post?.id}>
                 <Card id={post?.id} style={{ width: '15rem' }} ><br />
                   <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
-                    <OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />
+                  {post.listAttachFile.length===0?
+                  <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
+                   :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
                     <Card.Body>
                       <Card.Title>{post?.title}</Card.Title>
                       {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}

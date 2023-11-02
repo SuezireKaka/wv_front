@@ -4,7 +4,7 @@ import axios from 'api/axios';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import AppContext from 'context/AppContextProvider';
-
+import Image from 'react-bootstrap/Image';
 import { useState } from 'react';
 import { useLocation } from 'react-router';
 import Row from "react-bootstrap/Row";
@@ -89,8 +89,9 @@ export default function FavoritesList() {
                   {console.log(post)}
                   <Card id={post?.id} style={{ width: '15rem' }} ><br />
                     <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: post.boardVO.id }}>
-  
-                      <OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />
+                    {post.listAttachFile.length===0?
+                  <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
+                   :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
                       <Card.Body>
                         <Card.Title>{post?.title}</Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
@@ -106,7 +107,9 @@ export default function FavoritesList() {
                   {console.log("97줄",page)}
                     <Card id={post?.id} style={{ width: '15rem' }} ><br />
                     <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: post.boardVO.id }}>
-                        <OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />
+                    {post.listAttachFile.length===0?
+                  <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
+                   :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
                       <Card.Body>
                         <Card.Title>{post?.title}</Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}

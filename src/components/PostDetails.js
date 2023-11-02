@@ -110,6 +110,8 @@ export default function PostDetails() {
         ? <Link key={state.parentId} to={`/board/${state.boardId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
         : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
       &nbsp;
+      
+      &nbsp;
       {(post.writer ? post.writer.nick === auth.nick : false) ? <>
         <Link
           to={`/series/${post.id}/mng`}
@@ -129,3 +131,6 @@ export default function PostDetails() {
     </>
   }
 }
+
+// 아코디언 색 먹이기 <div style={{ display: 'block????', backgroundColor:"blue", padding: 1 }}> 
+// <Accordion.Body style={{ backgroundColor:"lightblue"}}>
