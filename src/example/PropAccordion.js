@@ -2,9 +2,9 @@ import { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import React from 'react';
 
-export default function PropAccordion(props) {
-    console.log(props)
-    const [nowObjectList, setNowObjectList] =  React.useState(props.objList);
+export default function PropAccordion({nowObjectList, setNowObjectList}) {
+    console.log(nowObjectList)
+
 
     console.log("너 나와봐!", nowObjectList)
 
@@ -12,7 +12,8 @@ export default function PropAccordion(props) {
         { console.log("너 나와봐!", nowObjectList)}
         <Accordion alwaysOpen flush>
             {nowObjectList.map((obj, index) => {
-                <Accordion.Item eventKey={index}>
+                return <Accordion.Item eventKey={index}>
+                    {console.log(obj?.name)}
                     <Accordion.Header>{obj?.name + "(" + obj?.id + ")"}</Accordion.Header>
                     <Accordion.Body>랄랄라</Accordion.Body>
                 </Accordion.Item>
