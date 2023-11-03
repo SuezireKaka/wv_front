@@ -21,13 +21,10 @@ export default function UserProfile() {
   const state = location.state;
   const response = location.state?.response;
   const owner = location.state?.owner;
-  console.log(auth)
-  console.log(state)
-  console.log(response)
-  console.log(owner)
   const [nick, setNick] = useState(state?.nick);
   const [name, setName] = useState(response?.name);
   const [signInResult, setSignInResult] = useState({});
+  const [introduction, setIntroduction] = useState("");
   const [birthDate, setBirthDate] = useState(response?.birthDate.substring(0, 10));
   const [sex, setSex] = useState(response?.sex);
   const { codeList } = useContext(AppContext);
@@ -137,6 +134,7 @@ export default function UserProfile() {
       passWord: passWord,
       sex: sex,
       birthDate: birthDate,
+      introduction: introduction,
       listContactPoint: list,
     };
     console.log(JSON.stringify(bodyData));
@@ -354,6 +352,14 @@ export default function UserProfile() {
           </FloatingLabel>
         </>
       })}
+     <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon2">자기소개</InputGroup.Text>
+          <Form.Control
+            id="intro"
+            as="textarea"
+            onChange={(e) => setIntroduction(e.target.value)}
+          />{" "}
+        </InputGroup>
     </Form>
     <Button variant="outline-primary"
       onClick={handleSubmit}
