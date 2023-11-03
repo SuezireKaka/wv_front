@@ -10,15 +10,10 @@ const SocialKakao = ()=> {
     return(
     <>
     <a href={KAKAO_AUTH_URL} className="kakaobtn">
-    <img src={process.env.PUBLIC_URL + `/images/kakao_login_small.png`} />
+    <img src={process.env.PUBLIC_URL + `/images/kakao_login_medium_narrow.png`} width="160" height="40px"/>
     </a>
 
 
-    
-    &nbsp;&nbsp;
-    <a href={"/login/oauth/callback/kakao"} className="kakaobtn">
-    <img src={process.env.PUBLIC_URL + `/images/kakao_login_medium_narrow.png`} />
-    </a>
 
     
     </>
