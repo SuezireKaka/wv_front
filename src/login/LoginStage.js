@@ -56,10 +56,10 @@ const LoginStage = () => {
                 const roles = data.roles;
                 const nick = data.userNick;
                 const loginId = data.userLoginId;
-                const loginType = data.type;
+                const accountType = data.accountType;
                 const loginCode = data.loginResultCode;
-                setAuth({ roles, nick, accessToken, loginId, userId, loginType, code });
-                window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId, userId, loginType, loginCode }));
+                setAuth({ roles, nick, accessToken, loginId, userId, accountType, code });
+                window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId, userId, accountType, loginCode }));
                 navigate("/")
             }
             else {
