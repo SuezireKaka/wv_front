@@ -4,6 +4,7 @@ import AppContext from "context/AppContextProvider";
 import { useLocation } from "react-router";
 import { Table } from "react-bootstrap";
 import { displayDate } from "toolbox/DateDisplayer";
+import LoginTypeIcon from "toolbox/LoginTypeIcon";
 
 export default function ReportList() {
     const {auth} = useContext(AppContext);
@@ -70,7 +71,10 @@ export default function ReportList() {
             ? <>
             <tr ref={setLastIntersectingImage}>
                 <td>{displayDate(report.regDt, report.uptDt)}</td>
-                <td>{!report.writer?.nick ?report.writer?.kakaoNick  :report.writer?.nick}</td>
+                <td>
+                    <LoginTypeIcon loginType={report?.reporter?.accountType}/>
+                    {!report.reporter?.nick ?report.reporter?.kakaoNick  :report.reporter?.nick}
+                </td>
                 <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>
@@ -81,7 +85,10 @@ export default function ReportList() {
             : <>
                 <tr>
                 <td>{displayDate(report.regDt, report.uptDt)}</td>
-                <td>{!report.writer?.nick ?report.writer?.kakaoNick  :report.writer?.nick}</td>
+                <td>
+                    <LoginTypeIcon loginType={report?.reporter?.accountType}/>
+                    {!report.reporter?.nick ?report.reporter?.kakaoNick  :report.reporter?.nick}
+                </td>
                 <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>
