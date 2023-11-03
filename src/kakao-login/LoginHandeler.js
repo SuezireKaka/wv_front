@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import AppContext from 'context/AppContextProvider';
 import axios from "axios";
+import Spinner from 'react-bootstrap/Spinner';
 
 const LoginHandeler = (props) => {
   const { setAuth } = useContext(AppContext);
@@ -44,8 +45,9 @@ const LoginHandeler = (props) => {
   return (
     <div className="LoginHandeler">
       <div className="notice">
-        <p>로그인 중입니다.</p>
-        <p>잠시만 기다려주세요.</p>
+      <Spinner animation="border" role="status">
+      <span className="visually-hidden">로그인 중입니다....</span>
+    </Spinner>
         <div className="spinner"></div>
       </div>
     </div>
