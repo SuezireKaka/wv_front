@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import AppContext from "context/AppContextProvider";
 import { useContext } from 'react';
+import LoginTypeIcon from 'toolbox/LoginTypeIcon';
 
 
 export default function MemberList() {
@@ -89,8 +90,8 @@ export default function MemberList() {
                     return (
                         <>
                             <tr key={member.id} ref={setLastIntersectingImage}>
-                                <td><b>{member.loginId}</b></td>
-                                <td><b>{member.nick}</b></td>
+                                <td><b>{member.loginId ? member.loginId : "비공개"}</b></td>
+                                <td><b>{<LoginTypeIcon loginType={member.accountType}/>} {member.nick ? member.nick : member.kakaoNick}</b></td>
                                 <td><b>{member.response?.name}</b></td>
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex==="남성" ?"남성": member.response?.sex==="여성"? "여성" : "비공개"}</td>
@@ -109,8 +110,8 @@ export default function MemberList() {
                     return (
                         <>
                             <tr key={member.id}>
-                                <td><b>{member.loginId}</b></td>
-                                <td><b>{member.nick}</b></td>
+                                <td><b>{member.loginId ? member.loginId : "비공개"}</b></td>
+                                <td><b>{<LoginTypeIcon loginType={member.accountType}/>} {member.nick ? member.nick : member.kakaoNick}</b></td>
                                 <td><b>{member.response?.name}</b></td>
                                 <td>{member.response?.birthDate?.substr(0, 10)}</td>
                                 <td>{member.response?.sex==="남성" ?"남성": member.response?.sex==="여성"? "여성" : "비공개"}</td>
