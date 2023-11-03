@@ -114,7 +114,7 @@ export default function PostDetails() {
       {/* 
       <PostListOffcanvas state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}/>
       &nbsp;*/}
-      {(post.writer ? post.writer.nick === auth.nick : false) ? <>
+      {(post.writer ? post.writer.id === auth.userId : false) ? <>
         <Link
           to={`/series/${post.id}/mng`}
           state={{ seriesId: state.seriesId, post, state, parentId: state.parentId }}

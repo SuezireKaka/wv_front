@@ -88,7 +88,7 @@ export default function Series() {
         <tr>
           <td>
             
-          {(post.writer ? post.writer.nick === auth.nick : false) ?<>
+          {(post.writer ? post.writer.id === auth.userId : false) ?<>
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId}}>
              <Button variant="outline-info">수정</Button>
            </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button></>
