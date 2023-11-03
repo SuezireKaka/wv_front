@@ -52,6 +52,9 @@ const Register = () => {
     );
     setListCP(listCP);
   };
+  const checkSex = (e) =>{
+    setSex(e.target.value)
+  }
 
   const onBlur = (e) => {
     e.preventDefault();
@@ -227,7 +230,7 @@ const Register = () => {
               name="userSex"
               type="radio"
               value="남성"
-              onChange={(e) =>setSex(e.target.value)}
+              onChange={checkSex}
               id={`inline-radio-1`}
             />
           </InputGroup.Text>
@@ -238,7 +241,7 @@ const Register = () => {
               label="여성"
               name="userSex"
               type="radio"
-              onChange={(e) =>setSex(e.target.value)}
+              onChange={checkSex}
               value="여성"
               id={`inline-radio-2`}
             />

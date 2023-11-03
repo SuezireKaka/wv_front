@@ -29,10 +29,10 @@ export default function UserProfile() {
   const [name, setName] = useState(response?.name);
   const [signInResult, setSignInResult] = useState({});
   const [birthDate, setBirthDate] = useState(response?.birthDate.substring(0, 10));
-  const [sex, setSex] = useState(response.sex);
+  const [sex, setSex] = useState(response?.sex);
   const { codeList } = useContext(AppContext);
   const [nameBlur, isNameBlur] = useState(false);
-  const [loginId, setLoginId] = useState(state.loginId);
+  const [loginId, setLoginId] = useState(state?.loginId);
   const [idChecked, setIdChecked] = useState(false);
   const [uniqueId, setUniqueId] = useState(false);
   const [nickChecked, setNickChecked] = useState(false);
@@ -41,8 +41,8 @@ export default function UserProfile() {
   const [birthDateBlur, isBirthDateBlur] = useState(false);
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState();
-  const [listCP, setListCP] = useState(new Map(response.contactPointList.map(cp => [cp.cpType, cp.cpVal])));
-  const [address, setAddress] = useState(state.contactPointList?.filter(cp => cp.cpType === "home address")[0]);
+  const [listCP, setListCP] = useState(new Map(response?.contactPointList?.map(cp => [cp.cpType, cp.cpVal])));
+  const [address, setAddress] = useState(state?.contactPointList?.filter(cp => cp.cpType === "home address")[0]);
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
@@ -66,6 +66,9 @@ export default function UserProfile() {
     }
   };
 
+  const checkSex = (e) =>{
+    setSex(e.target.value)
+  }
   const onBlurVal = async (e, type) => {
     e.preventDefault();
     
@@ -266,14 +269,14 @@ export default function UserProfile() {
         <InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
         <InputGroup.Text id="basic-addon2">
           남
-          {response.sex === "남성" ?
+          {response?.sex === "남성" ?
             <input
               inline
               defaultChecked
               label="남성"
               name="userSex"
               type="radio"
-              onChange={(e) =>setSex(e.target.value)}
+              onChange={checkSex}
               value="남성"
               id={`inline-radio-1`}
             /> : <input
@@ -281,21 +284,21 @@ export default function UserProfile() {
               label="남성"
               name="userSex"
               type="radio"
-              onChange={(e) =>setSex(e.target.value)}
+              onChange={checkSex}
               value="남성"
               id={`inline-radio-1`}
             />}
         </InputGroup.Text>
         <InputGroup.Text id="basic-addon2">
           여
-          {response.sex === "여성" ?
+          {response?.sex === "여성" ?
             <input
               inline
               defaultChecked
               label="여성"
               name="userSex"
               type="radio"
-              onChange={(e) =>setSex(e.target.value)}
+              onChange={checkSex}
               value="여성"
               id={`inline-radio-1`}
             /> : <input
@@ -303,7 +306,7 @@ export default function UserProfile() {
               label="여성"
               name="userSex"
               type="radio"
-              onChange={(e) =>setSex(e.target.value)}
+              onChange={checkSex}
               value="여성"
               id={`inline-radio-1`}
             />}

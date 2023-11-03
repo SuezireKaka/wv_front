@@ -35,6 +35,7 @@ export default function LoginButton() {
   function renderSuccess(profile) {
     console.log("=======boardList=========");
     console.log(profile);
+    console.log(auth.accountType);
     return <>
        <Dropdown.Item href="/userProfile"><Link style={navMenu} key={profile.id} to="/userProfile" state={profile}>프로필</Link></Dropdown.Item>
     </>
@@ -57,7 +58,7 @@ export default function LoginButton() {
       <Dropdown.Item href="/">홈</Dropdown.Item>
       <Dropdown.Item href="/test1">테스트</Dropdown.Item>
       <Dropdown.Item href="/favoriteslist">즐겨찾기</Dropdown.Item>
-      <Fetch uri={findByNickUri} renderSuccess={renderSuccess} />
+      {auth.accountType ==="원더" ?<Fetch uri={findByNickUri} renderSuccess={renderSuccess} />:"" }
       <Dropdown.Item href="/UserSeries">내작품보기</Dropdown.Item>
       
       <Dropdown.Item onClick={handleLogout}>로그아웃</Dropdown.Item>
