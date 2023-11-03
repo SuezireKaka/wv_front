@@ -97,13 +97,13 @@ export default function SeriesCards() {
     <Container>
       <Row>
         {postList?.map((post, index) => {
-          if (index === postList.length - 1) {
+          if (index === postList?.length - 1) {
             return (
 
               <Col id={post?.id} ref={setLastIntersectingImage}>
                 <Card id={post?.id} style={{ width: '15rem' }} ><br />
                   <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
-                  {post.listAttachFile.length===0?
+                  {post.listAttachFile?.length===0?
                   <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
                    :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
                     <Card.Body>
@@ -121,7 +121,7 @@ export default function SeriesCards() {
               <Col id={post?.id}>
                 <Card id={post?.id} style={{ width: '15rem' }} ><br />
                   <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: state?.post, page: 1, boardId: state?.boardId }}>
-                  {post.listAttachFile.length===0?
+                  {post.listAttachFile?.length===0?
                   <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
                    :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
                     <Card.Body>

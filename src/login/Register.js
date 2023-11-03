@@ -13,6 +13,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState("");
+  const [introduction, setIntroduction] = useState("");
   const [idChecked, setIdChecked] = useState(false);
   const [uniqueId, setUniqueId] = useState(false);
   const [nick, setNick] = useState("");
@@ -72,7 +73,7 @@ const Register = () => {
     
     try {
       const response = await axios.get(
-        `/party/anonymous/checkUiqueVal/${type}/${e.target.value}`
+        `/party/anonymous/checkUniqueVal/${type}/${e.target.value}`
       );
       if (type==="login_id"){
       console.log(response?.data);
@@ -112,6 +113,7 @@ const Register = () => {
       passWord: passWord,
       sex: sex,
       birthDate: birthDate,
+      introduction: introduction,
       listContactPoint: list,
     };
     console.log(JSON.stringify(bodyData));
@@ -288,7 +290,14 @@ const Register = () => {
             </InputGroup>
           </>
         ))}
-
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon2">자기소개</InputGroup.Text>
+          <Form.Control
+            id="intro"
+            as="textarea"
+            onChange={(e) => setIntroduction(e.target.value)}
+          />{" "}
+        </InputGroup>
         {console.log(listCP)}
       </form>
 
