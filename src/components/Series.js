@@ -61,6 +61,8 @@ export default function Series() {
         <tr>
           <th colSpan='2'>{post.title}&nbsp;&nbsp;
           {/**/}
+          {console.log(auth.roles)}
+          {console.log(post)}
           {!auth.roles || auth.roles.length === 0?"":
             <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
               return <><Favorites favorites={res?.data}/></>
