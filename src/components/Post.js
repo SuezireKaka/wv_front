@@ -95,7 +95,7 @@ export default function Post() {
                   state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, seriesId: state?.seriesId, parentId: state?.seriesId, boardId: post?.boardVO?.id, likeCount: post.likeCount }}>{/*시리즈아이디필요*/}
                   {post.title}</Link>
               </td>
-              <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{post.writer ? post.writer.nick : ""}</td>
+              <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{post.writer ? post.writer.nick ? post.writer.nick : post.writer.kakaoNick : ""}</td>
               <td>{post.readCount}</td>
               <td>{post.likeCount}</td>
               <td>{displayDate(post.regDt, post.uptDt)}</td>
