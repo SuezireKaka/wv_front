@@ -74,7 +74,7 @@ export default function UserProfile() {
     
     try {
       const response = await axios.get(
-        `/party/anonymous/checkUiqueVal/${type}/${e.target.value}`
+        `/party/anonymous/checkUniqueVal/${type}/${e.target.value}`
       );
       if (type==="login_id"){
       console.log(response?.data);
@@ -85,7 +85,11 @@ export default function UserProfile() {
         if(!e.target.value && e.target.value === ""){
           setNickChecked(false);
           setUniqueNick(false);
-        }else{
+        }else if(e.target.value===auth.nick){
+          setNickChecked(true);
+          setUniqueNick(true);
+        }
+        else{
         console.log(response?.data);
         setNickChecked(true);
         setUniqueNick(response?.data);}

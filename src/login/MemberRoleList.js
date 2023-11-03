@@ -8,13 +8,14 @@ import { useContext } from 'react';
 import Checkbox from 'toolbox/Checkbox';
 import CheckboxGroup from 'toolbox/CheckboxGroup';
 import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 
 export default function MemberRoleList({ member }) {
   const [value, setValue] = useState(member?.roleList[0]?.role);
   const [roles, setRoles] = React.useState([]);
   const [listCheckMember, setListCheckMember] = useState(new Map());
   const { auth } = useContext(AppContext);
-
+  const navigate = useNavigate();
   const reRole = async (e, value, memberId) => {
     e.preventDefault();
     console.log(value)
@@ -37,6 +38,7 @@ export default function MemberRoleList({ member }) {
         }
       );
       setValue(value);
+      navigate(0)
     } catch (err) {
       console.log('Registration Failed');
     }
