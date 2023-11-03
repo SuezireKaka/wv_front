@@ -17,9 +17,23 @@ export default function Test4({toolDetail = {
             })
         )
 
-    function onSummonVertex(customObject) {
-        console.log("객체 소환!", customObject)
+    function onSummonObject(customObject) {
+        console.log("오브젝트 소환!", customObject)
         setNowObjectList([...nowObjectList, customObject])
+    }
+
+    function onDeleteAllObjects(deleteIdArray) {
+        console.log("누구를 삭제한다고?", deleteIdArray)
+        setNowObjectList([...nowObjectList].filter(obj => ! deleteIdArray.includes(obj.id)))
+    }
+
+    function onUpdate(newList, index) {
+        console.log("주문하신 물품은?", newList)
+        let copyArray = [...nowObjectList]
+        console.log("복사 잘 됐니?", copyArray)
+        copyArray[index].customPropertiesList = newList
+        console.log("잘 바뀌었니?", copyArray)
+        setNowObjectList(copyArray)
     }
 
     console.log("그래서 지금 오브젝트 목록이 어케 된다고?", nowObjectList)
@@ -32,12 +46,13 @@ export default function Test4({toolDetail = {
                 <GraphCanvas
                     xToolSize={xToolSize} yToolSize={yToolSize}
                     vertices={toolDetail.customEntityList} edges={toolDetail.customRelationList}
-                    onSummonVertex={onSummonVertex}
+                    onSummonObject={onSummonObject}
+                    onDeleteAllObjects={onDeleteAllObjects}
                 />
             </td>
             <td style={{ width: "100%" }}>
                 <PropAccordion
-                    nowObjectList = {nowObjectList} setNowObjectList={setNowObjectList}
+                    nowObjectList = {nowObjectList} onUpdate={onUpdate}
                 />
             </td>
         </table>

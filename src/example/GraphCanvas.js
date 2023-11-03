@@ -4,7 +4,7 @@ import UseGestureElement from './UseGestureElement';
 
 export default function GraphCanvas({
     vertices = [], edges = [], xToolSize = 1024, yToolSize = 768,
-    onSummonVertex = f => f
+    onSummonObject = f => f, onDeleteAllObjects = f => f
 }) {
     const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
         DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE,
@@ -148,7 +148,7 @@ export default function GraphCanvas({
                 setInitVertices(initVertices.concat(newVertex))
                 setSummonedCnt(summonedCnt + 1)
                 setRealSummonedCnt(realSummonedCnt + 1)
-                onSummonVertex({id : newId, name : newName, customPropertiesList : []})
+                onSummonObject({id : newId, name : newName, customPropertiesList : []})
                 break
             }
             default: {
@@ -201,6 +201,7 @@ export default function GraphCanvas({
                     setRealSummonedCnt(realSummonedCnt + 1)
                     setNowEdges(nowEdges.concat(newEdge))
                     setInitEdges(initEdges.concat(newEdge))
+                    onSummonObject({id : newId, name : newName, customPropertiesList : []})
                     // 선택했다는 정보를 초기화
                     setSelectedId()
                 }
@@ -218,6 +219,7 @@ export default function GraphCanvas({
                 removeAllMemorized(memo, initVertices, setInitVertices)
                 removeAllMemorized(memo, nowEdges, setNowEdges)
                 removeAllMemorized(memo, initEdges, setInitEdges)
+                onDeleteAllObjects([...memo])
 
                 // 다 지웠으니까 기억 초기화
                 setMemo(memo.filter(() => false))

@@ -2,7 +2,7 @@ import { useContext } from "react"
 import AppContext from "context/AppContextProvider";
 
 
-export default function RelRemocon({index = 0, remain = 1, onSelect = f => f}) {
+export default function RelRemocon({index = 0, onSelect = f => f}) {
     const { relationRemocon } = useContext(AppContext);
     const remoteKeyList = relationRemocon?.remoteKeyList
 
@@ -17,7 +17,7 @@ export default function RelRemocon({index = 0, remain = 1, onSelect = f => f}) {
             : "없습니다.")}
             <br/>
             {(remoteKeyList && remoteKeyList.length > 0
-            ? remoteKeyList[index].use + "을(를) " + remain + "번 눌러주세요!"
+            ? remoteKeyList[index].info
             : "")
         }</p>
         {remoteKeyList?.map(
