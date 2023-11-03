@@ -12,7 +12,8 @@ import { Table } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";
 import { Pagination } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-
+import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import Form from 'react-bootstrap/Form';
 
 export default function Post() {
   const { auth } = useContext(AppContext);
@@ -94,7 +95,7 @@ export default function Post() {
                   state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, seriesId: state?.seriesId, parentId: state?.seriesId, boardId: post?.boardVO?.id, likeCount: post.likeCount }}>{/*시리즈아이디필요*/}
                   {post.title}</Link>
               </td>
-              <td>{post.writer ? post.writer.nick : ""}</td>
+              <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{post.writer ? post.writer.nick : ""}</td>
               <td>{post.readCount}</td>
               <td>{post.likeCount}</td>
               <td>{displayDate(post.regDt, post.uptDt)}</td>
@@ -118,14 +119,13 @@ export default function Post() {
         <Button variant="outline-primary">신규</Button>
       </Link>}<br/><br/>
       <div>
-        <input placeholder="검색어" ref={txtSearch}></input>
+      <input placeholder="검색어" ref={txtSearch}></input>
         &nbsp;
         <Button variant="outline-danger" onClick={onSearch}>
           검색
         </Button>
       </div>
       <Fetch uri={postListUri} renderSuccess={renderSuccess} />
-
     </div>
   )
 }

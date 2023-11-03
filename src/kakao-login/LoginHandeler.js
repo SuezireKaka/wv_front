@@ -35,7 +35,7 @@ const LoginHandeler = (props) => {
         setAuth({ roles, nick, accessToken, loginId, userId, accountType, code });
         window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId, userId, accountType, loginCode }))
         //로그인이 성공하면 이동할 페이지
-        navigate("/");
+        navigate("/log-in");
       });
     };
     kakaoLogin();

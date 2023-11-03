@@ -117,6 +117,7 @@ const LoginStage = () => {
         </form>
             <Button onClick={signIn} variant="outline-success">로그인</Button><br/>
         <Link to={"/agreement/"}><Button variant="outline-primary">회원가입</Button></Link>
+        &nbsp;
         <SocialKakao />
 
     </div>

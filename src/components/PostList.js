@@ -11,6 +11,7 @@ import AppContext from "context/AppContextProvider";
 import { Table } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";
 import { Pagination } from "react-bootstrap";
+import LoginTypeIcon from "toolbox/LoginTypeIcon";
 
 export default function PostList() {
   const { auth } = useContext(AppContext);
@@ -89,7 +90,7 @@ function renderSuccess(postListWithPaging) {
                           state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
                              {post.title}</Link>
                       </td>
-                      <td>👦🏻{post.writer ? post.writer.nick : ""}</td>
+                      <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{post.writer ? post.writer.nick : ""}</td>
                       <td>✔{post.readCount}</td>
                       <td>🤣{post.likeCount}</td>
                       <td>🕐{displayDate(post.regDt, post.uptDt)}</td>
