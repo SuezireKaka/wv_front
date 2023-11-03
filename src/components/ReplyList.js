@@ -71,7 +71,7 @@ export default function ReplyList({parent}) {
     justCreatedReplyList.forEach((newReply)=>{appendJustCreatedReply(newReply, parent)})
 
     return <>
-            {auth.nick ? <>
+            {auth.loginId ? <>
             <Button variant="outline-primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
             </Button>

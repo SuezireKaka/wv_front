@@ -70,7 +70,7 @@ export default function ReportList() {
             ? <>
             <tr ref={setLastIntersectingImage}>
                 <td>{displayDate(report.regDt, report.uptDt)}</td>
-                <td>{report.reporter.nick}</td>
+                <td>{!report.writer?.nick ?report.writer?.kakaoNick  :report.writer?.nick}</td>
                 <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>
@@ -81,7 +81,7 @@ export default function ReportList() {
             : <>
                 <tr>
                 <td>{displayDate(report.regDt, report.uptDt)}</td>
-                <td>{report.reporter.nick}</td>
+                <td>{!report.writer?.nick ?report.writer?.kakaoNick  :report.writer?.nick}</td>
                 <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>

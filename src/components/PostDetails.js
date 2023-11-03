@@ -96,11 +96,12 @@ export default function PostDetails() {
           {post.content}</ListGroup.Item>
         <ListGroup.Item as="li" disabled><OriginalViewList imgDtoList={post?.listAttachFile} x="70%" y="70%" /></ListGroup.Item>
         <ListGroup.Item>
-          <LoginTypeIcon loginType={post?.writer?.accountType}/>{post.writer ? post.writer.nick : ""}
+          <LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}
           ✔<span>{post.readCount}</span>
           <span onClick={() => { onLike(post.id, nowlike) }}>👍{nowlike}</span>
           😡<span>{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
+          {console.log(post)}
         <ListGroup.Item> <PostPrevNext post={post} state={{ parentId: state.parentId, boardId: state.boardId, page: state.page, postListWithPaging: state.postListWithPaging }} /></ListGroup.Item>
 
         {/* <Link to={`/post/${postList[1]}`} >11</Link>*/}

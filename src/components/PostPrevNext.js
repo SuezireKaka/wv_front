@@ -16,6 +16,7 @@ export default function PostPN({ post, state }) {
         console.log(data)
         const prev = data?.firstVal
         const next = data?.secondVal
+        console.log("이전화 ======= 다음화")
         console.log(prev?.id)
         console.log(next?.id)
     

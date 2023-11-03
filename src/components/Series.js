@@ -96,7 +96,7 @@ export default function Series() {
           <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
             <Button variant="outline-success">툴킷으로</Button>
           </Link>
-          {auth && auth.nick
+          {auth && auth.loginId
           ? <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work"}}>
             <Button variant="outline-danger">{"신고하기 "}<FaBullhorn color="tomato"/></Button>
           </Link>
