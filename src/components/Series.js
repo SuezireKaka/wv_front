@@ -125,23 +125,6 @@ export default function Series() {
       </>
   }
 
-  function PostSkinListSuccess(postsPage){
-    console.log("2, 4")
-    {/* 이 부분이 두 번째와 네 번째에 실행됨 */}
-    return <div>
-      {postsPage.length == 0
-        ? "로딩중....................."
-        : postsPage.firstVal.length == 0
-        ? "(게시글이 없습니다)"
-        : postsPage.firstVal.map(postSkin => {
-          return <div>
-            {"제목 : " + postSkin.title} 
-          </div>
-        })
-      }
-    </div>
-  }
-
   return <>
     <div>
       <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />

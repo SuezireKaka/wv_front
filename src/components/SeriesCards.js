@@ -131,7 +131,6 @@ export default function SeriesCards() {
                   </Link>
                 </Card><br />
               </Col>
-
             );
           }
         })}
