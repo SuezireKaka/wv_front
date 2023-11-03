@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import UserProfile from './UserProfile';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Fetch } from 'toolbox/Fetch';
+import { AxiosAuth, Fetch } from 'toolbox/Fetch';
 import { Link } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import { FaWpexplorer, FaComment } from 'react-icons/fa';
@@ -17,7 +17,7 @@ export default function LoginButton() {
     const loginType = auth.loginType ? auth.loginType : "";
     const [signInResult, setSignInResult] = useState({});
     const navigate = useNavigate();
-    const findByNickUri = `/party/anonymous/findByNick/${auth.nick}`;
+    const findByNickUri = `/party/searchSelf/`;
 
     const navMenu = {
       color:"grey",
@@ -32,12 +32,12 @@ export default function LoginButton() {
     navigate("/")
 
   }
-  function renderSuccess(profile) {
+  function renderSuccess(_, res) {
     console.log("=======boardList=========");
-    console.log(profile);
+    console.log(res.data);
     console.log(auth.accountType);
     return <>
-       <Dropdown.Item href="/userProfile"><Link style={navMenu} key={profile.id} to="/userProfile" state={profile}>프로필</Link></Dropdown.Item>
+       <Dropdown.Item href="/userProfile"><Link style={navMenu} key={res.data.id} to="/userProfile" state={res.data}>프로필</Link></Dropdown.Item>
     </>
   }
 
@@ -58,7 +58,7 @@ export default function LoginButton() {
       <Dropdown.Item href="/">홈</Dropdown.Item>
       <Dropdown.Item href="/test1">테스트</Dropdown.Item>
       <Dropdown.Item href="/favoriteslist">즐겨찾기</Dropdown.Item>
-      {auth.accountType ==="원더" ?<Fetch uri={findByNickUri} renderSuccess={renderSuccess} />:"" }
+      {auth.accountType ==="원더" ?<AxiosAuth uri={findByNickUri} auth={auth} renderSuccess={renderSuccess} />:"" }
       <Dropdown.Item href="/UserSeries">내작품보기</Dropdown.Item>
       
       <Dropdown.Item onClick={handleLogout}>로그아웃</Dropdown.Item>
