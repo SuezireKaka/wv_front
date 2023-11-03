@@ -20,6 +20,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router";
 import PostPrevNext from "./PostPrevNext";
 import PostListOffcanvas from "./PostListOffcanvas";
+import LoginTypeIcon from "toolbox/LoginTypeIcon";
 
 export default function PostDetails() {
   const thumbnailRequestTarget = ["video", "image"];
@@ -95,7 +96,7 @@ export default function PostDetails() {
           {post.content}</ListGroup.Item>
         <ListGroup.Item as="li" disabled><OriginalViewList imgDtoList={post?.listAttachFile} x="70%" y="70%" /></ListGroup.Item>
         <ListGroup.Item>
-          🧑🏻{post.writer ? post.writer.nick : ""}
+          <LoginTypeIcon loginType={post?.writer?.accountType}/>{post.writer ? post.writer.nick : ""}
           ✔<span>{post.readCount}</span>
           <span onClick={() => { onLike(post.id, nowlike) }}>👍{nowlike}</span>
           😡<span>{post.dislikeCount}</span>

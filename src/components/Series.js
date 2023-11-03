@@ -19,6 +19,7 @@ import { FaBullhorn } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import { Navigate } from "react-router";
 import { useNavigate } from "react-router";
+import LoginTypeIcon from "toolbox/LoginTypeIcon";
 
 export default function Series() {
   const location = useLocation();
@@ -76,7 +77,7 @@ export default function Series() {
       <tbody>
         <tr>
           <td rowSpan='4' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="auto"/></td>
-          <td>작가:{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}</td>
+          <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}</td>
         </tr>
         <tr>
           {/**<td>2</td> */}
@@ -111,10 +112,11 @@ export default function Series() {
   }
   function postListShow(series){
     {console.log(series)}
+    {console.log(auth)}
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
       :  <>
-      {(series.writer ? series.writer.nick === auth.nick : false) ?
+      {(series.writer ? series.writer.id === auth.userId : false) ?
       <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
       <Button variant="outline-primary">신규</Button>
       </Link>:""}
