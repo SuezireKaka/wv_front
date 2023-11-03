@@ -1,44 +1,55 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import AppContext from 'context/AppContextProvider';
 import axios from "axios";
 
 const LoginHandeler = (props) => {
-    const navigate = useNavigate();
-    const code = new URL(window.location.href).searchParams.get("code");
+  const { setAuth } = useContext(AppContext);
+  const navigate = useNavigate();
+  const code = new URL(window.location.href).searchParams.get("code");
 
-    console.log("코드를 보자......!", code)
-  
+  console.log("코드를 보자......!", code)
+
   //인가코드 백으로 보내는 코드
-    useEffect(() => {
-      const kakaoLogin = async () => {
-        await axios({
-          method: "GET",
-          url: `${process.env.REACT_APP_BACKEND_URL}/${code}`,
-          headers: {
-            "Content-Type": "application/json;charset=utf-8", //json형태로 데이터를 보내겠다는뜻
-            "Access-Control-Allow-Origin": "*", //이건 cors 에러때문에 넣어둔것. 당신의 프로젝트에 맞게 지워도됨
-          },
-        }).then((res) => { //백에서 완료후 우리사이트 전용 토큰 넘겨주는게 성공했다면
-          console.log("카카오톡이 뭘 줬을까?", res);
-          //계속 쓸 정보들( ex: 이름) 등은 localStorage에 저장해두자
-          localStorage.setItem("name", res.data.account.kakaoName);
-          //로그인이 성공하면 이동할 페이지
-          navigate("/");
-        });
-      };
-      kakaoLogin();
-    }, [props.history]);
-  
-    return (
-      <div className="LoginHandeler">
-        <div className="notice">
-          <p>로그인 중입니다.</p>
-          <p>잠시만 기다려주세요.</p>
-          <div className="spinner"></div>
-        </div>
+  useEffect(() => {
+    const kakaoLogin = async () => {
+      await axios({
+        method: "GET",
+        url: `${process.env.REACT_APP_BACKEND_URL}/${code}`,
+        headers: {
+          "Content-Type": "application/json;charset=utf-8", //json형태로 데이터를 보내겠다는뜻
+          "Access-Control-Allow-Origin": "*", //이건 cors 에러때문에 넣어둔것. 당신의 프로젝트에 맞게 지워도됨
+        },
+      }).then((res) => { //백에서 완료후 우리사이트 전용 토큰 넘겨주는게 성공했다면
+        let data = res?.data
+        console.log("카카오톡이 뭘 줬을까?", data);
+        //계속 쓸 정보들( ex: 이름) 등은 localStorage에 저장해두자
+        const accessToken = data.token;
+        const userId = data.userId;
+        const roles = data.roles;
+        const nick = data.userNick;
+        const loginId = data.userLoginId;
+        const loginType = data.type;
+        const loginCode = data.loginResultCode;
+        setAuth({ roles, nick, accessToken, loginId, userId, loginType, code });
+        window.sessionStorage.setItem("nowUser", JSON.stringify({ nick, roles, accessToken, loginId, userId, loginType, loginCode }))
+        //로그인이 성공하면 이동할 페이지
+        navigate("/");
+      });
+    };
+    kakaoLogin();
+  }, [props.history]);
+
+  return (
+    <div className="LoginHandeler">
+      <div className="notice">
+        <p>로그인 중입니다.</p>
+        <p>잠시만 기다려주세요.</p>
+        <div className="spinner"></div>
       </div>
-    );
-  };
-  
-  export default LoginHandeler;
+    </div>
+  );
+};
+
+export default LoginHandeler;

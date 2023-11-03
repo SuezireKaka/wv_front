@@ -8,10 +8,13 @@ import { useNavigate } from 'react-router';
 import { Fetch } from 'toolbox/Fetch';
 import { Link } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
+import { FaWpexplorer, FaComment } from 'react-icons/fa';
+import LoginTypeIcon from 'toolbox/LoginTypeIcon';
 
 export default function LoginButton() {
     const { auth, setAuth } = useContext(AppContext);
     const roles = auth.roles ? auth.roles : [""];
+    const loginType = auth.loginType ? auth.loginType : "";
     const [signInResult, setSignInResult] = useState({});
     const navigate = useNavigate();
     const findByNickUri = `/party/anonymous/findByNick/${auth.nick}`;
@@ -41,7 +44,7 @@ export default function LoginButton() {
     <div>    
     <Dropdown style={{position: "absolute",right: "10%"}}>
     <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic" size="sm">
-      {!roles || roles.length === 0? <>Sign</>: <>{auth.nick}님</>}
+      {!roles || roles.length === 0? <>Sign</>: <><LoginTypeIcon loginType={auth.loginType}/> {auth.nick}님</>}
     </Dropdown.Toggle>
     <Dropdown.Menu>
       {!roles || roles.length === 0?

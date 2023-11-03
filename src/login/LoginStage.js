@@ -16,7 +16,6 @@ const LoginStage = () => {
     const passWordRef = useRef();
     const [loginId, setLoginId] = useState("");
     const [passWord, setPassWord] = useState("");
-    const [signInResult, setSignInResult] = useState({});
     const navigate = useNavigate();
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
@@ -51,12 +50,12 @@ const LoginStage = () => {
         .then(data => {
             console.log(data);
             if (data.code === 0) {
-                setSignInResult(data);
                 console.log(data);
                 const accessToken = data.token;
                 const userId = data.userId;
                 const roles = data.roles;
                 const nick = data.userNick;
+                const loginId = data.userLoginId;
                 const loginType = data.type;
                 const loginCode = data.loginResultCode;
                 setAuth({ roles, nick, accessToken, loginId, userId, loginType, code });
