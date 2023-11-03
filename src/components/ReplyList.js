@@ -1,5 +1,5 @@
 import axios from 'api/axios';
-import NewReply from './NewReply';
+import ReplyNew from './ReplyNew';
 import AppContext from "context/AppContextProvider";
 import { useContext, useState } from 'react';
 import { displayDate } from "toolbox/DateDisplayer";
@@ -9,13 +9,11 @@ import LoginTypeIcon from 'toolbox/LoginTypeIcon';
 
 export default function ReplyList({parent}) {
     const { auth } = useContext(AppContext);
-
     const location = useLocation();
     const state = location.state;
     const [justCreatedReplyList, setJustCreatedReplyList] = useState([]);
     const [openAddReplay] = useState(new Map());
     const [replayOnReply] = useState(new Map());
-
     const [renderCnt, setRenderCnt] = useState(0);
 
     function onInputReplyContent(e, replyId) {
@@ -36,7 +34,9 @@ export default function ReplyList({parent}) {
         let hTier = parent?.hTier;
 		if (replayOnReply.get(parentId) === null || (replayOnReply&&replayOnReply?.get(parentId)?.length === 0))
 			return;
-        const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
+        const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId}
+        console.log(writer);
+
 		const bodyData = {
             firstVal:{id:parentId, hTier:hTier-1},
 	        secondVal:{id:isEditing?null:null, writer:writer, boardVO:{id:parent?.boardVO.id},
@@ -71,14 +71,13 @@ export default function ReplyList({parent}) {
     justCreatedReplyList.forEach((newReply)=>{appendJustCreatedReply(newReply, parent)})
 
     return <>
-            {auth.loginId ? <>
+            {auth.nick ? <>
             <Button variant="outline-primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
             </Button>
             </> :  ""}
-            {openAddReplay}
             {openAddReplay.has(parent.id) ? 
-            <NewReply auth={auth} reply={parent} state= {{seriesId:state.seriesId, parent, state, parentId : state.parentId}} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 
+            <ReplyNew auth={auth} reply={parent} state= {{seriesId:state.seriesId, parent, state, parentId : state.parentId}} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 
             : ""}
             <ul>
         {parent.repliesList?.map((reply) => {

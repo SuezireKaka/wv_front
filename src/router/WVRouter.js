@@ -18,7 +18,7 @@ import Test4 from 'example/Test4';
 import Test5 from 'example/Test5';
 import PostList from 'components/PostList';
 import ReportList from 'components/ReportList';
-import Post from 'components/Post';
+import PostNormal from 'components/PostNormal';
 import FavoritesList from 'components/FavoritesList';
 import Books from 'components/Books';
 import UserSeries from 'login/UserSeries';
@@ -29,8 +29,8 @@ export default function WVRouter() {
         <Routes> 
           <Route path="/" element={ <Home /> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
-          <Route path={"/board/0000"} element={ <Post/> } />
-          <Route path={"/board/0001"} element={ <Post/> } />
+          <Route path={"/board/0000"} element={ <PostNormal/> } />
+          <Route path={"/board/0001"} element={ <PostNormal/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
 
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>

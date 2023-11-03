@@ -15,7 +15,7 @@ import Button from "react-bootstrap/Button";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
 import Form from 'react-bootstrap/Form';
 
-export default function Post() {
+export default function PostNormal() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
