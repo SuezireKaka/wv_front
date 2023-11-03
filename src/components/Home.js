@@ -19,19 +19,23 @@ export default function Home() {
   const [index, setIndex] = useState(0);
   const seriesUri = `/work/anonymous/listAllSeries/0002/1`;
 
-  const renderSuccess = (data) =>{
+  const renderSuccess = (data) => {
     console.log(data.firstVal);
 
-    return <Carousel fade>
-    {data.firstVal?.map((post)=>{      
-      return <Carousel.Item interval={1500}>
-        <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="550" y="auto" />  
-    </Carousel.Item>
-        })}
-    </Carousel> 
+    return (
+      <table><tr><td width="20%"></td><td rowSpan='2' width="550px">
+        <Carousel fade>
+          {data.firstVal?.map((post) => {
+            return <Carousel.Item interval={1500}>
+              <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="550" y="auto" />
+            </Carousel.Item>
+          })}
+        </Carousel>
+      </td><td></td></tr>
+      </table>)
   }
 
   return (
-        <Fetch uri={seriesUri} renderSuccess={renderSuccess} />
+    <Fetch uri={seriesUri} renderSuccess={renderSuccess} />
   )
 }
