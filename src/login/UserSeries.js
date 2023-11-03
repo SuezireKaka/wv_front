@@ -16,12 +16,11 @@ export default function UserSeries() {
     const location = useLocation();
     let state = location.state;
     const [page, setPage] = useState(1);
-    const userSeriesUrl = `/work/anonymous/listUserSeries/${auth.nick}/1`
     const [seriesList, setSeriesList] = useState([]);
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
     const getPostListThenSet = async () => {
         try {
-            const { data } = await axios.get(`/work/anonymous/listUserSeries/${auth.nick}/${page}`, {
+            const { data } = await axios.get(`/work/anonymous/listUserSeries/${auth.userId}/${page}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "x-auth-token": `Bearer ${auth?.accessToken}`
