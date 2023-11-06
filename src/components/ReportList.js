@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 import { Table } from "react-bootstrap";
 import { displayDate } from "toolbox/DateDisplayer";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import { Link } from "react-router-dom";
 
 export default function ReportList() {
     const {auth} = useContext(AppContext);
@@ -63,10 +64,12 @@ export default function ReportList() {
           <thead>
             <th>작성일</th>
             <th>신고자</th>
+            <th>신고대상</th>
             <th>첨부</th>
           </thead>
           <tbody>
         {reportList.map((report, index) => {
+            console.log(report)
             return index === reportList.length - 1
             ? <>
             <tr ref={setLastIntersectingImage}>
@@ -75,6 +78,7 @@ export default function ReportList() {
                     <LoginTypeIcon loginType={report?.reporter?.accountType}/>
                     {!report.reporter?.nick ?report.reporter?.kakaoNick  :report.reporter?.nick}
                 </td>
+                <td>{report.suspectTable} - {report.suspectId}</td>
                 <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>
@@ -89,6 +93,7 @@ export default function ReportList() {
                     <LoginTypeIcon loginType={report?.reporter?.accountType}/>
                     {!report.reporter?.nick ?report.reporter?.kakaoNick  :report.reporter?.nick}
                 </td>
+                <td><Link to=''  style={{ all: "unset", cursor: "pointer" }}> {report.suspectTable} - {report.suspectId}</Link></td>
                 <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
             </tr>
             <tr>

@@ -7,13 +7,14 @@ import CheckboxGroup from 'toolbox/CheckboxGroup';
 import { FaStar } from "react-icons/fa"
 import axios from 'api/axios';
 
-export default function Favorites({favorites}) {
+export default function Favorites({favorites, post}) {
     const location = useLocation();
     let state = location.state;
     const [nowFavorites, setFavorites] = useState(favorites);
     const [color, setColor] = useState(nowFavorites?"blue":"gray");
     const { auth } = useContext(AppContext);
 
+    console.log(post)
     const onPress = async ()=>{
       if(nowFavorites===false){
         setFavorites(true)
@@ -24,7 +25,7 @@ export default function Favorites({favorites}) {
       }
       try {
         await axios.get(
-          `/work/toggleFavorites/${state.seriesId}`,
+          `/work/toggleFavorites/${post.id}`,
           {headers: {
             'Content-Type': 'application/json',
             "x-auth-token": `Bearer ${auth?.accessToken}`}}

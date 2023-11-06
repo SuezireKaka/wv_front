@@ -28,12 +28,11 @@ export default function TestNav() {
           <Nav className="me-auto  my-2 my-lg-0">
             <LoginButton className="me-auto  my-2 my-lg-0" />
             <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
-             <>
+            {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
+              ? <>
                 <Nav.Link><Link style={navMenu} class="jb-nav" to="/memberList/0000">회원정보</Link></Nav.Link>
                 <Nav.Link><Link style={navMenu} class="jb-nav" to="/report">신고사항</Link></Nav.Link>
               </>
-              {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
-              ?""
               : ""
             }
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Books" >북</Link></Nav.Link>

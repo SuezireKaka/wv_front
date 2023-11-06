@@ -13,6 +13,7 @@ import Container from "react-bootstrap/Container";
 import OriginalViewOne from "atom/OriginalViewOne";
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import Favorites from './Favorites';
 
 export default function FavoritesList() {
   const location = useLocation();
@@ -80,7 +81,7 @@ export default function FavoritesList() {
     return (
       <Container>
         <Row>
-  
+        
           {postList?.map((post, index) => {
             if (index === postList.length - 1) {
               return (
@@ -92,29 +93,40 @@ export default function FavoritesList() {
                     {post.listAttachFile.length===0?
                   <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
                    :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
+                    </Link>
                       <Card.Body>
-                        <Card.Title>{post?.title}</Card.Title>
+                        <Card.Title>{post?.title}
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
+                          return <><Favorites favorites={res?.data} post={post}/></>}}/>
+                        </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
-                    </Link>
+                      
+
                   </Card><br />
                 </Col>
   
               );
             } else {
               return (
+               
                 <Col id={post?.id}>
-                  {console.log("97줄",page)}
+                   {console.log(post.id)}
+
                     <Card id={post?.id} style={{ width: '15rem' }} ><br />
                     <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: post.boardVO.id }}>
                     {post.listAttachFile.length===0?
                   <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
                    :<OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
+                    </Link>
                       <Card.Body>
-                        <Card.Title>{post?.title}</Card.Title>
+                        <Card.Title>{post?.title}
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
+                          return <><Favorites favorites={res?.data} post={post}/></>}}/>
+                        </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
-                    </Link>
+                      
                   </Card><br />
                 </Col>
               );

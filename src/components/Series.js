@@ -66,7 +66,7 @@ export default function Series() {
           {console.log(post)}
           {!auth.roles || auth.roles.length === 0?"":
             <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
-              return <><Favorites favorites={res?.data}/></>
+              return <><Favorites favorites={res?.data} post={post}/></>
             }}/>}
             
           
