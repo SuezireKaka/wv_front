@@ -80,7 +80,7 @@ export default function ReportList() {
                     {!report.reporter?.nick ?report.reporter?.kakaoNick  :report.reporter?.nick}
                 </td>
                 <td><Link to={`/ReportDetails/${report.id}`} style={{ all: "unset", cursor: "pointer" }} state={{report}}>{report.suspectTable} - {report.suspectId}</Link></td>
-                <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
+                <td>{(report?.listAttachFile && report.listAttachFile?.length > 0) ? "O" : "X"}</td>
             </tr>
             <tr>
                 <td colSpan={5}>{report.rptTypesList.map((type)=>(
@@ -95,10 +95,10 @@ export default function ReportList() {
                     {!report.reporter?.nick ?report.reporter?.kakaoNick  :report.reporter?.nick}
                 </td>
                 <td><Link to={`/ReportDetails/${report.id}`} style={{ all: "unset", cursor: "pointer" }} state={{report}}>{report.suspectTable} - {report.suspectId}</Link></td>
-                <td>{(report.listAttachFile&&report.suspect.listAttachFile!=0)?"O":"X"}</td>
+                <td>{(report?.listAttachFile && report.listAttachFile?.length > 0) ? "O" : "X"}</td>
             </tr>
             <tr>
-                <td colSpan={5}>{report.rptTypesList.map((type)=>(
+                <td colSpan={5}>{report?.rptTypesList.map((type)=>(
                   <>{type.rptType}  </>))}</td>
             </tr> 
             </>
