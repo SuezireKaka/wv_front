@@ -88,14 +88,14 @@ export default function PostNormal() {
         <tbody>
           {postList?.map(post => (
             <tr key={post.id}>
-              
+
               <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
               <td width="60%">
-                <Link style={{ all: "unset", cursor:"pointer" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
+                <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
                   state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, seriesId: state?.seriesId, parentId: state?.seriesId, boardId: post?.boardVO?.id, likeCount: post.likeCount }}>{/*시리즈아이디필요*/}
                   {post.title}</Link>
               </td>
-              <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}</td>
+              <td><LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>
               <td>{post.readCount}</td>
               <td>{post.likeCount}</td>
               <td>{displayDate(post.regDt, post.uptDt)}</td>
@@ -105,7 +105,7 @@ export default function PostNormal() {
         <tfoot>
         </tfoot>
       </Table>
-      <div style={{ Align: "center", display: "inline-block"}}>
+      <div style={{ Align: "center", display: "inline-block" }}>
         <Pagination>
           {pagenation?.lastPage >= 2 ? displayPagination(pagenation) : ""}
         </Pagination>
@@ -114,17 +114,19 @@ export default function PostNormal() {
   }
   return (
     <div>
-      {!auth.roles || auth.roles.length === 0?"":
-      <Link to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
-        <Button variant="outline-primary">신규</Button>
-      </Link>}<br/><br/>
-      <div>
-      <input placeholder="검색어" ref={txtSearch}></input>
-        &nbsp;
-        <Button variant="outline-danger" onClick={onSearch}>
-          검색
-        </Button>
-      </div>
+      <table style={{ margin: "auto", position: "static" }}><td>
+        {!auth.roles || auth.roles.length === 0 ? "" :
+          <Link style={{ marginLeft: "auto", position: "relative" }} to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
+            <Button variant="outline-primary">신규</Button>
+          </Link>}
+      </td><td>
+          <Form.Control placeholder="검색어" ref={txtSearch}></Form.Control>
+        </td><td>
+          <Button variant="outline-danger" onClick={onSearch}>
+            검색
+          </Button>
+        </td>
+      </table>
       <Fetch uri={postListUri} renderSuccess={renderSuccess} />
     </div>
   )
