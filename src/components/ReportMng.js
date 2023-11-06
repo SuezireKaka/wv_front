@@ -48,7 +48,8 @@ export default function ReportMng() {
             reporter, suspectId, suspectTable, cause,
             rptTypesList : reportTypes.map(rpt => {
                 return {rptType : rpt}
-            })
+            }),
+            listAttachFile:listAttach
 		};
 		console.log(JSON.stringify(bodyData));
 
