@@ -34,3 +34,6 @@ npm i @emotion/styled
 
 리액트 테이블
 npm i react-table
+
+리덕스
+npm install react-redux

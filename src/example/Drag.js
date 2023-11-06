@@ -3,7 +3,7 @@ import PropTest from './PropTest';
 import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
 
-export default function Drag({initPropList = []}) {
+export default function Drag({name = "야호", initPropList = []}) {
   const { auth } = useContext(AppContext);
 
   const dragItem = useRef();
@@ -116,6 +116,7 @@ export default function Drag({initPropList = []}) {
 
   return (
     <>
+      <h2>{name}</h2>
       <input ref={lookUpId} type="text" placeholder='커스텀 오브젝트 ID'/>
       <button onClick={e => lookUp(lookUpId.current.value)}>조회하기</button>
       <br/>

@@ -3,7 +3,11 @@ import RelRemocon from './RelRemocon';
 import UseGestureElement from './UseGestureElement';
 
 export default function GraphCanvas({
-    vertices = [], edges = [], xToolSize = 1024, yToolSize = 768,
+    initVertices = [], setInitVertices = f => f,
+    nowVertices = [], setNowVertices = f => f,
+    initEdges = [], setInitEdges = f => f,
+    nowEdges = [], setNowEdges = f => f,
+    xToolSize = 1024, yToolSize = 768,
     onSummonObject = f => f, onDeleteAllObjects = f => f
 }) {
     const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
@@ -11,12 +15,6 @@ export default function GraphCanvas({
         DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST]
         = [100, 100, 50, 50, 150, 150]
     const canvasRef = useRef()
-
-    const [initVertices, setInitVertices] = useState(vertices)
-    const [initEdges, setInitEdges] = useState(edges)
-
-    const [nowVertices, setNowVertices] = useState(vertices)
-    const [nowEdges, setNowEdges] = useState(edges)
 
     const [nowFunc, setNowFunc] = useState(0)
     const [nowFuncName, setNowFuncName] = useState("선택")
@@ -116,7 +114,7 @@ export default function GraphCanvas({
     function onMove(set, type, index, newPoint) {
         let copyObjects = [...set]
         copyObjects[index] = { ...newPoint }
-        if (type === "vertex") {
+        if (type !== "edge") {
             setNowVertices(copyObjects)
         }
         else {
@@ -258,7 +256,7 @@ export default function GraphCanvas({
     }
 
     // 무조건 한 번 그리고
-    useEffect(redraw, [])
+    useEffect(redraw)
 
     // 움직이면 다시 그려라
     useMemo(redraw, [nowVertices, nowEdges])

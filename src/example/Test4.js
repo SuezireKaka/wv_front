@@ -1,21 +1,24 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
-import GraphCanvas from "./GraphCanvas"
-import PropAccordion from './PropAccordion';
+import ToolDetail from 'component-tool/ToolDetail';
+import { useState, useRef, useEffect } from 'react';
+import axios from 'api/axios';
+import AppContext from "context/AppContextProvider";
 
-export default function Test4({toolDetail = {
-    xToolSize : 1024,
-    yToolSize : 768,
-    customEntityList : [],
-    customRelationList : [],
-}}) {
-    const [xToolSize, setXToolSize] = useState(toolDetail.xToolSize)
-    const [yToolSize, setYToolSize] = useState(toolDetail.yToolSize)
-    const [nowObjectList, setNowObjectList]
-        = useState([...toolDetail.customEntityList, ...toolDetail.customRelationList]
-            .map(obj => {
-                return {id : obj?.id, name : obj?.name, customPropertiesList : obj?.customPropertiesList}
-            })
-        )
+export default function Test4() {
+    const TOOL_DETAILS_URL = "/tool/anonymous/getToolById/";
+    const lookUpId = useRef();
+
+    const [nowName, setNowName] = useState("")
+
+    const [xToolSize, setXToolSize] = useState(500)
+    const [yToolSize, setYToolSize] = useState(500)
+
+    const [initVertices, setInitVertices] = useState([])
+    const [initEdges, setInitEdges] = useState([])
+
+    const [nowVertices, setNowVertices] = useState([])
+    const [nowEdges, setNowEdges] = useState([])
+
+    const [nowObjectList, setNowObjectList] = useState([])
 
     function onSummonObject(customObject) {
         console.log("오브젝트 소환!", customObject)
@@ -25,7 +28,7 @@ export default function Test4({toolDetail = {
     function onDeleteAllObjects(deleteIdArray) {
         console.log("누구를 삭제한다고?", deleteIdArray)
         console.log("어디서 삭제한다고?", nowObjectList)
-        setNowObjectList([...nowObjectList].filter(obj => ! deleteIdArray.includes(obj.id)))
+        setNowObjectList([...nowObjectList].filter(obj => !deleteIdArray.includes(obj.id)))
     }
 
     function onUpdate(newList, index) {
@@ -37,25 +40,51 @@ export default function Test4({toolDetail = {
         setNowObjectList(copyArray)
     }
 
-    console.log("그래서 지금 오브젝트 목록이 어케 된다고?", nowObjectList)
+    function lookUp(id) {
+        let uri = TOOL_DETAILS_URL + id
+        fetch(uri).then(response => response.json())
+            .then((resData) => {
+                console.log("지금 나왔다", resData)
+                setNowName(resData?.name)
+                setXToolSize(resData?.xToolSize)
+                setYToolSize(resData?.yToolSize)
+                setInitVertices([...resData?.customEntityList]
+                    .map((entity) => { return { ...entity, key: entity.id } })
+                )
+                setInitEdges([...resData?.customRelationList]
+                    .map((relation) => { return { ...relation, key: relation.id } })
+                )
+                setNowVertices([...resData?.customEntityList]
+                    .map((entity) => { return { ...entity, key: entity.id } })
+                )
+                setNowEdges([...resData?.customRelationList]
+                    .map((relation) => { return { ...relation, key: relation.id } })
+                )
+                setNowObjectList([...resData?.customEntityList, ...resData?.customRelationList]
+                    .map((obj) => { return { key: obj.id, id: obj.id, name : obj.name, customPropertiesList : obj.customPropertiesList } })
+                )
+            })
+            .catch(() => {
+            });
+    }
+
+    console.log("지금 뭐라고?", nowName)
 
     return <>
         테스트4
-        <br/>
-        <table>
-            <td style={{ width: xToolSize + 100 }}>
-                <GraphCanvas
-                    xToolSize={xToolSize} yToolSize={yToolSize}
-                    vertices={toolDetail.customEntityList} edges={toolDetail.customRelationList}
-                    onSummonObject={onSummonObject}
-                    onDeleteAllObjects={onDeleteAllObjects}
-                />
-            </td>
-            <td style={{ width: "100%" }}>
-                <PropAccordion
-                    nowObjectList = {nowObjectList} onUpdate={onUpdate}
-                />
-            </td>
-        </table>
+        <br />
+        <input ref={lookUpId} type="text" placeholder='조회할 툴 ID' />
+        <button onClick={() => lookUp(lookUpId.current.value)}>조회하기</button>
+        <br />
+        <ToolDetail name={nowName}
+            xToolSize={xToolSize} yToolSize={yToolSize}
+            initVertices={initVertices} setInitVertices={setInitVertices}
+            nowVertices={nowVertices} setNowVertices={setNowVertices}
+            initEdges={initEdges} setInitEdges={setInitEdges}
+            nowEdges={nowEdges} setNowEdges={setNowEdges}
+            nowObjectList={nowObjectList} setNowObjectList={setNowObjectList}
+            setXToolSize={setXToolSize} setYToolSize={setYToolSize}
+            onSummonObject={onSummonObject} onDeleteAllObjects={onDeleteAllObjects} onUpdate={onUpdate}
+        />
     </>
 }

@@ -28,7 +28,6 @@ export default function FavoritesList() {
 
   const getPostListThenSet = async () => {
     try {
-      console.log("31줄",page);
       const { data } = await axios.get(
         `/work/favoritesAll/${page}`,
         {

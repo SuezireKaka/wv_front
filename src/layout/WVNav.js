@@ -42,6 +42,7 @@ export default function TestNav() {
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test3" >테스트용3</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test4" >테스트용4</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test5">테스트용5</Link></Nav.Link>
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test6">테스트용6</Link></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

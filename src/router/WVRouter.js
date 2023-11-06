@@ -16,6 +16,7 @@ import Test2 from 'example/Test2';
 import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
 import Test5 from 'example/Test5';
+import Test6 from 'example/Test6';
 import PostList from 'components/PostList';
 import ReportList from 'components/ReportList';
 import PostNormal from 'components/PostNormal';
@@ -54,6 +55,7 @@ export default function WVRouter() {
           <Route path={"/Test3"} element={<Test3 />} />
           <Route path={"/test4"} element={<Test4 />} />
           <Route path={"/Test5"} element={<Test5 />} />
+          <Route path={"/Test6"} element={<Test6 />} />
         </Routes>
        
       )
