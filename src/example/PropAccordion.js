@@ -18,7 +18,7 @@ export default function PropAccordion({nowObjectList, onUpdate = f => f}) {
                     {console.log(obj?.name)}
                     <Accordion.Header>{obj?.name + "(" + obj?.id + ")"}</Accordion.Header>
                     <Accordion.Body  style={{ backgroundColor:"lightblue"}}>
-                        <PureDrag initPropList={[]} onChange={(newList) => onUpdate(newList, index)}/>
+                        <PureDrag propList={obj?.customPropertiesList} onChange={(newList) => onUpdate(newList, index)}/>
                     </Accordion.Body>
                 </Accordion.Item>
             })}
