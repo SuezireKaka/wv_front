@@ -2,8 +2,9 @@ import React from 'react'
 import { displayDate } from 'toolbox/DateDisplayer'
 import { Table } from 'react-bootstrap'
 import MemberRoleList from 'login/MemberRoleList'
+import { Link } from 'react-router-dom'
 
-export default function ReportSuspect({report, data}) {
+export default function ReportSuspectPost({report, data}) {
     console.log(report)
   return (
     <Table><thead>
@@ -23,7 +24,9 @@ export default function ReportSuspect({report, data}) {
       <td>{data?.boardVO?.id}</td>
       <td>{data?.ksuspectType}</td>
       <td>{data?.id}</td>
-      <td>{data?.title}</td>
+      
+                   
+      <td><Link style={{ textDecoration: "none", color: "black" }} to={`/series/${data?.id}`} state={{ seriesId: data?.id, page: 1 }}>{data?.title}</Link></td>
       <td>{displayDate(data?.regDt, data?.uptDt)}</td>
       <td>{data?.writer?.nick}</td>
 

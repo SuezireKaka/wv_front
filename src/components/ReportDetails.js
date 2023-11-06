@@ -2,7 +2,7 @@ import React from 'react'
 import { AxiosAuth, Fetch } from 'toolbox/Fetch'
 import { useLocation } from "react-router-dom";
 import Reporter from './Reporter';
-import ReportSuspect from './ReportSuspect';
+import ReportSuspectPost from './ReportSuspectPost';
 import {  useContext } from "react";
 import ReportSuspectUser from './ReportSuspectUser';
 import AppContext from "context/AppContextProvider";
@@ -21,7 +21,7 @@ export default function ReportDetails() {
     return <><fieldset>
     <legend>신고 상세(포스트)</legend>
     <Reporter report={report}/>
-    <ReportSuspect report={report} data={data} />
+    <ReportSuspectPost report={report} data={data} />
     </fieldset></>
   }
   function renderParty(_,data){
