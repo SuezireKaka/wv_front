@@ -1,10 +1,52 @@
 import React from 'react'
 import { useState } from 'react';
 export default function Test3() {
+  const hhhh = {
+    position: "absolute",
+    display: "inline-table",
+    width: "calc(100% - 18px)"
+  }
+
     const [data, updateData] = useState([
         { firstName: "Irakli", lastName: "Tcigladze" },
         { firstName: "George", lastName: "Smith" },
         { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
+        { firstName: "Michael", lastName: "Simmons" },
+        { firstName: "Dirk", lastName: "Johnson" },        { firstName: "Mark", lastName: "Wayans" },
         { firstName: "Michael", lastName: "Simmons" },
         { firstName: "Dirk", lastName: "Johnson" },
         { firstName: "Casey", lastName: "Dawson" }
@@ -17,7 +59,7 @@ export default function Test3() {
     <div>
         <table className="m-table">
         <thead>
-          <tr>
+          <tr style={hhhh}>
             <th onClick={(e) => onSort(e, "firstName")}>First Name</th>
             <th onClick={(e) => onSort(e, "lastName")}>Salary</th>
           </tr>
