@@ -17,7 +17,7 @@ export default function LoginButton() {
     const loginType = auth.loginType ? auth.loginType : "";
     const [signInResult, setSignInResult] = useState({});
     const navigate = useNavigate();
-    const findByNickUri = `/party/searchSelf/`;
+    const findByNickUri = `/party/findById/${auth.userId}`;
 
     const navMenu = {
       color:"grey",
@@ -40,6 +40,8 @@ export default function LoginButton() {
        <Dropdown.Item href="/userProfile"><Link style={navMenu} key={res.data.id} to="/userProfile" state={res.data}>프로필</Link></Dropdown.Item>
     </>
   }
+
+  console.log(auth);
 
   return (
     <div>    
