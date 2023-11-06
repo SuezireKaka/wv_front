@@ -94,7 +94,8 @@ export default function ShowcaseList() {
   
     return <>
     <table style={{ margin: "auto", position: "static" }} ><td>
-      {!auth.roles || auth.roles.length === 0 ? "" :
+      {console.log(auth.roles[0])}
+      {!auth.roles || auth.roles.length === 0  ? "" :
         <Link style={{ marginLeft: "auto", position: "relative" }} to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
           <Button variant="outline-primary">신규</Button>
         </Link>}
@@ -121,8 +122,9 @@ export default function ShowcaseList() {
                     </Link>
                       <Card.Body>
                         <Card.Title>{post?.title}
+                        {!auth.roles || auth.roles.length === 0?"":
                         <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
-                          return <><Favorites favorites={res?.data} post={post}/></>}}/>
+                          return <><Favorites favorites={res?.data} post={post}/></>}}/>}
                         </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
@@ -142,8 +144,9 @@ export default function ShowcaseList() {
                     </Link>
                       <Card.Body>
                         <Card.Title>{post?.title}
+                        {!auth.roles || auth.roles.length === 0?"":
                         <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
-                          return <><Favorites favorites={res?.data} post={post}/></>}}/>
+                          return <><Favorites favorites={res?.data} post={post}/></>}}/>}
                         </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
