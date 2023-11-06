@@ -39,6 +39,8 @@ export default function PureDrag({propList = [], onChange = f => f}) {
     let propTypeList = newList.map(prop => prop.propType)
     newList = newList.map((prop, idx) => {return {...prop, isSafe : checkQuality(idx, prop.propType, propTypeList)}})
     newList[index].isSafe = checkQuality(index, value, propTypeList)
+    console.log("왜 안 바꾸는데에에에", checkQuality(index, value, propTypeList))
+    console.log("진짜 모르겠다고오오", newList)
     onChange(newList)
   }
 
@@ -69,10 +71,9 @@ export default function PureDrag({propList = [], onChange = f => f}) {
       {propList && propList.length > 0 ?
         propList.map((item, index) => {
           console.log("이 아이템은 뭐야?", item)
-          let bgColor = item.isSafe ? 'lightblue' : 'pink'
           return <div
           style={{
-            backgroundColor: bgColor,
+            backgroundColor: item.isSafe ? 'lightblue' : 'pink',
             textAlign: 'center',
           }}
           onDrag={() => dragStart(index)}

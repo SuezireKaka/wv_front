@@ -35,7 +35,7 @@ export default function Test4() {
         console.log("주문하신 물품은?", newList)
         let copyArray = [...nowObjectList]
         console.log("복사 잘 됐니?", copyArray)
-        copyArray[index].customPropertiesList = newList
+        copyArray[index].customPropertiesList = [...newList]
         console.log("잘 바뀌었니?", copyArray)
         setNowObjectList(copyArray)
     }

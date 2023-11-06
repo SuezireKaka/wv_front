@@ -14,12 +14,12 @@ export default function PropAccordion({nowObjectList, onUpdate = f => f}) {
                 return <Accordion.Item key={index} eventKey={index}>
                     {console.log(obj?.name)}
                     <Accordion.Header>{obj?.name + "(" + obj?.id + ")"}</Accordion.Header>
-                    <Accordion.Body  style={{ backgroundColor:"lightblue"}}>
+                    <Accordion.Body style={{ backgroundColor:"lightblue"}}>
                         <PureDrag
                             propList={obj?.customPropertiesList.map(
                                 prop => {
-                                    console.log("이걸 줄 예정이래요", {...prop, isSafe : true, isEdited : false})
-                                    return {...prop, isSafe : true, isEdited : false}
+                                    console.log("이걸 줄 예정이래요", {...prop})
+                                    return {...prop}
                                 }
                             )}
                             onChange={(newList) => onUpdate(newList, index)}
