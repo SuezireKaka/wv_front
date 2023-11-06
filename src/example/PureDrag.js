@@ -1,29 +1,31 @@
 import React, { useRef, useState, useContext } from 'react';
 import PropTest from './PropTest';
-import axios from 'api/axios';
-import AppContext from "context/AppContextProvider";
 
 export default function PureDrag({propList = [], onChange = f => f}) {
   const dragItem = useRef();
   const dragOverItem = useRef();
-  const lookUpId = useRef();
   const [summonedCnt, setSummonedCnt] = useState(0)
 
   const dragStart = idx => {
+    console.log("지금 이걸 드래그하는 중", idx);
     dragItem.current = idx;
   };
 
   const dragEnter = idx => {
+    console.log("지금 여길 지나다니는 중", idx);
     dragOverItem.current = idx;
   };
 
   const drop = () => {
     const copyListItems = [...propList];
+    console.log("지금 레퍼런스 내놔", dragItem)
     const dragItemContent = copyListItems[dragItem.current];
+    console.log("지금 드래그 내놔", dragItemContent)
     copyListItems.splice(dragItem.current, 1);
     copyListItems.splice(dragOverItem.current, 0, dragItemContent);
     dragItem.current = null;
     dragOverItem.current = null;
+    console.log("드래그 결과 내놔", copyListItems);
     onChange(copyListItems);
   };
 
@@ -72,12 +74,12 @@ export default function PureDrag({propList = [], onChange = f => f}) {
             backgroundColor: bgColor,
             textAlign: 'center',
           }}
-          onDragStart={() => dragStart(index)}
+          onDrag={() => dragStart(index)}
           onDragEnter={() => dragEnter(index)}
           onDragOver={e => e.preventDefault()}
           onDragEnd={drop}
           key={index}
-          draggable>
+          draggable="true">
           {/* 임시 위치 표시*/}
           <p>{index}</p>
           <PropTest key={index} level={index}
