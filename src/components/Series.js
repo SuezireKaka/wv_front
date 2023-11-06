@@ -66,7 +66,7 @@ export default function Series() {
           {console.log(post)}
           {!auth.roles || auth.roles.length === 0?"":
             <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
-              return <><Favorites favorites={res?.data}/></>
+              return <><Favorites favorites={res?.data} post={post}/></>
             }}/>}
             
           
@@ -91,14 +91,15 @@ export default function Series() {
           {(post.writer ? post.writer.id === auth.userId : false) ?<>
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId}}>
              <Button variant="outline-info">수정</Button>
-           </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button></>
-           : ""}
+           </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button>
+          
           <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
-            <Button variant="outline-success">툴킷으로</Button>
-          </Link>
+            <Button variant="outline-success">툴킷</Button>
+          </Link></>
+           : ""}
           {auth && auth.loginId
           ? <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work"}}>
-            <Button variant="outline-danger">{"신고하기 "}<FaBullhorn color="tomato"/></Button>
+            <Button variant="outline-danger">신고 <FaBullhorn color="tomato"/></Button>
           </Link>
           :""
           }

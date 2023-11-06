@@ -10,9 +10,9 @@ import CheckboxGroup from 'toolbox/CheckboxGroup';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
-export default function MemberRoleList({ member }) {
+export default function MemberAuthRoleList({ member, report }) {
   console.log(member)
-  const [value, setValue] = useState(member?.roleList[0]?.role);
+  const [value, setValue] = useState(member?.roles[0]);
   const [roles, setRoles] = React.useState([]);
   const [listCheckMember, setListCheckMember] = useState(new Map());
   const { auth } = useContext(AppContext);
@@ -39,7 +39,7 @@ export default function MemberRoleList({ member }) {
         }
       );
       setValue(value);
-      navigate(0)
+      //navigate(0)
     } catch (err) {
       console.log('Registration Failed');
     }
@@ -47,7 +47,7 @@ export default function MemberRoleList({ member }) {
 
   return (
     <div>
-      {member?.roleList?.map((role) => (
+      {member?.roles.map((role) => (
         <td>
         <RadioGroup value={value} onChange={setValue} >
           <Radio value="reader" checked={role === "reader"}>Reader</Radio>
@@ -55,7 +55,7 @@ export default function MemberRoleList({ member }) {
           <Radio value="manager" checked={role === "manager"}>Manager</Radio>
           <Radio value="admin" checked={role === "admin"} disabled>Admin</Radio>
         </RadioGroup>  </td>  ))}<td>
-        <Button onClick={(e)=>reRole(e,value, member.id)} variant="outline-success">변경</Button></td>
+        <Button onClick={(e)=>reRole(e,value, report.suspectId)} variant="outline-success">변경</Button></td>
     </div>
   )
 }

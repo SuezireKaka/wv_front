@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import AppContext from 'context/AppContextProvider';
 import axios from "axios";
-import Spinner from 'react-bootstrap/Spinner';
 
-const LoginHandeler = (props) => {
+import Loading from 'toolbox/Loading';
+const LoginHandler = (props) => {
   const { setAuth } = useContext(AppContext);
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
@@ -45,13 +45,11 @@ const LoginHandeler = (props) => {
   return (
     <div className="LoginHandeler">
       <div className="notice">
-      <Spinner animation="border" role="status">
-      <span className="visually-hidden">로그인 중입니다....</span>
-      </Spinner>
+      <Loading />
         <div className="spinner"></div>
       </div>
     </div>
   );
 };
 
-export default LoginHandeler;
+export default LoginHandler;
