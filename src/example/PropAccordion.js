@@ -17,9 +17,13 @@ export default function PropAccordion({nowObjectList, onUpdate = f => f}) {
                     <Accordion.Body  style={{ backgroundColor:"lightblue"}}>
                         <PureDrag
                             propList={obj?.customPropertiesList.map(
-                                prop => {return {...prop, isSafe : true, isEdited : false}}
+                                prop => {
+                                    console.log("이걸 줄 예정이래요", {...prop, isSafe : true, isEdited : false})
+                                    return {...prop, isSafe : true, isEdited : false}
+                                }
                             )}
-                            onChange={(newList) => onUpdate(newList, index)}/>
+                            onChange={(newList) => onUpdate(newList, index)}
+                        />
                     </Accordion.Body>
                 </Accordion.Item>
             })}

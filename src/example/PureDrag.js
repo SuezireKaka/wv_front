@@ -68,6 +68,7 @@ export default function PureDrag({propList = [], onChange = f => f}) {
     <>
       {propList && propList.length > 0 ?
         propList.map((item, index) => {
+          console.log("이 아이템은 뭐야?", item)
           let bgColor = item.isSafe ? 'lightblue' : 'pink'
           return <div
           style={{
