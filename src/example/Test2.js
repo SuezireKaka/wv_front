@@ -1,4 +1,4 @@
-import ImageUploadExample from './ImageUploadExample'
+
 import Drag from './Drag'
 
 
@@ -8,6 +8,6 @@ export default function Test2() {
   <>테스트2
   <br/>
    <Drag />
-   <ImageUploadExample /></>
+  </>
 )
 }
