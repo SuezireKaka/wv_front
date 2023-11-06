@@ -58,12 +58,7 @@ export default function TestNav() {
       ))}
     </>
   }
-  function renderSuccess1(originalFile) {
-    console.log("=======originalFile=========");
-    console.log(originalFile);
-    return (<>
-    </>)
-  }
+ 
 }
 
 
