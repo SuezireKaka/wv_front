@@ -5,7 +5,7 @@ import AttachFile from './AttachFile';
 
 
 
-export default function AttachedFileList({ writer, listAttach, setListAttach=f=>f }) {
+export default function AttachedFileList({ writer, listAttach, setListAttach=f=>f, multiple = true }) {
 
 
   const thumbnailRequestTarget = ["video", "image"];

@@ -26,7 +26,6 @@ export default function GraphCanvas({
     const [summonedCnt, setSummonedCnt] = useState(0)
 
     const [selectedId, setSelectedId] = useState()
-    const [copiedId, setCopiedId] = useState()
 
     // 재귀함수로 삭제할 때 이미 삭제할 것으로 정해진 애들을 기억해서 무시할 수 있도록 하는 용도
     const [memo, setMemo] = useState([])
@@ -274,10 +273,6 @@ export default function GraphCanvas({
             : null
         }
         <br />
-        {copiedId
-            ? <p>{"복사 중인 id는 " + copiedId + "입니다."}</p>
-            : null
-        }
         <div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
             <canvas class="Canvas" ref={canvasRef} width={xToolSize} height={yToolSize}
                 style={{ borderColor: "#000000", border: "1px dotted" }}

@@ -24,6 +24,7 @@ export default function Test4({toolDetail = {
 
     function onDeleteAllObjects(deleteIdArray) {
         console.log("누구를 삭제한다고?", deleteIdArray)
+        console.log("어디서 삭제한다고?", nowObjectList)
         setNowObjectList([...nowObjectList].filter(obj => ! deleteIdArray.includes(obj.id)))
     }
 
