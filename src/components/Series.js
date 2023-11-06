@@ -29,6 +29,7 @@ export default function Series() {
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
   console.log(auth);
+  console.log(state)
 	const navigate = useNavigate();
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
@@ -88,7 +89,7 @@ export default function Series() {
         <tr>
           <td>
             
-          {(post.writer ? post.writer.id === auth.userId : false) ?<>
+          {(post.writer ? post.writer.id === auth.userId : false) || (auth.roles[0]==="admin"||auth.roles[0]==="manager" ) && state?.isReport ?<>
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId}}>
              <Button variant="outline-info">수정</Button>
            </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button>

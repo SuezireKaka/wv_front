@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { displayDate } from 'toolbox/DateDisplayer'
 import { Table } from 'react-bootstrap'
 import MemberRoleList from 'login/MemberRoleList'
 import { Link } from 'react-router-dom'
+import ThumbnailList from 'atom/ThumbnailList'
 
 export default function ReportSuspectPost({report, data}) {
-    console.log(report)
+    const [isReport] = useState(true);
+    console.log(isReport)
   return (
     <Table><thead>
     <td></td>
@@ -20,13 +22,13 @@ export default function ReportSuspectPost({report, data}) {
   </thead>
     <tbody>
       <tr>
-      <td rowSpan="2" width="10%">신고대상</td>
+      <td rowSpan="3" width="10%">신고대상</td>
       <td>{data?.boardVO?.id}</td>
       <td>{data?.ksuspectType}</td>
       <td>{data?.id}</td>
       
                    
-      <td><Link style={{ textDecoration: "none", color: "black" }} to={`/series/${data?.id}`} state={{ seriesId: data?.id, page: 1 }}>{data?.title}</Link></td>
+      <td><Link style={{ textDecoration: "none", color: "black" }} to={`/series/${data?.id}`} state={{ seriesId: data?.id, page: 1, isReport:isReport }}>{data?.title}</Link></td>
       <td>{displayDate(data?.regDt, data?.uptDt)}</td>
       <td>{data?.writer?.nick}</td>
 
@@ -35,6 +37,11 @@ export default function ReportSuspectPost({report, data}) {
       <tr>
       <td>내용:</td>
       <td colSpan="5" width="70%">{data?.content?.substring(0, 30)}</td>
+      
+      </tr>
+      <tr>
+      <td>첨부:</td>
+      <td colSpan="5" width="70%"><ThumbnailList imgDtoList={report.listAttachFile} /></td>
       
       </tr>
     </tbody>
