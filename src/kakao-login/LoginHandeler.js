@@ -47,7 +47,7 @@ const LoginHandeler = (props) => {
       <div className="notice">
       <Spinner animation="border" role="status">
       <span className="visually-hidden">로그인 중입니다....</span>
-    </Spinner>
+      </Spinner>
         <div className="spinner"></div>
       </div>
     </div>
