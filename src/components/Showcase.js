@@ -13,7 +13,8 @@ import Image from 'react-bootstrap/Image';
 import AppContext from "context/AppContextProvider";
 import { useContext } from "react";
 import { Form } from "react-bootstrap";
-
+import Favorites from './Favorites';
+import { AxiosAuth } from 'toolbox/Fetch'
 export default function ShowcaseList() {
     const location = useLocation();
     let state = location.state;
@@ -117,11 +118,14 @@ export default function ShowcaseList() {
                       {post.listAttachFile?.length === 0 ?
                         <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
                         : <OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
+                    </Link>
                       <Card.Body>
-                        <Card.Title>{post?.title}</Card.Title>
+                        <Card.Title>{post?.title}
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
+                          return <><Favorites favorites={res?.data} post={post}/></>}}/>
+                        </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
-                    </Link>
                   </Card><br />
                 </Col>
   
@@ -135,11 +139,14 @@ export default function ShowcaseList() {
                       {post.listAttachFile?.length === 0 ?
                         <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="200" height="auto" thumbnail />
                         : <OriginalViewOne imgDtoList={post.listAttachFile} x="200" y="auto" />}
+                    </Link>
                       <Card.Body>
-                        <Card.Title>{post?.title}</Card.Title>
+                        <Card.Title>{post?.title}
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
+                          return <><Favorites favorites={res?.data} post={post}/></>}}/>
+                        </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
-                    </Link>
                   </Card><br />
                 </Col>
               );
