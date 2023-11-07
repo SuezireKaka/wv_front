@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router';
 
 export default function MemberStatusList({ member }) {
   console.log(member) //loginResultCode
-  const [value, setValue] = useState(member.loginResultCode);
+  const [value, setValue] = useState(member.loginResultCode.toString());
   const code = member?.loginResultCode;
   const { auth } = useContext(AppContext);
   const navigate = useNavigate();
