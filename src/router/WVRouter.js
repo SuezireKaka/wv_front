@@ -4,7 +4,7 @@ import Showcase from 'components/Showcase';
 import Series from 'components/Series';
 import ReportMng from 'components/ReportMng';
 import PostDetails from 'components/PostDetails';
-import Tool from 'components/Tool';
+import ToolExplorer from 'component-tool/ToolExplorer';
 import Agreement from 'login/Agreement';
 import LoginStage from 'login/LoginStage';
 import Register from 'login/Register';
@@ -30,6 +30,7 @@ export default function WVRouter() {
         <Routes> 
           <Route path="/" element={ <Home /> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
+          
           <Route path={"/board/0000"} element={ <PostNormal/> } />
           <Route path={"/board/0001"} element={ <PostNormal/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
@@ -39,7 +40,8 @@ export default function WVRouter() {
           <Route path={"/series/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/report/"} element={ <ReportMng/> } />
-          <Route path={"/series/:seriesId/toolkit/"} element={ <Tool/> } />
+          <Route path={"/series/:seriesId/tool/"} element={ <ToolExplorer/> } />
+          <Route path={"/series/:seriesId/tool/:idPath"} element={ <ToolExplorer/> } />
           <Route path={"/report"} element={ <ReportList/> } />
           <Route path={"/ReportDetails/:ReportId"} element={ <ReportDetails/> } />
 

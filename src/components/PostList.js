@@ -12,6 +12,7 @@ import { Table } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";
 import { Pagination } from "react-bootstrap";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import { displayPagination } from "toolbox/Pagination";
 
 export default function PostList() {
   const { auth } = useContext(AppContext);
@@ -20,15 +21,13 @@ export default function PostList() {
   const state = location.state;
 
   function buildUrl(step) {
-
-  
     if (state.search)
-        return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
+      return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
     else
-        return `/work/anonymous/listAllPost/${state.seriesId}/${state.page}`;//${state.boardId}
-}
+      return `/work/anonymous/listAllPost/${state.seriesId}/${state.page}`;//${state.boardId}
+  }
   const [postListUri, setPostListUri] = useState(buildUrl(222));
-    
+
   const [targetBoard, setTargetBoard] = useState(state.boardId);
 
 
@@ -36,18 +35,11 @@ export default function PostList() {
     setTargetBoard(state.boardId);
     setPostListUri(buildUrl());
 
-}
+  }
 
-function goTo(chosenPage) {
-    state.postListWithPaging = null;
-    state.page = chosenPage;
+  const txtSearch = useRef();
 
-    setPostListUri(buildUrl());
-}
-
-const txtSearch = useRef();
-
-const onSearch = (e) => {
+  const onSearch = (e) => {
     e.preventDefault();
     let search = txtSearch.current.value;
 
@@ -56,63 +48,54 @@ const onSearch = (e) => {
     state.page = 1;
 
     setPostListUri(buildUrl());
-}
+  }
 
-const displayPagination = (paging) => {
-    const pagingBar = [];
-    if (paging.prev)
-        pagingBar.push(<Pagination.Item key={paging.startPage - 1} onClick={(e) => goTo(paging.startPage - 1)}>&lt;</Pagination.Item>);
-    for (let i = paging.startPage; i <= paging.lastPage; i++) {
-        pagingBar.push(<Pagination.Item key={i} onClick={(e) => goTo(i)}>{i}</Pagination.Item>);
-    }
-    if (paging.next)
-        pagingBar.push(<Pagination.Item key={paging.lastPage + 1} onClick={(e) => goTo(paging.lastPage + 1)}>&gt;</Pagination.Item>);
-    return pagingBar;
-}
+  function renderSuccess(postListWithPaging) {
 
-function renderSuccess(postListWithPaging) {
+    const postList = postListWithPaging?.firstVal;
+    const pagenation = postListWithPaging?.secondVal;
 
-  const postList = postListWithPaging?.firstVal;
-  const pagenation = postListWithPaging?.secondVal;
+    console.log("뭐가 나온 건지 확인", postListWithPaging)
 
-  return <>
+    return <>
       <Table responsive variant="white">
-          <thead>
+        <thead>
 
-          </thead>
-          <tbody>
-              {postList?.map(post => (
-                <tr key={post.id}>
-                    {console.log(post)}
-                      <td><ThumbnailList imgDtoList={post?.listAttachFile}/></td>
-                      <td width="60%">
-                        <Link style={{all:"unset", cursor:"pointer"}} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
-                          state={{ id:post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId:state?.seriesId, boardId:post?.boardVO?.id}}>{/*시리즈아이디필요*/}
-                             {post.title}</Link>
-                      </td>
-                      <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}</td>
-                      <td>✔{post.readCount}</td>
-                      <td>🤣{post.likeCount}</td>
-                      <td>🕐{displayDate(post.regDt, post.uptDt)}</td>
-                  </tr> 
-              ))}
-          </tbody>
-          <tfoot>
-          </tfoot>
+        </thead>
+        <tbody>
+          {postList?.map(post => (
+            <tr key={post.id}>
+              <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
+              <td width="60%">
+                <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
+                  state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId: state?.seriesId, boardId: post?.boardVO?.id }}>{/*시리즈아이디필요*/}
+                  {post.title}</Link>
+              </td>
+              <td><LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>
+              <td>✔{post.readCount}</td>
+              <td>🤣{post.likeCount}</td>
+              <td>🕐{displayDate(post.regDt, post.uptDt)}</td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+        </tfoot>
       </Table>
-      <div style={{ Align: "center", display: "inline-block"}}>
-      <Pagination>
-      {pagenation?.lastPage>=2?displayPagination(pagenation):""}
-      </Pagination>
+      <div style={{ Align: "center", display: "inline-block" }}>
+        <Pagination>
+          {pagenation?.lastPage >= 2 ? displayPagination(pagenation, state, setPostListUri, buildUrl) : ""}
+        </Pagination>
       </div>
-  </>
+    </>
+  }
+
+  console.log("여기서의 상태는?", state)
+
+  return (
+    <div>
+
+      <Fetch uri={postListUri} renderSuccess={renderSuccess} />
+
+    </div>
+  )
 }
-    return (
-      <div>
-       
-        <Fetch uri={postListUri} renderSuccess={renderSuccess} />
-  
-      </div>
-    )
-}
-  

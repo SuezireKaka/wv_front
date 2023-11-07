@@ -93,15 +93,17 @@ export default function Series() {
           <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId}}>
              <Button variant="outline-info">수정</Button>
            </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button>
-          
-          <Link to={`/series/${state.seriesId}/toolkit`} state={{ seriesId: state.seriesId , page:1}}>
-            <Button variant="outline-success">툴킷</Button>
-          </Link></>
+          </>
            : ""}
           {auth && auth.loginId
-          ? <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work"}}>
-            <Button variant="outline-danger">신고 <FaBullhorn color="tomato"/></Button>
-          </Link>
+          ? <>
+            <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId , page:1, addr : ""}}>
+              <Button variant="outline-success">툴 목록</Button>
+            </Link>
+            <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work"}}>
+              <Button variant="outline-danger">신고 <FaBullhorn color="tomato"/></Button>
+            </Link>
+          </>
           :""
           }
           
