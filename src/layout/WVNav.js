@@ -20,7 +20,7 @@ export default function TestNav() {
   }
 
   return <>
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary"  style={{position: "sticky", top: 0, backgroundColor:"white", zIndex: "2"}}>
       <Container>
         <Navbar.Brand href="/"><Link style={navMenu} to='/' class="jb-nav">WonderVatory</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -43,6 +43,7 @@ export default function TestNav() {
           */}
           <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test3" >테스트용3</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test4" >테스트용4</Link></Nav.Link>
+          <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test5">테스트용5</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test6">테스트용6</Link></Nav.Link>
           </Nav>
         </Navbar.Collapse>

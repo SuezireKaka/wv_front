@@ -12,6 +12,7 @@ import { Container } from "react-bootstrap";
 import OriginalViewOne from "atom/OriginalViewOne";
 import Col from "react-bootstrap/Row";
 import Row from "react-bootstrap/Col";
+import PostNormal from "./PostNormal";
 
 
 
@@ -23,7 +24,7 @@ export default function Home() {
     console.log(data.firstVal);
 
     return (
-      <table><tr></tr><tr><td width="20%"></td><td rowSpan='2' width="550px">
+      <table><tr></tr><tr><td width="30%"></td><td rowSpan='2' width="550px">
         <Carousel fade>
           {data.firstVal?.map((post) => {
             return <Carousel.Item interval={1500}>

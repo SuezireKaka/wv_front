@@ -7,7 +7,7 @@ import ThumbnailList from 'atom/ThumbnailList'
 
 export default function ReportSuspectPost({report, data}) {
     const [isReport] = useState(true);
-    console.log(isReport)
+
   return (
     <Table><thead>
     <td></td>

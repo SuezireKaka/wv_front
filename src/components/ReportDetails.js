@@ -9,15 +9,12 @@ import AppContext from "context/AppContextProvider";
 
 export default function ReportDetails() {
   const {auth} = useContext(AppContext);
-
   const location = useLocation();
   let state = location.state.report;
   let report = location.state.report
-  console.log(report)
 
   function renderWork(data){
-    console.log(data)
-    console.log(report)
+
     return <><fieldset>
     <legend>신고 상세(포스트)</legend>
     <Reporter report={report}/>
@@ -25,11 +22,9 @@ export default function ReportDetails() {
     </fieldset></>
   }
   function renderParty(_,data){
-    console.log("신고유저 상세")
-    console.log(data)
-    console.log(report)
+
     const suspectUser = data.data
-    console.log(suspectUser)
+
     return <><fieldset>
     <legend>신고 상세(유저)</legend>
     <Reporter report={report}/>

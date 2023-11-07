@@ -58,7 +58,6 @@ export default function LoginButton() {
       : 
       <>
       <Dropdown.Item href="/">홈</Dropdown.Item>
-      <Dropdown.Item href="/test1">테스트</Dropdown.Item>
       <Dropdown.Item href="/favoriteslist">즐겨찾기</Dropdown.Item>
       {auth.accountType ==="원더" ?<AxiosAuth uri={findByNickUri} auth={auth} renderSuccess={renderSuccess} />:"" }
       <Dropdown.Item href="/UserSeries">내작품보기</Dropdown.Item>

@@ -10,26 +10,27 @@ import CheckboxGroup from 'toolbox/CheckboxGroup';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
-export default function MemberRoleList({ member }) {
-  console.log(member)
-  const [value, setValue] = useState(member?.roleList[0]?.role);
-  const [roles, setRoles] = React.useState([]);
-  const [listCheckMember, setListCheckMember] = useState(new Map());
+export default function MemberStatusList({ member }) {
+  console.log(member) //loginResultCode
+  const [value, setValue] = useState(member.loginResultCode.toString());
+  const code = member?.loginResultCode;
   const { auth } = useContext(AppContext);
   const navigate = useNavigate();
-  const reRole = async (e, value, memberId) => {
+
+  const setStatus = async (e, value, memberId) => {
     e.preventDefault();
     console.log(value)
     console.log(memberId)
+    
     const bodyData = {
       accountId: memberId,
-      role: value,
+      loginResultCode: value,
     };
     console.log(JSON.stringify(bodyData));
 
     try {
       const response = await axios.get(
-        `/party/reRole/${memberId}/${value}`,
+        `/party/updateStatus/${memberId}/${value}`,
         
         {
           headers: {
@@ -46,15 +47,16 @@ export default function MemberRoleList({ member }) {
   }
 
   return (
-    <div><td>
-      {member?.roleList?.map((role) => (
+    <div>
+        <td>
+          {console.log(value)}
         <RadioGroup value={value} onChange={setValue} >
-          <Radio value="reader" checked={role === "reader"}>Reader</Radio>
-          <Radio value="writer" checked={role === "writer"}>Writer</Radio>
-          <Radio value="manager" checked={role === "manager"}>Manager</Radio>
-          <Radio value="admin" checked={role === "admin"} disabled>Admin</Radio>
-        </RadioGroup>    ))}</td>
-        <td><Button onClick={(e)=>reRole(e,value, member.id)} variant="outline-success">변경</Button></td>
+          <Radio value="0" checked={code==="0"} disabled>강제탈퇴</Radio>
+          <Radio value="1" checked={code==="1"}>정상계정</Radio>
+          <Radio value="2" checked={code==="2"}>만료계정</Radio>
+          <Radio value="3" checked={code==="3"}>계정정지</Radio>
+        </RadioGroup>  </td>
+        <td><Button onClick={(e)=>setStatus(e,value, member.id)} variant="outline-warning">변경</Button></td>
     </div>
   )
 }

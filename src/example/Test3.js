@@ -56,10 +56,11 @@ export default function Test3() {
         updateData(tempData.sort((a, b) => a[sortKey].localeCompare(b[sortKey])));
       };
   return (
-    <div>
+    <div style={{}}>
+      
         <table className="m-table">
-        <thead>
-          <tr style={hhhh}>
+        <thead style={{position: "sticky", top: 0, backgroundColor:"white"}}>
+          <tr >
             <th onClick={(e) => onSort(e, "firstName")}>First Name</th>
             <th onClick={(e) => onSort(e, "lastName")}>Salary</th>
           </tr>

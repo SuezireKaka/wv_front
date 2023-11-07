@@ -57,9 +57,9 @@ export default function PostList() {
 
     console.log("뭐가 나온 건지 확인", postListWithPaging)
 
-    return <>
-      <Table responsive variant="white">
-        <thead>
+  return <>
+      <Table  striped bordered hover responsive variant="white">
+          <thead>
 
         </thead>
         <tbody>

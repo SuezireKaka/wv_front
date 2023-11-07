@@ -77,8 +77,8 @@ export default function ReportMng() {
 		}
 	}
 
-    return <>
-        [{reportTypes.join(", ")}]
+    return <div>
+        {/*[{reportTypes.join(", ")}]*/}
         <Form style={STYLE}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>신고사유를 선택해주세요</Form.Label>
@@ -108,5 +108,5 @@ export default function ReportMng() {
                 신고하기
             </Button>
         </Form>
-    </>
+    </div>
 }
