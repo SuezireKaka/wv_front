@@ -76,7 +76,7 @@ export default function PostNormal() {
 
     return <>
 
-      <Table responsive variant="white">
+      <Table  striped bordered hover responsive variant="white">
         <thead>
           <th><p></p></th>
           <th><p>게시글</p></th>

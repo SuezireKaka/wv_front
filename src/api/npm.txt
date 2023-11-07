@@ -37,3 +37,8 @@ npm i react-table
 
 리덕스
 npm install react-redux
+
+
+니보
+npm install @nivo/core
+npm install @nivo/bar

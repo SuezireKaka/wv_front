@@ -70,7 +70,6 @@ export default function ReportList() {
           </thead>
           <tbody>
         {reportList.map((report, index) => {
-            console.log(report)
             return index === reportList.length - 1
             ? <>
             <tr ref={setLastIntersectingImage}>

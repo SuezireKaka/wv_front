@@ -80,7 +80,7 @@ export default function MemberList() {
                 <th style={backgroundColorTD}>이름</th>
                 <th style={backgroundColorTD}>생년월일</th>
                 <th style={backgroundColorTD}>성별</th>
-                <th style={backgroundColorTD}>분류</th>
+                <th style={backgroundColorTD} colSpan={2}>분류</th>
             </tr>
         </thead>
         <tbody>

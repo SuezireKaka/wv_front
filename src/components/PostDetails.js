@@ -44,7 +44,8 @@ export default function PostDetails() {
   function RenderSuccess({ post }) {
     console.log("뭘 받았니?", post)
     //setLike(post.likeCount)
-    const [nowlike, setLike] = useState(post?.likeCount);
+    const [nowLike, setLike] = useState(post?.likeCount);
+    const [nowDislike, setDisLike] = useState(post?.dislikeCount);
 
     const onLike = async (id, like) => {
       let newLike = like++;
@@ -64,9 +65,32 @@ export default function PostDetails() {
       } catch (err) {
         console.log(err);
       }
+      navigate(0);
       setLike(like++)
     }
 
+    
+    const onDisLike = async (id, dislike) => {
+      let newDisLike = dislike++;
+      console.log("예상치 : ", newDisLike)
+      console.log(id)
+      try {
+        await axios.get(
+          `/work/anonymous/onDisLike?id=${id}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }).then((res) => {
+            console.log("잘 다녀왔는지 보자", res)
+          })
+        } catch (err) {
+          console.log(err);
+        }
+        navigate(0);
+      setLike(dislike++)
+    }
+    
     const handleDelete = async (e) => {
       e.preventDefault();
 
@@ -98,8 +122,8 @@ export default function PostDetails() {
         <ListGroup.Item>
           <LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}
           ✔<span>{post.readCount}</span>
-          <span onClick={() => { onLike(post.id, nowlike) }}>👍{nowlike}</span>
-          😡<span>{post.dislikeCount}</span>
+          <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{post.likeCount}</span>
+          <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
           {console.log(post)}
         <ListGroup.Item> <PostPrevNext post={post} state={{ parentId: state.parentId, boardId: state.boardId, page: state.page, postListWithPaging: state.postListWithPaging }} /></ListGroup.Item>

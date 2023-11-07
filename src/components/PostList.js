@@ -76,7 +76,7 @@ function renderSuccess(postListWithPaging) {
   const pagenation = postListWithPaging?.secondVal;
 
   return <>
-      <Table responsive variant="white">
+      <Table  striped bordered hover responsive variant="white">
           <thead>
 
           </thead>
