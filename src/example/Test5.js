@@ -3,6 +3,7 @@ import SocialKakao from 'kakao-login/SocialKakao';
 import styled from "@emotion/styled";
 import useHover from 'hooks/useHover';
 import Gra1 from './Gra1';
+import { Fetch } from 'toolbox/Fetch';
 
 // 시각적인 효과를 위해 BOX컴포넌트 사용
 const Box = styled.div`
@@ -120,11 +121,24 @@ const Box = styled.div`
       "donutColor": "hsl(335, 70%, 50%)"
     }
   ]
+  function renderSuccess(data) {
+    console.log(data)
+    const series = data?.firstVal
+    return(<>
+    <div style={{width:700, height:500}}>
+    {series.map((data)=>{
+        <Gra1 data={data}/>
+      })}
+        </div>
+    </>
+    )
+ }
 
-  return (
+  return (<>
+    {/* <Fetch uri={`/work/anonymous/listAllSeries/0001/1`} renderSuccess={renderSuccess} />*/}
     <div style={{width:700, height:500}}> {/*  style={{width:700, height:500}} 가로 세로 꼭줘야함 */}
       <Gra1 data={data}/>
-    </div>
+    </div></>
   );
 };
 export default Test5

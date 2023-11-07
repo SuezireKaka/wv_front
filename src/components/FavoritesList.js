@@ -74,13 +74,9 @@ export default function FavoritesList() {
     return () => observer && observer.disconnect();
   }, [lastIntersectingImage]);
 
-
-
-
     return (
       <Container>
         <Row>
-        
           {postList?.map((post, index) => {
             if (index === postList.length - 1) {
               return (
@@ -100,18 +96,13 @@ export default function FavoritesList() {
                         </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
-                      
-
                   </Card><br />
                 </Col>
-  
               );
             } else {
               return (
-               
                 <Col id={post?.id}>
                    {console.log(post.id)}
-
                     <Card id={post?.id} style={{ width: '15rem' }} ><br />
                     <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: post.boardVO.id }}>
                     {post.listAttachFile.length===0?
@@ -125,7 +116,6 @@ export default function FavoritesList() {
                         </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
                       </Card.Body>
-                      
                   </Card><br />
                 </Col>
               );

@@ -80,10 +80,10 @@ export default function PostNormal() {
         <thead>
           <th><p></p></th>
           <th><p>게시글</p></th>
-          <th><p>👦🏻</p></th>
-          <th><p>✔</p></th>
-          <th><p>🤣</p></th>
-          <th><p>🕐</p></th>
+          <th><p>게시자</p></th>
+          <th><p>조회수</p></th>
+          <th><p>좋아요</p></th>
+          <th><p>작성일</p></th>
         </thead>
         <tbody>
           {postList?.map(post => (

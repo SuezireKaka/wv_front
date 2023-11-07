@@ -14,7 +14,6 @@ export default function Favorites({favorites, post}) {
     const [color, setColor] = useState(nowFavorites?"blue":"gray");
     const { auth } = useContext(AppContext);
 
-    console.log(post)
     const onPress = async ()=>{
       if(nowFavorites===false){
         setFavorites(true)

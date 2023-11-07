@@ -46,16 +46,15 @@ export default function MemberRoleList({ member }) {
   }
 
   return (
-    <div>
+    <div><td>
       {member?.roleList?.map((role) => (
-        <td colSpan={2}>
         <RadioGroup value={value} onChange={setValue} >
           <Radio value="reader" checked={role === "reader"}>Reader</Radio>
           <Radio value="writer" checked={role === "writer"}>Writer</Radio>
           <Radio value="manager" checked={role === "manager"}>Manager</Radio>
           <Radio value="admin" checked={role === "admin"} disabled>Admin</Radio>
-        </RadioGroup>  </td>  ))}<td>
-        <Button onClick={(e)=>reRole(e,value, member.id)} variant="outline-success">변경</Button></td>
+        </RadioGroup>    ))}</td>
+        <td><Button onClick={(e)=>reRole(e,value, member.id)} variant="outline-success">변경</Button></td>
     </div>
   )
 }

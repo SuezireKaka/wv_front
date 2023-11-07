@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Col } from 'react-bootstrap';
+import Loading from 'toolbox/Loading';
 
 const Books = ({ title }) => {
     const [query, setQuery] = useState('웹툰');
@@ -28,7 +29,7 @@ const Books = ({ title }) => {
     }
 
     if (documents === null) {
-        return <h1>로딩중........</h1>
+        return <Loading />
     }
 
     return (
