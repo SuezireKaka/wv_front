@@ -38,12 +38,12 @@ export default function PostMng() {
 		e.preventDefault();
 		if (!hasAllContents)
 			return;
-		
+		console.log(post.id);
+		console.log(parentId);
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		console.log(post?.boardVO?.id)
 		const bodyData = {
-			firstVal : {id:parentId, hTier:hTier-1},
-			secondVal : {id:post?.id, writer:writer, boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
+			writer:writer, id:post? post.id: parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id),
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
 		console.log(JSON.stringify(bodyData));
