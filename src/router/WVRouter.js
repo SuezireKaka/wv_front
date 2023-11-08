@@ -25,6 +25,7 @@ import Books from 'components/Books';
 import UserSeries from 'login/UserSeries';
 import LoginHandler from 'kakao-login/LoginHandler';
 import ReportDetails from 'components/ReportDetails';
+import ToolView from 'component-tool/ToolView';
 export default function WVRouter() {
     return (
         <Routes> 
@@ -40,6 +41,7 @@ export default function WVRouter() {
           <Route path={"/series/:seriesId/report/"} element={ <ReportMng/> } />
           <Route path={"/series/:seriesId/tool/"} element={ <ToolExplorer/> } />
           <Route path={"/series/:seriesId/tool/:idPath"} element={ <ToolExplorer/> } />
+          <Route path={"/series/:seriesId/tool/:idPath/view"} element={ <ToolView/> } />
           <Route path={"/report"} element={ <ReportList/> } />
           <Route path={"/ReportDetails/:ReportId"} element={ <ReportDetails/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />

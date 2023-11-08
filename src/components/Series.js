@@ -66,7 +66,8 @@ export default function Series() {
           {console.log(auth.roles)}
           {console.log(post)}
           {!auth.roles || auth.roles.length === 0?"":
-            <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(_, res) => {
+            <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(res) => {
+              console.log("그래서 좋다는 거지?", res)
               return <><Favorites favorites={res?.data} post={post}/></>
             }}/>}
             
@@ -78,7 +79,7 @@ export default function Series() {
       <tbody>
         <tr>
           <td rowSpan='4' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="auto"/></td>
-          <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}</td>
+          <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>
         </tr>
         <tr>
           {/**<td>2</td> */}
@@ -97,7 +98,7 @@ export default function Series() {
            : ""}
           {auth && auth.loginId
           ? <>
-            <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId , page:1, addr : ""}}>
+            <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId , page:1, toolId : "", addr : ""}}>
               <Button variant="outline-success">툴 목록</Button>
             </Link>
             <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work"}}>

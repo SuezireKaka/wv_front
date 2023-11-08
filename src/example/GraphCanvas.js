@@ -1,5 +1,5 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
-import RelRemocon from './RelRemocon';
+import Remocon from '../toolbox/Remocon';
 import UseGestureElement from './UseGestureElement';
 
 export default function GraphCanvas({
@@ -18,7 +18,6 @@ export default function GraphCanvas({
 
     const [nowFunc, setNowFunc] = useState(0)
     const [nowFuncName, setNowFuncName] = useState("선택")
-    const [remainCnt, setRemainCnt] = useState(1)
     // 위에는 id랑, 아래는 이름이랑 엮기 - 복붙시 위에만 증가
     const [realSummonedCnt, setRealSummonedCnt] = useState(0)
     const [summonedCnt, setSummonedCnt] = useState(0)
@@ -28,10 +27,9 @@ export default function GraphCanvas({
     // 재귀함수로 삭제할 때 이미 삭제할 것으로 정해진 애들을 기억해서 무시할 수 있도록 하는 용도
     const [memo, setMemo] = useState([])
 
-    function onSelect(index, name, clickCnt) {
+    function onSelect(index, name) {
         setNowFunc(index)
         setNowFuncName(name)
-        setRemainCnt(clickCnt)
         setSelectedId()
     }
 
@@ -264,7 +262,7 @@ export default function GraphCanvas({
     console.log("지금 선택된 아이디 나와!", nowVertices, nowEdges)
 
     return <div>
-        <RelRemocon index={nowFunc} remain={remainCnt} onSelect={onSelect} />
+        <Remocon index={nowFunc} type="rel" onSelect={onSelect} />
         <br />
         {selectedId
             ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
