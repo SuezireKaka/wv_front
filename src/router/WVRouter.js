@@ -30,11 +30,9 @@ export default function WVRouter() {
         <Routes> 
           <Route path="/" element={ <Home /> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
-          
           <Route path={"/board/0000"} element={ <PostNormal/> } />
           <Route path={"/board/0001"} element={ <PostNormal/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
-
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
           <Route path={"/series/mng"} element={ <PostMng/> } />
@@ -44,8 +42,6 @@ export default function WVRouter() {
           <Route path={"/series/:seriesId/tool/:idPath"} element={ <ToolExplorer/> } />
           <Route path={"/report"} element={ <ReportList/> } />
           <Route path={"/ReportDetails/:ReportId"} element={ <ReportDetails/> } />
-
-          
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/register"} element={ <Register/> } />
           <Route path={"/favoritesList"} element={ <FavoritesList/> } />

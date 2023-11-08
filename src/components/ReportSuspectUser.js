@@ -1,7 +1,7 @@
 import React from 'react'
 import { displayDate } from 'toolbox/DateDisplayer'
 import { Table } from 'react-bootstrap'
-import MemberAuthRoleList from 'login/MemberAuthRoleList'
+
 import MemberStatusList from 'login/MemberStatusList'
 import MemberRoleList from 'login/MemberRoleList'
 import ThumbnailList from 'atom/ThumbnailList'
