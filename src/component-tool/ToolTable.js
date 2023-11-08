@@ -8,7 +8,10 @@ import { Pagination } from "react-bootstrap";
 import { displayPagination } from "toolbox/Pagination";
 import Remocon from "toolbox/Remocon";
 
-export default function ToolTable({ data, state, setToolListUri = f => f, buildUrl = f => f, setData = f => f}) {
+export default function ToolTable({
+    data, state,
+    setToolListUri = f => f, buildUrl = f => f,
+    setData = f => f, manageToolSkin = f => f}) {
     console.log("그래서 뭘 테이블로 만들면 돼?", data)
 
     const address = `Tool:/${state?.addr}`
@@ -18,21 +21,22 @@ export default function ToolTable({ data, state, setToolListUri = f => f, buildU
 
     const [selectedId, setSelectedId] = useState()
 
-    const [editingIndex, setEditingIndex] = useState(-1)
-
-    function onDetermine() {
+    function onDetermine(index, newTool) {
         let newData = [...data.firstVal]
-        newData[editingIndex].isEditing = false
+        newData[index] = newTool ? {...newTool, isEditing : false} : {...newData[index], isEditing : false}
         setNowFunc(1)
         setNowFuncName("선택")
+        setData({ ...data, firstVal: newData })
     }
 
-    function onManage(tool) {
-        onDetermine()
+    function onManage(index, newTool) {
+        console.log("저장하려는 데이터는?", {...newTool, isEditing : false})
+        onDetermine(index, newTool)
+        manageToolSkin(newTool)
     }
 
-    function onCancel() {
-        onDetermine()
+    function onCancel(index) {
+        onDetermine(index)
     }
 
     function onSelect(index, name) {
@@ -44,7 +48,9 @@ export default function ToolTable({ data, state, setToolListUri = f => f, buildU
     function onExecute(tool, index) {
         switch (nowFuncName) {
             case "수정":
-                setEditingIndex(index === editingIndex ? -1 : index)
+                let newData = [...data.firstVal]
+                newData[index].isEditing = true
+                setData({ ...data, firstVal: newData })
                 break
             default:
         }
@@ -70,12 +76,14 @@ export default function ToolTable({ data, state, setToolListUri = f => f, buildU
             <tr><td colSpan={4} style={{ ...TABLE_STYLE, textAlign: "center" }}>
                 <Remocon index={nowFunc} type="xpl" onSelect={onSelect} />
             </td></tr>
-            <tr><td colSpan={4} style={{ ...TABLE_STYLE, alignItems: "center"/* 왜 작동 안 하는 ㅡ.ㅡ */ }}>
-                <Pagination>
-                    {pagenation?.lastPage >= 2
-                        ? <>{displayPagination(pagenation, state, setToolListUri, buildUrl)}<br /></>
-                        : ""}
-                </Pagination>
+            <tr><td colSpan={4} style={{ ...TABLE_STYLE }}>
+                <div style={{ display: "inline-block" }}>
+                    <Pagination>
+                        {pagenation?.lastPage >= 2
+                            ? <>{displayPagination(pagenation, state, setToolListUri, buildUrl)}<br /></>
+                            : ""}
+                    </Pagination>
+                </div>
             </td></tr>
             <tr style={{ ...TABLE_STYLE, textAlign: "center", }}>
                 <th>이름</th>
@@ -86,18 +94,21 @@ export default function ToolTable({ data, state, setToolListUri = f => f, buildU
         </thead>
         {toolset && toolset.length > 0
             ? toolset.map((tool, index) =>
-                index === editingIndex
+                tool.isEditing
                     ? <ToolManager key={index}
                         tool={tool}
                         state={state}
-                        onManage={onManage}
-                        onCancel={onCancel}
-                        onLink={setToolListUri}
+                        onManage={(newTool) => onManage(index, newTool)}
+                        onCancel={() => onCancel()}
                     />
                     : <ToolSkin key={index}
                         tool={tool}
                         state={state}
                         onClick={tool => onExecute(tool, index)}
+                        onLink={() => {
+                            state.addr = tool.name;
+                            setToolListUri(buildUrl())
+                        }}
                     />
             ) : <tr style={{ ...TABLE_STYLE, textAlign: "center" }}>
                 <td colSpan={4}>{"(이 위치에는 선택 가능한 툴이 존재하지 않습니다.)"}</td>

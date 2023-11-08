@@ -1,7 +1,7 @@
 import { displayDate } from "toolbox/DateDisplayer";
 import { Link } from "react-router-dom";
 
-export default function ToolSkin({ tool, state, onClick = f => f }) {
+export default function ToolSkin({ tool, state, onClick = f => f, onLink = f => f }) {
     const TABLE_STYLE = {
         width: "100%",
         border: "1px solid",
@@ -16,7 +16,7 @@ export default function ToolSkin({ tool, state, onClick = f => f }) {
             <Link to={`/series/${state.seriesId}/tool/${tool.id}`}
                 state={{ seriesId: state.seriesId, page: 1, toolId: tool.id, addr: state.addr + tool.name + "/" }}
             >
-                <button>하위 툴</button>
+                <button onClick={onLink}>하위 툴</button>
             </Link>
             {" : "}
             <Link to={`/series/${state.seriesId}/tool/${tool.id}/view`}
