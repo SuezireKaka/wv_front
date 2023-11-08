@@ -6,15 +6,10 @@ import AttachFile from './AttachFile';
 
 
 export default function AttachedFileList({ writer, listAttach, setListAttach=f=>f, multiple = true }) {
-
-
   const thumbnailRequestTarget = ["video", "image"];
-  //검사 장치
   const [contentFilter, setContentFilter] = useState([]);
-  //지금까지 선택한 파일 기억장치. 업로드 용도
   const [업로드파일기억장치, set업로드파일기억장치] = useState([]);
   const [imgDtoList, setImgDtoList] = useState([]);
-
   const [imgSrc, setImgSrc] = useState([]);
   const [attachedFileUrls, setAttachedFileUrls] = useState([]);
 
@@ -32,13 +27,11 @@ export default function AttachedFileList({ writer, listAttach, setListAttach=f=>
     }
   }
 
-  //지정된 파일들을 axios로 Server로 올리기하면 썸네일로 첨부파일들을 목록으로 보여준다.
   const handleAttach = (e) => {
     e.preventDefault();
     if (업로드파일기억장치.length === 0)
       return;
     const formData = new FormData();
-    // 동일 key에 여러개 할당 가능?
     console.log("얼마나 실행되나=====111====")
     Array.from(업로드파일기억장치).forEach((file) => {
       formData.append("attachFiles", file);
@@ -53,22 +46,21 @@ export default function AttachedFileList({ writer, listAttach, setListAttach=f=>
         const listDto = res.data;
         console.log("얼마나 실행되나=====222====")
         setImgDtoList(listDto);
-        setListAttach([...listAttach, ...listDto]); //여기서 에러 발생!!!!
-        //setListAttach([...listAttach, ...imgDtoList]); 
+        setListAttach([...listAttach, ...listDto]);
       }).catch((error) => {
         console.log(error);
       }).finally(()=>{
         set업로드파일기억장치([]);
       });
-    //      setTimeout(()=>{setImgSrc([...imgSrc, ...collection]);}, 100);
     console.log("handleAttach Done");
   }
 
   return <Form.Group className="mb-3" >
-    <Form.Label htmlFor="username">첨부파일</Form.Label>
-    <AttachFile onFileSelect={onFileSelect} />
-    <Button variant="primary" onClick={handleAttach}>
+    <Form.Label htmlFor="username"></Form.Label>
+    <table style={{ display: "inline-block" }}><tr><td>
+    <AttachFile onFileSelect={onFileSelect} /></td><td>
+    <Button variant="outline-warning" onClick={handleAttach}>
       첨부
-    </Button>
+    </Button></td></tr></table>
   </Form.Group>
 }

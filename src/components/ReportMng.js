@@ -92,11 +92,12 @@ export default function ReportMng() {
                 </CheckboxGroup>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>신고사유를 구체적으로 적어주세요</Form.Label>
+                {/*<Form.Label>신고사유를 구체적으로 적어주세요</Form.Label>*/}
                 <Form.Control as="textarea"
                     style={{ resize: "none" }}
                     rows={6}
 				    value={cause}
+                    placeholder="신고사유를 구체적으로 적어주세요"
                     onChange={(e) => setCause(e.target.value)}
                 />
             </Form.Group>

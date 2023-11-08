@@ -13,7 +13,7 @@ const getSystemUse = async (uri, setter = f => f) => {
 
 export default function App() {
   const {
-    cpCodeList, setCpCodeList = f => f,
+    cpCodeList, setCpCodeList,
     rptCodeList, setRptCodeList, 
     relationRemocon, setRelationRemocon,
     explorerRemocon, setExplorerRemocon} = useContext(AppContext);

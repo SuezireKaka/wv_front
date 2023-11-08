@@ -35,12 +35,12 @@ export default function ReportSuspectPost({report, data}) {
 
       </tr>
       <tr>
-      <td>내용:</td>
+      <td>내용</td>
       <td colSpan="5" width="70%">{data?.content?.substring(0, 30)}</td>
       
       </tr>
       <tr>
-      <td>첨부:</td>
+      <td>첨부</td>
       <td colSpan="5" width="70%"><ThumbnailList imgDtoList={report.listAttachFile} /></td>
       
       </tr>
