@@ -91,7 +91,7 @@ export default function FavoritesList() {
                     </Link>
                       <Card.Body>
                         <Card.Title>{post?.title}
-                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(res) => {
                           return <><Favorites favorites={res?.data} post={post}/></>}}/>
                         </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}
@@ -111,7 +111,7 @@ export default function FavoritesList() {
                     </Link>
                       <Card.Body>
                         <Card.Title>{post?.title}
-                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(_, res) => {
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(res) => {
                           return <><Favorites favorites={res?.data} post={post}/></>}}/>
                         </Card.Title>
                         {/*<Card.Text>{post?.writer?.nick}</Card.Text> */}

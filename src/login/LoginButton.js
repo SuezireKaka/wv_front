@@ -32,7 +32,7 @@ export default function LoginButton() {
     navigate("/")
 
   }
-  function renderSuccess(_, res) {
+  function renderSuccess(res) {
     console.log("=======boardList=========");
     console.log(res.data);
     console.log(auth.accountType);

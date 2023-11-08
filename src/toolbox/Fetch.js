@@ -43,7 +43,7 @@ function AxiosAuth({uri, auth, renderSuccess = f=>f,
     if (loading) return loadingFallBack;
     if (error) return renderError({error});
     if (data) {
-        return renderSuccess(auth, data);
+        return renderSuccess(data);
     }
 }
 

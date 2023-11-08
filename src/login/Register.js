@@ -9,7 +9,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from 'react-bootstrap';
 
 const Register = () => {
-  const { codeList } = useContext(AppContext);
+  const { cpCodeList } = useContext(AppContext);
   const [name, setName] = useState("");
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState("");
@@ -251,7 +251,7 @@ const Register = () => {
         </InputGroup>
         <br />
 
-        {codeList?.map((cpType) => (
+        {cpCodeList?.map((cpType) => (
           <>
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon2">

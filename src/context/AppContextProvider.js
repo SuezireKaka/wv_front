@@ -6,16 +6,18 @@ export const AppContextProvider = ({ children }) => {
     let user = window.sessionStorage.getItem("nowUser");
     console.log(user ? JSON.parse(user) : "야");
     const [auth, setAuth] = useState(user ? JSON.parse(user) : {nick : "", roles : []});
-    const [codeList, setCodeList] = useState();
+    const [cpCodeList, setCpCodeList] = useState();
     const [rptCodeList, setRptCodeList] = useState();
     const [relationRemocon, setRelationRemocon] = useState();
+    const [explorerRemocon, setExplorerRemocon] = useState();
     
     return (
         <AppContext.Provider value={{
             auth, setAuth,
-            codeList, setCodeList,
+            cpCodeList, setCpCodeList,
             rptCodeList, setRptCodeList,
-            relationRemocon, setRelationRemocon
+            relationRemocon, setRelationRemocon,
+            explorerRemocon, setExplorerRemocon
         }}>
             {children}
         </AppContext.Provider> 
