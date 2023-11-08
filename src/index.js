@@ -10,12 +10,12 @@ import WVNav from 'layout/WVNav';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
-    <AppContextProvider>
     <Router>
+    <AppContextProvider>
       <WVNav />
       <App />
-    </Router>
     </AppContextProvider>
+    </Router>
 
 );
 

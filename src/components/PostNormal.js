@@ -19,10 +19,10 @@ export default function PostNormal() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
-
+  console.log(state)
   function buildUrl(step) {
-    if (state.search)
-      return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;
+    if (state?.search)
+      return `/work/anonymous/search/${state?.boardId}/${state?.search}/${state.page}`;
     else
       return `/work/anonymous/listAllPost/${state.boardId}/${state.page}`;//${state.boardId}
   }

@@ -105,7 +105,6 @@ export default function PostDetails() {
       } catch (err) {
         console.log('Delete Failed', err);
       } finally {
-        // navigate state 전달
         console.log('Delete state', state);
         navigate(-1, { state: state });
       }
@@ -132,7 +131,9 @@ export default function PostDetails() {
       </ListGroup>
       {/* <PostListCanvas state={{ seriesId: state.seriesId, post, state, parentId: state.parentId, boardId: state.boardId }} />*/}
 
-      {(state?.boardId === "0001" || state?.boardId === "0000")
+      {state?.boardId === "0000" ?
+      <Link key={state.parentId} to={`/`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
+      : (state?.boardId === "0001" )
         ? <Link key={state.parentId} to={`/board/${state.boardId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
         : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
       &nbsp;
