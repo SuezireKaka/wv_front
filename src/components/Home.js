@@ -20,6 +20,7 @@ import HomePlus from "./HomePlus";
 export default function Home() {
   const [index, setIndex] = useState(0);
   const seriesUri = `/work/anonymous/listAllSeries/0002/1`;
+  const seriesUri2 = `/work/anonymous/listAllSeries/0003/1`;
   const postUri = `/work/anonymous/listAllPost/0000/1`;
   const txtSearch = useRef();
 
@@ -37,7 +38,7 @@ export default function Home() {
             <Carousel.Item interval={1500}>
               <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: "0002" }}>
             {post.listAttachFile?.length === 0 ?
-              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`} width="500" height="700" rounded />
+              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="500" height="700" rounded />
               : <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="500" y="700" />}
               </Link>
           </Carousel.Item>
@@ -82,7 +83,7 @@ export default function Home() {
         <td width="550px" height="700px" >
 
           <Fetch uri={postUri} renderSuccess={renderSuccessPost} />
-          <tr height="350px" ><HomePlus/></tr>
+          <tr width="550px" height="350px" ><HomePlus /></tr>
         </td>
 
         

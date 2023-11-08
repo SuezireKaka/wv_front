@@ -96,7 +96,7 @@ export default function ShowcaseList() {
     <table style={{ margin: "auto", position: "static" }} ><td>
       {console.log(auth.roles[0])}
       {!auth.roles || auth.roles.length === 0  ? "" :
-        <Link style={{ marginLeft: "auto", position: "relative" }} to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
+        <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
           <Button variant="outline-primary">신규</Button>
         </Link>}
         </td><td>

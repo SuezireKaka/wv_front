@@ -6,6 +6,8 @@ import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
 import AttachedFileList from 'atom/AttachedFileList';
 import ThumbnailList from 'atom/ThumbnailList';
+import CheckboxGroup from "toolbox/CheckboxGroup";
+import Checkbox from "toolbox/Checkbox";
 
 export default function PostMng() {
 	const location = useLocation();
@@ -36,12 +38,12 @@ export default function PostMng() {
 		e.preventDefault();
 		if (!hasAllContents)
 			return;
-		
+		console.log(post.id);
+		console.log(parentId);
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		console.log(post?.boardVO?.id)
 		const bodyData = {
-			firstVal : {id:parentId, hTier:hTier-1},
-			secondVal : {id:post?.id, writer:writer, boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
+			writer:writer, id:post? post.id: parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id),
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
 		};
 		console.log(JSON.stringify(bodyData));
@@ -89,30 +91,42 @@ export default function PostMng() {
 
 	return <Form>
 		<h3>글쓰기</h3>
-		<hr />
 		<Form.Group className="mb-3" >
-			<Form.Label >글제목:</Form.Label>
+			{/*<Form.Label >글제목</Form.Label>*/}
 			<Form.Control
 				type="text"
 				value={title}
 				id="title"
+				placeholder="글제목"
 				onChange={(e) => setTitle(e.target.value)}
 				required
 			/>
 		</Form.Group>
-
 		<Form.Group className="mb-3" >
-			<Form.Label >글내용:</Form.Label>
+			{/*<Form.Label >글내용</Form.Label>*/}
 			<Form.Control
 				as="textarea"
 				value={content}
 				rows="5"
 				id="content"
+				placeholder="글내용"
 				onChange={(e) => setContent(e.target.value)}
 				required
 			/>
 		</Form.Group>
+		<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>장르</Form.Label>
+                <br />
+                <CheckboxGroup>
+                    {/*rptCodeList?.map(cause => <>
+                        <Checkbox value={cause.rptType}>
+                            {cause.rptType}
+                        </Checkbox>
+					</>)*/}
+                </CheckboxGroup>
+        </Form.Group>
 		<ThumbnailList imgDtoList={listAttach}/>
+
 		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
 		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents} >
 			반영
@@ -120,6 +134,7 @@ export default function PostMng() {
 		<Button variant="outline-dark" onClick={handleDelete}>
 			삭제
 		</Button>
+		
 	</Form>
 }
 

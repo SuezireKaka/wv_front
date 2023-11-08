@@ -105,7 +105,7 @@ export default function PostNormal() {
         <tfoot>
         </tfoot>
       </Table>
-      <div style={{ Align: "center", display: "inline-block" }}>
+      <div style={{ display: "inline-block" }}>
         <Pagination>
           {pagenation?.lastPage >= 2 ? displayPagination(pagenation) : ""}
         </Pagination>
