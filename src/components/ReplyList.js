@@ -6,16 +6,18 @@ import { displayDate } from "toolbox/DateDisplayer";
 import { useLocation } from 'react-router';
 import { Button } from 'react-bootstrap';
 import LoginTypeIcon from 'toolbox/LoginTypeIcon';
+import { useNavigate } from "react-router";
 
 export default function ReplyList({parent}) {
     const { auth } = useContext(AppContext);
     const location = useLocation();
     const state = location.state;
+    console.log(parent);
     const [justCreatedReplyList, setJustCreatedReplyList] = useState([]);
     const [openAddReplay] = useState(new Map());
     const [replayOnReply] = useState(new Map());
     const [renderCnt, setRenderCnt] = useState(0);
-
+    const navigate = useNavigate();
     function onInputReplyContent(e, replyId) {
         const content = e.target.value;
         replayOnReply.set(replyId, content);
@@ -26,6 +28,25 @@ export default function ReplyList({parent}) {
         openAddReplay.set(replyId, 1);
         setRenderCnt(renderCnt + 1);
     }
+ 
+    const handleDelete = async (e, reply) => {
+        e.preventDefault();
+  
+        try {
+          const data = await axios.delete(`/work/${reply.id}`,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                "x-auth-token": `Bearer ${auth.accessToken}`
+              }
+            });
+        } catch (err) {
+          console.log('Delete Failed', err);
+        } finally {
+          console.log('Delete state', state);
+          navigate(0, { state: state });
+        }
+      }
 
 	const mngReply = async (e, parentId, isEditing) => {
         // 목적: 재 조회 방지. 성능
@@ -71,10 +92,11 @@ export default function ReplyList({parent}) {
     justCreatedReplyList.forEach((newReply)=>{appendJustCreatedReply(newReply, parent)})
 
     return <>
-            {auth.nick ? <>
+            {auth.nick ? <>{console.log(parent)}
             <Button variant="outline-primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
             </Button>
+
             </> :  ""}
             {openAddReplay.has(parent.id) ? 
             <ReplyNew auth={auth} reply={parent} state= {{seriesId:state.seriesId, parent, state, parentId : state.parentId}} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 
@@ -85,6 +107,7 @@ export default function ReplyList({parent}) {
                 <span>{reply.content}</span>
                 &nbsp;&nbsp; <span>{displayDate(reply.regDt, reply.uptDt)} </span>
                 &nbsp;&nbsp; <span><LoginTypeIcon loginType={reply?.writer?.accountType}/>{!reply.writer?.nick ?reply.writer?.kakaoNick  :reply.writer?.nick} </span>
+                <Button variant="outline-dark" onClick={(e)=>handleDelete(e, reply)}>삭제</Button>{console.log(reply)}
                 <ReplyList parent={reply}/>
             </li>
             })}
