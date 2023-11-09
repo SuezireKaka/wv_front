@@ -117,7 +117,10 @@ export default function PostDetails() {
       <ListGroup as="ul">
         <ListGroup.Item variant="light" as="li">
           {post.content}</ListGroup.Item>
-        <ListGroup.Item as="li" disabled><OriginalViewList imgDtoList={post?.listAttachFile} x="70%" y="70%" /></ListGroup.Item>
+          <ListGroup.Item as="li" disabled>
+          {(state?.boardId === "0000"||state?.boardId === "0001") ? <ThumbnailList imgDtoList={post?.listAttachFile}/>:
+        <OriginalViewList imgDtoList={post?.listAttachFile} x="70%" y="70%" />}
+        </ListGroup.Item>
         <ListGroup.Item>
           <LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}
           ✔<span>{post.readCount}</span>

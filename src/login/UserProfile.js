@@ -17,6 +17,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 export default function UserProfile() {
   const { auth, setAuth } = useContext(AppContext);
+
   const location = useLocation();
   const state = location.state;
   const response = location.state?.response;
@@ -27,7 +28,8 @@ export default function UserProfile() {
   const [introduction, setIntroduction] = useState("");
   const [birthDate, setBirthDate] = useState(response?.birthDate.substring(0, 10));
   const [sex, setSex] = useState(response?.sex);
-  const { codeList } = useContext(AppContext);
+  const { cpCodeList } = useContext(AppContext);
+  console.log(cpCodeList);
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState(state?.loginId);
   const [idChecked, setIdChecked] = useState(false);
@@ -187,16 +189,16 @@ export default function UserProfile() {
     }
   }
   console.log("지금 우리가 뭘 던지려고 하는 거야?", listCP);
-  return (<Form>
+  return (<Form controlId={loginId}>
     <h4>프로필</h4>
-    <Form>
+
       <FloatingLabel
         controlId="floatingInput"
         label="이름"
         className="mb-3"
       ><Form.Control
           type="text"
-          id="name"
+          controlId="name"
           onChange={(e) => setName(e.target.value)}
           value={name}
           onBlur={onBlur}
@@ -207,7 +209,7 @@ export default function UserProfile() {
         className="mb-3"
       ><Form.Control
           type="text"
-          id="nick"
+          controlId={nick}
           placeholder="닉네임을 정해주세요"
           value={nick}
           onChange={(e) => setNick(e.target.value)}
@@ -226,7 +228,7 @@ export default function UserProfile() {
         className="mb-3"
       ><Form.Control
           type="text"
-          id="loginId"
+          id={loginId}
           value={loginId}
           disabled
         /></FloatingLabel>
@@ -314,7 +316,8 @@ export default function UserProfile() {
             />}
         </InputGroup.Text>
       </InputGroup>
-      {codeList?.map((code) => {
+      {console.log(cpCodeList)}
+      {cpCodeList?.map((code) => {
         let rcpVal = Array(...listCP.keys()).includes(code.codeVal) ? listCP.get(code.codeVal) : ""
         return <>{console.log(Array(...listCP.keys()))}{console.log(code)}{console.log(rcpVal)}
           <FloatingLabel
@@ -360,7 +363,7 @@ export default function UserProfile() {
             onChange={(e) => setIntroduction(e.target.value)}
           />{" "}
         </InputGroup>
-    </Form>
+
     <Button variant="outline-primary"
       onClick={handleSubmit}
       disabled={

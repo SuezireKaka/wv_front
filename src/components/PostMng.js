@@ -8,6 +8,7 @@ import AttachedFileList from 'atom/AttachedFileList';
 import ThumbnailList from 'atom/ThumbnailList';
 import CheckboxGroup from "toolbox/CheckboxGroup";
 import Checkbox from "toolbox/Checkbox";
+import PostGenreList from './PostGenreList';
 
 export default function PostMng() {
 	const location = useLocation();
@@ -24,7 +25,7 @@ export default function PostMng() {
 	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
 	let hTier;
-	
+	const [genreTypes, setGenreTypes] = useState([]);
 
 	console.log("너가 첨부파일 갖고 있다며?", listAttach)
 
@@ -46,7 +47,11 @@ export default function PostMng() {
 		console.log(post?.boardVO?.id)
 		const bodyData = {
 			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
-			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach
+			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach,
+            genreTypesList : genreTypes.map(genre => {
+                return {genre : genre}
+            }),
+			
 		};
 		console.log(JSON.stringify(bodyData));
 
@@ -104,6 +109,8 @@ export default function PostMng() {
 				required
 			/>
 		</Form.Group>
+		<PostGenreList genreTypes={genreTypes} setGenreTypes={setGenreTypes}/>
+		{genreTypes}
 		<Form.Group className="mb-3" >
 			{/*<Form.Label >글내용</Form.Label>*/}
 			<Form.Control
@@ -116,17 +123,7 @@ export default function PostMng() {
 				required
 			/>
 		</Form.Group>
-		<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>장르</Form.Label>
-                <br />
-                <CheckboxGroup>
-                    {/*rptCodeList?.map(cause => <>
-                        <Checkbox value={cause.rptType}>
-                            {cause.rptType}
-                        </Checkbox>
-					</>)*/}
-                </CheckboxGroup>
-        </Form.Group>
+		
 		<ThumbnailList imgDtoList={listAttach}/>
 
 		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>

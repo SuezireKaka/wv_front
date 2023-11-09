@@ -59,9 +59,9 @@ export default function ReplyList({parent}) {
         console.log(writer);
 
 		const bodyData = {
-            firstVal:{id:parentId, hTier:hTier-1},
-	        secondVal:{id:isEditing?null:null, writer:writer, boardVO:{id:parent?.boardVO.id},
-            title:"", content:replayOnReply.get(parentId), hTier}
+            id:parentId+"----", hTier:hTier-1,
+	         writer:writer, boardVO:{id:parent?.boardVO.id},
+            title:"", content:replayOnReply.get(parentId), hTier
         };
 		console.log(JSON.stringify(bodyData));
 
