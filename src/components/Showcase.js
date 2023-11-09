@@ -67,7 +67,7 @@ export default function ShowcaseList() {
         console.error('fetching error');
       }
     };
-  
+
     //observer 콜백함수
     const onIntersect = (entries, observer) => {
       entries.forEach((entry) => {

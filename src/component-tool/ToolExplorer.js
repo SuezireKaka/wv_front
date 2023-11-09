@@ -1,5 +1,5 @@
 import { useLocation, useParams } from "react-router";
-import { useContext, useState, useEffect, useCallback } from "react";
+import { useContext, useState, useEffect, useMemo } from "react";
 import AppContext from "context/AppContextProvider";
 import ToolTable from "./ToolTable";
 import axios from 'api/axios';
@@ -18,7 +18,7 @@ export default function ToolExplorer() {
     const [nowData, setNowData] = useState()
 
     function buildUrl() {
-        return "http://localhost:8080/tool/listAllNextTools/path" + state?.toolId + "/" + state?.page
+        return "http://localhost:8080/tool/listAllNextTools/" + state?.seriesId + "/path" + state?.toolId + "/" + state?.page
     }
 
     function manageToolSkin(toolSkin) {
@@ -32,9 +32,10 @@ export default function ToolExplorer() {
                 'Content-Type': 'application/json',
                 "x-auth-token": `Bearer ${auth?.accessToken}`
             }
-        }).catch((error) => { console.log(error) })
+        }).then(res => console.log("뭐라고 왔어?", res)).catch((error) => { console.log(error) })
+        
     }
-
+    
     useEffect(() => {
         console.log("여기는 언제 들어가? 1111111111111111111111")
         axios.get(buildUrl(), {
@@ -46,7 +47,7 @@ export default function ToolExplorer() {
     }, [])
 
 
-    useEffect(() => {
+    useMemo(() => {
         console.log("여기는 언제 들어가? 2222222222222222222222")
         axios.get(buildUrl(),
             {

@@ -54,6 +54,8 @@ export default function Series() {
   function SeriesDetailsSuccess(post){
     //function SeriesDetailsSuccess(시리즈) <<요부분은 시리즈 대신 포스트로 해서 수정하기 용이하게 함
 
+    console.log("시리즈 보여줘!", post)
+
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
     <Table responsive variant="white">
@@ -94,7 +96,7 @@ export default function Series() {
            : ""}
           {auth && auth.loginId
           ? <>
-            <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId , page:1, toolId : "", addr : ""}}>
+            <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId, writer : post.writer, page:1, toolId : "", addr : ""}}>
               <Button variant="outline-success">툴 목록</Button>
             </Link>
             <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work"}}>

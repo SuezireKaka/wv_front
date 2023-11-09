@@ -12,6 +12,8 @@ export default function ToolTable({
     data, state, param,
     setToolListUri = f => f, buildUrl = f => f,
     setData = f => f, manageToolSkin = f => f }) {
+
+    console.log("상태 좀 보여줘", state)
     console.log("그래서 뭘 테이블로 만들면 돼?", data)
 
     const address = `Tool:/${state?.addr}`
@@ -37,6 +39,7 @@ export default function ToolTable({
     function onDetermine(index, newTool) {
         let newData = [...data.firstVal]
         newData[index] = newTool ? { ...newTool, isEditing: false } : { ...newData[index], isEditing: false }
+        console.log("네 결심을 보여줘!", newData)
         setNowFunc(1)
         setNowFuncName("선택")
         setData({ ...data, firstVal: newData })
@@ -45,21 +48,21 @@ export default function ToolTable({
     function onManage(index, newTool) {
         console.log("저장하려는 데이터는?", { ...newTool, isEditing: false })
         onDetermine(index, newTool)
-        if (checkQuality(newTool, data)) {
+        if (checkQuality(newTool)) {
             manageToolSkin(newTool)
+        }
+        else {
+            alert("툴 이름이 없습니다!")
         }
     }
 
     function checkQuality(toolSkin) {
-        return toolSkin?.name && testUniqueName(param?.idPath ? param.idPath : "", toolSkin?.name)
-    }
-
-    function testUniqueName(id, name) {
-        
+        return toolSkin?.name
     }
 
     function onCancel(index) {
         onDetermine(index)
+        
     }
 
     function onSelect(index, name) {
