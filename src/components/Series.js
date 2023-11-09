@@ -33,7 +33,7 @@ export default function Series() {
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
   const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
   const favoriteCheckUri = `/work/isFavorites/${state.seriesId}`;
-  const {isSeries} = useState(true);
+  const [isSeries, setIsSeries] = useState(true);
 	const handleDelete = async (e) => {
 		e.preventDefault();
 
@@ -53,7 +53,7 @@ export default function Series() {
 
   function SeriesDetailsSuccess(post){
     //function SeriesDetailsSuccess(시리즈) <<요부분은 시리즈 대신 포스트로 해서 수정하기 용이하게 함
-
+    console.log(post)
     {/* 이 부분이 첫 번째와 세 번째에 실행됨 */}
     return <>
     <Table responsive variant="white">
@@ -74,7 +74,7 @@ export default function Series() {
       </thead>
       <tbody>
         <tr>
-          <td rowSpan='4' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="auto"/></td>
+          <td rowSpan='5' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="auto"/></td>
           <td><LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>
         </tr>
         <tr>
@@ -82,7 +82,11 @@ export default function Series() {
           <td rowSpan='2'>설명:{post.content}</td>
         </tr>
         <tr>
+
         </tr>
+        <tr>
+            <td>{post?.genreList?.map((genre)=><>#{genre.genre} </>)}</td>
+          </tr>
         <tr>
           <td>
             

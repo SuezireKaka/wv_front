@@ -36,7 +36,8 @@ export default function ShowcaseList() {
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
     const [listAttachFile] =useState([])
     const [byKeyWord, setByKeyWord] = useState(false);
-  
+    const [isSeries, setIsSeries] = useState(true);
+
     const onSearch = (e) => {
       const search = txtSearch.current.value;
       window.scrollTo({ top: 0 });
@@ -115,7 +116,7 @@ export default function ShowcaseList() {
       <GenreButton />
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
-        <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile}}}>
+        <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile},isSeries:isSeries}}>
           <Button variant="outline-primary">신규</Button>
         </Link>}
         </td><td>
