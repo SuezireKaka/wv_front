@@ -36,15 +36,17 @@ export default function PostMng() {
 	const handleSubmit = async (e) => {
 		
 		e.preventDefault();
+		console.log(parentId+"----")
+		console.log(post);
 		if (!hasAllContents)
 			return;
-		console.log(post.id);
+		console.log(post?.id);
 		console.log(parentId);
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		console.log(post?.boardVO?.id)
 		const bodyData = {
-			writer:writer, id:post? post.id: parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id),
-			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach}
+			writer:writer, id:post? post?.id: parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
+			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach
 		};
 		console.log(JSON.stringify(bodyData));
 
@@ -76,7 +78,7 @@ export default function PostMng() {
 		e.preventDefault();
 
 		try {
-			const data = await axios.delete(`/work/${post.id}`,
+			const data = await axios.delete(`/work/${post?.id}`,
 				{headers: {
 					'Content-Type': 'application/json',
 					"x-auth-token": `Bearer ${auth.accessToken}`}});
