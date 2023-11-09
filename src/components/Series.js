@@ -33,7 +33,7 @@ export default function Series() {
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
   const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
   const favoriteCheckUri = `/work/isFavorites/${state.seriesId}`;
-  const isSeries =useState(true);
+  const {isSeries} = useState(true);
 	const handleDelete = async (e) => {
 		e.preventDefault();
 
@@ -87,7 +87,7 @@ export default function Series() {
           <td>
             
           {(post.writer ? post.writer.id === auth.userId : false) || (auth.roles[0]==="admin"||auth.roles[0]==="manager" ) && state?.isReport ?<>
-          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId, isSeries}}>
+          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId, isSeries:isSeries}}>
              <Button variant="outline-info">수정</Button>
            </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button>
           </>
