@@ -2,7 +2,7 @@ import { useContext } from "react"
 import AppContext from "context/AppContextProvider";
 
 
-export default function Remocon({ index = 0, type = "", writer, onSelect = f => f }) {
+export default function Remocon({ index = 0, type = "", writer, onSelect = f => f, immediate = f => f }) {
     const { auth, relationRemocon, explorerRemocon } = useContext(AppContext);
     const selectedRemocon =
         type === "rel"
@@ -26,13 +26,34 @@ export default function Remocon({ index = 0, type = "", writer, onSelect = f => 
                 ? remoteKeyList[index].info
                 : "")
             }</p>
-        {remoteKeyList?.map(
-            (rmt, index) => <button onClick={() => onSelect(index, rmt.name, rmt.clickCnt)}>{rmt.name}</button>
+        {remoteKeyList?.filter(key => remoconAuth(auth, writer, key.auth)).map(
+            (rmt, index) => <button onClick={
+                () => rmt.isImmediate
+                ? immediate(index, rmt.name)
+                : onSelect(index, rmt.name)
+            }>{rmt.name}</button>
         )}
     </div>
 }
 
 function remoconAuth(auth, writer, authCode) {
+    let andArray = authCode.split(" and ")
+    let orArrayOfArray = andArray.map(clause => clause.split(" or "))
+    console.log("논리식 분해중......", orArrayOfArray)
+    // reduce 안 reduce 실화?
+    let result = orArrayOfArray.reduce(
+        (lemma, nextArray) => {
+            let bool = nextArray.reduce(
+                (lemma, nextAuth) => lemma || codeToAuth(auth, writer, nextAuth), false
+            )
+            return lemma && bool
+        }, true
+    )
+
+    return result
+}
+
+function codeToAuth(auth, writer, authCode) {
     switch (authCode) {
         case "all":
             return true

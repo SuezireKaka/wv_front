@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -22,6 +22,10 @@ export default function ShowcaseList() {
     console.log("PostListObserver param", state);
     console.log("PostListObserver param", state.boardId);
     const [targetBoard, setTargetBoard] = useState(state.boardId);
+
+    const param = useParams();
+
+    console.log("파란색 보여줘", param)
   
     const txtSearch = useRef();
   
@@ -76,6 +80,20 @@ export default function ShowcaseList() {
       });
     };
   
+    useEffect(() => { 
+      async function recall() {
+        try {
+          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state.boardId}/1`);
+          console.log("다시 불러온 게시글 목록", data?.firstVal);
+          setPostList(data?.firstVal);
+        } catch {
+          console.error('fetching error');
+        }
+      }
+      recall()
+
+    }, [param]);
+
     useEffect(() => {
       console.log('page ? ', page);
       getPostListThenSet();
