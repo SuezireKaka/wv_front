@@ -11,7 +11,7 @@ import Remocon from "toolbox/Remocon";
 export default function ToolTable({
     data, state,
     setToolListUri = f => f, buildUrl = f => f,
-    setData = f => f, manageToolSkin = f => f}) {
+    setData = f => f, manageToolSkin = f => f }) {
     console.log("그래서 뭘 테이블로 만들면 돼?", data)
 
     const address = `Tool:/${state?.addr}`
@@ -23,14 +23,14 @@ export default function ToolTable({
 
     function onDetermine(index, newTool) {
         let newData = [...data.firstVal]
-        newData[index] = newTool ? {...newTool, isEditing : false} : {...newData[index], isEditing : false}
+        newData[index] = newTool ? { ...newTool, isEditing: false } : { ...newData[index], isEditing: false }
         setNowFunc(1)
         setNowFuncName("선택")
         setData({ ...data, firstVal: newData })
     }
 
     function onManage(index, newTool) {
-        console.log("저장하려는 데이터는?", {...newTool, isEditing : false})
+        console.log("저장하려는 데이터는?", { ...newTool, isEditing: false })
         onDetermine(index, newTool)
         manageToolSkin(newTool)
     }
@@ -46,9 +46,13 @@ export default function ToolTable({
     }
 
     function onExecute(tool, index) {
+        let newData = [...data.firstVal]
         switch (nowFuncName) {
+            case "생성":
+                newData.unshift({id : state?.toolId + "----", name : "", xToolSize : 100, yToolSize: 100, isEditing : true})
+                setData({ ...data, firstVal: newData })
+                break
             case "수정":
-                let newData = [...data.firstVal]
                 newData[index].isEditing = true
                 setData({ ...data, firstVal: newData })
                 break

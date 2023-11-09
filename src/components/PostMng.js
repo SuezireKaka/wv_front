@@ -45,7 +45,7 @@ export default function PostMng() {
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		console.log(post?.boardVO?.id)
 		const bodyData = {
-			writer:writer, id:post? post?.id: parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
+			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach
 		};
 		console.log(JSON.stringify(bodyData));
