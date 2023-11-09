@@ -37,7 +37,7 @@ export default function MemberList() {
                     "x-auth-token": `Bearer ${auth?.accessToken}`
                 }
             });
-            console.log("읽어온 멤버 목록", data?.firstVal);
+
             setMemberList(memberList.concat(data?.firstVal));
         } catch {
             console.error('fetching error');
@@ -84,7 +84,7 @@ export default function MemberList() {
             </tr>
         </thead>
         <tbody>
-            {console.log(memberList)}
+
             {memberList?.map((member, index) => {
                 if (index === memberList.length - 1) {
                     return (

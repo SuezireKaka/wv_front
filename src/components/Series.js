@@ -28,8 +28,6 @@ export default function Series() {
   const [targetBoard, setTargetBoard] = useState(state.seriesId);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
-  console.log(auth);
-  console.log(state)
 	const navigate = useNavigate();
   const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
@@ -63,8 +61,6 @@ export default function Series() {
         <tr>
           <th colSpan='2'>{post.title}&nbsp;&nbsp;
           {/**/}
-          {console.log(auth.roles)}
-          {console.log(post)}
           {!auth.roles || auth.roles.length === 0?"":
             <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(res) => {
               console.log("그래서 좋다는 거지?", res)
@@ -116,8 +112,7 @@ export default function Series() {
     </>
   }
   function postListShow(series){
-    {console.log(series)}
-    {console.log(auth)}
+
     return (series?.repliesList == 0 && !series?.repliesList)
       ? series?.length===0?"":""
       :  <>

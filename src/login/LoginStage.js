@@ -38,8 +38,6 @@ const LoginStage = () => {
     const signIn = async (e) => {
         e.preventDefault();
 
-        console.log(loginId, passWord);
-        
         await fetch(LOGIN_URL,
             {
                 method : "Post",
@@ -48,7 +46,6 @@ const LoginStage = () => {
             }
         ).then((response) => response.json())
         .then(data => {
-            console.log(data);
             if (data.code === 0) {
                 console.log(data);
                 const accessToken = data.token;

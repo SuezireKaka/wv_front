@@ -9,8 +9,6 @@ import { useContext } from 'react'
 
 export default function GenreButton() {
     const {genreCodeList } = useContext(AppContext);
-    console.log(genreCodeList);
-
 
         return (
             <div>
@@ -22,7 +20,7 @@ export default function GenreButton() {
                         <Dropdown.Item eventKey="0">전체</Dropdown.Item>
                         <Dropdown.Divider />
                         {genreCodeList?.map((gen)=><>
-                        {console.log(gen)}
+
                         <Dropdown.Item eventKey={gen.id} href="#/action-1">{gen.genre}</Dropdown.Item>
                         </>)}
                     </Dropdown.Menu>

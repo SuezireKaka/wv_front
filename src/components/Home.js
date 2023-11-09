@@ -30,7 +30,7 @@ export default function Home() {
 
   }
   const renderSuccess = (data) => {
-    console.log(data.firstVal);
+
     return (
       <Carousel fade>{/* */}
         {data?.firstVal?.map((post) => {

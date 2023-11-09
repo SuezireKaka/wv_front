@@ -28,11 +28,8 @@ export default function PostDetails() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
-
-  console.log(state)
   const postlist = location.state?.postListWithPaging?.firstVal;
   //state={{ id:post.id, boardId:state.boardId, page: currentPage, search: txtSearch.current?.value, postListWithPaging}}>
-  console.log(postlist)
   const postUri = `/work/anonymous/findById/${state.id}`;
   const postListUri = `/work/anonymous/findById/${state.parentId}`;
 
@@ -50,7 +47,6 @@ export default function PostDetails() {
     const onLike = async (id, like) => {
       let newLike = like++;
       console.log("예상치 : ", newLike)
-      console.log(id)
       try {
         await axios.get(
           `/work/anonymous/onLike?id=${id}`,
@@ -73,7 +69,6 @@ export default function PostDetails() {
     const onDisLike = async (id, dislike) => {
       let newDisLike = dislike++;
       console.log("예상치 : ", newDisLike)
-      console.log(id)
       try {
         await axios.get(
           `/work/anonymous/onDisLike?id=${id}`,
@@ -127,7 +122,6 @@ export default function PostDetails() {
           <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{post.likeCount}</span>
           <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
-          {console.log(post)}
         <ListGroup.Item> <PostPrevNext post={post} state={{ parentId: state.parentId, boardId: state.boardId, page: state.page, postListWithPaging: state.postListWithPaging }} /></ListGroup.Item>
 
         {/* <Link to={`/post/${postList[1]}`} >11</Link>*/}

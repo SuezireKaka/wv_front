@@ -10,7 +10,6 @@ import AppContext from 'context/AppContextProvider';
 
 export default function PostGenreList({genreTypes, setGenreTypes=f=>f}) {
     const {genreCodeList } = useContext(AppContext);
-    console.log(genreCodeList);
 
     return <>
 		<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">

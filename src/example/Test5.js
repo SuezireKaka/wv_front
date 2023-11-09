@@ -122,7 +122,7 @@ const Box = styled.div`
     }
   ]
   function renderSuccess(data) {
-    console.log(data)
+
     const series = data?.firstVal
     return(<>
     <div style={{width:700, height:500}}>

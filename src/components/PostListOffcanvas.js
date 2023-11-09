@@ -11,15 +11,14 @@ export default function PostListOffcanvas() {
     const [show, setShow] = useState(false);
     const location = useLocation();
     let state = location.state;
-    console.log(state)
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const postListUri = `/work/anonymous/listAllPost/${state.parentId}/${state.page}`;
     const txtSearch = useRef();
     function renderSuccess(postListWithPaging) {
-        console.log(postListWithPaging)
         const postList = postListWithPaging?.firstVal;
-        console.log(postList)
+
         return (
             <>
                 <Button variant="primary" onClick={handleShow}>

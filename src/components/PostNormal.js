@@ -19,7 +19,6 @@ export default function PostNormal() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
-  console.log(state)
   function buildUrl(step) {
     if (state?.search)
       return `/work/anonymous/search/${state?.boardId}/${state?.search}/${state.page}`;
@@ -50,7 +49,6 @@ export default function PostNormal() {
   const onSearch = (e) => {
     e.preventDefault();
     let search = txtSearch.current.value;
-    console.log(search)
     state.postListWithPaging = null;
     state.search = search;
     state.page = 1;
