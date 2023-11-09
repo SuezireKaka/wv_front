@@ -90,6 +90,7 @@ export default function ToolExplorer() {
         <ToolTable
             data={nowData}
             state={state}
+            param={param}
             setToolListUri={setToolListUri}
             buildUrl={buildUrl}
             setData={setNowData}

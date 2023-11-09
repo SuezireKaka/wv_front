@@ -9,7 +9,7 @@ import { displayPagination } from "toolbox/Pagination";
 import Remocon from "toolbox/Remocon";
 
 export default function ToolTable({
-    data, state,
+    data, state, param,
     setToolListUri = f => f, buildUrl = f => f,
     setData = f => f, manageToolSkin = f => f }) {
     console.log("그래서 뭘 테이블로 만들면 돼?", data)
@@ -20,6 +20,19 @@ export default function ToolTable({
     const [nowFuncName, setNowFuncName] = useState("선택")
 
     const [selectedId, setSelectedId] = useState()
+
+    const DEFAULT_SKIN = {
+        customEntityList : [],
+        customRelationList : [],
+        id : state?.toolId + "----",
+        isEditing : true,
+        name : "",
+        parentId : state?.seriesId,
+        xToolSize : 100,
+        yToolSize : 100,
+        isCreating : true,
+        isSafe : false
+    }
 
     function onDetermine(index, newTool) {
         let newData = [...data.firstVal]
@@ -32,7 +45,17 @@ export default function ToolTable({
     function onManage(index, newTool) {
         console.log("저장하려는 데이터는?", { ...newTool, isEditing: false })
         onDetermine(index, newTool)
-        manageToolSkin(newTool)
+        if (checkQuality(newTool, data)) {
+            manageToolSkin(newTool)
+        }
+    }
+
+    function checkQuality(toolSkin) {
+        return toolSkin?.name && testUniqueName(param?.idPath ? param.idPath : "", toolSkin?.name)
+    }
+
+    function testUniqueName(id, name) {
+        
     }
 
     function onCancel(index) {
@@ -48,12 +71,19 @@ export default function ToolTable({
     function onExecute(tool, index) {
         let newData = [...data.firstVal]
         switch (nowFuncName) {
-            case "생성":
-                newData.unshift({id : state?.toolId + "----", name : "", xToolSize : 100, yToolSize: 100, isEditing : true})
-                setData({ ...data, firstVal: newData })
-                break
             case "수정":
                 newData[index].isEditing = true
+                setData({ ...data, firstVal: newData })
+                break
+            default:
+        }
+    }
+
+    function onCreate(index, name) {
+        let newData = [...data.firstVal]
+        switch (name) {
+            case "생성":
+                newData.unshift({...DEFAULT_SKIN})
                 setData({ ...data, firstVal: newData })
                 break
             default:
@@ -78,7 +108,7 @@ export default function ToolTable({
         <thead>
             <tr><th colSpan={4} style={{ ...TABLE_STYLE, textAlign: "left", ...ADDRESS_STYLE }}> ★ {address}</th></tr>
             <tr><td colSpan={4} style={{ ...TABLE_STYLE, textAlign: "center" }}>
-                <Remocon index={nowFunc} type="xpl" onSelect={onSelect} />
+                <Remocon index={nowFunc} type="xpl" onSelect={onSelect} immediate={onCreate} />
             </td></tr>
             <tr><td colSpan={4} style={{ ...TABLE_STYLE }}>
                 <div style={{ display: "inline-block" }}>
