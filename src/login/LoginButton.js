@@ -33,15 +33,13 @@ export default function LoginButton() {
 
   }
   function renderSuccess(res) {
-    console.log("=======boardList=========");
-    console.log(res.data);
-    console.log(auth.accountType);
+
     return <>
        <Dropdown.Item href="/userProfile"><Link style={navMenu} key={res.data.id} to="/userProfile" state={res.data}>프로필</Link></Dropdown.Item>
     </>
   }
 
-  console.log(auth);
+  
 
   return (
     <div>    

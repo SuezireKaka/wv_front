@@ -19,5 +19,5 @@ const SocialKakao = ()=> {
     </>
     )
 }
-console.log(code)  
+
 export default SocialKakao

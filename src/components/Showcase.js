@@ -47,7 +47,6 @@ export default function ShowcaseList() {
     };
   
     useEffect(() => {
-      console.log(state)
       let search = txtSearch.current.value
       if (search.trim()) {
         getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
@@ -113,7 +112,6 @@ export default function ShowcaseList() {
   
     return <>
     <table style={{ margin: "auto", position: "static" }} ><td>
-      {console.log(auth.roles[0])}
       <GenreButton />
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :

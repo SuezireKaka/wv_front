@@ -11,7 +11,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 export default function MemberStatusList({ member }) {
-  console.log(member) //loginResultCode
+
   const [value, setValue] = useState(member.loginResultCode.toString());
   const code = member?.loginResultCode;
   const { auth } = useContext(AppContext);
@@ -19,8 +19,7 @@ export default function MemberStatusList({ member }) {
 
   const setStatus = async (e, value, memberId) => {
     e.preventDefault();
-    console.log(value)
-    console.log(memberId)
+
     
     const bodyData = {
       accountId: memberId,
@@ -49,7 +48,6 @@ export default function MemberStatusList({ member }) {
   return (
     <div>
         <td>
-          {console.log(value)}
         <RadioGroup value={value} onChange={setValue} >
           <Radio value="0" checked={code==="0"} disabled>강제탈퇴</Radio>
           <Radio value="1" checked={code==="1"}>정상계정</Radio>

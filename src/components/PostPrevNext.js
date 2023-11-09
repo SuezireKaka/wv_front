@@ -8,17 +8,12 @@ import { Button } from 'react-bootstrap';
 
 export default function PostPN({ post, state }) {
     const uri = `/work/anonymous/getPrevAndNext/${post.id}`
-    console.log(post.id)
-    console.log(state.id)
-    console.log("스테이트", state)
 
     function renderSuccess(data) {
-        console.log(data)
+
         const prev = data?.firstVal
         const next = data?.secondVal
-        console.log("이전화 ======= 다음화")
-        console.log(prev?.id)
-        console.log(next?.id)
+
     
         return <>
         {prev===null?<Button variant="outline-dark" disabled>이전화 X</Button>:

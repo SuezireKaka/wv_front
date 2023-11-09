@@ -56,7 +56,7 @@ export default function ReplyList({parent}) {
 		if (replayOnReply.get(parentId) === null || (replayOnReply&&replayOnReply?.get(parentId)?.length === 0))
 			return;
         const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId}
-        console.log(writer);
+
 
 		const bodyData = {
             id:parentId+"----", hTier:hTier-1,
@@ -92,11 +92,10 @@ export default function ReplyList({parent}) {
     justCreatedReplyList.forEach((newReply)=>{appendJustCreatedReply(newReply, parent)})
 
     return <>
-            {auth.nick ? <>{console.log(parent)}
+            {auth.nick ? <>
             <Button  size="sm" variant="outline-primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
             </Button>
-
             </> :  ""}
             {openAddReplay.has(parent.id) ? 
             <ReplyNew auth={auth} reply={parent} state= {{seriesId:state.seriesId, parent, state, parentId : state.parentId}} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply}/> 

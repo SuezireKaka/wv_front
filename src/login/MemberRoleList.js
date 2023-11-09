@@ -11,7 +11,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 export default function MemberRoleList({ member }) {
-  console.log(member)
+
   const [value, setValue] = useState(member?.roleList[0]?.role);
   const [roles, setRoles] = React.useState([]);
   const [listCheckMember, setListCheckMember] = useState(new Map());
@@ -19,8 +19,7 @@ export default function MemberRoleList({ member }) {
   const navigate = useNavigate();
   const reRole = async (e, value, memberId) => {
     e.preventDefault();
-    console.log(value)
-    console.log(memberId)
+
     const bodyData = {
       accountId: memberId,
       role: value,

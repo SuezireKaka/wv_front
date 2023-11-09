@@ -29,7 +29,6 @@ export default function UserProfile() {
   const [birthDate, setBirthDate] = useState(response?.birthDate.substring(0, 10));
   const [sex, setSex] = useState(response?.sex);
   const { cpCodeList } = useContext(AppContext);
-  console.log(cpCodeList);
   const [nameBlur, isNameBlur] = useState(false);
   const [loginId, setLoginId] = useState(state?.loginId);
   const [idChecked, setIdChecked] = useState(false);
@@ -111,9 +110,9 @@ export default function UserProfile() {
       code.codeVal,
       code.codeVal === "home address" ? address + " " + inValue : inValue
     );
-    console.log(listCP);
+
     setListCP(listCP);
-    console.log(listCP);
+
   };
 
   const handleSubmit = async (e) => {
