@@ -17,7 +17,7 @@ export default function PostMng() {
 	const post = location.state?.post;
     const state = location.state?.state;
 	const parentId = location.state?.parentId;
-	
+	console.log(state);
 	const navigate = useNavigate();
 	const [title, setTitle] = useState(post?.title);
 	const [content, setContent] = useState(post?.content);

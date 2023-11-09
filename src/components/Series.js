@@ -33,7 +33,7 @@ export default function Series() {
   const seriesDetailsUri = `/work/anonymous/findById/${state.seriesId}`;
   const postListUri = `/work/anonymous/listAllPost/${state.seriesId}/1`;
   const favoriteCheckUri = `/work/isFavorites/${state.seriesId}`;
-  	
+  const isSeries =useState(true);
 	const handleDelete = async (e) => {
 		e.preventDefault();
 
@@ -87,7 +87,7 @@ export default function Series() {
           <td>
             
           {(post.writer ? post.writer.id === auth.userId : false) || (auth.roles[0]==="admin"||auth.roles[0]==="manager" ) && state?.isReport ?<>
-          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId}}>
+          <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, post: post, state, parentId : "", boardId:state.boardId, isSeries}}>
              <Button variant="outline-info">수정</Button>
            </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button>
           </>
@@ -108,21 +108,17 @@ export default function Series() {
         </tr>
       </tbody>
     </Table>
-      {postListShow(post)}
-    </>
-  }
-  function postListShow(series){
-
-    return (series?.repliesList == 0 && !series?.repliesList)
-      ? series?.length===0?"":""
+    {(post?.repliesList == 0 && !post?.repliesList)
+      ? post?.length===0?"":""
       :  <>
-      {(series.writer ? series.writer.id === auth.userId : false) ?
+      {(post.writer ? post.writer.id === auth.userId : false) ?
       <Link to={`/series/${state.seriesId}/mng`} state={{seriesId:state.seriesId, state, parentId : state.seriesId, boardId:state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile:[] }}}>
       <Button variant="outline-primary">신규</Button>
       </Link>:""}
       <hr/>
       <PostList />
-      </>
+      </>}
+    </>
   }
 
   return <>

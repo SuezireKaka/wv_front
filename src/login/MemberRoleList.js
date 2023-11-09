@@ -17,6 +17,7 @@ export default function MemberRoleList({ member }) {
   const [listCheckMember, setListCheckMember] = useState(new Map());
   const { auth } = useContext(AppContext);
   const navigate = useNavigate();
+
   const reRole = async (e, value, memberId) => {
     e.preventDefault();
 
@@ -47,7 +48,9 @@ export default function MemberRoleList({ member }) {
   return (
     <div><td>
       {member?.roleList?.map((role) => (
+
         <RadioGroup value={value} onChange={setValue} >
+                  {console.log(role)}
           <Radio value="reader" checked={role === "reader"}>Reader</Radio>
           <Radio value="writer" checked={role === "writer"}>Writer</Radio>
           <Radio value="manager" checked={role === "manager"}>Manager</Radio>

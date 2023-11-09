@@ -15,7 +15,6 @@ export default function PostGenreList({genreTypes, setGenreTypes=f=>f}) {
 		<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>작품에 해당하는 장르를 선택해주세요</Form.Label>
                 <CheckboxGroup values={genreTypes} onChange={setGenreTypes}>
-                
                     {genreCodeList?.map((gen)=><>
                         <Checkbox key={gen.id} name="genre" value={gen.id}>
                             {gen.genre} 
@@ -24,7 +23,4 @@ export default function PostGenreList({genreTypes, setGenreTypes=f=>f}) {
                 </CheckboxGroup>
             </Form.Group>
         </>
-    
-
- 
 }

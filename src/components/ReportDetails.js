@@ -23,7 +23,7 @@ export default function ReportDetails() {
   }
   function renderParty(_,data){
 
-    const suspectUser = data.data
+    const suspectUser = data?.data
 
     return <><fieldset>
     <legend>신고 상세(유저)</legend>
