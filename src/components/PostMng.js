@@ -15,9 +15,11 @@ export default function PostMng() {
 	const location = useLocation();
     const { auth, genreCodeList } = useContext(AppContext);
 	const post = location.state?.post;
-    const state = location.state?.state;
+	const state = location.state;
+    const innerState = location.state?.state;
 	const parentId = location.state?.parentId;
 	console.log(state);
+	
 	const navigate = useNavigate();
 	const [title, setTitle] = useState(post?.title);
 	const [content, setContent] = useState(post?.content);
@@ -26,6 +28,10 @@ export default function PostMng() {
 	let hTier;
 	const [genreTypes, setGenreTypes] = useState([]);
     const [hasAnyType, setHasAnyType] = useState([]);
+
+
+
+	
 	console.log("너가 첨부파일 갖고 있다며?", listAttach)
 
 	useMemo(() => {
@@ -45,7 +51,7 @@ export default function PostMng() {
 			return;
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
-			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
+			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(innerState&&innerState?.boardId!=0?innerState?.boardId:post?.boardVO?.id)},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach,
             genreList : genreTypes.map(gen => {
                 return {id : gen}
@@ -69,7 +75,7 @@ export default function PostMng() {
 			} else {
 				//수정
 				console.log('수정', post);
-				navigate(-1, {state:state});
+				navigate(-1, {state:innerState});
 			}
 			
 		} catch (err) {
@@ -89,8 +95,8 @@ export default function PostMng() {
 			console.log('Delete Failed', err);
 		} finally {
 			// navigate state 전달
-			console.log('Delete state', state);
-			navigate(-1, {state:state});
+			console.log('Delete state', innerState);
+			navigate(-1, {state:innerState});
 		}
 	}
 
@@ -107,8 +113,8 @@ export default function PostMng() {
 				required
 			/>
 		</Form.Group>
-		<PostGenreList genreTypes={genreTypes} setGenreTypes={setGenreTypes}/>
-		{genreTypes}
+		{state.isSeries?<PostGenreList genreList={post.genreList} genreTypes={genreTypes} setGenreTypes={setGenreTypes}/>:""}
+		
 		<Form.Group className="mb-3" >
 			{/*<Form.Label >글내용</Form.Label>*/}
 			<Form.Control
@@ -121,9 +127,7 @@ export default function PostMng() {
 				required
 			/>
 		</Form.Group>
-		
 		<ThumbnailList imgDtoList={listAttach}/>
-
 		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
 		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents || !genreTypes ||genreTypes.length === 0} >
 			반영
