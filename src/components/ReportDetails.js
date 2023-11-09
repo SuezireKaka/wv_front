@@ -12,7 +12,7 @@ export default function ReportDetails() {
   const location = useLocation();
   let state = location.state.report;
   let report = location.state.report
-
+  console.log(report)
   function renderWork(data){
 
     return <><fieldset>
@@ -21,22 +21,16 @@ export default function ReportDetails() {
     <ReportSuspectPost report={report} data={data} />
     </fieldset></>
   }
-  function renderParty(_,data){
-
-    const suspectUser = data?.data
-
-    return <><fieldset>
-    <legend>신고 상세(유저)</legend>
-    <Reporter report={report}/>
-    <ReportSuspectUser report={report} suspectUser={suspectUser}/>
-    </fieldset></>
-  }
-
 
   return (
     <>
     {report.suspectTable === "t_account" ?
-    <AxiosAuth uri={`/party/findById/${report.suspectId}`} auth={auth} renderSuccess={renderParty} />
+    <AxiosAuth uri={`/party/findById/${report.suspectId}`} auth={auth} renderSuccess={(res) => {
+      return <><fieldset>{console.log(res.data)}
+      <legend>신고 상세(유저)</legend>
+      <Reporter report={report}/>
+      <ReportSuspectUser report={report} suspectUser={res.data}/>
+      </fieldset></>}}/>
     :<Fetch uri={`/work/anonymous/findById/${report.suspectId}`} renderSuccess={renderWork} />}
     </>
   )

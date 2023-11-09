@@ -20,7 +20,7 @@ export default function LoginButton() {
     const findByNickUri = `/party/findById/${auth.userId}`;
 
     const navMenu = {
-      color:"grey",
+      color:"black",
       textDecoration:"none"
     }
 
@@ -32,14 +32,6 @@ export default function LoginButton() {
     navigate("/")
 
   }
-  function renderSuccess(res) {
-
-    return <>
-       <Dropdown.Item href="/userProfile"><Link style={navMenu} key={res.data.id} to="/userProfile" state={res.data}>프로필</Link></Dropdown.Item>
-    </>
-  }
-
-  
 
   return (
     <div>    
@@ -57,7 +49,8 @@ export default function LoginButton() {
       <>
       <Dropdown.Item href="/">홈</Dropdown.Item>
       <Dropdown.Item href="/favoriteslist">즐겨찾기</Dropdown.Item>
-      {auth.accountType ==="원더" ?<AxiosAuth uri={findByNickUri} auth={auth} renderSuccess={renderSuccess} />:"" }
+      {auth.accountType ==="원더" ?<AxiosAuth uri={findByNickUri} auth={auth} renderSuccess={(res) => {
+                          return <Dropdown.Item href="/userProfile"><Link style={navMenu} key={res.data.id} to="/userProfile" state={res.data}>프로필</Link></Dropdown.Item>}}/>:"" }
       <Dropdown.Item href="/UserSeries">내작품보기</Dropdown.Item>
       
       <Dropdown.Item onClick={handleLogout}>로그아웃</Dropdown.Item>
