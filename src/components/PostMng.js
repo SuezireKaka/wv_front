@@ -51,7 +51,6 @@ export default function PostMng() {
             genreTypesList : genreTypes.map(genre => {
                 return {genre : genre}
             }),
-			
 		};
 		console.log(JSON.stringify(bodyData));
 

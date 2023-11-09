@@ -93,7 +93,7 @@ export default function ReplyList({parent}) {
 
     return <>
             {auth.nick ? <>{console.log(parent)}
-            <Button variant="outline-primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
+            <Button  size="sm" variant="outline-primary" onClick={(e)=>{markShowAddReply(e, parent.id)}}>
                 댓글
             </Button>
 
@@ -107,7 +107,7 @@ export default function ReplyList({parent}) {
                 <span>{reply.content}</span>
                 &nbsp;&nbsp; <span>{displayDate(reply.regDt, reply.uptDt)} </span>
                 &nbsp;&nbsp; <span><LoginTypeIcon loginType={reply?.writer?.accountType}/>{!reply.writer?.nick ?reply.writer?.kakaoNick  :reply.writer?.nick} </span>
-                <Button variant="outline-dark" onClick={(e)=>handleDelete(e, reply)}>삭제</Button>{console.log(reply)}
+                <Button  size="sm" variant="outline-dark" onClick={(e)=>handleDelete(e, reply)}>삭제</Button>{console.log(reply)}
                 <ReplyList parent={reply}/>
             </li>
             })}

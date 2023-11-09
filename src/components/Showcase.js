@@ -15,6 +15,7 @@ import { useContext } from "react";
 import { Form } from "react-bootstrap";
 import Favorites from './Favorites';
 import { AxiosAuth } from 'toolbox/Fetch'
+import GenreButton from "./GenreButton";
 export default function ShowcaseList() {
     const location = useLocation();
     let state = location.state;
@@ -113,6 +114,8 @@ export default function ShowcaseList() {
     return <>
     <table style={{ margin: "auto", position: "static" }} ><td>
       {console.log(auth.roles[0])}
+      <GenreButton />
+      </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
         <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile}}}>
           <Button variant="outline-primary">신규</Button>
