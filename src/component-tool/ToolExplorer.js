@@ -13,21 +13,12 @@ export default function ToolExplorer() {
 
     const TOOLSKIN_MANAGE_URL = "/tool/manageToolSkin/"
 
-    const getDefaultToolsetUrl = state =>
-        "http://localhost:8080/tool/listAllFromSeries/" + state?.seriesId + "/" + state?.page
-    const getAddressToolsetUrl = state =>
-        "http://localhost:8080/tool/listAllNextTools/" + state?.toolId + "/" + state?.page
-
     const [toolListUri, setToolListUri] = useState(buildUrl());
 
     const [nowData, setNowData] = useState()
 
     function buildUrl() {
-        console.log("url 만드는 기준이 뭐야?", state)
-        if (param.idPath)
-            return getAddressToolsetUrl(state)
-        else
-            return getDefaultToolsetUrl(state)
+        return "http://localhost:8080/tool/listAllNextTools/path" + state?.toolId + "/" + state?.page
     }
 
     function manageToolSkin(toolSkin) {
@@ -65,13 +56,6 @@ export default function ToolExplorer() {
                 }
             }).then(res => setNowData(readyForEditing(res?.data)))
     }, [toolListUri, param])
-
-    function readyForEditing(data) {
-        return {
-            ...data,
-            firstVal: data?.firstVal?.map(tool => { return { ...tool, isEditing: false } })
-        }
-    }
 
     function readyForEditing(data) {
         return {

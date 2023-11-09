@@ -57,7 +57,7 @@ export default function PostMng() {
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach,
             genreList : genreTypes.map(gen => {
 				{console.log(gen)}
-                return {genre : gen}
+                return {id : gen}
             }),
 		};
 		console.log(JSON.stringify(bodyData));
