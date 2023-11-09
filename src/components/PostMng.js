@@ -26,7 +26,7 @@ export default function PostMng() {
 	let hTier;
 	
 
-	console.log("부모 아이디는", parentId)
+	console.log("너가 첨부파일 갖고 있다며?", listAttach)
 
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
