@@ -48,10 +48,6 @@ export default function PostMng() {
 			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach,
             genreList : genreTypes.map(gen => {
-<<<<<<< HEAD
-				{console.log(gen)}
-=======
->>>>>>> cd6feb09608076fecb694c9f77ac34365e6a7405
                 return {id : gen}
             }),
 		};
