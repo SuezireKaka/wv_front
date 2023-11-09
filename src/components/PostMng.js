@@ -9,16 +9,19 @@ import ThumbnailList from 'atom/ThumbnailList';
 import CheckboxGroup from "toolbox/CheckboxGroup";
 import Checkbox from "toolbox/Checkbox";
 import PostGenreList from './PostGenreList';
+import { useMemo } from 'react';
 
 export default function PostMng() {
 	const location = useLocation();
-
+    const { auth, genreCodeList } = useContext(AppContext);
 	const post = location.state?.post;
     const state = location.state?.state;
-	console.log(post)
-	console.log(state)
+	console.log(genreCodeList);
+	console.log(auth);
+	console.log(post);
+	console.log(state);
 	const parentId = location.state?.parentId;
-	const { auth } = useContext(AppContext);
+	
 	const navigate = useNavigate();
 	const [title, setTitle] = useState(post?.title);
 	const [content, setContent] = useState(post?.content);
@@ -26,8 +29,12 @@ export default function PostMng() {
 	const isComplete = useState(1);
 	let hTier;
 	const [genreTypes, setGenreTypes] = useState([]);
-
+    const [hasAnyType, setHasAnyType] = useState([]);
 	console.log("너가 첨부파일 갖고 있다며?", listAttach)
+
+	useMemo(() => {
+		setHasAnyType(genreTypes?.length > 0);
+	}, [genreTypes])
 
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
@@ -48,8 +55,9 @@ export default function PostMng() {
 		const bodyData = {
 			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach,
-            genreTypesList : genreTypes.map(genre => {
-                return {genre : genre}
+            genreTypesList : genreTypes.map(gen => {
+				{console.log(gen)}
+                return {genre : gen}
             }),
 		};
 		console.log(JSON.stringify(bodyData));

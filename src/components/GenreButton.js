@@ -2,10 +2,12 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { Dropdown } from 'react-bootstrap'
 import { Fetch } from 'toolbox/Fetch'
+import AppContext from 'context/AppContextProvider'
+import { useContext } from 'react'
 
 export default function GenreButton() {
     const genreUrl = `/work/anonymous/listAllGenre`;
-
+    
     function renderSuccess(genreList) {
         console.log(genreList);
         return (

@@ -216,7 +216,6 @@ const Register = () => {
             onChange={(e) => setBirthDate(e.target.value)}
             min="1920-01-01"
             max="2023-12-31"
-            
             aria-required="true"
             value={birthDate}
             onBlur={onBlur}

@@ -8,6 +8,7 @@ export const AppContextProvider = ({ children }) => {
     const [auth, setAuth] = useState(user ? JSON.parse(user) : {nick : "", roles : []});
     const [cpCodeList, setCpCodeList] = useState();
     const [rptCodeList, setRptCodeList] = useState();
+    const [genreCodeList, setGenreCodeList] = useState();
     const [relationRemocon, setRelationRemocon] = useState();
     const [explorerRemocon, setExplorerRemocon] = useState();
     
@@ -16,6 +17,7 @@ export const AppContextProvider = ({ children }) => {
             auth, setAuth,
             cpCodeList, setCpCodeList,
             rptCodeList, setRptCodeList,
+            genreCodeList, setGenreCodeList,
             relationRemocon, setRelationRemocon,
             explorerRemocon, setExplorerRemocon
         }}>
