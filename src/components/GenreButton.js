@@ -5,11 +5,13 @@ import { Fetch } from 'toolbox/Fetch'
 import AppContext from 'context/AppContextProvider'
 import { useContext } from 'react'
 
+
+
 export default function GenreButton() {
-    const genreUrl = `/work/anonymous/listAllGenre`;
-    
-    function renderSuccess(genreList) {
-        console.log(genreList);
+    const {genreCodeList } = useContext(AppContext);
+    console.log(genreCodeList);
+
+
         return (
             <div>
                 <Dropdown>
@@ -19,7 +21,7 @@ export default function GenreButton() {
                     <Dropdown.Menu>
                         <Dropdown.Item eventKey="0">전체</Dropdown.Item>
                         <Dropdown.Divider />
-                        {genreList?.map((gen)=><>
+                        {genreCodeList?.map((gen)=><>
                         {console.log(gen)}
                         <Dropdown.Item eventKey={gen.id} href="#/action-1">{gen.genre}</Dropdown.Item>
                         </>)}
@@ -27,8 +29,5 @@ export default function GenreButton() {
                 </Dropdown>
             </div>
         )
-    }
-    return (
-        <div><Fetch uri={genreUrl} renderSuccess={renderSuccess} /></div>
-    )
+
 }

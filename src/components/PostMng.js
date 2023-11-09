@@ -55,7 +55,7 @@ export default function PostMng() {
 		const bodyData = {
 			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach,
-            genreTypesList : genreTypes.map(gen => {
+            genreList : genreTypes.map(gen => {
 				{console.log(gen)}
                 return {genre : gen}
             }),
@@ -134,7 +134,7 @@ export default function PostMng() {
 		<ThumbnailList imgDtoList={listAttach}/>
 
 		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
-		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents} >
+		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents || !genreTypes ||genreTypes.length === 0} >
 			반영
 		</Button>
 		<Button variant="outline-dark" onClick={handleDelete}>
