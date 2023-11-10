@@ -26,9 +26,9 @@ export default function PostMng() {
 	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
 	let hTier;
-	const [genreTypes, setGenreTypes] = useState([]);
+	const [genreTypes, setGenreTypes] = useState(post?.genreList?.map((genre) => genre?.id));
     const [hasAnyType, setHasAnyType] = useState([]);
-
+	console.log(genreTypes);
 	//const [checkedItems, setCheckedItems] = useState([]);//체크된 요소들
 
     const checkedItemHandler = (box, code, isChecked) => {
@@ -46,11 +46,11 @@ export default function PostMng() {
 
 	
 	console.log("너가 첨부파일 갖고 있다며?", listAttach)
-
+/*
 	useMemo(() => {
 		setHasAnyType(genreTypes?.length > 0);
 	}, [genreTypes])
-
+*/
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
 		setHasAllContents(title?.trim() ? content?.trim() : false);
