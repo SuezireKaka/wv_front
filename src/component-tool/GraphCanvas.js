@@ -1,17 +1,24 @@
 import { useState, useRef, useMemo, useEffect, useContext } from 'react';
 import ToolContext from './ToolContextProvider';
+import AppContext from 'context/AppContextProvider';
 import Remocon from '../toolbox/Remocon';
 import UseGestureElement from '../example/UseGestureElement';
 import { useLocation } from 'react-router';
+import { Button } from 'react-bootstrap';
+import { isAnyDanger } from './PropAccordion';
 
 export default function GraphCanvas() {
-    const {initVertices, setInitVertices,
+    const { initVertices, setInitVertices,
         nowVertices, setNowVertices,
         initEdges, setInitEdges,
         nowEdges, setNowEdges,
         xToolSize, yToolSize,
-        onSummonObject, onDeleteAllObjects
+        nowObjectList,
+        onSummonObject, onDeleteAllObjects,
+        onSaveTool
     } = useContext(ToolContext);
+
+    const { auth } = useContext(AppContext);
 
     const location = useLocation();
     const state = location.state;
@@ -146,13 +153,14 @@ export default function GraphCanvas() {
                 let newName = "object - " + (summonedCnt + 1)
                 let newVertex = {
                     id: newId, name: newName, xPos: newX, yPos: newY,
-                    xSize: DEFAULT_VERTEX_X_SIZE, ySize: DEFAULT_VERTEX_Y_SIZE
+                    xSize: DEFAULT_VERTEX_X_SIZE, ySize: DEFAULT_VERTEX_Y_SIZE,
+                    customPropertiesList: []
                 }
                 setNowVertices([...nowVertices].concat(newVertex))
                 setInitVertices([...initVertices].concat(newVertex))
                 setSummonedCnt(summonedCnt + 1)
                 setRealSummonedCnt(realSummonedCnt + 1)
-                onSummonObject({key : newId, id : newId, name : newName, customPropertiesList : []})
+                onSummonObject(newVertex)
                 break
             }
             default: {
@@ -199,13 +207,14 @@ export default function GraphCanvas() {
                         id: newId, name: newName, xPos: newX, yPos: newY,
                         xSize: DEFAULT_EDGE_X_SIZE, ySize: DEFAULT_EDGE_Y_SIZE,
                         // 먼저 선택한 걸 one에, 나중에 선택한 걸 other에
-                        one: { id: selectedId }, other: { id: targetId }
+                        one: { id: selectedId }, other: { id: targetId },
+                        customPropertiesList: []
                     }
                     setSummonedCnt(summonedCnt + 1)
                     setRealSummonedCnt(realSummonedCnt + 1)
                     setNowEdges(nowEdges.concat(newEdge))
                     setInitEdges(initEdges.concat(newEdge))
-                    onSummonObject({id : newId, name : newName, customPropertiesList : []})
+                    onSummonObject(newEdge)
                     // 선택했다는 정보를 초기화
                     setSelectedId()
                 }
@@ -270,15 +279,28 @@ export default function GraphCanvas() {
 
     console.log("지금 선택된 아이디 나와!", nowVertices, nowEdges)
 
-    return <div>
-        <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
-        <br />
-        {selectedId
-            ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
-            : null
-        }
-        <br />
-        <div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
+    return <table>
+        <tr><td>
+            <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
+            <br />
+            {selectedId
+                ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
+                : null
+            }
+        </td><td>
+                <Button variant="success"
+                    // 조금이라도 위험하면 세이브 못 하게 할 거야
+                    disabled={nowObjectList.reduce((current, inputObj) => {
+                        let propList = inputObj.customPropertiesList
+                        // 기존에 위험한 게 있었거나 이번 게 안전하지 않으면 위험한 게 있는 것이다
+                        return current || isAnyDanger(propList)
+                    }, false)}
+                    onClick={() => onSaveTool(state?.toolId, state?.writer, auth)}
+                >
+                    저장하기
+                </Button>
+            </td></tr>
+        <tr><td colSpan={2}><div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
             <canvas class="Canvas" ref={canvasRef} width={xToolSize} height={yToolSize}
                 style={{ borderColor: "#000000", border: "1px dotted" }}
                 onClick={(e) => canvasExecute(nowFuncName, e)}
@@ -309,7 +331,7 @@ export default function GraphCanvas() {
                     onClick={(e) => objectExecute(nowFuncName, e, "vertex")}
                 />)
             }
-        </div>
-    </div>
+        </div></td></tr>
+    </table>
 
 }

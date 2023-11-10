@@ -7,6 +7,7 @@ import { Table, Button } from 'react-bootstrap';
 import { Pagination } from "react-bootstrap";
 import { displayPagination } from "toolbox/Pagination";
 import Remocon from "toolbox/Remocon";
+import AppContext from "context/AppContextProvider";
 
 export default function ToolTable({
     data, state, param,
@@ -29,6 +30,7 @@ export default function ToolTable({
         id : state?.toolId + "----",
         isEditing : true,
         name : "",
+        writer : state?.writer,
         parentId : state?.seriesId,
         xToolSize : 100,
         yToolSize : 100,
@@ -45,7 +47,7 @@ export default function ToolTable({
     }
 
     function onManage(index, newTool) {
-        console.log("저장하려는 데이터는?", { ...newTool, isEditing: false })
+        console.log("저장하려는 데이터는?", newTool)
         onDetermine(index, newTool)
         if (checkQuality(newTool)) {
             manageToolSkin(newTool, index, newTool.isCreating)

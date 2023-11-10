@@ -21,13 +21,12 @@ export default function ToolExplorer() {
         return "http://localhost:8080/tool/listAllNextTools/" + state?.seriesId + "/path" + state?.toolId + "/" + state?.page
     }
 
-    function manageToolSkin(toolSkin, index, isCreating) {
+    function manageToolSkin(toolSkin, index) {
         console.log("이 유저가 보냅니다: ", auth)
         let uri = TOOLSKIN_MANAGE_URL + state?.seriesId
         console.log("다음 주소로 보냅니다: ", uri)
-        let request = {id : toolSkin.id, name: toolSkin.name, xToolSize: toolSkin.xToolSize, yToolSize: toolSkin.yToolSize}
-        console.log("이것을 보냅니다: ", request)
-        axios.post(uri, request, {
+        console.log("이것을 보냅니다: ", toolSkin)
+        axios.post(uri, toolSkin, {
             headers: {
                 'Content-Type': 'application/json',
                 "x-auth-token": `Bearer ${auth?.accessToken}`

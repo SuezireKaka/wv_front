@@ -8,7 +8,7 @@ export default function ToolDetail() {
 
     return <table>
         <td style={{ width: xToolSize + 100 }}>
-            <GraphCanvas/>
+            <GraphCanvas />
         </td>
         <td style={{ width: "100%" }}>
             <PropAccordion />

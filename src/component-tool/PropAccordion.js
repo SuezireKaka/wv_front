@@ -33,3 +33,10 @@ export default function PropAccordion() {
         </div>
     </div>
 }
+
+export function isAnyDanger(propList) {
+    return propList.reduce((current, inputProp) => {
+        // 기존에 위험한 게 있었거나 이번 게 안전하지 않으면 위험한 게 있는 것이다
+        return current || ! inputProp.isSafe
+    }, false)
+}

@@ -1,10 +1,13 @@
 import ToolDetail from 'component-tool/ToolDetail';
 import { useState, useRef, useContext, createContext } from 'react';
 import AppContext from "context/AppContextProvider";
+import axios from 'api/axios';
 
 const ToolContext = createContext({});
 
 export const ToolContextProvider = ({ children }) => {
+
+    const SAVE_TOOL_URL = "/tool/saveToolDetails/"
 
     const [nowName, setNowName] = useState("")
 
@@ -41,6 +44,26 @@ export const ToolContextProvider = ({ children }) => {
         setNowObjectList(copyArray)
     }
 
+    function onSaveTool(id, writer, auth) {
+        console.log("세관 검사중......", id, writer, auth, {
+            id : id, name : nowName, writer : writer,
+            xToolSize : xToolSize, yToolSize : yToolSize,
+            customEntityList : nowVertices,
+            customRelationList : nowEdges
+        })
+        axios.post(SAVE_TOOL_URL,
+            {
+                id : id, name : nowName, writer : writer,
+                xToolSize : xToolSize, yToolSize : yToolSize,
+                customEntityList : nowVertices,
+                customRelationList : nowEdges
+            }, { headers: {
+					'Content-Type': 'application/json',
+					"x-auth-token": `Bearer ${auth?.accessToken}`
+            }}
+        )
+    }
+
     return (
         <ToolContext.Provider value={{
             nowName, setNowName,
@@ -48,7 +71,8 @@ export const ToolContextProvider = ({ children }) => {
             initVertices, setInitVertices, initEdges, setInitEdges,
             nowVertices, setNowVertices, nowEdges, setNowEdges,
             nowObjectList, setNowObjectList,
-            onSummonObject, onDeleteAllObjects, onUpdate
+            onSummonObject, onDeleteAllObjects,
+            onUpdate, onSaveTool
         }}>
             {children}
         </ToolContext.Provider>
