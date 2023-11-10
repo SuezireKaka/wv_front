@@ -32,7 +32,7 @@ export default function ShowcaseList() {
   
     const [postList, setPostList] = useState([]);
     const [page, setPage] = useState(1);
-  
+    console.log(postList)
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
     const [listAttachFile] =useState([])
     const [byKeyWord, setByKeyWord] = useState(false);
@@ -113,7 +113,7 @@ export default function ShowcaseList() {
   
     return <>
     <table style={{ margin: "auto", position: "static" }} ><td>
-      <GenreButton />
+      <GenreButton txtSearch={txtSearch} onSearch={onSearch}/>
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
         <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile},isSeries:isSeries}}>

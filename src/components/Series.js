@@ -21,6 +21,7 @@ import { Navigate } from "react-router";
 import { useNavigate } from "react-router";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
 
+
 export default function Series() {
   const location = useLocation();
   let state = location.state;

@@ -7,25 +7,29 @@ import { useContext } from 'react'
 
 
 
-export default function GenreButton() {
-    const {genreCodeList } = useContext(AppContext);
+export default function GenreButton({ txtSearch, onSearch = f => f }) {
+    const { genreCodeList } = useContext(AppContext);
 
-        return (
-            <div>
-                <Dropdown>
-                    <Dropdown.Toggle variant="outline-success" id="dropdown-basic">
-                        장르
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item eventKey="0">전체</Dropdown.Item>
-                        <Dropdown.Divider />
-                        {genreCodeList?.map((gen)=><>
+    function onGenreSearch(e) {
+        
+        return console.log(e);
+    }
 
-                        <Dropdown.Item eventKey={gen.id} href="#/action-1">{gen.genre}</Dropdown.Item>
-                        </>)}
-                    </Dropdown.Menu>
-                </Dropdown>
-            </div>
-        )
+    return (
+        <div>
+            <Dropdown>
+                <Dropdown.Toggle variant="outline-success" id="dropdown-basic">
+                    장르
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item eventKey="0">전체</Dropdown.Item>
+                    <Dropdown.Divider />
+                    {genreCodeList?.map((gen) => <>
+                        <Dropdown.Item eventKey={gen.id} onSelect={onGenreSearch(gen.genre)}>{gen.genre}</Dropdown.Item>
+                    </>)}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+    )
 
 }
