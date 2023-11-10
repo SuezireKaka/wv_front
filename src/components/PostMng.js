@@ -29,7 +29,20 @@ export default function PostMng() {
 	const [genreTypes, setGenreTypes] = useState([]);
     const [hasAnyType, setHasAnyType] = useState([]);
 
+	//const [checkedItems, setCheckedItems] = useState([]);//체크된 요소들
 
+    const checkedItemHandler = (box, code, isChecked) => {
+        if (isChecked) { //체크 되었을때 
+            setGenreTypes([...genreTypes, code])
+
+        } else if (!isChecked && genreTypes.find(one => one === code)) { //체크가 안되었고, id가 있을때(클릭 2번시) 
+            const filter = genreTypes.filter(one => one !== code)
+            setGenreTypes([...filter]);
+
+        }
+    };
+
+    console.log('checkedItems', genreTypes)
 
 	
 	console.log("너가 첨부파일 갖고 있다며?", listAttach)
@@ -113,7 +126,7 @@ export default function PostMng() {
 				required
 			/>
 		</Form.Group>
-		{state.isSeries?<PostGenreList genreList={post.genreList} genreTypes={genreTypes} setGenreTypes={setGenreTypes}/>:""}
+		{state.isSeries?<PostGenreList checkedItemHandler={checkedItemHandler} genreList={post.genreList} genreTypes={genreTypes} setGenreTypes={setGenreTypes}/>:""}
 		
 		<Form.Group className="mb-3" >
 			{/*<Form.Label >글내용</Form.Label>*/}
@@ -129,7 +142,7 @@ export default function PostMng() {
 		</Form.Group>
 		<ThumbnailList imgDtoList={listAttach}/>
 		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
-		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents || !genreTypes ||genreTypes.length === 0} >
+		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents } >
 			반영
 		</Button>
 		<Button variant="outline-dark" onClick={handleDelete}>
