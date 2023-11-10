@@ -280,26 +280,33 @@ export default function GraphCanvas() {
     console.log("지금 선택된 아이디 나와!", nowVertices, nowEdges)
 
     return <table>
-        <tr><td>
-            <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
-            <br />
-            {selectedId
-                ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
-                : null
-            }
-        </td><td>
-                <Button variant="success"
-                    // 조금이라도 위험하면 세이브 못 하게 할 거야
-                    disabled={nowObjectList.reduce((current, inputObj) => {
-                        let propList = inputObj.customPropertiesList
-                        // 기존에 위험한 게 있었거나 이번 게 안전하지 않으면 위험한 게 있는 것이다
-                        return current || isAnyDanger(propList)
-                    }, false)}
-                    onClick={() => onSaveTool(state?.toolId, state?.writer, auth)}
-                >
-                    저장하기
-                </Button>
-            </td></tr>
+        <tr>
+            <td>
+                <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
+                <br />
+                {selectedId
+                    ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
+                    : null
+                }
+            </td>
+            <td>
+                {console.log("야 너희 둘 같아?", auth.userId, writer.id)}
+                {auth?.userId === writer?.id
+                    ? <Button variant="success"
+                        // 조금이라도 위험하면 세이브 못 하게 할 거야
+                        disabled={nowObjectList.reduce((current, inputObj) => {
+                            let propList = inputObj.customPropertiesList
+                            // 기존에 위험한 게 있었거나 이번 게 안전하지 않으면 위험한 게 있는 것이다
+                            return current || isAnyDanger(propList)
+                        }, false)}
+                        onClick={() => onSaveTool(state?.toolId, state?.writer, auth)}
+                    >
+                        저장하기
+                    </Button>
+                    : ""
+                }
+            </td>
+        </tr>
         <tr><td colSpan={2}><div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
             <canvas class="Canvas" ref={canvasRef} width={xToolSize} height={yToolSize}
                 style={{ borderColor: "#000000", border: "1px dotted" }}
