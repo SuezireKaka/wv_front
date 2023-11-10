@@ -47,6 +47,7 @@ export const ToolContextProvider = ({ children }) => {
             xToolSize, setXToolSize, yToolSize, setYToolSize,
             initVertices, setInitVertices, initEdges, setInitEdges,
             nowVertices, setNowVertices, nowEdges, setNowEdges,
+            nowObjectList, setNowObjectList,
             onSummonObject, onDeleteAllObjects, onUpdate
         }}>
             {children}

@@ -7,10 +7,12 @@ export default function ToolData({ data }) {
     const { nowName, setNowName,
         setXToolSize, setYToolSize,
         setInitVertices, setInitEdges,
-        setNowVertices, setNowEdges
+        setNowVertices, setNowEdges,
+        setNowObjectList
     } = useContext(ToolContext);
 
     useEffect(() => {
+        let newObjectList = [...data?.customEntityList, ...data?.customRelationList]
         setNowName(data?.name);
         setXToolSize(data?.xToolSize);
         setYToolSize(data?.yToolSize);
@@ -18,6 +20,7 @@ export default function ToolData({ data }) {
         setNowVertices(data?.customEntityList);
         setInitEdges(data?.customRelationList);
         setNowEdges(data?.customRelationList);
+        setNowObjectList(newObjectList)
     }, [])
 
 
