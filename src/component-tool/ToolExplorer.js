@@ -33,13 +33,12 @@ export default function ToolExplorer() {
                 "x-auth-token": `Bearer ${auth?.accessToken}`
             }
         }).then(res => {
-            if (isCreating) {
-                let oldData = {...nowData }
-                let newData = {...nowData }
-                let newSkin = {...res.data}
-                newData.firstVal[index] = newSkin
-                console.log("데이터 비교좀 하자", oldData, nowData)
-            }
+            let oldData = {...nowData }
+            let newData = {...nowData }
+            let newSkin = {...res.data, idEditing : false, isCreating : false}
+            newData.firstVal[index] = newSkin
+            setNowData(newData)
+            console.log("데이터 비교좀 하자", oldData, nowData)
         }).catch((error) => { console.log(error) })
         
     }

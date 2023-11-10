@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+import ToolContext from './ToolContextProvider';
 import Accordion from 'react-bootstrap/Accordion';
 import React from 'react';
-import PureDrag from '../component-tool/PureDrag';
+import PureDrag from './PureDrag';
 
-export default function PropAccordion({nowObjectList, onUpdate = f => f}) {
-    console.log("너 나와봐!", nowObjectList)
+export default function PropAccordion() {
+    const {nowObjectList, onUpdate} = useContext(ToolContext);
+
+    console.log("객체 다 줘봐", nowObjectList)
 
     return <div style={{ width: "100%" }}>
-        { console.log("너 나와봐!", nowObjectList)}
         <div style={{ display: 'block????', backgroundColor: nowObjectList && nowObjectList.length > 0 ? "blue" : "white", padding: 1 }}> 
         <Accordion alwaysOpen flush>
             {nowObjectList?.map((obj, index) => {

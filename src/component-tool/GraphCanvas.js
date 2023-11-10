@@ -1,15 +1,25 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useRef, useMemo, useEffect, useContext } from 'react';
+import ToolContext from './ToolContextProvider';
 import Remocon from '../toolbox/Remocon';
-import UseGestureElement from './UseGestureElement';
+import UseGestureElement from '../example/UseGestureElement';
+import { useLocation } from 'react-router';
 
-export default function GraphCanvas({
-    initVertices = [], setInitVertices = f => f,
-    nowVertices = [], setNowVertices = f => f,
-    initEdges = [], setInitEdges = f => f,
-    nowEdges = [], setNowEdges = f => f,
-    xToolSize = 1024, yToolSize = 768,
-    onSummonObject = f => f, onDeleteAllObjects = f => f
-}) {
+export default function GraphCanvas() {
+    const {initVertices, setInitVertices,
+        nowVertices, setNowVertices,
+        initEdges, setInitEdges,
+        nowEdges, setNowEdges,
+        xToolSize, yToolSize,
+        onSummonObject, onDeleteAllObjects
+    } = useContext(ToolContext);
+
+    const location = useLocation();
+    const state = location.state;
+    const writer = state?.writer;
+
+    console.log("작가 들어있는 상태 보여줘", state)
+    console.log("그래서 이제 뭐 그려?", nowVertices, nowEdges)
+
     const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
         DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE,
         DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST]
@@ -64,7 +74,6 @@ export default function GraphCanvas({
 
     function redraw() {
         let ctx = canvasRef.current?.getContext("2d")
-        console.log("넌 누구니?", ctx)
 
         ctx?.reset()
         ctx?.beginPath()
@@ -139,11 +148,11 @@ export default function GraphCanvas({
                     id: newId, name: newName, xPos: newX, yPos: newY,
                     xSize: DEFAULT_VERTEX_X_SIZE, ySize: DEFAULT_VERTEX_Y_SIZE
                 }
-                setNowVertices(nowVertices.concat(newVertex))
-                setInitVertices(initVertices.concat(newVertex))
+                setNowVertices([...nowVertices].concat(newVertex))
+                setInitVertices([...initVertices].concat(newVertex))
                 setSummonedCnt(summonedCnt + 1)
                 setRealSummonedCnt(realSummonedCnt + 1)
-                onSummonObject({id : newId, name : newName, customPropertiesList : []})
+                onSummonObject({key : newId, id : newId, name : newName, customPropertiesList : []})
                 break
             }
             default: {
@@ -262,7 +271,7 @@ export default function GraphCanvas({
     console.log("지금 선택된 아이디 나와!", nowVertices, nowEdges)
 
     return <div>
-        <Remocon index={nowFunc} type="rel" onSelect={onSelect} />
+        <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
         <br />
         {selectedId
             ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>

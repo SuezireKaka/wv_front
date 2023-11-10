@@ -3,6 +3,8 @@ import { useState, useRef, useEffect, useContext } from 'react';
 import { AxiosAuth } from 'toolbox/Fetch';
 import { useLocation, useParams } from "react-router";
 import AppContext from "context/AppContextProvider";
+import { ToolContextProvider } from './ToolContextProvider';
+import ToolData from './ToolData';
 
 export default function ToolView() {
     const { auth } = useContext(AppContext);
@@ -16,5 +18,13 @@ export default function ToolView() {
 
     const TOOL_DETAILS_URL = "/tool/getToolById/";
 
-    return <p>공사중입니다!</p>
+
+    return <AxiosAuth uri={TOOL_DETAILS_URL + param.idPath} auth={auth}
+        renderSuccess={(res) =>
+            <ToolContextProvider>
+                <ToolData data={res?.data} />
+            </ToolContextProvider>
+        }
+    />
+
 }
