@@ -1,20 +1,45 @@
-import React from 'react'
-import axios from 'api/axios';
-import { Fetch } from 'toolbox/Fetch';
-import { Form } from 'react-bootstrap';
-import Checkbox from 'toolbox/Checkbox';
-import CheckboxGroup from 'toolbox/CheckboxGroup';
-import { useState } from 'react';
-import { useContext } from 'react';
-import AppContext from 'context/AppContextProvider';
+import { useState } from "react";
+import { useEffect } from "react";
+
 export default function Test1() {
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
 
-  return (
-    <article>
-      테스트
-    </article>
-  );
+  // Note: the empty deps array [] means
+  // this useEffect will run once
+  // similar to componentDidMount()
+  useEffect(() => {
+    fetch("https://api.example.com/items")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setItems(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+  }, [])
 
-
-
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <ul>
+        {items.map(item => (
+          <li key={item.id}>
+            {item.name} {item.price}
+          </li>
+        ))}
+      </ul>
+    );
+  }
 }

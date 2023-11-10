@@ -26,7 +26,8 @@ export default function PostMng() {
 	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
 	let hTier;
-	const [genreTypes, setGenreTypes] = useState(post?.genreList?.map((genre) => genre?.id));
+
+	const [genreTypes, setGenreTypes] = useState(state?.isSeries?post?.genreList?.map((genre) => genre?.id):[]);
     const [hasAnyType, setHasAnyType] = useState([]);
 	console.log(genreTypes);
 	//const [checkedItems, setCheckedItems] = useState([]);//체크된 요소들
@@ -35,8 +36,8 @@ export default function PostMng() {
         if (isChecked) { //체크 되었을때 
             setGenreTypes([...genreTypes, code])
 
-        } else if (!isChecked && genreTypes.find(one => one === code)) { //체크가 안되었고, id가 있을때(클릭 2번시) 
-            const filter = genreTypes.filter(one => one !== code)
+        } else if (!isChecked && genreTypes?.find(one => one === code)) { //체크가 안되었고, id가 있을때(클릭 2번시) 
+            const filter = genreTypes?.filter(one => one !== code)
             setGenreTypes([...filter]);
 
         }
