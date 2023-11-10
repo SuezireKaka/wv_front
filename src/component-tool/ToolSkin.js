@@ -14,13 +14,13 @@ export default function ToolSkin({ tool, state, onClick = f => f, onLink = f => 
         <td onClick={() => onClick(tool)}>{displayDate(tool.regDt, tool.uptDt)}</td>
         <td>
             <Link to={`/series/${state.seriesId}/tool/${tool.id}`}
-                state={{ seriesId: state.seriesId, page: 1, toolId: tool.id, addr: state.addr + tool.name + "/" }}
+                state={{ writer : state.writer, seriesId: state.seriesId, page: 1, toolId: tool.id, addr: state.addr + tool.name + "/" }}
             >
                 <button onClick={onLink}>하위 툴</button>
             </Link>
             {" : "}
             <Link to={`/series/${state.seriesId}/tool/${tool.id}/view`}
-                state={{ seriesId: state.seriesId, page: state.page, toolId: tool.id, addr: state.addr,
+                state={{ writer : state.writer, seriesId: state.seriesId, page: state.page, toolId: tool.id, addr: state.addr,
                     tool: tool}}
             >
                 <button>펼쳐보기</button>

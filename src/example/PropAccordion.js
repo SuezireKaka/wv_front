@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import React from 'react';
-import PureDrag from './PureDrag';
+import PureDrag from '../component-tool/PureDrag';
 
 export default function PropAccordion({nowObjectList, onUpdate = f => f}) {
     console.log("너 나와봐!", nowObjectList)

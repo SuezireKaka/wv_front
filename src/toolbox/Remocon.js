@@ -26,7 +26,7 @@ export default function Remocon({ index = 0, type = "", writer, onSelect = f => 
                 ? remoteKeyList[index].info
                 : "")
             }</p>
-        {remoteKeyList?.filter(key => remoconAuth(auth, writer, key.auth)).map(
+        {remoteKeyList?.filter(key => {console.log("얘 살려?", remoconAuth(auth, writer, key.auth)); return remoconAuth(auth, writer, key.auth)}).map(
             (rmt, index) => <button onClick={
                 () => rmt.isImmediate
                 ? immediate(index, rmt.name)
@@ -38,15 +38,16 @@ export default function Remocon({ index = 0, type = "", writer, onSelect = f => 
 
 function remoconAuth(auth, writer, authCode) {
     let andArray = authCode.split(" and ")
+    console.log("논리식 분해중......1", andArray)
     let orArrayOfArray = andArray.map(clause => clause.split(" or "))
-    console.log("논리식 분해중......", orArrayOfArray)
+    console.log("논리식 분해중......2", orArrayOfArray)
     // reduce 안 reduce 실화?
     let result = orArrayOfArray.reduce(
-        (lemma, nextArray) => {
+        (lemma_fitst, nextArray) => {
             let bool = nextArray.reduce(
-                (lemma, nextAuth) => lemma || codeToAuth(auth, writer, nextAuth), false
+                (lemma_second, nextAuth) => {return lemma_second || codeToAuth(auth, writer, nextAuth)}, false
             )
-            return lemma && bool
+            return lemma_fitst && bool
         }, true
     )
 
@@ -60,8 +61,11 @@ function codeToAuth(auth, writer, authCode) {
         case "login":
             return auth
         case "self":
-            return auth?.id === writer?.id
+            console.log("넌 누구야?", auth)
+            console.log("이건 누가 썼는데?", writer)
+            return auth?.userId === writer?.id
         case "manage":
+            console.log("롤 좀 보여줄래?", auth?.roles)
             return auth?.roles.includes('manager') || auth?.roles.includes('admin')
         default:
             return false

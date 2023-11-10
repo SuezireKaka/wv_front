@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from 'react';
-import PropTest from './PropTest';
+import PropTest from '../example/PropTest';
 
 export default function PureDrag({propList = [], onChange = f => f}) {
   const dragItem = useRef();

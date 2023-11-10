@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function ToolManager({
-    tool = {name : "", xToolSize : 100, yToolSize : 100}, state,
+    index, tool = {name : "", xToolSize : 100, yToolSize : 100}, state,
     onManage = f => f, onCancel = f => f
 }) {
     const TABLE_STYLE = {
@@ -47,7 +47,7 @@ export default function ToolManager({
                 저장
             </button>
             {" : "}
-            <button onClick={onCancel}>취소</button>
+            <button onClick={() => onCancel(index)}>취소</button>
         </td>
     </tr>
 }
