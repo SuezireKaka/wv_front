@@ -15,6 +15,7 @@ export default function PostMng() {
 	const location = useLocation();
     const { auth, genreCodeList } = useContext(AppContext);
 	const post = location.state?.post;
+	console.log("포스트 나와라 오버", post)
 	const state = location.state;
     const innerState = location.state?.state;
 	const parentId = location.state?.parentId;
@@ -35,8 +36,8 @@ export default function PostMng() {
         if (isChecked) { //체크 되었을때 
             setGenreTypes([...genreTypes, code])
 
-        } else if (!isChecked && genreTypes.find(one => one === code)) { //체크가 안되었고, id가 있을때(클릭 2번시) 
-            const filter = genreTypes.filter(one => one !== code)
+        } else if (!isChecked && genreTypes?.find(one => one === code)) { //체크가 안되었고, id가 있을때(클릭 2번시) 
+            const filter = genreTypes?.filter(one => one !== code)
             setGenreTypes([...filter]);
 
         }
