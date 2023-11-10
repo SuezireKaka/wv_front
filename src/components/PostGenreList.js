@@ -17,7 +17,7 @@ export default function PostGenreList({ genreTypes, genreList, setGenreTypes=f=>
     //const [genId, setGenId] = useState([])
 
     const onCheck = ({ target }) => {
-        checkedItemHandler(target.parentNode, target.value, target.checked)
+        checkedItemHandler(target?.parentNode, target?.value, target?.checked)
     }
 
     //setGenreTypes()
@@ -26,12 +26,12 @@ export default function PostGenreList({ genreTypes, genreList, setGenreTypes=f=>
 
             <Form.Check
                 inline
-                label={gen.genre}
+                label={gen?.genre}
                 name="checkGenre"
                 type="checkbox"
-                value={gen.id}
+                value={gen?.id}
                 onChange={e => onCheck(e)}
-                id={gen.id}
+                id={gen?.id}
                 defaultChecked={genreList?.map((genre) => genre?.id).includes(gen?.id)}
                 />
 

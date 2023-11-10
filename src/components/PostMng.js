@@ -27,7 +27,8 @@ export default function PostMng() {
 	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
 	let hTier;
-	const [genreTypes, setGenreTypes] = useState(post?.genreList?.map((genre) => genre?.id));
+
+	const [genreTypes, setGenreTypes] = useState(state?.isSeries?post?.genreList?.map((genre) => genre?.id):[]);
     const [hasAnyType, setHasAnyType] = useState([]);
 	console.log(genreTypes);
 	//const [checkedItems, setCheckedItems] = useState([]);//체크된 요소들

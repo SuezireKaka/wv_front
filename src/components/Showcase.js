@@ -92,7 +92,6 @@ export default function ShowcaseList() {
         }
       }
       recall()
-
     }, [param]);
 
     useEffect(() => {
@@ -116,7 +115,7 @@ export default function ShowcaseList() {
       <GenreButton txtSearch={txtSearch} onSearch={onSearch}/>
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
-        <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile, genreList: []},isSeries:isSeries}}>
+        <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>
           <Button variant="outline-primary">신규</Button>
         </Link>}
         </td><td>
