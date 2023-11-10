@@ -39,25 +39,37 @@ export const ToolContextProvider = ({ children }) => {
         console.log("주문하신 물품은?", newList)
         let copyArray = [...nowObjectList]
         console.log("복사 잘 됐니?", copyArray)
-        copyArray[index].customPropertiesList = [...newList]
+        let target = copyArray[index]
+        console.log("타겟은?", target)
+        target.customPropertiesList = [...newList]
         console.log("잘 바뀌었니?", copyArray)
+        findTargetAndSync(target)
         setNowObjectList(copyArray)
     }
 
+    function findTargetAndSync(target) {
+        // 타겟의 one이 있으면 edge 없으면 vertex
+        let [targetArray, setTargetArray] =
+        target.one
+            ? [[...nowEdges], setNowEdges]
+            : [[...nowVertices], setNowVertices]
+        // 타겟 어레이에서 타겟과 아이디가 일치하는 것을 찾아서 제거하고 다시 넣기
+        let newTargetArray = targetArray.filter(tgt =>  tgt.id !== target.id)
+        newTargetArray.push(target)
+        console.log("타겟은 처리했나", newTargetArray)
+        setTargetArray(newTargetArray)
+    }
+
     function onSaveTool(id, writer, auth) {
-        console.log("세관 검사중......", id, writer, auth, {
+        let saveDate = {
             id : id, name : nowName, writer : writer,
             xToolSize : xToolSize, yToolSize : yToolSize,
             customEntityList : nowVertices,
             customRelationList : nowEdges
-        })
-        axios.post(SAVE_TOOL_URL,
-            {
-                id : id, name : nowName, writer : writer,
-                xToolSize : xToolSize, yToolSize : yToolSize,
-                customEntityList : nowVertices,
-                customRelationList : nowEdges
-            }, { headers: {
+        }
+        console.log("세관 검사중......", id, writer, auth, saveDate)
+        axios.post(SAVE_TOOL_URL, saveDate,
+            { headers: {
 					'Content-Type': 'application/json',
 					"x-auth-token": `Bearer ${auth?.accessToken}`
             }}

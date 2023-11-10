@@ -15,6 +15,7 @@ export default function PostMng() {
 	const location = useLocation();
     const { auth, genreCodeList } = useContext(AppContext);
 	const post = location.state?.post;
+	console.log("포스트 나와라 오버", post)
 	const state = location.state;
     const innerState = location.state?.state;
 	const parentId = location.state?.parentId;
