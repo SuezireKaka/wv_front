@@ -26,18 +26,31 @@ export default function PostMng() {
 	const [listAttach, setListAttach] = useState(post?.listAttachFile);
 	const isComplete = useState(1);
 	let hTier;
-	const [genreTypes, setGenreTypes] = useState([]);
+	const [genreTypes, setGenreTypes] = useState(post?.genreList?.map((genre) => genre?.id));
     const [hasAnyType, setHasAnyType] = useState([]);
+	console.log(genreTypes);
+	//const [checkedItems, setCheckedItems] = useState([]);//체크된 요소들
 
+    const checkedItemHandler = (box, code, isChecked) => {
+        if (isChecked) { //체크 되었을때 
+            setGenreTypes([...genreTypes, code])
 
+        } else if (!isChecked && genreTypes.find(one => one === code)) { //체크가 안되었고, id가 있을때(클릭 2번시) 
+            const filter = genreTypes.filter(one => one !== code)
+            setGenreTypes([...filter]);
+
+        }
+    };
+
+    console.log('checkedItems', genreTypes)
 
 	
 	console.log("너가 첨부파일 갖고 있다며?", listAttach)
-
+/*
 	useMemo(() => {
 		setHasAnyType(genreTypes?.length > 0);
 	}, [genreTypes])
-
+*/
 	const [hasAllContents, setHasAllContents] = useState();
 	useEffect(() => {
 		setHasAllContents(title?.trim() ? content?.trim() : false);
@@ -113,7 +126,7 @@ export default function PostMng() {
 				required
 			/>
 		</Form.Group>
-		{state.isSeries?<PostGenreList genreList={post.genreList} genreTypes={genreTypes} setGenreTypes={setGenreTypes}/>:""}
+		{state.isSeries?<PostGenreList checkedItemHandler={checkedItemHandler} genreList={post.genreList} genreTypes={genreTypes} setGenreTypes={setGenreTypes}/>:""}
 		
 		<Form.Group className="mb-3" >
 			{/*<Form.Label >글내용</Form.Label>*/}
@@ -129,7 +142,7 @@ export default function PostMng() {
 		</Form.Group>
 		<ThumbnailList imgDtoList={listAttach}/>
 		<AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach}/>
-		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents || !genreTypes ||genreTypes.length === 0} >
+		<Button variant="outline-primary" onClick={handleSubmit} disabled={!hasAllContents } >
 			반영
 		</Button>
 		<Button variant="outline-dark" onClick={handleDelete}>
