@@ -7,7 +7,7 @@ import { useLocation } from 'react-router';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function PostListOffcanvas() {
+export default function PostListOffcanvas({post}) {
     const [show, setShow] = useState(false);
     const location = useLocation();
     let state = location.state;

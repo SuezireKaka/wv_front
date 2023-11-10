@@ -12,7 +12,7 @@ export default function GenreButton({ txtSearch, onSearch = f => f }) {
 
     function onGenreSearch(e) {
         
-        return console.log(e);
+        //return console.log(e);
     }
 
     return (

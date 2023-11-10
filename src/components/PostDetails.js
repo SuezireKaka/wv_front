@@ -135,7 +135,7 @@ export default function PostDetails() {
         : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
       &nbsp;
       {/* 
-      <PostListOffcanvas state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}/>
+      <PostListOffcanvas post={post} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}/>
       &nbsp;*/}
       {(post.writer ? post.writer.id === auth.userId : false) ? <>
         <Link
