@@ -12,9 +12,19 @@ export default function ToolManager({
         borderCollapse: "collapse"
     }
 
+    const [MIN_SIZE, MAX_SIZE] = [100, 2000]
+
     const [nowName, setNowName] = useState(tool.name);
     const [nowXToolSize, setNowXToolSize] = useState(tool.xToolSize);
     const [nowYToolSize, setNowYToolSize] = useState(tool.yToolSize);
+
+    function minmax(value) {
+        return value > MIN_SIZE 
+        ? value < MAX_SIZE 
+            ? value
+            : MAX_SIZE
+        : MIN_SIZE
+    }
 
     return <tr style={{ ...TABLE_STYLE, textAlign: "center" }}>
         <td>
@@ -30,24 +40,28 @@ export default function ToolManager({
                 min={100} max={2000}
                 value={nowXToolSize}
                 onChange={e => setNowXToolSize(e.target.value)}
+                onBlur={e => {console.log("블러가 먼저야!"); setNowXToolSize(minmax(e.target.value))}}
             />
             {" X "}
             <input type="number"
                 min={100} max={2000}
                 value={nowYToolSize}
-                onChange={e => setNowYToolSize(e.target.value)
-            }/>
+                onChange={e => setNowYToolSize(e.target.value)}
+                onBlur={e => {console.log("블러가 먼저야!"); setNowYToolSize(minmax(e.target.value))}}
+            />
         </td>
         <td></td>
         <td>
             <button onClick={() => {
-                console.log("지금부터 이걸로 변경을 시도한다", {...tool, name : nowName, xToolSize : nowXToolSize, yToolSize : nowYToolSize})
-                onManage({...tool, name : nowName, xToolSize : nowXToolSize, yToolSize : nowYToolSize})
+                console.log("원래 툴은 이거였어", tool)
+                // 왜 자바 프로퍼티명은 xToolSize인데 받는 건 xtoolSize로 받음? 어이없어 정말
+                console.log("지금부터 이걸로 변경을 시도한다", {...tool, name : nowName, xtoolSize : Number(nowXToolSize), ytoolSize : Number(nowYToolSize)})
+                onManage({...tool, name : nowName, xtoolSize : Number(nowXToolSize), ytoolSize : Number(nowYToolSize)})
             }}>
                 저장
             </button>
             {" : "}
-            <button onClick={() => onCancel(index)}>취소</button>
+            <button onClick={() => {console.log("취소가 먼저거든?"); onCancel(index)}}>취소</button>
         </td>
     </tr>
 }
