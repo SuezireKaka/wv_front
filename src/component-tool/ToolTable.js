@@ -42,14 +42,13 @@ export default function ToolTable({
         console.log("네 결심을 보여줘!", newData)
         setNowFunc(1)
         setNowFuncName("선택")
-        setData({ ...data, firstVal: newData })
     }
 
     function onManage(index, newTool) {
         console.log("저장하려는 데이터는?", { ...newTool, isEditing: false })
         onDetermine(index, newTool)
         if (checkQuality(newTool)) {
-            manageToolSkin(newTool)
+            manageToolSkin(newTool, index, newTool.isCreating)
         }
         else {
             alert("툴 이름이 없습니다!")
@@ -61,6 +60,15 @@ export default function ToolTable({
     }
 
     function onCancel(index) {
+        let newData = [...data.firstVal]
+        console.log("지금 뭘 취소하려는 거야?", newData, index, newData[index])
+        if (newData[index].isCreating) {
+            newData = newData.slice(1, newData.length)
+        }
+        else {
+            newData[index].isEditing = false
+        }
+        setData({ ...data, firstVal: newData })
         onDetermine(index)
         
     }
@@ -111,7 +119,7 @@ export default function ToolTable({
         <thead>
             <tr><th colSpan={4} style={{ ...TABLE_STYLE, textAlign: "left", ...ADDRESS_STYLE }}> ★ {address}</th></tr>
             <tr><td colSpan={4} style={{ ...TABLE_STYLE, textAlign: "center" }}>
-                <Remocon index={nowFunc} type="xpl" onSelect={onSelect} immediate={onCreate} />
+                <Remocon index={nowFunc} writer={state?.writer} type="xpl" onSelect={onSelect} immediate={onCreate} />
             </td></tr>
             <tr><td colSpan={4} style={{ ...TABLE_STYLE }}>
                 <div style={{ display: "inline-block" }}>
@@ -133,10 +141,11 @@ export default function ToolTable({
             ? toolset.map((tool, index) =>
                 tool.isEditing
                     ? <ToolManager key={index}
+                        index={index}
                         tool={tool}
                         state={state}
                         onManage={(newTool) => onManage(index, newTool)}
-                        onCancel={() => onCancel()}
+                        onCancel={onCancel}
                     />
                     : <ToolSkin key={index}
                         tool={tool}

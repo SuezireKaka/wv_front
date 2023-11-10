@@ -12,9 +12,6 @@ export default function Remocon({ index = 0, type = "", writer, onSelect = f => 
                 : null
     const remoteKeyList = selectedRemocon?.remoteKeyList
 
-    console.log("리모콘 또 실종", relationRemocon)
-    console.log("버튼은 어디갔지", remoteKeyList)
-
     return <div style={{ marginBottom: "5px" }}>
         <p>{
             "지금 선택된 기능은 '" +
@@ -39,14 +36,13 @@ export default function Remocon({ index = 0, type = "", writer, onSelect = f => 
 function remoconAuth(auth, writer, authCode) {
     let andArray = authCode.split(" and ")
     let orArrayOfArray = andArray.map(clause => clause.split(" or "))
-    console.log("논리식 분해중......", orArrayOfArray)
     // reduce 안 reduce 실화?
     let result = orArrayOfArray.reduce(
-        (lemma, nextArray) => {
+        (lemma_fitst, nextArray) => {
             let bool = nextArray.reduce(
-                (lemma, nextAuth) => lemma || codeToAuth(auth, writer, nextAuth), false
+                (lemma_second, nextAuth) => {return lemma_second || codeToAuth(auth, writer, nextAuth)}, false
             )
-            return lemma && bool
+            return lemma_fitst && bool
         }, true
     )
 
@@ -60,7 +56,7 @@ function codeToAuth(auth, writer, authCode) {
         case "login":
             return auth
         case "self":
-            return auth?.id === writer?.id
+            return auth?.userId === writer?.id
         case "manage":
             return auth?.roles.includes('manager') || auth?.roles.includes('admin')
         default:

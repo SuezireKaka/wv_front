@@ -4,7 +4,7 @@ import axios from 'api/axios';
 import AppContext from "context/AppContextProvider";
 
 export default function Test4() {
-    const TOOL_DETAILS_URL = "/tool/anonymous/getToolById/";
+    const TOOL_DETAILS_URL = "/tool/getToolById/";
     const lookUpId = useRef();
 
     const [nowName, setNowName] = useState("")
@@ -42,7 +42,7 @@ export default function Test4() {
 
     function lookUp(id) {
         let uri = TOOL_DETAILS_URL + id
-        fetch(uri).then(response => response.json())
+        axios.post(uri, ).then(response => response.json())
             .then((resData) => {
                 console.log("지금 나왔다", resData)
                 setNowName(resData?.name)

@@ -21,7 +21,7 @@ export default function ToolExplorer() {
         return "http://localhost:8080/tool/listAllNextTools/" + state?.seriesId + "/path" + state?.toolId + "/" + state?.page
     }
 
-    function manageToolSkin(toolSkin) {
+    function manageToolSkin(toolSkin, index, isCreating) {
         console.log("이 유저가 보냅니다: ", auth)
         let uri = TOOLSKIN_MANAGE_URL + state?.seriesId
         console.log("다음 주소로 보냅니다: ", uri)
@@ -32,7 +32,14 @@ export default function ToolExplorer() {
                 'Content-Type': 'application/json',
                 "x-auth-token": `Bearer ${auth?.accessToken}`
             }
-        }).then(res => console.log("뭐라고 왔어?", res)).catch((error) => { console.log(error) })
+        }).then(res => {
+            let oldData = {...nowData }
+            let newData = {...nowData }
+            let newSkin = {...res.data, idEditing : false, isCreating : false}
+            newData.firstVal[index] = newSkin
+            setNowData(newData)
+            console.log("데이터 비교좀 하자", oldData, nowData)
+        }).catch((error) => { console.log(error) })
         
     }
     
@@ -61,7 +68,7 @@ export default function ToolExplorer() {
     function readyForEditing(data) {
         return {
             ...data,
-            firstVal: data?.firstVal?.map(tool => { return { ...tool, isEditing: false } })
+            firstVal: data?.firstVal?.map(tool => { return { ...tool, isEditing: false, isCreating: false } })
         }
     }
 
