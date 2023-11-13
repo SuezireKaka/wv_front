@@ -4,7 +4,7 @@ import { AxiosPost } from 'toolbox/Fetch';
 import OriginalFileView from './OriginalFileView';
 
 //개량판
-export default function OriginalViewOne({ imgDtoList, x,y }) {
+export default function OriginalViewOne({ imgDtoList, x,y, d }) {
     //console.log("ThumbnailList render ", imgDtoList);
 
     const thumbnailRequestTarget = ["video", "image"];
