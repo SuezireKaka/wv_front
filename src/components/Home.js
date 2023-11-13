@@ -29,17 +29,20 @@ export default function Home() {
     textDecoration: "none",
 
   }
+
+
+
   const renderSuccess = (data) => {
 
     return (
       <Carousel fade>{/* */}
         {data?.firstVal?.map((post) => {
           return (
-            <Carousel.Item interval={1500}>
+            <Carousel.Item interval={3000}>
               <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: "0002" }}>
             {post.listAttachFile?.length === 0 ?
               <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="500" height="700" rounded />
-              : <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="500" y="700" />}
+              : <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="500" y="700"  />}
               </Link>
           </Carousel.Item>
         )})}
@@ -47,13 +50,33 @@ export default function Home() {
     )
   }
 
+  const renderSuccess2 = (data) => {
+
+    return (
+      <Carousel>{/* */}
+        {data?.firstVal?.map((post) => {
+          return (
+            <Carousel.Item interval={1500} >
+              <Link style={{ textDecoration: "none", color: "black", overflow:"hidden" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: "0002" }}>
+            {post.listAttachFile?.length === 0 ?
+            <div  overflow="hidden">
+              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="550px" height="350px"   rounded /></div>
+              : <OriginalViewOne key={post.id}  imgDtoList={post.listAttachFile} x="550px"  y="350px" d=".img"  />}
+              </Link>
+          </Carousel.Item>
+        )})}
+      </Carousel>
+    )
+  }
+
+
   const renderSuccessPost = (postListWithPaging) => {
     const postList = postListWithPaging?.firstVal;
     const pagenation = postListWithPaging?.secondVal;
     let postList2 = postList?.filter((post, i) => i < 7);
 
     return (<>
-      <Table striped bordered hover variant="white"  width="550px" height="350px" border="2px">
+      <Table striped bordered hover variant="white"  width="550px" height="300px" border="2px">
         <th><Link  style={{ textDecoration: "none", color: "black" }} to={`/board/0000`}
             state={{ boardId: "0000", page: 1 }}>공지사항</Link></th>
         {postList2?.map((post, i) =>
@@ -66,7 +89,6 @@ export default function Home() {
           </tr>
         )}
       </Table>
-
       </>
     )
   }
@@ -80,12 +102,11 @@ export default function Home() {
         </td>
 
         <td width="5%"></td>
-        <td width="550px" height="700px" >
-
+        <td width="550px" height="350px" >
           <Fetch uri={postUri} renderSuccess={renderSuccessPost} />
-          <tr width="550px" height="350px" ><HomePlus /></tr>
+          <tr width="550px" height="350px" ><Fetch uri={seriesUri2} renderSuccess={renderSuccess2} /></tr>
         </td>
-
+        
         
       </tr>
     </table >

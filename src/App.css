@@ -58,6 +58,31 @@
   text-decoration: none;
   cursor: "pointer"
 }
+
+.cropping{
+  overflow: hidden;
+  clip-path: polygon(200px 0px 300px 0px);
+}
+
+.cropping img{
+	max-width: initial;
+
+  margin-top: -15%;
+  clip-path: polygon(200px 0px 300px 0px);
+  object-position: 20% 10%;
+}
+
+.img {
+  width: 550px;
+  height: 350px;
+  position: absolute;
+  background-size: cover;
+  object-fit: cover;
+  margin-top: -15%;
+  overflow:hidden;
+
+}
+
 .wvclip{
 clip: rect( 20px, 220px, 220px, 20px )
 }
