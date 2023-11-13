@@ -6,6 +6,7 @@ export default function ToolData({ data }) {
     console.log("데이터는 나와?", data)
     const { nowName, setNowName,
         setXToolSize, setYToolSize,
+        setInitXToolSize, setInitYToolSize,
         setInitVertices, setInitEdges,
         setNowVertices, setNowEdges,
         setNowObjectList
@@ -16,6 +17,8 @@ export default function ToolData({ data }) {
         setNowName(data?.name);
         setXToolSize(data?.xToolSize);
         setYToolSize(data?.yToolSize);
+        setInitXToolSize(data?.xToolSize);
+        setInitYToolSize(data?.yToolSize);
         setInitVertices(data?.customEntityList);
         setNowVertices(data?.customEntityList);
         setInitEdges(data?.customRelationList);

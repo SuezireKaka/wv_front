@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import useHover from 'hooks/useHover';
 import Gra1 from './Gra1';
 import { Fetch } from 'toolbox/Fetch';
+import ToolManager from 'component-tool/ToolManager';
 
 // 시각적인 효과를 위해 BOX컴포넌트 사용
 const Box = styled.div`
@@ -138,6 +139,8 @@ const Box = styled.div`
     {/* <Fetch uri={`/work/anonymous/listAllSeries/0001/1`} renderSuccess={renderSuccess} />*/}
     <div style={{width:700, height:500}}> {/*  style={{width:700, height:500}} 가로 세로 꼭줘야함 */}
       <Gra1 data={data}/>
+      <br/>
+      <p>{ToolManager.X_MIN_SIZE + "에요"}</p>
     </div></>
   );
 };

@@ -2,17 +2,33 @@ import { useState, useRef, useMemo, useEffect, useContext } from 'react';
 import ToolContext from './ToolContextProvider';
 import AppContext from 'context/AppContextProvider';
 import Remocon from '../toolbox/Remocon';
-import UseGestureElement from '../example/UseGestureElement';
+import UseGestureElement from '../toolbox/UseGestureElement';
 import { useLocation } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { isAnyDanger } from './PropAccordion';
+import { X_MAX_TOOLSIZE, X_MIN_TOOLSIZE, Y_MAX_TOOLSIZE, Y_MIN_TOOLSIZE } from './ToolManager';
+import Tracker, {TRACKER_SIZE} from 'toolbox/Tracker';
+
+export const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
+    DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE]
+    = [100, 100, 50, 50]
+
+export const [X_MIN_OBJSIZE, Y_MIN_OBJSIZE,
+    X_MAX_OBJSIZE, Y_MAX_OBJSIZE]
+    = [50, 25, 200, 100]
+
+export const [DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST] = [150, 150]
 
 export default function GraphCanvas() {
-    const { initVertices, setInitVertices,
+    const {
+        setName,
+        initVertices, setInitVertices,
         nowVertices, setNowVertices,
         initEdges, setInitEdges,
         nowEdges, setNowEdges,
-        xToolSize, yToolSize,
+        xToolSize, setXToolSize,
+        yToolSize, setYToolSize,
+        initXToolSize, initYToolSize,
         nowObjectList,
         onSummonObject, onDeleteAllObjects,
         onSaveTool
@@ -27,10 +43,6 @@ export default function GraphCanvas() {
     console.log("작가 들어있는 상태 보여줘", state)
     console.log("그래서 이제 뭐 그려?", nowVertices, nowEdges)
 
-    const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
-        DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE,
-        DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST]
-        = [100, 100, 50, 50, 150, 150]
     const canvasRef = useRef()
 
     const [nowFunc, setNowFunc] = useState(0)
@@ -136,6 +148,18 @@ export default function GraphCanvas() {
         }
     }
 
+    function onResize(set, type, index, newPoint) {
+        console.log("새로운 지점 보여 줘", newPoint)
+        console.log("타입은 어때?", type)
+        if (type !== "canvas") {
+
+        }
+        else {
+            setXToolSize(newPoint.xPos - TRACKER_SIZE[0])
+            setYToolSize(newPoint.yPos - TRACKER_SIZE[1])
+        }
+    }
+
     function canvasExecute(funcName, e) {
         let rect = e.target.getBoundingClientRect();
         let clkX = e.clientX - rect.left;
@@ -143,6 +167,7 @@ export default function GraphCanvas() {
         switch (funcName) {
             case "선택": {
                 console.log("지금 클릭한 좌표는", clkX, clkY)
+                setSelectedId("")
                 break
             }
             case "객체 추가": {
@@ -277,7 +302,7 @@ export default function GraphCanvas() {
     // 움직이면 다시 그려라
     useMemo(redraw, [nowVertices, nowEdges])
 
-    console.log("지금 선택된 아이디 나와!", nowVertices, nowEdges)
+    console.log("툴 사이즈 초기값은?", initXToolSize, initYToolSize)
 
     return <table>
         <tr>
@@ -307,38 +332,63 @@ export default function GraphCanvas() {
                 }
             </td>
         </tr>
-        <tr><td colSpan={2}><div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
-            <canvas class="Canvas" ref={canvasRef} width={xToolSize} height={yToolSize}
-                style={{ borderColor: "#000000", border: "1px dotted" }}
-                onClick={(e) => canvasExecute(nowFuncName, e)}
-            />
-            {nowEdges.map((edge, index) =>
-                <UseGestureElement
-                    id={edge.id}
-                    canvasSize={[xToolSize, yToolSize]}
-                    init={initEdges[index]}
-                    pos={edge}
-                    set={nowEdges}
-                    type="edge"
-                    index={index}
-                    onMove={onMove}
-                    onClick={(e) => objectExecute(nowFuncName, e, "edge")}
-                />)
-            }
-            {nowVertices.map((vertex, index) =>
-                <UseGestureElement
-                    id={vertex.id}
-                    canvasSize={[xToolSize, yToolSize]}
-                    init={initVertices[index]}
-                    pos={vertex}
-                    set={nowVertices}
-                    type="vertex"
-                    index={index}
-                    onMove={onMove}
-                    onClick={(e) => objectExecute(nowFuncName, e, "vertex")}
-                />)
-            }
-        </div></td></tr>
+        <tr><td colSpan={2}>
+            <div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
+                <canvas class="Canvas" ref={canvasRef} width={xToolSize} height={yToolSize}
+                    style={{ borderColor: "#000000", border: "1px dotted" }}
+                    onClick={(e) => canvasExecute(nowFuncName, e)}
+                />
+                {nowEdges.map((edge, index) => {
+                    let init = initEdges[index]
+                    return <UseGestureElement
+                        id={edge.id}
+                        init={init}
+                        pos={edge}
+                        set={nowEdges}
+                        type="edge"
+                        index={index}
+                        onMove={onMove}
+                        onClick={(e) => objectExecute(nowFuncName, e, "edge")}
+                        bound={objBound(init, xToolSize, yToolSize, edge)}
+                    />
+                })}
+                {nowVertices.map((vertex, index) => {
+                    let init = initVertices[index]
+                    return <UseGestureElement
+                        id={vertex.id}
+                        init={init}
+                        pos={vertex}
+                        set={nowVertices}
+                        type="vertex"
+                        index={index}
+                        onMove={onMove}
+                        onClick={(e) => objectExecute(nowFuncName, e, "vertex")}
+                        bound={objBound(init, xToolSize, yToolSize, vertex)}
+                    />
+                })}
+                {selectedId
+                    ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
+                    : <Tracker
+                        onlySize
+                        type="canvas"
+                        pos={{ xPos: xToolSize, yPos: yToolSize }}
+                        init={{ xPos: initXToolSize, yPos: initYToolSize }}
+                        minToolSize={{ xSize: X_MIN_TOOLSIZE, ySize: Y_MIN_TOOLSIZE }}
+                        maxToolSize={{ xSize: X_MAX_TOOLSIZE, ySize: Y_MAX_TOOLSIZE }}
+                        onResize={onResize}
+                    />
+                }
+            </div>
+        </td></tr>
     </table>
+}
 
+
+function objBound(init, xMax, yMax, obj) {
+    return {
+        left: 0 - init.xPos,
+        right: xMax - obj.xSize - init.xPos,
+        top: 0 - init.yPos,
+        bottom: yMax - obj.ySize - init.yPos
+    }
 }
