@@ -41,7 +41,7 @@ export default function Home() {
             <Carousel.Item interval={3000}>
               <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: "0002" }}>
             {post.listAttachFile?.length === 0 ?
-              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="500" height="700" rounded />
+              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="500" height="700" />
               : <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="500" y="700"  />}
               </Link>
           </Carousel.Item>
@@ -59,9 +59,9 @@ export default function Home() {
             <Carousel.Item interval={1500} >
               <Link style={{ textDecoration: "none", color: "black", overflow:"hidden" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: "0002" }}>
             {post.listAttachFile?.length === 0 ?
-            <div  overflow="hidden">
-              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="550px" height="350px"   rounded /></div>
-              : <OriginalViewOne key={post.id}  imgDtoList={post.listAttachFile} x="550px"  y="350px" d=".img"  />}
+            <div   class="clipmain">
+              <Image  src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="550px" height="700px" class="clipmain" /></div>
+              : <OriginalViewOne key={post.id}  imgDtoList={post.listAttachFile} x="550px"  y="700px" d="clipmain"  />}
               </Link>
           </Carousel.Item>
         )})}
@@ -102,9 +102,9 @@ export default function Home() {
         </td>
 
         <td width="5%"></td>
-        <td width="550px" height="350px" >
+        <td width="550px" height="300px" >
           <Fetch uri={postUri} renderSuccess={renderSuccessPost} />
-          <tr width="550px" height="350px" ><Fetch uri={seriesUri2} renderSuccess={renderSuccess2} /></tr>
+          <tr width="550px" height="300px" ><Fetch uri={seriesUri2} renderSuccess={renderSuccess2} /></tr>
         </td>
         
         
