@@ -72,16 +72,18 @@
   object-position: 20% 10%;
 }
 
-.img {
+.clipmain { position: relative;
   width: 550px;
-  height: 350px;
-  position: absolute;
-  background-size: cover;
-  object-fit: cover;
-  margin-top: -15%;
-  overflow:hidden;
-
+  height: 700px;
+  overflow: hidden;
+  top: -50px;
+  left: 0;
+  margin-top: -30%;
+  margin-bottom:-20%;
+  max-height: initial;
 }
+
+
 
 .wvclip{
 clip: rect( 20px, 220px, 220px, 20px )

@@ -12,10 +12,10 @@ export default function OriginalViewOne({ imgDtoList, x,y, d }) {
     function renderImg(afdto, blob) {
         const thumbFile = new File([blob.data], "image");
         const imgUrl = (window.URL || window.webkitURL).createObjectURL(thumbFile);
-        return  <img src={imgUrl} width={x} height={y} onError={({ currentTarget }) => {
+        return  <div> <img src={imgUrl} class={d} width={x} height={y} onError={({ currentTarget }) => {
             currentTarget.onerror = null; // prevents looping
             currentTarget.src=process.env.PUBLIC_URL + `/images/WVseries.jpg`;
-          }} alt='' />
+          }} alt='' /></div>
     }
 
     return <>
