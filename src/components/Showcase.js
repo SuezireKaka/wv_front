@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Col } from "react-bootstrap";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useState } from "react";
 import OriginalViewOne from "atom/OriginalViewOne";
 import axios from "api/axios";
@@ -53,15 +53,15 @@ export default function ShowcaseList() {
         getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
         setByKeyWord(true)
       } else {
-        getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}`);
+        getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}?genreId=${param.genreId ? param.genreId : ""}`);
         setByKeyWord(false)
       }
     }, [page])
   
     const getPostListThenSet = async (seriesListUri, isReset) => {
-      console.log("여기다 보내고 있네요 : ", seriesListUri + `/${page}`)
+      console.log("여기다 보내고 있네요 2222 : ", seriesListUri + `/${page}?genreId=${param.genreId ? param.genreId : ""}`)
       try {
-        const { data } = await axios.get(seriesListUri + `/${page}`);
+        const { data } = await axios.get(seriesListUri + `/${page}?genreId=${param.genreId ? param.genreId : ""}`);
         console.log("읽어온 게시글 목록", data?.firstVal);
         setPostList(isReset ? data?.firstVal : postList.concat(data?.firstVal));
       } catch {
@@ -81,11 +81,12 @@ export default function ShowcaseList() {
       });
     };
   
-    useEffect(() => { 
+    useMemo(() => { 
       async function recall() {
         try {
-          console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state.boardId}/1/`)
-          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state.boardId}/1`);
+          console.log("뭐가 문제인데?", state, state.boardId, param.genreId ? param.genreId : "")
+          console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state?.boardId}/1/?genreId=${param.genreId ? param.genreId : ""}`)
+          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/1?genreId=${param.genreId ? param.genreId : ""}`);
           console.log("다시 불러온 게시글 목록", data?.firstVal);
           setPostList(data?.firstVal);
         } catch {
@@ -97,7 +98,7 @@ export default function ShowcaseList() {
 
     useEffect(() => {
       console.log('page ? ', page);
-      getPostListThenSet();
+      getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}`);
     }, [page]);
   
     useEffect(() => {
