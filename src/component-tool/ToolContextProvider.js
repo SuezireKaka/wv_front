@@ -13,6 +13,8 @@ export const ToolContextProvider = ({ children }) => {
 
     const [xToolSize, setXToolSize] = useState(500)
     const [yToolSize, setYToolSize] = useState(500)
+    const [initXToolSize, setInitXToolSize] = useState(500)
+    const [initYToolSize, setInitYToolSize] = useState(500)
 
     const [initVertices, setInitVertices] = useState([])
     const [initEdges, setInitEdges] = useState([])
@@ -82,6 +84,8 @@ export const ToolContextProvider = ({ children }) => {
             xToolSize, setXToolSize, yToolSize, setYToolSize,
             initVertices, setInitVertices, initEdges, setInitEdges,
             nowVertices, setNowVertices, nowEdges, setNowEdges,
+            initXToolSize, setInitXToolSize,
+            initYToolSize, setInitYToolSize,
             nowObjectList, setNowObjectList,
             onSummonObject, onDeleteAllObjects,
             onUpdate, onSaveTool

@@ -84,6 +84,7 @@ export default function ShowcaseList() {
     useEffect(() => { 
       async function recall() {
         try {
+          console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state.boardId}/1/`)
           const { data } = await axios.get(`/work/anonymous/listAllSeries/${state.boardId}/1`);
           console.log("다시 불러온 게시글 목록", data?.firstVal);
           setPostList(data?.firstVal);

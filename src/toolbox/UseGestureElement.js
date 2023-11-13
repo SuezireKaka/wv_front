@@ -1,7 +1,7 @@
 import { useDrag } from 'react-use-gesture';
 
 export default function UseGestureElement({ id,
-    canvasSize = [1024, 768], init, pos, set, type, index,
+    init, pos, set, type, index, bound, style,
     onMove = f => f, onClick = f => f
 }) {
 
@@ -11,18 +11,14 @@ export default function UseGestureElement({ id,
             xPos: params.offset[0] + init.xPos,
             yPos: params.offset[1] + init.yPos
         })
-    }, {
-        bounds: {
-            left: 0 - init.xPos,
-            right: canvasSize[0] - pos.xSize - init.xPos,
-            top: 0 - init.yPos,
-            bottom: canvasSize[1] - pos.ySize - init.yPos
-        }
-    });
+    }, {bounds : {
+       ...bound
+    }});
 
     return <button id={id}
         {...bindPos()}
         style={{ /*MODIFIED!*/
+            ...style,
             position: "absolute",
             left: pos.xPos,
             top: pos.yPos,
