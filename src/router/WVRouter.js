@@ -32,13 +32,11 @@ export default function WVRouter() {
         <Routes> 
           <Route path="/" element={ <Home /> } />
           <Route path={"/agreement"} element={ <Agreement/> } />
-          <Route path={"/board/"}/> 
-          <Route path={"/board/0000/1"} element={ <PostNormal/> } />
-          <Route path={"/board/0001/1"} element={ <PostNormal/> } />
-          <Route path={"/board/:boardId/:page"} element={ <Showcase/> } />
-          {/**/}
+          <Route path={"/board/0000"} element={ <PostNormal/> } />
+          <Route path={"/board/0001"} element={ <PostNormal/> } />
+          <Route path={"/board/:boardId"} element={ <Showcase/> } />
+          <Route path={"/board/:boardId/:genreId"} element={ <Showcase/> } />
 
-          <Route path={"/board/:boardId/:page/:genreId"} element={ <Showcase/> } />
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
           <Route path={"/series/mng"} element={ <PostMng/> } />

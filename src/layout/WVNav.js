@@ -55,7 +55,7 @@ export default function TestNav() {
     return <>
       {boardList.map(board => (
         <Nav.Link>
-          <Link style={navMenu} class="jb-nav" key={board.id}  to={`/board/${board.id}/1`}
+          <Link style={navMenu} class="jb-nav" key={board.id}  to={`/board/${board.id}`}
           state={{ boardId: board.id, page: 1 }}>{board.name}</Link>
           </Nav.Link>
       ))}

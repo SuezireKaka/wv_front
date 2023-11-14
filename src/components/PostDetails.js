@@ -131,7 +131,7 @@ export default function PostDetails() {
       {state?.boardId === "0000" ?
       <Link key={state.parentId} to={`/`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
       : (state?.boardId === "0001" )
-        ? <Link key={state.parentId} to={`/board/${state.boardId}/1`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
+        ? <Link key={state.parentId} to={`/board/${state.boardId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
         : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
       &nbsp;
       {/* 

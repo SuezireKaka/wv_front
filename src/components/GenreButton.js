@@ -7,10 +7,11 @@ import { useContext } from 'react'
 import { useLocation } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 
-export default function GenreButton() {
+export default function GenreButton({state, page, setPage=f=>f}) {
     const { genreCodeList } = useContext(AppContext);
     const location = useLocation();
-    let state = location.state;
+    //let state = location.state;
+    console.log(state)
     const param = useParams();
 
     const navMenu = {
@@ -18,31 +19,30 @@ export default function GenreButton() {
         textDecoration: "none",
 
     }
+    /*
     function renderGenre(data, gen) {
         console.log(data)
         console.log(gen)
         return (
-            <Fetch uri={`/work/anonymous/listAllSeries/${state?.boardId}/1?genreId=${gen.id}`} renderSuccess={(data) => renderGenre(data, gen)} />
-        )
-    }
-
+            <Fetch uri={`/work/anonymous/listAllSeries/${state?.boardId}/${page}?genreId=${gen.id}`} renderSuccess={(data) => renderGenre(data, gen)} />
+        ) //onClick={e=>setPage(1)}
+    }*/
 
     return (
         <div>
             <Dropdown>
                 <Dropdown.Toggle variant="outline-success" id="dropdown-basic">
-                    장르
+                 장르
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item eventKey="all000" href={`/board/${state?.boardId}/1`}>
-                        <Link key="all000" style={navMenu} to={`/board/${state?.boardId}/1`}
+                    <Dropdown.Item eventKey="all000" href={`/board/${state?.boardId}`}>
+                        <Link key="all000" style={navMenu} to={`/board/${state?.boardId}`}
                             state={{ post: state?.post, page:1, boardId: state?.boardId }}>전체</Link> </Dropdown.Item>
                     <Dropdown.Divider />
                     {genreCodeList?.map((gen) => <>
-                        <Dropdown.Item eventKey={gen?.id} href={`/board/${state?.boardId}/1/${gen?.id}`}
-                            >
-                            <Link style={navMenu} key={gen?.id} to={`/board/${state?.boardId}/1/${gen?.id}`}
-                                state={{ post: state?.post, page:1, boardId: state?.boardId, genId: gen?.id }}>{gen?.genre}</Link>
+                        <Dropdown.Item eventKey={gen?.id} href={`/board/${state?.boardId}/${gen?.id}`}>
+                            <Link style={navMenu} key={gen?.id} to={`/board/${state?.boardId}/${gen?.id}`}
+                                state={{ post: state?.post, page:1, boardId: state?.boardId, genId: gen?.id }} >{gen?.genre}</Link>
                         </Dropdown.Item>
                     </>)}
                 </Dropdown.Menu>

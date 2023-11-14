@@ -89,7 +89,7 @@ export default function ShowcaseList() {
         try {
           //console.log("뭐가 문제인데?", state, state.boardId, state.genreId ? state.genreId : "")
           //console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state?.boardId}/1/?genreId=${param.genreId ? param.genreId : ""}`)
-          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/1?genreId=${param?.genreId ? param?.genreId : ""}`);
+          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/${page}?genreId=${param?.genreId ? param?.genreId : ""}`);
           //console.log("다시 불러온 게시글 목록", data?.firstVal);
           setPostList(data?.firstVal);
         } catch {
@@ -119,7 +119,7 @@ export default function ShowcaseList() {
     return <>
 
     <table style={{ margin: "auto", position: "static" }} ><td>
-      <GenreButton/>
+      <GenreButton state={state} page={page} setPage={setPage}/>
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
         <Link to={`/series/mng`} state={{ seriesId: state?.seriesId, state, parentId: "", boardId: state?.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>
