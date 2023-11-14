@@ -5,6 +5,7 @@ import { useContext, useEffect } from 'react';
 export default function ToolData({ data }) {
     console.log("데이터는 나와?", data)
     const { nowName, setNowName,
+        xToolSize, yToolSize,
         setXToolSize, setYToolSize,
         setInitXToolSize, setInitYToolSize,
         setInitVertices, setInitEdges,
@@ -29,6 +30,7 @@ export default function ToolData({ data }) {
 
     return <>
         <h2>{nowName}</h2>
+        <p>{xToolSize + " X " + yToolSize}</p>
         <br />
         <ToolDetail />
     </>

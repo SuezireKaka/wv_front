@@ -7,7 +7,7 @@ import { Table, Button } from 'react-bootstrap';
 import { Pagination } from "react-bootstrap";
 import { displayPagination } from "toolbox/Pagination";
 import Remocon from "toolbox/Remocon";
-import AppContext from "context/AppContextProvider";
+import {X_MIN_TOOLSIZE, Y_MIN_TOOLSIZE} from "./ToolManager"
 
 export default function ToolTable({
     data, state, param,
@@ -32,8 +32,8 @@ export default function ToolTable({
         name : "",
         writer : state?.writer,
         parentId : state?.seriesId,
-        xToolSize : 100,
-        yToolSize : 100,
+        xToolSize : X_MIN_TOOLSIZE,
+        yToolSize : Y_MIN_TOOLSIZE,
         isCreating : true,
         isSafe : false
     }

@@ -53,7 +53,7 @@ export default function ShowcaseList() {
         getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
         setByKeyWord(true)
       } else {
-        getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}?genreId=${param.genreId ? param.genreId : ""}`);
+        getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}`);
         setByKeyWord(false)
       }
     }, [page])

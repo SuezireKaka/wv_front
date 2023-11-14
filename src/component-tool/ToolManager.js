@@ -5,7 +5,7 @@ import { useState } from "react";
 export const [X_MIN_TOOLSIZE, Y_MIN_TOOLSIZE, X_MAX_TOOLSIZE, Y_MAX_TOOLSIZE] = [500, 300, 1500, 1500]
 
 export default function ToolManager({
-    index, tool = {name : "", xToolSize : 100, yToolSize : 100}, state,
+    index, tool = {name : "", xToolSize : X_MIN_TOOLSIZE, yToolSize : Y_MIN_TOOLSIZE}, state,
     onManage = f => f, onCancel = f => f
 }) {
     const TABLE_STYLE = {
@@ -37,14 +37,14 @@ export default function ToolManager({
         </td>
         <td>
             <input type="number"
-                min={100} max={2000}
+                min={X_MIN_TOOLSIZE} max={X_MAX_TOOLSIZE}
                 value={nowXToolSize}
                 onChange={e => setNowXToolSize(e.target.value)}
                 onBlur={e => setNowXToolSize(minmax(e.target.value, X_MIN_TOOLSIZE, X_MAX_TOOLSIZE))}
             />
             {" X "}
             <input type="number"
-                min={100} max={2000}
+                min={Y_MIN_TOOLSIZE} max={Y_MAX_TOOLSIZE}
                 value={nowYToolSize}
                 onChange={e => setNowYToolSize(e.target.value)}
                 onBlur={e => setNowYToolSize(minmax(e.target.value, Y_MIN_TOOLSIZE, Y_MAX_TOOLSIZE))}

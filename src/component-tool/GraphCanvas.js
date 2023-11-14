@@ -7,7 +7,7 @@ import { useLocation } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { isAnyDanger } from './PropAccordion';
 import { X_MAX_TOOLSIZE, X_MIN_TOOLSIZE, Y_MAX_TOOLSIZE, Y_MIN_TOOLSIZE } from './ToolManager';
-import Tracker, {TRACKER_SIZE} from 'toolbox/Tracker';
+import Tracker, { TRACKER_SIZE } from 'toolbox/Tracker';
 
 export const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
     DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE]
@@ -15,20 +15,20 @@ export const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
 
 export const [X_MIN_OBJSIZE, Y_MIN_OBJSIZE,
     X_MAX_OBJSIZE, Y_MAX_OBJSIZE]
-    = [50, 25, 200, 100]
+    = [50, 30, 200, 100]
 
 export const [DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST] = [150, 150]
 
 export default function GraphCanvas() {
     const {
-        setName,
         initVertices, setInitVertices,
         nowVertices, setNowVertices,
         initEdges, setInitEdges,
         nowEdges, setNowEdges,
         xToolSize, setXToolSize,
         yToolSize, setYToolSize,
-        initXToolSize, initYToolSize,
+        initXToolSize, setInitXToolSize,
+        initYToolSize, setInitYToolSize,
         nowObjectList,
         onSummonObject, onDeleteAllObjects,
         onSaveTool
@@ -96,6 +96,7 @@ export default function GraphCanvas() {
 
         ctx?.reset()
         ctx?.beginPath()
+        console.log("nowEdges에 무슨 일이야?", nowEdges)
         nowEdges.forEach((relation) => {
             console.log("지금부터 이거 그릴게요", relation)
             let oneId = relation?.one.id
@@ -150,15 +151,34 @@ export default function GraphCanvas() {
 
     function onResize(set, type, index, newPoint) {
         console.log("새로운 지점 보여 줘", newPoint)
-        console.log("타입은 어때?", type)
+        console.log("타입은 어때?", type, type !== "edge")
+        console.log("셋이 뭐더라......", set)
         if (type !== "canvas") {
-
+            let copyObjects = [...set]
+            console.log("복사한 결과물이 뭔데?", copyObjects)
+            let nowObj = nowObjectList[index]
+            console.log("그 새로운 오브젝트가 뭔데?", nowObj)
+            // 새로운 툴 사이즈는 현재 트랙커의 중심에서 다시 해당 객체의 위치를 빼서 계산
+            copyObjects[index] = { ...nowObj,
+                xSize: newPoint.xPos - nowObj.xPos,
+                ySize: newPoint.yPos - nowObj.yPos
+            }
+            console.log("결과 알려줘!", copyObjects[index])
+            if (type !== "edge") {
+                setNowVertices(copyObjects)
+            }
+            else {
+                console.log("그래서 여기로 왔다는 거지?")
+                setNowEdges(copyObjects)
+            }
         }
         else {
-            setXToolSize(newPoint.xPos - TRACKER_SIZE[0])
-            setYToolSize(newPoint.yPos - TRACKER_SIZE[1])
+            setXToolSize(newPoint.xPos)
+            setYToolSize(newPoint.yPos)
         }
     }
+
+    useEffect(() => { console.log("그래서 지금 캔버스 크기는?", [xToolSize, yToolSize]) }, [xToolSize, yToolSize])
 
     function canvasExecute(funcName, e) {
         let rect = e.target.getBoundingClientRect();
@@ -185,6 +205,7 @@ export default function GraphCanvas() {
                 setInitVertices([...initVertices].concat(newVertex))
                 setSummonedCnt(summonedCnt + 1)
                 setRealSummonedCnt(realSummonedCnt + 1)
+                setSelectedId(newId)
                 onSummonObject(newVertex)
                 break
             }
@@ -197,6 +218,8 @@ export default function GraphCanvas() {
     function objectExecute(funcName, e, type) {
         let targetId = e.target.id
         console.log("중점이랑 이름 보여줘", findCenterOf(targetId), findById(targetId).name)
+        setInitXToolSize(xToolSize)
+        setInitYToolSize(yToolSize)
         switch (funcName) {
             case "선택": {
                 console.log("지금 선택된 대상은", findById(targetId))
@@ -240,8 +263,8 @@ export default function GraphCanvas() {
                     setNowEdges(nowEdges.concat(newEdge))
                     setInitEdges(initEdges.concat(newEdge))
                     onSummonObject(newEdge)
-                    // 선택했다는 정보를 초기화
-                    setSelectedId()
+                    // 새로운 아이디를 선택
+                    setSelectedId(newId)
                 }
                 else {
                     setSelectedId(targetId)
@@ -272,11 +295,9 @@ export default function GraphCanvas() {
     function isToDelete(objId, targetId) {
         // 한 번 지우기로 메모했으면 무조건 지움
         if (memo.includes(objId)) {
-            console.log("기억났어!")
             return true
         }
         let obj = findById(objId)
-        console.log("누군지 기억이 가물가물...", obj)
         let result = objId === targetId // 타겟 자신이면 무조건 지움
             // 타겟을 one이나 other로 직접 갖고 있는 애도 다 지움
             || (obj.one && obj.other && (obj.one.id === targetId || obj.other.id === targetId
@@ -296,6 +317,48 @@ export default function GraphCanvas() {
         removeCallback(filteredArray)
     }
 
+    function findTypeAndIndexOf(objId) {
+        let rawIndex = extractIndex(nowObjectList, objId)
+        console.log("찾은 날 인덱스는", rawIndex)
+        // 날 인덱스가 nowVertices.length 미만이면 vertex 아니면 edge
+        let resultType = rawIndex < nowVertices.length ? "vertex" : "edge"
+        let [initArray, nowArray] = resultType === "vertex" ? [initVertices, nowVertices] : [initEdges, nowEdges]
+        let resultIndex = extractIndex(nowArray, objId)
+        console.log("여기 결과 다시 줘 봐", resultType, resultIndex, initArray, nowArray)
+        return [resultType, resultIndex, initArray, nowArray]
+    }
+
+    function extractIndex(array, id) {
+        return [...array]
+            .map((obj, idx) => obj?.id === id ? idx : -1)
+            .filter(idx => idx > -1)[0]
+    }
+
+    function calcTrackerPos(selectedId, type) {
+        let searchArray = findTypeAndIndexOf(selectedId)
+        let index = searchArray[1]
+        let initArray = searchArray[2]
+        let nowArray = searchArray[3]
+        let found = type === "init" ? { ...(initArray[index]) } : { ...(nowArray[index]) }
+        //트래커의 init은 현재 위치에다 더해야
+        return {
+            xPos: nowArray[index]?.xPos + found?.xSize,
+            yPos: nowArray[index]?.yPos + found?.ySize
+        }
+    }
+
+    function calcTrackerBound(selectedId, type) {
+        let searchArray = findTypeAndIndexOf(selectedId)
+        let index = searchArray[1]
+        let nowArray = searchArray[3]
+        console.log("이건 또 뭔데?", index, nowArray)
+        // 얘 변수명 xSize, ySize로 잘못 이해했다가 거의 망했었지......
+        return {
+            xPos: nowArray[index].xPos + (type === "max" ? X_MAX_OBJSIZE : X_MIN_OBJSIZE),
+            yPos: nowArray[index].yPos + (type === "max" ? Y_MAX_OBJSIZE : Y_MIN_OBJSIZE)
+        }
+    }
+
     // 무조건 한 번 그리고
     useEffect(redraw)
 
@@ -309,10 +372,6 @@ export default function GraphCanvas() {
             <td>
                 <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
                 <br />
-                {selectedId
-                    ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
-                    : null
-                }
             </td>
             <td>
                 {console.log("야 너희 둘 같아?", auth.userId, writer.id)}
@@ -349,7 +408,7 @@ export default function GraphCanvas() {
                         index={index}
                         onMove={onMove}
                         onClick={(e) => objectExecute(nowFuncName, e, "edge")}
-                        bound={objBound(init, xToolSize, yToolSize, edge)}
+                        bound={canvasBound(init, xToolSize, yToolSize, edge)}
                     />
                 })}
                 {nowVertices.map((vertex, index) => {
@@ -363,28 +422,35 @@ export default function GraphCanvas() {
                         index={index}
                         onMove={onMove}
                         onClick={(e) => objectExecute(nowFuncName, e, "vertex")}
-                        bound={objBound(init, xToolSize, yToolSize, vertex)}
+                        bound={canvasBound(init, xToolSize, yToolSize, vertex)}
                     />
                 })}
-                {selectedId
-                    ? <p>{"지금 선택된 id는 " + selectedId + "입니다."}</p>
-                    : <Tracker
-                        onlySize
+                {!selectedId
+                    ? <Tracker
                         type="canvas"
                         pos={{ xPos: xToolSize, yPos: yToolSize }}
                         init={{ xPos: initXToolSize, yPos: initYToolSize }}
-                        minToolSize={{ xSize: X_MIN_TOOLSIZE, ySize: Y_MIN_TOOLSIZE }}
-                        maxToolSize={{ xSize: X_MAX_TOOLSIZE, ySize: Y_MAX_TOOLSIZE }}
+                        minSize={{ xSize: X_MIN_TOOLSIZE, ySize: Y_MIN_TOOLSIZE }}
+                        maxSize={{ xSize: X_MAX_TOOLSIZE, ySize: Y_MAX_TOOLSIZE }}
                         onResize={onResize}
                     />
+                    : <Tracker
+                        type={findTypeAndIndexOf(selectedId)[0]}
+                        index={findTypeAndIndexOf(selectedId)[1]}
+                        pos={{ ...calcTrackerPos(selectedId, "now") }}
+                        init={{ ...calcTrackerPos(selectedId, "init") }}
+                        minSize={{ ...calcTrackerBound(selectedId, "min") }}
+                        maxSize={{ ...calcTrackerBound(selectedId, "max") }}
+                        onResize={onResize}
+                    />
+
                 }
             </div>
         </td></tr>
     </table>
 }
 
-
-function objBound(init, xMax, yMax, obj) {
+function canvasBound(init, xMax, yMax, obj) {
     return {
         left: 0 - init.xPos,
         right: xMax - obj.xSize - init.xPos,

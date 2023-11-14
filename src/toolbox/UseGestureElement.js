@@ -5,6 +5,9 @@ export default function UseGestureElement({ id,
     onMove = f => f, onClick = f => f
 }) {
 
+    console.log("초기값 줘", init)
+    console.log("현재값 줘", pos)
+
     const bindPos = useDrag((params) => {
         onMove(set, type, index, {
             ...pos,
