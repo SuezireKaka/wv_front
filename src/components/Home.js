@@ -19,7 +19,7 @@ import HomePlus from "./HomePlus";
 
 export default function Home() {
   const [index, setIndex] = useState(0);
-  const seriesUri = `/work/anonymous/listAllSeries/0002/1/?genreId=`;
+  const seriesUri = `/work/anonymous/listAllSeries/0002/1?genreId=`;
   const seriesUri2 = `/work/anonymous/listAllSeries/0003/1?genreId=`;
   const postUri = `/work/anonymous/listAllPost/0000/1`;
   const txtSearch = useRef();
