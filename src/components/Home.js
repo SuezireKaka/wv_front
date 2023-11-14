@@ -19,17 +19,14 @@ import HomePlus from "./HomePlus";
 
 export default function Home() {
   const [index, setIndex] = useState(0);
-  const seriesUri = `/work/anonymous/listAllSeries/0002/1`;
-  const seriesUri2 = `/work/anonymous/listAllSeries/0003/1`;
+  const seriesUri = `/work/anonymous/listAllSeries/0002/1?genreId=`;
+  const seriesUri2 = `/work/anonymous/listAllSeries/0003/1?genreId=`;
   const postUri = `/work/anonymous/listAllPost/0000/1`;
   const txtSearch = useRef();
 
-  const navMenu = {
-    color: "grey",
-    textDecoration: "none",
-
-  }
-
+  const xSize = 550;
+  const ySize = 700
+  
 
 
   const renderSuccess = (data) => {
@@ -41,8 +38,8 @@ export default function Home() {
             <Carousel.Item interval={3000}>
               <Link style={{ textDecoration: "none", color: "black" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: "0002" }}>
             {post.listAttachFile?.length === 0 ?
-              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="500" height="700" />
-              : <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x="500" y="700"  />}
+              <Image src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width={xSize} height={ySize} />
+              : <OriginalViewOne key={post.id} imgDtoList={post.listAttachFile} x={xSize} y={ySize}  />}
               </Link>
           </Carousel.Item>
         )})}
@@ -60,8 +57,8 @@ export default function Home() {
               <Link style={{ textDecoration: "none", color: "black", overflow:"hidden" }} to={`/series/${post.id}`} state={{ seriesId: post.id, post: post, page: 1, boardId: "0002" }}>
             {post.listAttachFile?.length === 0 ?
             <div   class="clipmain">
-              <Image  src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width="550px" height="700px" class="clipmain" /></div>
-              : <OriginalViewOne key={post.id}  imgDtoList={post.listAttachFile} x="550px"  y="700px" d="clipmain"  />}
+              <Image  src={process.env.PUBLIC_URL + `/images/WVseries.jpg`}  width={xSize} height={ySize} class="clipmain" /></div>
+              : <OriginalViewOne key={post.id}  imgDtoList={post.listAttachFile} x={xSize}  y={ySize} d="clipmain"  />}
               </Link>
           </Carousel.Item>
         )})}
@@ -76,7 +73,7 @@ export default function Home() {
     let postList2 = postList?.filter((post, i) => i < 7);
 
     return (<>
-      <Table striped bordered hover variant="white"  width="550px" height="300px" border="2px">
+      <Table striped bordered hover variant="white"  width={xSize} height={ySize/2} border="2px">
         <th><Link  style={{ textDecoration: "none", color: "black" }} to={`/board/0000`}
             state={{ boardId: "0000", page: 1 }}>공지사항</Link></th>
         {postList2?.map((post, i) =>
@@ -97,14 +94,14 @@ export default function Home() {
     <table>
       <tr>
         <td width="10%"></td>
-        <td rowSpan='2' width="550px" height="700px" >
+        <td rowSpan='2' width={xSize} height={ySize} >
           <Fetch uri={seriesUri} renderSuccess={renderSuccess} />
         </td>
 
         <td width="5%"></td>
-        <td width="550px" height="300px" >
+        <td width={xSize} height={ySize/2} >
           <Fetch uri={postUri} renderSuccess={renderSuccessPost} />
-          <tr width="550px" height="300px" ><Fetch uri={seriesUri2} renderSuccess={renderSuccess2} /></tr>
+          <tr width={xSize} height={ySize/2} ><Fetch uri={seriesUri2} renderSuccess={renderSuccess2} /></tr>
         </td>
         
         

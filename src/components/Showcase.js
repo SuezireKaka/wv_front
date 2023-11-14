@@ -16,22 +16,23 @@ import { Form } from "react-bootstrap";
 import Favorites from './Favorites';
 import { AxiosAuth } from 'toolbox/Fetch'
 import GenreButton from "./GenreButton";
+
 export default function ShowcaseList() {
     const location = useLocation();
     let state = location.state;
     const { auth } = useContext(AppContext);
-    console.log("PostListObserver param", state);
-    console.log("PostListObserver param", state.boardId);
-    const [targetBoard, setTargetBoard] = useState(state.boardId);
+    console.log("PostListObserver 스테이트", state);
+    console.log("PostListObserver 스테이트.보드id", state?.boardId);
+    const [targetBoard, setTargetBoard] = useState(state?.boardId);
 
-    const param = useParams();
-
+    let param = useParams();
     console.log("파란색 보여줘", param)
-  
+
     const txtSearch = useRef();
   
     const [postList, setPostList] = useState([]);
     const [page, setPage] = useState(1);
+
     console.log(postList)
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
     const [listAttachFile] =useState([])
@@ -53,16 +54,17 @@ export default function ShowcaseList() {
         getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
         setByKeyWord(true)
       } else {
-        getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}`);
+        getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}`);
         setByKeyWord(false)
       }
     }, [page])
   
     const getPostListThenSet = async (seriesListUri, isReset) => {
-      console.log("여기다 보내고 있네요 2222 : ", seriesListUri + `/${page}?genreId=${param.genreId ? param.genreId : ""}`)
+      console.log("여기다 보내고 있네요 2222 : ", seriesListUri + `/${page}?genreId=${param?.genreId ? param?.genreId : ""}`)
       try {
-        const { data } = await axios.get(seriesListUri + `/${page}?genreId=${param.genreId ? param.genreId : ""}`);
-        console.log("읽어온 게시글 목록", data?.firstVal);
+        const { data } = await axios.get(seriesListUri + `/${page}?genreId=${param?.genreId ? param?.genreId : ""}`);
+        //console.log("읽어온 게시글 목록", data?.firstVal);
+        console.log('page 겟포스트리스트덴셋? ', page);
         setPostList(isReset ? data?.firstVal : postList.concat(data?.firstVal));
       } catch {
         console.error('fetching error');
@@ -77,6 +79,7 @@ export default function ShowcaseList() {
           setPage((prev) => prev + 1);
           // 현재 타겟을 unobserve한다.
           observer.unobserve(entry.target);
+          console.log('page +1 ? ', page);
         }
       });
     };
@@ -84,21 +87,22 @@ export default function ShowcaseList() {
     useMemo(() => { 
       async function recall() {
         try {
-          console.log("뭐가 문제인데?", state, state.boardId, param.genreId ? param.genreId : "")
-          console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state?.boardId}/1/?genreId=${param.genreId ? param.genreId : ""}`)
-          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/1?genreId=${param.genreId ? param.genreId : ""}`);
-          console.log("다시 불러온 게시글 목록", data?.firstVal);
+          //console.log("뭐가 문제인데?", state, state.boardId, state.genreId ? state.genreId : "")
+          //console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state?.boardId}/1/?genreId=${param.genreId ? param.genreId : ""}`)
+          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/${page}?genreId=${param?.genreId ? param?.genreId : ""}`);
+          //console.log("다시 불러온 게시글 목록", data?.firstVal);
           setPostList(data?.firstVal);
         } catch {
           console.error('fetching error');
         }
       }
       recall()
+      console.log('page유즈메모 ? ', page);
     }, [param]);
 
     useEffect(() => {
-      console.log('page ? ', page);
-      getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}`);
+      console.log('page유즈이펙트 ? ', page);
+      getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}`);
     }, [page]);
   
     useEffect(() => {
@@ -113,11 +117,12 @@ export default function ShowcaseList() {
     }, [lastIntersectingImage]);
   
     return <>
+
     <table style={{ margin: "auto", position: "static" }} ><td>
-      <GenreButton txtSearch={txtSearch} onSearch={onSearch}/>
+      <GenreButton state={state} page={page} setPage={setPage}/>
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
-        <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>
+        <Link to={`/series/mng`} state={{ seriesId: state?.seriesId, state, parentId: "", boardId: state?.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>
           <Button variant="outline-primary">신규</Button>
         </Link>}
         </td><td>
@@ -128,6 +133,7 @@ export default function ShowcaseList() {
         </Button>
       </td>
       </table>
+
       <Container>
         <Row>
           {postList?.map((post, index) => {

@@ -26,6 +26,7 @@ import UserSeries from 'login/UserSeries';
 import LoginHandler from 'kakao-login/LoginHandler';
 import ReportDetails from 'components/ReportDetails';
 import ToolView from 'component-tool/ToolView';
+import NotFound from 'components/NotFound';
 export default function WVRouter() {
     return (
         <Routes> 
@@ -35,6 +36,7 @@ export default function WVRouter() {
           <Route path={"/board/0001"} element={ <PostNormal/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
           <Route path={"/board/:boardId/:genreId"} element={ <Showcase/> } />
+
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
           <Route path={"/series/mng"} element={ <PostMng/> } />
@@ -60,6 +62,8 @@ export default function WVRouter() {
           <Route path={"/test4"} element={<Test4 />} />
           <Route path={"/Test5"} element={<Test5 />} />
           <Route path={"/Test6"} element={<Test6 />} />
+  
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
        
       )

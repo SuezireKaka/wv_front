@@ -6,7 +6,7 @@ function useFatch(uri, doLog) {
     const [data, setData] = useState([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(true);
-    console.log(uri)
+    //console.log(uri)
     useEffect(() => {
         if (!uri) {
             return;
@@ -15,11 +15,11 @@ function useFatch(uri, doLog) {
             .then((resData) => {
                 setData(resData);
                 if (doLog) {
-                    console.log("response에서 읽은 data는 이러합니다:", resData)
+                    //console.log("response에서 읽은 data는 이러합니다:", resData)
                 }
             })
             .then(setLoading(false))
-            .then(console.log("난 언제 나오지?"))
+            //.then(console.log("난 언제 나오지?"))
             .catch(setError);
     }, [uri]);
     return { loading, data, error};
@@ -51,7 +51,7 @@ function useAuth(uri, auth) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log("여기를 통과했음", uri, auth)
+        //console.log("여기를 통과했음", uri, auth)
         if (!uri || !auth) return;
         axios.get(uri, 
             {
