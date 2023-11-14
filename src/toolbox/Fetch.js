@@ -9,14 +9,14 @@ function Fetch({uri, renderSuccess = f => f,
     const {loading, data, error} = useFatch(uri, doLog);
 
     if (doLog) {
-        console.log("어디 한 번 해보자");
-        console.log(uri, loading, data);
+        //console.log("어디 한 번 해보자");
+        //console.log(uri, loading, data);
     }
 
     if (loading) return loadingFallBack;
     if (error) return renderError({error});
     if (data) {
-        console.log("로딩 끝났다~!");
+        //console.log("로딩 끝났다~!");
         return renderSuccess(data);
     }
 }
