@@ -19,19 +19,22 @@ export default function GenreButton({ onSearch = f => f, page, setPage = f => f 
     }
     /*
     function renderGenre() {
+  
         return (
+            
             //<Fetch uri={`/work/anonymous/listAllSeries/${state?.boardId}/${page}?genreId=${gen.id}`} renderSuccess={(data) => renderGenre(data, gen)} />
-        ) //onClick={e=>setPage(1)}
+        ) //onClick={e=>setPage(1)} 
     }*/
 
     return (
         <div>
             <Link style={navMenu} key={state?.boardId} to={`/board/${state?.boardId}`}
-                state={{ boardId: state?.boardId, page: 1 }}>전체 </Link>
+                state={{ boardId: state?.boardId, page: 1 }}>[전체]</Link>
             {genreCodeList?.map((gen) => <>
                 <Link style={navMenu} key={gen?.id} to={`/board/${state?.boardId}/${gen?.id}`}
-                    state={{ post: state?.post, page: 1, boardId: state?.boardId, genId: gen?.id }} >{gen?.genre} </Link>
+                    state={{ post: state?.post, page: 1, boardId: state?.boardId, genId: gen?.id }} >[{gen?.genre}]</Link>
             </>)}
+
         </div>
     )
 }

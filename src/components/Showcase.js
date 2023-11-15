@@ -16,22 +16,22 @@ import { Form } from "react-bootstrap";
 import Favorites from './Favorites';
 import { AxiosAuth } from 'toolbox/Fetch'
 import GenreButton from "./GenreButton";
+
 export default function ShowcaseList() {
     const location = useLocation();
     let state = location.state;
     const { auth } = useContext(AppContext);
-    console.log("PostListObserver param", state);
-    console.log("PostListObserver param", state?.boardId);
+    console.log("PostListObserver state", state);
+    console.log("PostListObserver state", state?.boardId);
     const [targetBoard, setTargetBoard] = useState(state?.boardId);
 
     const param = useParams();
-
-    console.log("파란색 보여줘", param)
+    //console.log("파란색 보여줘", param)
   
     const txtSearch = useRef();
   
     const [postList, setPostList] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(state?.page);
     console.log(postList)
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
     const [listAttachFile] =useState([])
@@ -52,9 +52,11 @@ export default function ShowcaseList() {
       if (search.trim()) {
         getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
         setByKeyWord(true)
+        console.log("이펙트페이지",page)
       } else {
-        getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}?genreId=${param?.genreId ? param?.genreId : ""}`);
+        getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}`);
         setByKeyWord(false)
+        console.log("이펙트페이지",page)
       }
     }, [page])
   
@@ -63,7 +65,9 @@ export default function ShowcaseList() {
       try {
         const { data } = await axios.get(seriesListUri + `/${page}?genreId=${param?.genreId ? param?.genreId : ""}`);
         console.log("읽어온 게시글 목록", data?.firstVal);
-        setPostList(isReset ? data?.firstVal : postList.concat(data?.firstVal));
+        setPostList(isReset ? data?.firstVal : postList?.concat(data?.firstVal));
+        console.log(postList);
+        console.log("getPostListThenSet",page)
       } catch {
         console.error('fetching error');
       }
@@ -77,6 +81,7 @@ export default function ShowcaseList() {
           setPage((prev) => prev + 1);
           // 현재 타겟을 unobserve한다.
           observer.unobserve(entry.target);
+          console.log("setPage((prev) => prev + 1);",page)
         }
       });
     };
@@ -84,7 +89,7 @@ export default function ShowcaseList() {
     useMemo(() => { 
       async function recall() {
         try {
-          console.log("뭐가 문제인데?", state, state?.boardId, param?.genreId ? param?.genreId : "")
+          console.log("뭐가 문제인데?", state, state?.boardId, state?.genreId ? state?.genreId : "")
           console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state?.boardId}/1/?genreId=${param?.genreId ? param?.genreId : ""}`)
           const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/1?genreId=${param?.genreId ? param?.genreId : ""}`);
           console.log("다시 불러온 게시글 목록", data?.firstVal);
@@ -94,11 +99,12 @@ export default function ShowcaseList() {
         }
       }
       recall()
-    }, [param]);
+    }, [state]);
 
     useEffect(() => {
       console.log('page ? ', page);
       getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}`);
+      console.log("이펙트 페이지변화2",page)
     }, [page]);
   
     useEffect(() => {
@@ -111,10 +117,12 @@ export default function ShowcaseList() {
       }
       return () => observer && observer.disconnect();
     }, [lastIntersectingImage]);
-  
+
+    console.log(page)
+
     return <>
     <table style={{ margin: "auto", position: "static" }} ><td>
-      <GenreButton setPage={setPage}/>
+      <GenreButton setPage={setPage} ref={txtSearch}/>
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
         <Link to={`/series/mng`} state={{ seriesId: state?.seriesId, state, parentId: "", boardId: state?.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>

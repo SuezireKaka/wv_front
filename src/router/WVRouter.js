@@ -38,13 +38,13 @@ export default function WVRouter() {
           <Route path={"/board/:boardId/:genreId"} element={ <Showcase/> } />
 
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
-          <Route path={"/post/:postId"} element={ <PostDetails/> } />
           <Route path={"/series/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/report/"} element={ <ReportMng/> } />
           <Route path={"/series/:seriesId/tool/"} element={ <ToolExplorer/> } />
           <Route path={"/series/:seriesId/tool/:idPath"} element={ <ToolExplorer/> } />
           <Route path={"/series/:seriesId/tool/:idPath/view"} element={ <ToolView/> } />
+          <Route path={"/post/:postId"} element={ <PostDetails/> } />
           <Route path={"/report"} element={ <ReportList/> } />
           <Route path={"/ReportDetails/:ReportId"} element={ <ReportDetails/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
