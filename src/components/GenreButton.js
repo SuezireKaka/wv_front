@@ -20,11 +20,11 @@ export default function GenreButton({state, page, setPage=f=>f}) {
 
     }
     /*
-    function renderGenre(data, gen) {
-        console.log(data)
-        console.log(gen)
+    function renderGenre() {
+  
         return (
-            <Fetch uri={`/work/anonymous/listAllSeries/${state?.boardId}/${page}?genreId=${gen.id}`} renderSuccess={(data) => renderGenre(data, gen)} />
+            
+            //<Fetch uri={`/work/anonymous/listAllSeries/${state?.boardId}/${page}?genreId=${gen.id}`} renderSuccess={(data) => renderGenre(data, gen)} />
         ) //onClick={e=>setPage(1)}
     }*/
 
@@ -40,8 +40,8 @@ export default function GenreButton({state, page, setPage=f=>f}) {
                             state={{ post: state?.post, page:1, boardId: state?.boardId }}>전체</Link> </Dropdown.Item>
                     <Dropdown.Divider />
                     {genreCodeList?.map((gen) => <>
-                        <Dropdown.Item eventKey={gen?.id} href={`/board/${state?.boardId}/${gen?.id}`}>
-                            <Link style={navMenu} key={gen?.id} to={`/board/${state?.boardId}/${gen?.id}`}
+                        <Dropdown.Item eventKey={gen?.id} href={`/board/${state?.boardId}/${gen?.id}`} >
+                        <Link style={navMenu} key={gen?.id} to={`/board/${state?.boardId}/${gen?.id}`}
                                 state={{ post: state?.post, page:1, boardId: state?.boardId, genId: gen?.id }} >{gen?.genre}</Link>
                         </Dropdown.Item>
                     </>)}
