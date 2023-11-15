@@ -73,7 +73,7 @@ export default function Home() {
     let postList2 = postList?.filter((post, i) => i < 7);
 
     return (<>
-      <Table striped bordered hover variant="white"  width={xSize} height={ySize/2} border="2px">
+      <Table striped bordered hover variant="white"  width={xSize} height={ySize/2-50} border="2px">
         <th><Link  style={{ textDecoration: "none", color: "black" }} to={`/board/0000`}
             state={{ boardId: "0000", page: 1 }}>공지사항</Link></th>
         {postList2?.map((post, i) =>

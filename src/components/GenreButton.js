@@ -7,12 +7,10 @@ import { useContext } from 'react'
 import { useLocation } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 
-export default function GenreButton({state, page, setPage=f=>f}) {
+export default function GenreButton({page, setPage=f=>f}) {
     const { genreCodeList } = useContext(AppContext);
     const location = useLocation();
-    //let state = location.state;
-    console.log(state)
-    const param = useParams();
+    let state = location.state;
 
     const navMenu = {
         color: "grey",

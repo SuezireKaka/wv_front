@@ -21,8 +21,8 @@ export default function ShowcaseList() {
     let state = location.state;
     const { auth } = useContext(AppContext);
     console.log("PostListObserver param", state);
-    console.log("PostListObserver param", state.boardId);
-    const [targetBoard, setTargetBoard] = useState(state.boardId);
+    console.log("PostListObserver param", state?.boardId);
+    const [targetBoard, setTargetBoard] = useState(state?.boardId);
 
     const param = useParams();
 
@@ -53,15 +53,15 @@ export default function ShowcaseList() {
         getPostListThenSet(`/work/anonymous/search/${state?.boardId}/${search}`)
         setByKeyWord(true)
       } else {
-        getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}?genreId=${param.genreId ? param.genreId : ""}`);
+        getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}?genreId=${param?.genreId ? param?.genreId : ""}`);
         setByKeyWord(false)
       }
     }, [page])
   
     const getPostListThenSet = async (seriesListUri, isReset) => {
-      console.log("여기다 보내고 있네요 2222 : ", seriesListUri + `/${page}?genreId=${param.genreId ? param.genreId : ""}`)
+      console.log("여기다 보내고 있네요 2222 : ", seriesListUri + `/${page}?genreId=${param?.genreId ? param?.genreId : ""}`)
       try {
-        const { data } = await axios.get(seriesListUri + `/${page}?genreId=${param.genreId ? param.genreId : ""}`);
+        const { data } = await axios.get(seriesListUri + `/${page}?genreId=${param?.genreId ? param?.genreId : ""}`);
         console.log("읽어온 게시글 목록", data?.firstVal);
         setPostList(isReset ? data?.firstVal : postList.concat(data?.firstVal));
       } catch {
@@ -84,9 +84,9 @@ export default function ShowcaseList() {
     useMemo(() => { 
       async function recall() {
         try {
-          console.log("뭐가 문제인데?", state, state.boardId, param.genreId ? param.genreId : "")
-          console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state?.boardId}/1/?genreId=${param.genreId ? param.genreId : ""}`)
-          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/1?genreId=${param.genreId ? param.genreId : ""}`);
+          console.log("뭐가 문제인데?", state, state?.boardId, param?.genreId ? param?.genreId : "")
+          console.log("여기서 다시 가져오는 거야", `/work/anonymous/listAllSeries/${state?.boardId}/1/?genreId=${param?.genreId ? param?.genreId : ""}`)
+          const { data } = await axios.get(`/work/anonymous/listAllSeries/${state?.boardId}/1?genreId=${param?.genreId ? param?.genreId : ""}`);
           console.log("다시 불러온 게시글 목록", data?.firstVal);
           setPostList(data?.firstVal);
         } catch {
@@ -98,7 +98,7 @@ export default function ShowcaseList() {
 
     useEffect(() => {
       console.log('page ? ', page);
-      getPostListThenSet(`/work/anonymous/listAllSeries/${state.boardId}`);
+      getPostListThenSet(`/work/anonymous/listAllSeries/${state?.boardId}`);
     }, [page]);
   
     useEffect(() => {
@@ -117,7 +117,7 @@ export default function ShowcaseList() {
       <GenreButton setPage={setPage}/>
       </td><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
-        <Link to={`/series/mng`} state={{ seriesId: state.seriesId, state, parentId: "", boardId: state.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>
+        <Link to={`/series/mng`} state={{ seriesId: state?.seriesId, state, parentId: "", boardId: state?.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>
           <Button variant="outline-primary">신규</Button>
         </Link>}
         </td><td>
