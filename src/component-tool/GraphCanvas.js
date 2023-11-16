@@ -7,7 +7,8 @@ import { useLocation } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { isAnyDanger } from './PropAccordion';
 import { X_MAX_TOOLSIZE, X_MIN_TOOLSIZE, Y_MAX_TOOLSIZE, Y_MIN_TOOLSIZE } from './ToolManager';
-import Tracker, { TRACKER_SIZE } from 'toolbox/Tracker';
+import Tracker from 'component-tool/Tracker';
+import ObjectEditor from './ObjectEditor';
 
 export const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,
     DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE]
@@ -21,6 +22,7 @@ export const [DEFAULT_LOOP_X_DIST, DEFAULT_LOOP_Y_DIST] = [150, 150]
 
 export default function GraphCanvas() {
     const {
+        defaultObject, setDefaultObject,
         initVertices, setInitVertices,
         nowVertices, setNowVertices,
         initEdges, setInitEdges,
@@ -95,10 +97,13 @@ export default function GraphCanvas() {
         let ctx = canvasRef.current?.getContext("2d")
 
         ctx?.reset()
-        ctx?.beginPath()
+        
         console.log("nowEdges에 무슨 일이야?", nowEdges)
         nowEdges.forEach((relation) => {
             console.log("지금부터 이거 그릴게요", relation)
+            // 각 relation마다 시작
+            ctx?.beginPath()
+            ctx.strokeStyle = relation.outerColor
             let oneId = relation?.one.id
             let otherId = relation?.other.id
             // edge의 양 끝 대상의 id가 같다면 원 그리기
@@ -115,8 +120,9 @@ export default function GraphCanvas() {
                     center(relation.xPos, relation.yPos, relation.xSize, relation.ySize)
                 )
             }
+            // relation 단위로 그리기
+            ctx?.stroke();
         })
-        ctx?.stroke();
     }
 
     function drawCircle(ctx, [oneCenterX, oneCenterY], [fartherX, fartherY]) {
@@ -139,7 +145,9 @@ export default function GraphCanvas() {
     }
 
     function onMove(set, type, index, newPoint) {
+        console.log("셋이 뭐더라......", set)
         let copyObjects = [...set]
+        console.log("복사한 결과물이 뭔데?", copyObjects)
         copyObjects[index] = { ...newPoint }
         if (type !== "edge") {
             setNowVertices(copyObjects)
@@ -151,12 +159,9 @@ export default function GraphCanvas() {
 
     function onResize(set, type, index, newPoint) {
         console.log("새로운 지점 보여 줘", newPoint)
-        console.log("타입은 어때?", type, type !== "edge")
-        console.log("셋이 뭐더라......", set)
         if (type !== "canvas") {
             let copyObjects = [...set]
-            console.log("복사한 결과물이 뭔데?", copyObjects)
-            let nowObj = nowObjectList[index]
+            let nowObj = copyObjects[index] // 얘 이상해서 고쳤더니 다른 버그들도 해결됐다......?
             console.log("그 새로운 오브젝트가 뭔데?", nowObj)
             // 새로운 툴 사이즈는 현재 트랙커의 중심에서 다시 해당 객체의 위치를 빼서 계산
             copyObjects[index] = { ...nowObj,
@@ -173,6 +178,7 @@ export default function GraphCanvas() {
             }
         }
         else {
+            console.log("캔버스 움직임 줘", newPoint)
             setXToolSize(newPoint.xPos)
             setYToolSize(newPoint.yPos)
         }
@@ -195,18 +201,20 @@ export default function GraphCanvas() {
                 let newX = clkX - (clkX > xToolSize / 2 ? DEFAULT_VERTEX_X_SIZE : 0)
                 let newY = clkY - (clkY > yToolSize / 2 ? DEFAULT_VERTEX_Y_SIZE : 0)
                 let newId = "----" + (realSummonedCnt + 1)
-                let newName = "object - " + (summonedCnt + 1)
-                let newVertex = {
+                let newName = defaultObject.name ? defaultObject.name : "object - " + (summonedCnt + 1)
+                let newVertex = { ...defaultObject,
                     id: newId, name: newName, xPos: newX, yPos: newY,
                     xSize: DEFAULT_VERTEX_X_SIZE, ySize: DEFAULT_VERTEX_Y_SIZE,
                     customPropertiesList: []
                 }
-                setNowVertices([...nowVertices].concat(newVertex))
-                setInitVertices([...initVertices].concat(newVertex))
+                let newNowVertexArray = nowVertices.concat(newVertex)
+                let newInitVertexArray = initVertices.concat(newVertex)
+                setNowVertices(newNowVertexArray)
+                setInitVertices(newInitVertexArray)
                 setSummonedCnt(summonedCnt + 1)
                 setRealSummonedCnt(realSummonedCnt + 1)
                 setSelectedId(newId)
-                onSummonObject(newVertex)
+                onSummonObject(newNowVertexArray, nowEdges)
                 break
             }
             default: {
@@ -230,7 +238,7 @@ export default function GraphCanvas() {
                 // 이미 선택을 한 상태로 실행시 접수 후 객체 추가
                 if (selectedId) {
                     let newId = "----" + (realSummonedCnt + 1)
-                    let newName = "rel - " + (summonedCnt + 1)
+                    let newName = defaultObject.name ? defaultObject.name : "rel - " + (summonedCnt + 1)
                     let [newX, newY] =
                         targetId === selectedId // loop edge인가?
                             // loop edge이면
@@ -251,20 +259,20 @@ export default function GraphCanvas() {
                                     - [DEFAULT_EDGE_X_SIZE, DEFAULT_EDGE_Y_SIZE][i] / 2
                                 )
                             })
-                    let newEdge = {
+                    let newEdge = { ...defaultObject,
                         id: newId, name: newName, xPos: newX, yPos: newY,
                         xSize: DEFAULT_EDGE_X_SIZE, ySize: DEFAULT_EDGE_Y_SIZE,
                         // 먼저 선택한 걸 one에, 나중에 선택한 걸 other에
                         one: { id: selectedId }, other: { id: targetId },
                         customPropertiesList: []
                     }
+                    let newNowEdgeArray = nowEdges.concat(newEdge)
+                    let newInitEdgeArray = initEdges.concat(newEdge)
                     setSummonedCnt(summonedCnt + 1)
                     setRealSummonedCnt(realSummonedCnt + 1)
-                    setNowEdges(nowEdges.concat(newEdge))
-                    setInitEdges(initEdges.concat(newEdge))
-                    onSummonObject(newEdge)
-                    // 새로운 아이디를 선택
-                    setSelectedId(newId)
+                    setNowEdges(newNowEdgeArray)
+                    setInitEdges(newInitEdgeArray)
+                    onSummonObject(nowVertices, newNowEdgeArray)
                 }
                 else {
                     setSelectedId(targetId)
@@ -359,6 +367,20 @@ export default function GraphCanvas() {
         }
     }
 
+    function onSetup(e, prop) {
+        console.log("이제 초기값의 " + prop + "는 이거다람쥐", e.target.value)
+        let copyDefault = {...defaultObject}
+        console.log("바꾸려는 대상은?", copyDefault)
+        console.log("바꾸려는 값은?", copyDefault[prop])
+        copyDefault[prop] = e.target.value
+        console.log("바뀐 값은?", copyDefault[prop])
+        setDefaultObject(copyDefault)
+    }
+
+    function onEdit(e, prop, id) {
+        console.log("지금 " + id + "의 " + prop + "는 이거다리미", e.target.value)
+    }
+
     // 무조건 한 번 그리고
     useEffect(redraw)
 
@@ -371,7 +393,6 @@ export default function GraphCanvas() {
         <tr>
             <td>
                 <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
-                <br />
             </td>
             <td>
                 {console.log("야 너희 둘 같아?", auth.userId, writer.id)}
@@ -391,6 +412,7 @@ export default function GraphCanvas() {
                 }
             </td>
         </tr>
+        <ObjectEditor id={selectedId} obj={selectedId ? findById(selectedId) : defaultObject} onSetup={onSetup} onEdit={onEdit}/>
         <tr><td colSpan={2}>
             <div style={{ position: "relative", width: xToolSize, height: yToolSize, margin: "auto" }}>
                 <canvas class="Canvas" ref={canvasRef} width={xToolSize} height={yToolSize}
@@ -409,6 +431,9 @@ export default function GraphCanvas() {
                         onMove={onMove}
                         onClick={(e) => objectExecute(nowFuncName, e, "edge")}
                         bound={canvasBound(init, xToolSize, yToolSize, edge)}
+                        style={
+                            {borderColor : edge.outerColor, backgroundColor : edge.innerColor, color : edge.textColor}
+                        }
                     />
                 })}
                 {nowVertices.map((vertex, index) => {
@@ -423,6 +448,9 @@ export default function GraphCanvas() {
                         onMove={onMove}
                         onClick={(e) => objectExecute(nowFuncName, e, "vertex")}
                         bound={canvasBound(init, xToolSize, yToolSize, vertex)}
+                        style={
+                            {borderColor : vertex.outerColor, backgroundColor : vertex.innerColor, color : vertex.textColor}
+                        }
                     />
                 })}
                 {!selectedId
@@ -430,8 +458,8 @@ export default function GraphCanvas() {
                         type="canvas"
                         pos={{ xPos: xToolSize, yPos: yToolSize }}
                         init={{ xPos: initXToolSize, yPos: initYToolSize }}
-                        minSize={{ xSize: X_MIN_TOOLSIZE, ySize: Y_MIN_TOOLSIZE }}
-                        maxSize={{ xSize: X_MAX_TOOLSIZE, ySize: Y_MAX_TOOLSIZE }}
+                        minPos={{ xPos: X_MIN_TOOLSIZE, yPos: Y_MIN_TOOLSIZE }}
+                        maxPos={{ xPos: X_MAX_TOOLSIZE, yPos: Y_MAX_TOOLSIZE }}
                         onResize={onResize}
                     />
                     : <Tracker
@@ -439,8 +467,8 @@ export default function GraphCanvas() {
                         index={findTypeAndIndexOf(selectedId)[1]}
                         pos={{ ...calcTrackerPos(selectedId, "now") }}
                         init={{ ...calcTrackerPos(selectedId, "init") }}
-                        minSize={{ ...calcTrackerBound(selectedId, "min") }}
-                        maxSize={{ ...calcTrackerBound(selectedId, "max") }}
+                        minPos={{ ...calcTrackerBound(selectedId, "min") }}
+                        maxPos={{ ...calcTrackerBound(selectedId, "max") }}
                         onResize={onResize}
                     />
 

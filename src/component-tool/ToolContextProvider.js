@@ -11,6 +11,10 @@ export const ToolContextProvider = ({ children }) => {
 
     const [nowName, setNowName] = useState("")
 
+    const [defaultObject, setDefaultObject] = useState(
+        {name : "", innerColor : "#f0f0f0", outerColor : "#000000", textColor : "#000000"}
+    )
+
     const [xToolSize, setXToolSize] = useState(500)
     const [yToolSize, setYToolSize] = useState(500)
     const [initXToolSize, setInitXToolSize] = useState(500)
@@ -24,11 +28,8 @@ export const ToolContextProvider = ({ children }) => {
 
     const [nowObjectList, setNowObjectList] = useState([])
 
-    function onSummonObject(customObject) {
-        console.log("오브젝트 소환!", customObject)
-        console.log("기존 결과 보여줘!", [...nowObjectList])
-        console.log("지금 결과 보여줘!", [...nowObjectList, customObject])
-        setNowObjectList([...nowObjectList, customObject])
+    function onSummonObject(entityArray, relationArray) {
+        setNowObjectList([...entityArray, ...relationArray])
     }
 
     function onDeleteAllObjects(deleteIdArray) {
@@ -82,6 +83,7 @@ export const ToolContextProvider = ({ children }) => {
         <ToolContext.Provider value={{
             nowName, setNowName,
             xToolSize, setXToolSize, yToolSize, setYToolSize,
+            defaultObject, setDefaultObject,
             initVertices, setInitVertices, initEdges, setInitEdges,
             nowVertices, setNowVertices, nowEdges, setNowEdges,
             initXToolSize, setInitXToolSize,
