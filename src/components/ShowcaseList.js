@@ -16,9 +16,10 @@ import { Form } from "react-bootstrap";
 import Favorites from './Favorites';
 import { AxiosAuth } from 'toolbox/Fetch'
 import GenreButton from "./GenreButton";
+//import GenreCanvas from "./GenreCanvas";
 
 export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=f=>f, lastIntersectingImage, setLastIntersectingImage=f=>f,
-  listAttachFile, setByKeyWord=f=>f, isSeries,txtSearch,onSearch=f=>f}) {
+  listAttachFile, setByKeyWord=f=>f, isSeries,txtSearch,onSearch=f=>f,GenreCanvas=f=>f}) {
     const param = useParams();
     console.log("PostListObserver param", param);
     
@@ -128,7 +129,7 @@ export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=
      */}
     <table style={{ margin: "auto", position: "static" }} ><td>
       {/*<GenreButton />*/}
-      </td><td>
+      </td><GenreCanvas param={param}/><td>
       {!auth.roles || auth.roles.length === 0  ? "" :
         <Link to={`/series/mng`} state={{ seriesId: "",  parentId: "", boardId: param?.boardId, post : {listAttachFile: listAttachFile, genreList:[]},isSeries:isSeries}}>
           <Button variant="outline-primary">신규</Button>

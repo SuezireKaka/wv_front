@@ -19,7 +19,7 @@ export default function TestNav() {
   }
 
   return <>
-    <Navbar expand="lg" className="bg-body-tertiary"  style={{position: "sticky", top: 0, backgroundColor:"white", zIndex: "2"}}>
+    <Navbar expand="lg" className="bg-body-tertiary"  style={{position: "sticky", top: 0, zIndex: "2"}}>
       <Container>
         <Navbar.Brand href="/"><Link style={navMenu} to='/' class="jb-nav">WonderVatory</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

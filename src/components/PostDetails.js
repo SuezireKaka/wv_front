@@ -12,14 +12,14 @@ import ListGroupItem from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+
 import PostList from "./PostList";
-import PostListCanvas from "./PostListCanvas";
+
 import axios from "api/axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router";
 import PostPrevNext from "./PostPrevNext";
-import PostListOffcanvas from "./PostListOffcanvas";
+
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
 
 export default function PostDetails() {
