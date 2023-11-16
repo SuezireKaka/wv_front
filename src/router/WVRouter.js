@@ -1,6 +1,8 @@
 import Home from 'components/Home';
 import { Route, Routes } from 'react-router';
 import Showcase from 'components/Showcase';
+import Showcase2 from 'components/Showcase2';
+import ShowcaseList from 'components/ShowcaseList';
 import Series from 'components/Series';
 import ReportMng from 'components/ReportMng';
 import PostDetails from 'components/PostDetails';
@@ -35,8 +37,9 @@ export default function WVRouter() {
           <Route path={"/board/0000"} element={ <PostNormal/> } />
           <Route path={"/board/0001"} element={ <PostNormal/> } />
           <Route path={"/board/:boardId"} element={ <Showcase/> } />
-          <Route path={"/board/:boardId/:genreId"} element={ <Showcase/> } />
-
+          {/*
+          */}
+            <Route path={"/board/:boardId/:genreId"} element={ <Showcase/> } /> 
           <Route path={"/series/:seriesId/"} element={ <Series/> }/>
           <Route path={"/series/mng"} element={ <PostMng/> } />
           <Route path={"/series/:seriesId/mng"} element={ <PostMng/> } />

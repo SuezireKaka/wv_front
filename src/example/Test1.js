@@ -1,45 +1,29 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useContext } from 'react'
 
 export default function Test1() {
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+/*
+    {page, setPage} = useContext(ShowcaseContext)
+    const param = useParams()
 
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
-  useEffect(() => {
-    fetch("https://api.example.com/items")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
-  }, [])
+    useMemo (
+        () => {setPage(1)}, []
+    )
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <ul>
-        {items.map(item => (
-          <li key={item.id}>
-            {item.name} {item.price}
-          </li>
-        ))}
-      </ul>
-    );
-  }
+    function onChange(index) {
+        ...
+        setNowGenre(GenreList[index])
+        setPage(1)
+    }
+
+    <GenreSelector initGenre={genre} onChange={onChange}/>
+    <ShowcaseList board={param?.boardId} initPage={page}/>
+
+    function GenreSelector({initGenre, onChange = f => f}) {
+       
+        <button onClick = {() => onChange(index)}></button>
+
+       
+       
+    }
+    return <></>*/
 }

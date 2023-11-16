@@ -9,8 +9,7 @@ import AppContext from "context/AppContextProvider";
 
 export default function TestNav() {
   const boardListUri = `/bb/anonymous/listAll`;
-  const originalFileUri = `/attach/anonymous/getOriginalFile`;
-  const thumbFileFileUri = `/attach/anonymous/displayThumbnail`;
+
   const { auth } = useContext(AppContext);
 
   const navMenu = {
@@ -20,7 +19,7 @@ export default function TestNav() {
   }
 
   return <>
-    <Navbar expand="lg" className="bg-body-tertiary"  style={{position: "sticky", top: 0, backgroundColor:"white", zIndex: "2"}}>
+    <Navbar expand="lg" className="bg-body-tertiary"  style={{position: "sticky", top: 0, zIndex: "2"}}>
       <Container>
         <Navbar.Brand href="/"><Link style={navMenu} to='/' class="jb-nav">WonderVatory</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -56,7 +55,7 @@ export default function TestNav() {
       {boardList.map(board => (
         <Nav.Link>
           <Link style={navMenu} class="jb-nav" key={board.id}  to={`/board/${board.id}`}
-          state={{ boardId: board.id, page: 1 }}>{board.name}</Link>
+          state={{boardId:board.id, page:1}}>{board.name}</Link>
           </Nav.Link>
       ))}
     </>
