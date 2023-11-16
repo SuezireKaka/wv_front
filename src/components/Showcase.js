@@ -24,26 +24,24 @@ export default function Showcase() {
     const navigate = useNavigate();
 
     const [postList, setPostList] = useState([]);
-    console.log(postList)
+    //console.log(postList)
     const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
     const [listAttachFile] = useState([])
     const [byKeyWord, setByKeyWord] = useState(false);
     const [isSeries, setIsSeries] = useState(true);
 
-    const txtSearch = useRef();
-  
 
+
+    const txtSearch = useRef(null);
     const onSearch = (e) => {
-      const search = txtSearch.current.value;
-      window.scrollTo({ top: 0 });
-      e.preventDefault();
-      setPostList([]);
-      setPage(1);
-      console.log(search);
-    };
+        const search = txtSearch.current.value;
+        window.scrollTo({ top: 0 });
+        e.preventDefault();
+        setPostList([]);
+        setPage(1);
+        console.log(search);
+      };
   
-
-
     useEffect((e) => {
         console.log("showcase 변화에 따른 이전 페이징 값 1로 초기화", page);
         window.scrollTo({ top: 0 });
@@ -52,25 +50,22 @@ export default function Showcase() {
         console.log(page)
     }, [param.boardId])
 
-    const onChange = async (genId, index) => {
-        console.log(genId)
-        setNowGenre(genreCodeList[index])
+    const onChange = async (genId) => {
         setPage(1)
         setPostList([])
         navigate(`/board/${param.boardId}/${genId}`)
-
     }
 
     function GenreSelector({ initGenre, onChange = f => f }) {
         return <>
-            <button onClick={(_, index) => onChange("", null)}>전체</button>
-            {genreCodeList?.map((gen, index) => <>
-                <button onClick={() => onChange(gen.id, index)}>{gen?.genre}</button>
+            <button onClick={(_) => onChange("")}>전체</button>
+            {genreCodeList?.map((gen) => <>
+                <button onClick={() => onChange(gen.id)}>{gen?.genre}</button>
             </>)}
         </>
     }
 
-    console.log(nowGenre)
+    //console.log(nowGenre)
 
     return <>
         <GenreSelector initGenre={initGenre} onChange={onChange} />
@@ -79,10 +74,10 @@ export default function Showcase() {
             lastIntersectingImage={lastIntersectingImage} 
             setLastIntersectingImage={setLastIntersectingImage}
             listAttachFile={listAttachFile}
-            setByKeyWord={setByKeyWord}
+            byKeyWord={byKeyWord} setByKeyWord={setByKeyWord}
             isSeries={isSeries}
-            txtSearch={txtSearch}
             onSearch={onSearch}
+            txtSearch={txtSearch}
         />
     </>
 }

@@ -9,8 +9,7 @@ import AppContext from "context/AppContextProvider";
 
 export default function TestNav() {
   const boardListUri = `/bb/anonymous/listAll`;
-  const originalFileUri = `/attach/anonymous/getOriginalFile`;
-  const thumbFileFileUri = `/attach/anonymous/displayThumbnail`;
+
   const { auth } = useContext(AppContext);
 
   const navMenu = {

@@ -18,15 +18,15 @@ import { AxiosAuth } from 'toolbox/Fetch'
 import GenreButton from "./GenreButton";
 
 export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=f=>f, lastIntersectingImage, setLastIntersectingImage=f=>f,
-  listAttachFile, setByKeyWord=f=>f, isSeries, txtSearch,  onSearch}) {
+  listAttachFile, setByKeyWord=f=>f, isSeries,txtSearch,onSearch=f=>f}) {
     const param = useParams();
     console.log("PostListObserver param", param);
     
     useEffect((e) => {
-      console.log("showcase 변화에 따른 이전 페이징 값 1로 초기화", page);
+
       window.scrollTo({ top: 0 });
       setPage(1)
-      console.log(page)
+
     },[param.boardId])
 
     const location = useLocation();
@@ -34,29 +34,32 @@ export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=
     const { auth } = useContext(AppContext);
 
     //const [targetBoard, setTargetBoard] = useState(state?.boardId);
-  
+
 
     useEffect(() => {
-      let search = txtSearch.current.value
-      if (search?.trim()) {
+      const search = txtSearch.current.value
+      if (search.trim()) {
+        console.log("search")
         getPostListThenSet(`/work/anonymous/search/${param?.boardId}/${search}`)
+
         setByKeyWord(true)
-        console.log("이펙트페이지",page)
       } else {
+        console.log("여기 들어오냐? 여긴 써치 아님")
         getPostListThenSet(`/work/anonymous/listAllSeries/${param?.boardId}`);
         setByKeyWord(false)
-        console.log("이펙트페이지",page)
       }
     }, [page])
   
+    
+
     const getPostListThenSet = async (seriesListUri, isReset) => {
       //console.log("여기다 보내고 있네요 2222 : ", seriesListUri + `/${page}?genreId=${param?.genreId ? param?.genreId : ""}`)
       try {
         const { data } = await axios.get(seriesListUri + `/${page}?genreId=${param?.genreId ? param?.genreId : ""}`);
         console.log("읽어온 게시글 목록", data?.firstVal);
         setPostList(isReset ? data?.firstVal : postList?.concat(data?.firstVal));
-        console.log(postList);
-        console.log("getPostListThenSet",page)
+        //console.log(postList);
+
       } catch {
         console.error('fetching error');
       }
@@ -70,7 +73,7 @@ export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=
           setPage((prev) => prev + 1);
           // 현재 타겟을 unobserve한다.
           observer.unobserve(entry.target);
-          console.log("setPage((prev) => prev + 1);",page)
+          
         }
       });
     };
@@ -83,20 +86,20 @@ export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=
           const { data } = await axios.get(`/work/anonymous/listAllSeries/${param?.boardId}/1?genreId=${param?.genreId ? param?.genreId : ""}`);
           console.log("다시 불러온 게시글 목록", data?.firstVal);
           setPostList(data?.firstVal);
-          //setPage(param?.page)
+
         } catch {
           console.error('fetching error');
         }
       }
       recall()
     }, [param]);
-
+/*
     useEffect(() => {
-      console.log('page ? ', page);
+      console.log("유즈이펙트 너 실행되냐")
       getPostListThenSet(`/work/anonymous/listAllSeries/${param?.boardId}`);
-      console.log("이펙트 페이지변화2",page)
+
     }, [page]);
-  
+  */
     useEffect(() => {
       //observer 인스턴스를 생성한 후 구독
       let observer;
@@ -108,7 +111,7 @@ export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=
       return () => observer && observer.disconnect();
     }, [lastIntersectingImage]);
 
-    console.log(page)
+    //console.log(page)
 
     //if (!page){return <></>}
     //else{
@@ -131,7 +134,7 @@ export default function ShowcaseList({page, setPage=f=>f, postList, setPostList=
           <Button variant="outline-primary">신규</Button>
         </Link>}
         </td><td>
-        <Form.Control placeholder="검색어" ref={txtSearch} ></Form.Control>
+        <Form.Control type="text" placeholder="검색어" ref={txtSearch} ></Form.Control>
         </td><td>
         <Button variant="outline-danger" onClick={onSearch}>
           검색
