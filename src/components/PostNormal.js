@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useState } from "react";
 import axios from "api/axios";
 import { useEffect } from "react";
@@ -19,6 +19,8 @@ export default function PostNormal() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
+  //const param = useParams()
+ // console.log(param)
   function buildUrl(step) {
     if (state?.search)
       return `/work/anonymous/search/${state?.boardId}/${state?.search}/${state.page}`;

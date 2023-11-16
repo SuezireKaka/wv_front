@@ -17,7 +17,8 @@ export default function PostMng() {
 	const post = location.state?.post;
 	console.log("포스트 나와라 오버", post)
 	const state = location.state;
-    const innerState = location.state?.state;
+	console.log(state);
+    //const innerState = location.state?.state;
 	const parentId = location.state?.parentId;
 	console.log(state);
 	
@@ -66,7 +67,7 @@ export default function PostMng() {
 			return;
 		const writer = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
 		const bodyData = {
-			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(innerState&&innerState?.boardId!=0?innerState?.boardId:post?.boardVO?.id)},
+			writer:writer, id:post?.id ? post.id : parentId+"----", boardVO:{id:(state&&state?.boardId!=0?state?.boardId:post?.boardVO?.id)},
 			title:title.trim(), content:content.trim(), hTier, isComplete:isComplete[0], listAttachFile:listAttach,
             genreList : genreTypes.map(gen => {
                 return {id : gen}
@@ -90,7 +91,7 @@ export default function PostMng() {
 			} else {
 				//수정
 				console.log('수정', post);
-				navigate(-1, {state:innerState});
+				navigate(-1, {state:state});
 			}
 			
 		} catch (err) {
@@ -110,8 +111,8 @@ export default function PostMng() {
 			console.log('Delete Failed', err);
 		} finally {
 			// navigate state 전달
-			console.log('Delete state', innerState);
-			navigate(-1, {state:innerState});
+			console.log('Delete state', state);
+			navigate(-1, {state:state});
 		}
 	}
 
