@@ -91,6 +91,7 @@ export default function Home() {
   }
 
   return (<>
+  
     <table>
       <tr>
         <td width="10%"></td>
@@ -106,7 +107,7 @@ export default function Home() {
         
         
       </tr>
-    </table >
+    </table > 
   </>
   )
 }

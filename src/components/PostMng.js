@@ -136,7 +136,8 @@ export default function PostMng() {
 			<Form.Control
 				as="textarea"
 				value={content}
-				rows="5"
+				style={{whiteSpace:"pre-line"}}
+				rows="10"
 				id="content"
 				placeholder="글내용"
 				onChange={(e) => setContent(e.target.value)}
