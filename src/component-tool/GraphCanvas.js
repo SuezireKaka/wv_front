@@ -42,9 +42,6 @@ export default function GraphCanvas() {
     const state = location.state;
     const writer = state?.writer;
 
-    console.log("작가 들어있는 상태 보여줘", state)
-    console.log("그래서 이제 뭐 그려?", nowVertices, nowEdges)
-
     const canvasRef = useRef()
 
     const [nowFunc, setNowFunc] = useState(0)
@@ -76,7 +73,6 @@ export default function GraphCanvas() {
 
     function findById(selectedId) {
         let filteredArray = [...nowVertices, ...nowEdges].filter(obj => obj.id === selectedId)
-        console.log("이 어레이는 뭐야?", filteredArray)
         if (filteredArray && filteredArray.length > 0) {
             let selected = filteredArray[0]
             return selected
@@ -89,7 +85,6 @@ export default function GraphCanvas() {
     function center(xPos, yPos, xSize, ySize) {
         // x축은 3.3배정도, y축은 5.1배 정도 길이 but why?
         let result = [xPos + xSize / 2, yPos + ySize / 2]
-        console.log("여기가 지금 중점이라며?", ...result)
         return result
     }
 
@@ -98,9 +93,7 @@ export default function GraphCanvas() {
 
         ctx?.reset()
         
-        console.log("nowEdges에 무슨 일이야?", nowEdges)
         nowEdges.forEach((relation) => {
-            console.log("지금부터 이거 그릴게요", relation)
             // 각 relation마다 시작
             ctx?.beginPath()
             ctx.strokeStyle = relation?.outerColor
@@ -127,10 +120,8 @@ export default function GraphCanvas() {
 
     function drawCircle(ctx, [oneCenterX, oneCenterY], [fartherX, fartherY]) {
         //원의 중점과 반지름을 이용
-        console.log("뭐가 온 거야?", oneCenterX, oneCenterY, fartherX, fartherY)
         let [circleCenterX, circleCenterY] = [(oneCenterX + fartherX) / 2, (oneCenterY + fartherY) / 2]
         let radius = Math.sqrt((oneCenterX - circleCenterX) ** 2 + (oneCenterY - circleCenterY) ** 2)
-        console.log("반지름 줘 봐", radius)
         // 라디안은 전설이다......
         ctx?.moveTo(circleCenterX + radius, circleCenterY)
         ctx?.arc(circleCenterX, circleCenterY, radius, 0, (360 * Math.PI) / 180, true)
@@ -145,10 +136,9 @@ export default function GraphCanvas() {
     }
 
     function onMove(set, type, index, newPoint) {
-        console.log("셋이 뭐더라......", set)
         let copyObjects = [...set]
-        console.log("복사한 결과물이 뭔데?", copyObjects)
-        copyObjects[index] = { ...newPoint }
+        copyObjects[index] = { ...newPoint, edited : true }
+        console.log("움직인 결과물 좀 보자", copyObjects[index])
         if (type !== "edge") {
             setNowVertices(copyObjects)
         }
@@ -158,33 +148,26 @@ export default function GraphCanvas() {
     }
 
     function onResize(set, type, index, newPoint) {
-        console.log("새로운 지점 보여 줘", newPoint)
         if (type !== "canvas") {
             let copyObjects = [...set]
             let nowObj = copyObjects[index] // 얘 이상해서 고쳤더니 다른 버그들도 해결됐다......?
-            console.log("그 새로운 오브젝트가 뭔데?", nowObj)
             // 새로운 툴 사이즈는 현재 트랙커의 중심에서 다시 해당 객체의 위치를 빼서 계산
             copyObjects[index] = { ...nowObj,
                 xSize: newPoint.xPos - nowObj.xPos,
                 ySize: newPoint.yPos - nowObj.yPos
             }
-            console.log("결과 알려줘!", copyObjects[index])
             if (type !== "edge") {
                 setNowVertices(copyObjects)
             }
             else {
-                console.log("그래서 여기로 왔다는 거지?")
                 setNowEdges(copyObjects)
             }
         }
         else {
-            console.log("캔버스 움직임 줘", newPoint)
             setXToolSize(newPoint.xPos)
             setYToolSize(newPoint.yPos)
         }
     }
-
-    useEffect(() => { console.log("그래서 지금 캔버스 크기는?", [xToolSize, yToolSize]) }, [xToolSize, yToolSize])
 
     function canvasExecute(funcName, e) {
         let rect = e.target.getBoundingClientRect();
@@ -225,12 +208,10 @@ export default function GraphCanvas() {
 
     function objectExecute(funcName, e, type) {
         let targetId = e.target.id
-        console.log("중점이랑 이름 보여줘", findCenterOf(targetId), findById(targetId).name)
         setInitXToolSize(xToolSize)
         setInitYToolSize(yToolSize)
         switch (funcName) {
             case "선택": {
-                console.log("지금 선택된 대상은", findById(targetId))
                 setSelectedId(targetId)
                 break
             }
@@ -280,9 +261,6 @@ export default function GraphCanvas() {
                 break
             }
             case "제거": {
-                [...nowVertices, ...nowEdges]
-                    .forEach(obj => { console.log("이거 삭제할 거야?", obj.id, isToDelete(obj.id, targetId)) })
-                console.log("얘내들 삭제하는 거 맞지?", memo)
                 // 기억 못 하는 애들만 남기고 다 지워!!!
                 removeAllMemorized(memo, nowVertices, setNowVertices)
                 removeAllMemorized(memo, initVertices, setInitVertices)
@@ -308,7 +286,7 @@ export default function GraphCanvas() {
         let obj = findById(objId)
         let result = objId === targetId // 타겟 자신이면 무조건 지움
             // 타겟을 one이나 other로 직접 갖고 있는 애도 다 지움
-            || (obj.one && obj.other && (obj.oneId === targetId || obj.otherId === targetId
+            || (obj.oneId && obj.otherId && (obj.oneId === targetId || obj.otherId === targetId
                 // 간접적으로 갖고 있는 애도
                 || isToDelete(obj.oneId, targetId)
                 || isToDelete(obj.otherId, targetId)))
@@ -316,7 +294,6 @@ export default function GraphCanvas() {
             // 다시 안 그리면서 상태변경하려고 가변함수 push 사용
             memo.push(objId)
         }
-        console.log(objId + "는 " + result + "라고 기억해야지")
         return result
     }
 
@@ -327,12 +304,10 @@ export default function GraphCanvas() {
 
     function findTypeAndIndexOf(objId) {
         let rawIndex = extractIndex(nowObjectList, objId)
-        console.log("찾은 날 인덱스는", rawIndex)
         // 날 인덱스가 nowVertices.length 미만이면 vertex 아니면 edge
         let resultType = rawIndex < nowVertices.length ? "vertex" : "edge"
         let [initArray, nowArray] = resultType === "vertex" ? [initVertices, nowVertices] : [initEdges, nowEdges]
         let resultIndex = extractIndex(nowArray, objId)
-        console.log("여기 결과 다시 줘 봐", resultType, resultIndex, initArray, nowArray)
         return [resultType, resultIndex, initArray, nowArray]
     }
 
@@ -359,7 +334,6 @@ export default function GraphCanvas() {
         let searchArray = findTypeAndIndexOf(selectedId)
         let index = searchArray[1]
         let nowArray = searchArray[3]
-        console.log("이건 또 뭔데?", index, nowArray)
         // 얘 변수명 xSize, ySize로 잘못 이해했다가 거의 망했었지......
         return {
             xPos: nowArray[index].xPos + (type === "max" ? X_MAX_OBJSIZE : X_MIN_OBJSIZE),
@@ -368,12 +342,8 @@ export default function GraphCanvas() {
     }
 
     function onSetup(e, prop) {
-        console.log("이제 초기값의 " + prop + "는 이거다람쥐", e.target.value)
         let copyDefault = {...defaultObject}
-        console.log("바꾸려는 대상은?", copyDefault)
-        console.log("바꾸려는 값은?", copyDefault[prop])
         copyDefault[prop] = e.target.value
-        console.log("바뀐 값은?", copyDefault[prop])
         setDefaultObject(copyDefault)
     }
 

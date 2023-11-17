@@ -7,25 +7,20 @@ export default function PureDrag({propList = [], onChange = f => f}) {
   const [summonedCnt, setSummonedCnt] = useState(0)
 
   const dragStart = idx => {
-    console.log("지금 이걸 드래그하는 중", idx);
     dragItem.current = idx;
   };
 
   const dragEnter = idx => {
-    console.log("지금 여길 지나다니는 중", idx);
     dragOverItem.current = idx;
   };
 
   const drop = () => {
     const copyListItems = [...propList];
-    console.log("지금 레퍼런스 내놔", dragItem)
     const dragItemContent = copyListItems[dragItem.current];
-    console.log("지금 드래그 내놔", dragItemContent)
     copyListItems.splice(dragItem.current, 1);
     copyListItems.splice(dragOverItem.current, 0, dragItemContent);
     dragItem.current = null;
     dragOverItem.current = null;
-    console.log("드래그 결과 내놔", copyListItems);
     onChange(copyListItems);
   };
 
@@ -39,8 +34,6 @@ export default function PureDrag({propList = [], onChange = f => f}) {
     let propTypeList = newList.map(prop => prop.propType)
     newList = newList.map((prop, idx) => {return {...prop, isSafe : checkQuality(idx, prop.propType, propTypeList)}})
     newList[index].isSafe = checkQuality(index, value, propTypeList)
-    console.log("왜 안 바꾸는데에에에", checkQuality(index, value, propTypeList))
-    console.log("진짜 모르겠다고오오", newList)
     onChange(newList)
   }
 
@@ -63,14 +56,10 @@ export default function PureDrag({propList = [], onChange = f => f}) {
     onChange([...propList].filter((_, idx) => {return idx !== index}))
   }
 
-  console.log("지금 반영 안 돼?", propList && ! propList.length > 0 &&
-  ! propList.reduce((accumulator, currentValue) => accumulator && currentValue.isSafe, true))
-
   return (
     <>
       {propList && propList.length > 0 ?
         propList.map((item, index) => {
-          console.log("이 아이템은 뭐야?", item)
           return <div
           style={{
             backgroundColor: item.isSafe ? 'lightblue' : 'pink',

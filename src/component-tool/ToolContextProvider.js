@@ -1,5 +1,5 @@
 import ToolDetail from 'component-tool/ToolDetail';
-import { useState, useRef, useContext, createContext } from 'react';
+import { useState, useRef, useContext, createContext, useMemo } from 'react';
 import AppContext from "context/AppContextProvider";
 import axios from 'api/axios';
 
@@ -67,9 +67,13 @@ export const ToolContextProvider = ({ children }) => {
         let saveDate = {
             id : id, name : nowName,
             series : {id : seriesId}, writer : writer,
-            xToolSize : xToolSize, yToolSize : yToolSize,
-            customEntityList : nowVertices,
-            customRelationList : nowEdges,
+            xtoolSize : xToolSize, ytoolSize : yToolSize,
+            customEntityList : nowVertices.map(v => {
+                return {...v, xpos : v.xPos, ypos : v.yPos, xsize : v.xSize, ysize : v.ySize}
+            }),
+            customRelationList : nowEdges.map(e => {
+                return {...e, xpos : e.xPos, ypos : e.yPos, xsize : e.xSize, ysize : e.ySize}
+            })
         }
         console.log("세관 검사중......", id, writer, auth, saveDate)
         axios.post(SAVE_TOOL_URL, saveDate,
@@ -79,6 +83,10 @@ export const ToolContextProvider = ({ children }) => {
             }}
         )
     }
+
+    useMemo(() => {
+        console.log("너희들 뭐하니?", nowVertices, nowEdges)
+    }, [nowVertices, nowEdges])
 
     return (
         <ToolContext.Provider value={{

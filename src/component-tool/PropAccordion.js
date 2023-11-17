@@ -7,8 +7,6 @@ import PureDrag from './PureDrag';
 export default function PropAccordion() {
     const {nowObjectList, onUpdate} = useContext(ToolContext);
 
-    console.log("객체 다 줘봐", nowObjectList)
-
     return <div style={{ width: "100%" }}>
         <div style={{ display: 'block????', backgroundColor: nowObjectList && nowObjectList.length > 0 ? "blue" : "white", padding: 1 }}> 
         <Accordion alwaysOpen flush>
@@ -20,7 +18,6 @@ export default function PropAccordion() {
                         <PureDrag
                             propList={obj?.customPropertiesList.map(
                                 prop => {
-                                    console.log("이걸 줄 예정이래요", {...prop})
                                     return {...prop}
                                 }
                             )}
