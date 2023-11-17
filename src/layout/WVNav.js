@@ -11,7 +11,7 @@ export default function TestNav() {
   const boardListUri = `/bb/anonymous/listAll`;
 
   const { auth } = useContext(AppContext);
-
+  console.log(auth);
   const navMenu = {
     color: "grey",
     textDecoration: "none",

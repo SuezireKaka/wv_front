@@ -1,0 +1,3 @@
+rds 설정변경
+lower_case_table_names = 1  대소문자 구분
+log_bin_trust_function_creators = 1  함수(NEXT_PK)안들어가는 문제

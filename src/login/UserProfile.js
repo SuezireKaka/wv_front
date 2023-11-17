@@ -22,10 +22,11 @@ export default function UserProfile() {
   const state = location.state;
   const response = location.state?.response;
   const owner = location.state?.owner;
+  console.log(state)
   const [nick, setNick] = useState(state?.nick);
   const [name, setName] = useState(response?.name);
   const [signInResult, setSignInResult] = useState({});
-  const [introduction, setIntroduction] = useState("");
+  const [introduction, setIntroduction] = useState(state?.introduction);
   const [birthDate, setBirthDate] = useState(response?.birthDate.substring(0, 10));
   const [sex, setSex] = useState(response?.sex);
   const { cpCodeList } = useContext(AppContext);
@@ -359,6 +360,7 @@ export default function UserProfile() {
           <Form.Control
             id="intro"
             as="textarea"
+            value={introduction}
             onChange={(e) => setIntroduction(e.target.value)}
           />{" "}
         </InputGroup>
