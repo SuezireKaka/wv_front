@@ -19,8 +19,10 @@ import axios from "api/axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router";
 import PostPrevNext from "./PostPrevNext";
-
+import React from "react";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import PostCnt from "./PostCnt";
+
 
 export default function PostDetails() {
   const thumbnailRequestTarget = ["video", "image"];
@@ -39,10 +41,36 @@ export default function PostDetails() {
   </>
 
   function RenderSuccess({ post }) {
+    const [counter, setCounter] = React.useState(post?.likeCount);
+    
     console.log("뭘 받았니?", post)
     //setLike(post.likeCount)
     const [nowLike, setLike] = useState(post?.likeCount);
     const [nowDislike, setDisLike] = useState(post?.dislikeCount);
+    
+    const onClickLike = async (id, like)=>{
+      let newLike = like+1;
+      console.log("예상치 : ", newLike)
+      try {
+        await axios.get(
+          `/work/anonymous/onLike?id=${id}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }).then((res) => {
+            console.log("잘 다녀왔는지 보자", res)
+          })
+
+      } catch (err) {
+        console.log(err);
+      }
+   
+      setLike(newLike+1)
+
+    }
+
+
 
     const onLike = async (id, like) => {
       let newLike = like++;
@@ -61,7 +89,7 @@ export default function PostDetails() {
       } catch (err) {
         console.log(err);
       }
-      navigate(0);
+      //navigate(0);
       setLike(like++)
     }
 
@@ -119,6 +147,7 @@ export default function PostDetails() {
         <ListGroup.Item>
           <LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}
           ✔<span>{post.readCount}</span>
+          {/* <PostCnt onClickLike={onClickLike} post={post} setLike={setLike}/>*/}
           <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{post.likeCount}</span>
           <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{post.dislikeCount}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>

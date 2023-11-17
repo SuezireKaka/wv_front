@@ -88,7 +88,7 @@ export default function Showcase() {
         const handleShow = () => setShow(true);
 
         return <div> <>
-            <Button variant="outline-dark" onClick={handleShow}>
+            <Button variant="outline-warning" onClick={handleShow}>
                 장르
             </Button>
 
@@ -96,12 +96,11 @@ export default function Showcase() {
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>장르검색</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body>
-                    <Link style={{ all: "unset", cursor: "pointer" }} key={param.boardId}to={`/board/${param.boardId}`}>전체</Link>&nbsp;&nbsp;
+                <Offcanvas.Body><b>
+                    <Link style={{ all: "unset", cursor: "pointer" }} key={param.boardId}to={`/board/${param.boardId}`}>전체</Link>&nbsp;&nbsp;<br/>
                     {genreCodeList?.map((gen) => <>
-                        <Link style={{ all: "unset", cursor: "pointer" }} key={gen.id} to={`/board/${param.boardId}/${gen.id}`}>{gen?.genre}</Link>&nbsp;&nbsp;
-                        
-                    </>)}
+                        <Link style={{ all: "unset", cursor: "pointer" }} key={gen.id} to={`/board/${param.boardId}/${gen.id}`}>{gen?.genre}</Link>&nbsp;&nbsp;<br/>
+                    </>)}</b>
                 </Offcanvas.Body>
             </Offcanvas>
         </></div>
