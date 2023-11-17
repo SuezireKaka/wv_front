@@ -51,9 +51,9 @@ export const ToolContextProvider = ({ children }) => {
     }
 
     function findTargetAndSync(target) {
-        // 타겟의 one이 있으면 edge 없으면 vertex
+        // 타겟의 oneId 있으면 edge 없으면 vertex
         let [targetArray, setTargetArray] =
-        target.one
+        target.oneId
             ? [[...nowEdges], setNowEdges]
             : [[...nowVertices], setNowVertices]
         // 타겟 어레이에서 타겟과 아이디가 일치하는 것을 찾아서 제거하고 다시 넣기
@@ -63,12 +63,13 @@ export const ToolContextProvider = ({ children }) => {
         setTargetArray(newTargetArray)
     }
 
-    function onSaveTool(id, writer, auth) {
+    function onSaveTool(id, seriesId, writer, auth) {
         let saveDate = {
-            id : id, name : nowName, writer : writer,
+            id : id, name : nowName,
+            series : {id : seriesId}, writer : writer,
             xToolSize : xToolSize, yToolSize : yToolSize,
             customEntityList : nowVertices,
-            customRelationList : nowEdges
+            customRelationList : nowEdges,
         }
         console.log("세관 검사중......", id, writer, auth, saveDate)
         axios.post(SAVE_TOOL_URL, saveDate,

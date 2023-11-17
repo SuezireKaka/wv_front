@@ -103,21 +103,21 @@ export default function GraphCanvas() {
             console.log("지금부터 이거 그릴게요", relation)
             // 각 relation마다 시작
             ctx?.beginPath()
-            ctx.strokeStyle = relation.outerColor
-            let oneId = relation?.one.id
-            let otherId = relation?.other.id
+            ctx.strokeStyle = relation?.outerColor
+            let oneId = relation?.oneId
+            let otherId = relation?.otherId
             // edge의 양 끝 대상의 id가 같다면 원 그리기
             if (oneId === otherId) {
                 drawCircle(ctx,
-                    findCenterOf(relation.one.id),
-                    center(relation.xPos, relation.yPos, relation.xSize, relation.ySize)
+                    findCenterOf(relation?.oneId),
+                    center(relation?.xPos, relation?.yPos, relation?.xSize, relation?.ySize)
                 )
             } // 다르다면 2차 베지에 그리기
             else {
                 drawQuadraticCurve(ctx,
-                    findCenterOf(relation.one.id),
-                    findCenterOf(relation.other.id),
-                    center(relation.xPos, relation.yPos, relation.xSize, relation.ySize)
+                    findCenterOf(relation?.oneId),
+                    findCenterOf(relation?.otherId),
+                    center(relation?.xPos, relation?.yPos, relation?.xSize, relation?.ySize)
                 )
             }
             // relation 단위로 그리기
@@ -263,7 +263,7 @@ export default function GraphCanvas() {
                         id: newId, name: newName, xPos: newX, yPos: newY,
                         xSize: DEFAULT_EDGE_X_SIZE, ySize: DEFAULT_EDGE_Y_SIZE,
                         // 먼저 선택한 걸 one에, 나중에 선택한 걸 other에
-                        one: { id: selectedId }, other: { id: targetId },
+                        oneId: selectedId , otherId: targetId,
                         customPropertiesList: []
                     }
                     let newNowEdgeArray = nowEdges.concat(newEdge)
@@ -308,10 +308,10 @@ export default function GraphCanvas() {
         let obj = findById(objId)
         let result = objId === targetId // 타겟 자신이면 무조건 지움
             // 타겟을 one이나 other로 직접 갖고 있는 애도 다 지움
-            || (obj.one && obj.other && (obj.one.id === targetId || obj.other.id === targetId
+            || (obj.one && obj.other && (obj.oneId === targetId || obj.otherId === targetId
                 // 간접적으로 갖고 있는 애도
-                || isToDelete(obj.one?.id, targetId)
-                || isToDelete(obj.other?.id, targetId)))
+                || isToDelete(obj.oneId, targetId)
+                || isToDelete(obj.otherId, targetId)))
         if (result) {
             // 다시 안 그리면서 상태변경하려고 가변함수 push 사용
             memo.push(objId)
@@ -385,7 +385,7 @@ export default function GraphCanvas() {
     useEffect(redraw)
 
     // 움직이면 다시 그려라
-    useMemo(redraw, [nowVertices, nowEdges])
+    useMemo( redraw, [nowVertices, nowEdges])
 
     console.log("툴 사이즈 초기값은?", initXToolSize, initYToolSize)
 
@@ -404,7 +404,7 @@ export default function GraphCanvas() {
                             // 기존에 위험한 게 있었거나 이번 게 안전하지 않으면 위험한 게 있는 것이다
                             return current || isAnyDanger(propList)
                         }, false)}
-                        onClick={() => onSaveTool(state?.toolId, state?.writer, auth)}
+                        onClick={() => onSaveTool(state?.toolId, state?.seriesId, state?.writer, auth)}
                     >
                         저장하기
                     </Button>
