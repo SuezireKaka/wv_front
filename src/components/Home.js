@@ -14,7 +14,7 @@ import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
-import HomePlus from "./HomePlus";
+
 
 
 export default function Home() {

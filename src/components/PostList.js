@@ -68,7 +68,7 @@ export default function PostList() {
               <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
               <td width="60%">
                 <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
-                  state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId: state?.seriesId, boardId: post?.boardVO?.id }}>{/*시리즈아이디필요*/}
+                  state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId: state?.seriesId, boardId: post?.boardVO?.id, likeCount:post?.likeCount, dislikeCount:post?.dislikeCount }}>{/*시리즈아이디필요*/}
                   {post.title}</Link>
               </td>
               <td><LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>

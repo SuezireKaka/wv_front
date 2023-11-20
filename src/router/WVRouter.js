@@ -1,7 +1,7 @@
 import Home from 'components/Home';
 import { Route, Routes } from 'react-router';
 import Showcase from 'components/Showcase';
-import Showcase2 from 'components/Showcase2';
+
 import ShowcaseList from 'components/ShowcaseList';
 import Series from 'components/Series';
 import ReportMng from 'components/ReportMng';

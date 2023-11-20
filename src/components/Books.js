@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Col } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
 import Loading from 'toolbox/Loading';
-
+import Row from 'react-bootstrap/Row';
 const Books = ({ title }) => {
     const [query, setQuery] = useState('웹툰');
     const [page, setPage] = useState(1);
@@ -39,16 +39,24 @@ const Books = ({ title }) => {
                 <input type="text" placeholder='검색어' value={query} onChange={(e) => setQuery(e.target.value)} />
                 <button>검색</button>
             </form>
-            <Col>
-                <div className='documents'>
-                    {documents.map(d => (
+            <hr></hr>
+            <Container>
+            <Row>
+           
+        
+                    {documents.map(data => (
+                        <Col>
                         <div className='box'>
-                            <img src={d.thumbnail ? d.thumbnail : 'http://via.placeholder.com/120X150'} alt="" />
-                            <div className='ellipsis'>{d.title}</div>
-                            <div className='ellipsis'>{d.authors[0]}</div>
+                             
+                            <img src={data.thumbnail ? data.thumbnail : 'http://via.placeholder.com/120X150'} alt="" />
+                            <div >{data.title}</div>
+                            <div>{data.authors[0]}</div>
+                           
                         </div>
+                        </Col>
                     ))}
-                </div></Col>
+
+                </Row></Container>
             <div>
                 <button onClick={() => setPage(page - 1)} disabled={page === 1}>이전</button>
                 <span style={{ margin: '10px' }}>{page}/{last}</span>

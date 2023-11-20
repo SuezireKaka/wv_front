@@ -30,6 +30,11 @@ export default function PostDetails() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
+  console.log(state)
+  const [nowLike, setLike] = useState(state?.likeCount);
+  const [nowDislike, setDisLike] = useState(state?.dislikeCount);
+  console.log(nowLike)
+  console.log(nowDislike)
   const postlist = location.state?.postListWithPaging?.firstVal;
   //state={{ id:post.id, boardId:state.boardId, page: currentPage, search: txtSearch.current?.value, postListWithPaging}}>
   const postUri = `/work/anonymous/findById/${state.id}`;
@@ -45,31 +50,8 @@ export default function PostDetails() {
     
     console.log("뭘 받았니?", post)
     //setLike(post.likeCount)
-    const [nowLike, setLike] = React.useState(post?.likeCount);
-    const [nowDislike, setDisLike] = useState(post?.dislikeCount);
     
-    const onClickLike = async (id, like)=>{
-      let newLike = like+1;
-      console.log("예상치 : ", newLike)
-      try {
-        await axios.get(
-          `/work/anonymous/onLike?id=${id}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          }).then((res) => {
-            console.log("잘 다녀왔는지 보자", res)
-          })
-
-      } catch (err) {
-        console.log(err);
-      }
-   
-      setLike(newLike+1)
-
-    }
-
+    
 
 
     const onLike = async (id, like) => {
@@ -110,8 +92,8 @@ export default function PostDetails() {
         } catch (err) {
           console.log(err);
         }
-        navigate(0);
-      setLike(dislike++)
+        
+        setDisLike(dislike++)
     }
     
     const handleDelete = async (e) => {
@@ -145,11 +127,10 @@ export default function PostDetails() {
         <OriginalViewList imgDtoList={post?.listAttachFile} x="51%" y="51%" />}
         </ListGroup.Item>
         <ListGroup.Item>
-          <LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}
-          ✔<span>{post.readCount}</span>
-          {/* <PostCnt onClickLike={onClickLike} post={post} setLike={setLike}/>*/}
-          <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{post.likeCount}//{nowLike}</span>
-          <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{post.dislikeCount}</span>
+          <LoginTypeIcon loginType={post?.writer?.accountType}/>{!post.writer?.nick ?post.writer?.kakaoNick  :post.writer?.nick}&nbsp;&nbsp;
+          ✔<span>{post.readCount}</span>&nbsp;&nbsp;
+          <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{nowLike}</span>&nbsp;&nbsp;
+          <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{nowDislike}</span>
           🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
         <ListGroup.Item> <PostPrevNext post={post} state={{ parentId: state.parentId, boardId: state.boardId, page: state.page, postListWithPaging: state.postListWithPaging }} /></ListGroup.Item>
 
