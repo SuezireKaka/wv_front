@@ -12,7 +12,7 @@ import {X_MIN_TOOLSIZE, Y_MIN_TOOLSIZE} from "./ToolManager"
 export default function ToolTable({
     data, state, param,
     setToolListUri = f => f, buildUrl = f => f,
-    setData = f => f, manageToolSkin = f => f }) {
+    setData = f => f, manageToolSkin = f => f, deleteToolSkin = f => f }) {
 
     console.log("상태 좀 보여줘", state)
     console.log("그래서 뭘 테이블로 만들면 돼?", data)
@@ -88,6 +88,10 @@ export default function ToolTable({
                 newData[index].isEditing = true
                 setData({ ...data, firstVal: newData })
                 break
+            case "삭제":
+                console.log("지금부터 여기 있는 애 삭제할 거야", index)
+                console.log("걔 아이디가 이렇게 생겼어", newData[index].id)
+                deleteToolSkin(newData[index].id)
             default:
         }
     }

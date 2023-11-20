@@ -11,7 +11,10 @@ export default function ToolExplorer() {
     const param = useParams();
     const state = location.state;
 
+    console.log("지금 상태 보여 줘", state)
+
     const TOOLSKIN_MANAGE_URL = "/tool/manageToolSkin/"
+    const TOOLSKIN_DELETE_URL = "/tool/deleteTool/"
 
     const [toolListUri, setToolListUri] = useState(buildUrl());
 
@@ -39,7 +42,22 @@ export default function ToolExplorer() {
             setNowData(newData)
             console.log("데이터 비교좀 하자", oldData, nowData)
         }).catch((error) => { console.log(error) })
-        
+    }
+
+    function deleteToolSkin(id) {
+        console.log("이 유저가 보냅니다: ", auth)
+        let uri = TOOLSKIN_DELETE_URL + id
+        console.log("다음 주소로 보냅니다: ", uri)
+        axios.delete(uri, {
+            headers: {
+                'Content-Type': 'application/json',
+                "x-auth-token": `Bearer ${auth?.accessToken}`
+            }
+        }).then(() => {
+            let newData = {...nowData, firstVal : [...nowData.firstVal].filter(data => data.id !== id)}
+            setNowData(newData)
+        } 
+        ).catch((error) => { console.log(error) })
     }
     
     useEffect(() => {
@@ -86,6 +104,7 @@ export default function ToolExplorer() {
             buildUrl={buildUrl}
             setData={setNowData}
             manageToolSkin={manageToolSkin}
+            deleteToolSkin={deleteToolSkin}
         />
     </div>
 }
