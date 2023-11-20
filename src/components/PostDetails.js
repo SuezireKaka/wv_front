@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { Fetch } from "toolbox/Fetch";
+import { AxiosAuth, Fetch } from "toolbox/Fetch";
 import { displayDate } from "toolbox/DateDisplayer";
 import ReplyList from "./ReplyList";
 import AppContext from "context/AppContextProvider";
@@ -37,7 +37,7 @@ export default function PostDetails() {
 
   console.log("밖에서 잘 그리고 있니?")
   return <>
-    <Fetch uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
+    <AxiosAuth auth={auth} uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
   </>
 
   function RenderSuccess({ post }) {

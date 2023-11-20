@@ -72,7 +72,7 @@ export default function GraphCanvas() {
     }
 
     function findById(selectedId) {
-        let filteredArray = [...nowVertices, ...nowEdges].filter(obj => obj.id === selectedId)
+        let filteredArray = [...nowVertices, ...nowEdges].filter(obj => obj?.id === selectedId)
         if (filteredArray && filteredArray.length > 0) {
             let selected = filteredArray[0]
             return selected
@@ -261,6 +261,7 @@ export default function GraphCanvas() {
                 break
             }
             case "제거": {
+                nowObjectList.forEach(edge => isToDelete(edge?.id, targetId));
                 // 기억 못 하는 애들만 남기고 다 지워!!!
                 removeAllMemorized(memo, nowVertices, setNowVertices)
                 removeAllMemorized(memo, initVertices, setInitVertices)
@@ -284,6 +285,7 @@ export default function GraphCanvas() {
             return true
         }
         let obj = findById(objId)
+        console.log("얘는 누구야?", obj)
         let result = objId === targetId // 타겟 자신이면 무조건 지움
             // 타겟을 one이나 other로 직접 갖고 있는 애도 다 지움
             || (obj.oneId && obj.otherId && (obj.oneId === targetId || obj.otherId === targetId
@@ -293,12 +295,14 @@ export default function GraphCanvas() {
         if (result) {
             // 다시 안 그리면서 상태변경하려고 가변함수 push 사용
             memo.push(objId)
+            console.log("기억 하고는 있어?", memo)
         }
         return result
     }
 
     function removeAllMemorized(memo, searchArray, removeCallback = f => f) {
-        let filteredArray = searchArray.filter(elem => (!memo.includes(elem.id)))
+        console.log("뭘 지우려는지 보자", memo)
+        let filteredArray = searchArray.filter(elem => (!memo.includes(elem?.id)))
         removeCallback(filteredArray)
     }
 
@@ -365,7 +369,7 @@ export default function GraphCanvas() {
                 <Remocon index={nowFunc} writer={writer} type="rel" onSelect={onSelect} />
             </td>
             <td>
-                {console.log("야 너희 둘 같아?", auth.userId, writer.id)}
+                {console.log("야 너희 둘 같아?", auth.userId, writer?.id)}
                 {auth?.userId === writer?.id
                     ? <Button variant="success"
                         // 조금이라도 위험하면 세이브 못 하게 할 거야
@@ -392,7 +396,7 @@ export default function GraphCanvas() {
                 {nowEdges.map((edge, index) => {
                     let init = initEdges[index]
                     return <UseGestureElement
-                        id={edge.id}
+                        id={edge?.id}
                         init={init}
                         pos={edge}
                         set={nowEdges}
@@ -409,7 +413,7 @@ export default function GraphCanvas() {
                 {nowVertices.map((vertex, index) => {
                     let init = initVertices[index]
                     return <UseGestureElement
-                        id={vertex.id}
+                        id={vertex?.id}
                         init={init}
                         pos={vertex}
                         set={nowVertices}
