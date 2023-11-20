@@ -22,7 +22,7 @@ function useFatch(uri, doLog) {
             //.then(console.log("난 언제 나오지?"))
             .catch(setError);
     }, [uri]);
-    return { loading, data, error};
+    return { loading, data, error };
 }
 
 function usePost(uri, body) {
@@ -53,7 +53,7 @@ function useAuth(uri, auth) {
     useEffect(() => {
         //console.log("여기를 통과했음", uri, auth)
         if (!uri || !auth) return;
-        axios.get(uri, 
+        axios.get(uri,
             {
                 headers: {
                     'Content-Type': 'application/json',

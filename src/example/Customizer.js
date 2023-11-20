@@ -1,5 +1,3 @@
-import { useState } from "react"
-import { Fetch } from "toolbox/Fetch"
 
 export default function Customizer({index = 0, setNowIndex = f => f}) {
     return <div style={{marginBottom : "5px"}}>

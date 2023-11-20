@@ -1,28 +1,17 @@
 import AppContext from "context/AppContextProvider";
-import { useContext } from 'react';
 import axios from "api/axios";
-import { Fetch } from "toolbox/Fetch";
-import { Form } from "react-bootstrap";
-import { useState } from "react";
+import { Form, InputGroup } from "react-bootstrap";
+import { useState, useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
-import { InputGroup } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import DaumPost from "daumpost/DaumPost";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import UserSeries from "./UserSeries";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-
 
 export default function UserProfile() {
   const { auth, setAuth } = useContext(AppContext);
-
   const location = useLocation();
   const state = location.state;
   const response = location.state?.response;
-  const owner = location.state?.owner;
-  console.log(state)
   const [nick, setNick] = useState(state?.nick);
   const [name, setName] = useState(response?.name);
   const [signInResult, setSignInResult] = useState({});
@@ -65,34 +54,35 @@ export default function UserProfile() {
     }
   };
 
-  const checkSex = (e) =>{
+  const checkSex = (e) => {
     setSex(e.target.value)
   }
   const onBlurVal = async (e, type) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.get(
         `/party/anonymous/checkUniqueVal/${type}/${e.target.value}`
       );
-      if (type==="login_id"){
-      console.log(response?.data);
-      setIdChecked(true);
-      setUniqueId(response?.data);
+      if (type === "login_id") {
+        console.log(response?.data);
+        setIdChecked(true);
+        setUniqueId(response?.data);
       }
-      if (type==="nick"){
-        if(!e.target.value && e.target.value === ""){
+      if (type === "nick") {
+        if (!e.target.value && e.target.value === "") {
           setNickChecked(false);
           setUniqueNick(false);
-        }else if(e.target.value===auth.nick){
+        } else if (e.target.value === auth.nick) {
           setNickChecked(true);
           setUniqueNick(true);
         }
-        else{
-        console.log(response?.data);
-        setNickChecked(true);
-        setUniqueNick(response?.data);}
+        else {
+          console.log(response?.data);
+          setNickChecked(true);
+          setUniqueNick(response?.data);
         }
+      }
 
     } catch (err) {
       setErrMsg("에러");
@@ -192,178 +182,178 @@ export default function UserProfile() {
   return (<Form controlId={loginId}>
     <h4>프로필</h4>
 
-      <FloatingLabel
-        controlId="floatingInput"
-        label="이름"
-        className="mb-3"
-      ><Form.Control
-          type="text"
-          controlId="name"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          onBlur={onBlur}
-        /></FloatingLabel>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="닉네임"
-        className="mb-3"
-      ><Form.Control
-          type="text"
-          controlId={nick}
-          placeholder="닉네임을 정해주세요"
-          value={nick}
-          onChange={(e) => setNick(e.target.value)}
-          onBlur={(e) => onBlurVal(e , "nick")}
-          required
-        /></FloatingLabel>
-      <p>{nickChecked
-        ? uniqueNick
-          ? "사용 가능한 닉네임입니다"
-          : "이미 사용중인 닉네임입니다"
-        : ""}
-      </p>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="아이디"
-        className="mb-3"
-      ><Form.Control
-          type="text"
-          id={loginId}
-          value={loginId}
-          disabled
-        /></FloatingLabel>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="패스워드"
-        className="mb-3"
-      ><Form.Control
-          input
-          type="password"
-          id="passWord"
-          onChange={(e) => setPassWord(e.target.value)}
-          value={passWord}
-          required
-        />{" "}
-      </FloatingLabel>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="암호확인"
-        className="mb-3"
-      ><Form.Control
-          type="password"
-          id="userMatchPwd"
+    <FloatingLabel
+      controlId="floatingInput"
+      label="이름"
+      className="mb-3"
+    ><Form.Control
+        type="text"
+        controlId="name"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+        onBlur={onBlur}
+      /></FloatingLabel>
+    <FloatingLabel
+      controlId="floatingInput"
+      label="닉네임"
+      className="mb-3"
+    ><Form.Control
+        type="text"
+        controlId={nick}
+        placeholder="닉네임을 정해주세요"
+        value={nick}
+        onChange={(e) => setNick(e.target.value)}
+        onBlur={(e) => onBlurVal(e, "nick")}
+        required
+      /></FloatingLabel>
+    <p>{nickChecked
+      ? uniqueNick
+        ? "사용 가능한 닉네임입니다"
+        : "이미 사용중인 닉네임입니다"
+      : ""}
+    </p>
+    <FloatingLabel
+      controlId="floatingInput"
+      label="아이디"
+      className="mb-3"
+    ><Form.Control
+        type="text"
+        id={loginId}
+        value={loginId}
+        disabled
+      /></FloatingLabel>
+    <FloatingLabel
+      controlId="floatingInput"
+      label="패스워드"
+      className="mb-3"
+    ><Form.Control
+        input
+        type="password"
+        id="passWord"
+        onChange={(e) => setPassWord(e.target.value)}
+        value={passWord}
+        required
+      />{" "}
+    </FloatingLabel>
+    <FloatingLabel
+      controlId="floatingInput"
+      label="암호확인"
+      className="mb-3"
+    ><Form.Control
+        type="password"
+        id="userMatchPwd"
 
-          placeholder="패스워드를 다시입력하세요"
-          onChange={(e) => setMatchPwd(e.target.value)}
-          value={matchPwd}
-          required
-        /></FloatingLabel>
-      <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon2">생년월일</InputGroup.Text>
-        <input
-          type="date"
-          id="birthDate"
-          name="birthDate"
-          onChange={(e) => setBirthDate(e.target.value)}
-          min="1920-01-01"
-          max="2023-12-31"
-          aria-required="true"
-          value={birthDate}
-        />
-        <InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
-        <InputGroup.Text id="basic-addon2">
-          남
-          {response?.sex === "남성" ?
-            <input
-              inline
-              defaultChecked
-              label="남성"
-              name="userSex"
-              type="radio"
-              onChange={checkSex}
-              value="남성"
-              id={`inline-radio-1`}
-            /> : <input
-              inline
-              label="남성"
-              name="userSex"
-              type="radio"
-              onChange={checkSex}
-              value="남성"
-              id={`inline-radio-1`}
-            />}
-        </InputGroup.Text>
-        <InputGroup.Text id="basic-addon2">
-          여
-          {response?.sex === "여성" ?
-            <input
-              inline
-              defaultChecked
-              label="여성"
-              name="userSex"
-              type="radio"
-              onChange={checkSex}
-              value="여성"
-              id={`inline-radio-1`}
-            /> : <input
-              inline
-              label="여성"
-              name="userSex"
-              type="radio"
-              onChange={checkSex}
-              value="여성"
-              id={`inline-radio-1`}
-            />}
-        </InputGroup.Text>
-      </InputGroup>
-      {console.log(cpCodeList)}
-      {cpCodeList?.map((code) => {
-        let rcpVal = Array(...listCP.keys()).includes(code.codeVal) ? listCP.get(code.codeVal) : ""
-        return <>{console.log(Array(...listCP.keys()))}{console.log(code)}{console.log(rcpVal)}
-          <FloatingLabel
-            controlId="floatingInput"
-            label={code.codeVal}
-            className="mb-3">
-            {code.codeVal === "home address" ? (
-              <>
-                <DaumPost setAddress={setAddress} />
-                <div style={{ width: "100%" }}>
-                  <Form.Control
-                    type="text"
-                    defaultValue={rcpVal}
-                    value={address}
-                    disabled
-                  />
-                  <Form.Control
-                    type="text"
-                    id={code.codeType}
-                    onChange={(e) =>
-                      checkCPValidity(e, code, e.target.value)
-                    }
-                    placeholder="상세주소입력"
-                  />
-                </div>
-              </>
-            ) : (
-              <Form.Control
-                type="text"
-                id={code.codeVal}
-                defaultValue={rcpVal}
-                onChange={(e) =>
-                  checkCPValidity(e, code, e.target.value)}/>
-            )}
-          </FloatingLabel>
-        </>
-      })}
-     <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon2">자기소개</InputGroup.Text>
-          <Form.Control
-            id="intro"
-            as="textarea"
-            value={introduction}
-            onChange={(e) => setIntroduction(e.target.value)}
-          />{" "}
-        </InputGroup>
+        placeholder="패스워드를 다시입력하세요"
+        onChange={(e) => setMatchPwd(e.target.value)}
+        value={matchPwd}
+        required
+      /></FloatingLabel>
+    <InputGroup className="mb-3">
+      <InputGroup.Text id="basic-addon2">생년월일</InputGroup.Text>
+      <input
+        type="date"
+        id="birthDate"
+        name="birthDate"
+        onChange={(e) => setBirthDate(e.target.value)}
+        min="1920-01-01"
+        max="2023-12-31"
+        aria-required="true"
+        value={birthDate}
+      />
+      <InputGroup.Text id="basic-addon2">성별</InputGroup.Text>
+      <InputGroup.Text id="basic-addon2">
+        남
+        {response?.sex === "남성" ?
+          <input
+            inline
+            defaultChecked
+            label="남성"
+            name="userSex"
+            type="radio"
+            onChange={checkSex}
+            value="남성"
+            id={`inline-radio-1`}
+          /> : <input
+            inline
+            label="남성"
+            name="userSex"
+            type="radio"
+            onChange={checkSex}
+            value="남성"
+            id={`inline-radio-1`}
+          />}
+      </InputGroup.Text>
+      <InputGroup.Text id="basic-addon2">
+        여
+        {response?.sex === "여성" ?
+          <input
+            inline
+            defaultChecked
+            label="여성"
+            name="userSex"
+            type="radio"
+            onChange={checkSex}
+            value="여성"
+            id={`inline-radio-1`}
+          /> : <input
+            inline
+            label="여성"
+            name="userSex"
+            type="radio"
+            onChange={checkSex}
+            value="여성"
+            id={`inline-radio-1`}
+          />}
+      </InputGroup.Text>
+    </InputGroup>
+    {console.log(cpCodeList)}
+    {cpCodeList?.map((code) => {
+      let rcpVal = Array(...listCP.keys()).includes(code.codeVal) ? listCP.get(code.codeVal) : ""
+      return <>{console.log(Array(...listCP.keys()))}{console.log(code)}{console.log(rcpVal)}
+        <FloatingLabel
+          controlId="floatingInput"
+          label={code.codeVal}
+          className="mb-3">
+          {code.codeVal === "home address" ? (
+            <>
+              <DaumPost setAddress={setAddress} />
+              <div style={{ width: "100%" }}>
+                <Form.Control
+                  type="text"
+                  defaultValue={rcpVal}
+                  value={address}
+                  disabled
+                />
+                <Form.Control
+                  type="text"
+                  id={code.codeType}
+                  onChange={(e) =>
+                    checkCPValidity(e, code, e.target.value)
+                  }
+                  placeholder="상세주소입력"
+                />
+              </div>
+            </>
+          ) : (
+            <Form.Control
+              type="text"
+              id={code.codeVal}
+              defaultValue={rcpVal}
+              onChange={(e) =>
+                checkCPValidity(e, code, e.target.value)} />
+          )}
+        </FloatingLabel>
+      </>
+    })}
+    <InputGroup className="mb-3">
+      <InputGroup.Text id="basic-addon2">자기소개</InputGroup.Text>
+      <Form.Control
+        id="intro"
+        as="textarea"
+        value={introduction}
+        onChange={(e) => setIntroduction(e.target.value)}
+      />{" "}
+    </InputGroup>
 
     <Button variant="outline-primary"
       onClick={handleSubmit}

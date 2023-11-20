@@ -1,5 +1,4 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import axios from "api/axios";
 import AppContext from "context/AppContextProvider";
 import DaumPost from "daumpost/DaumPost";
@@ -53,7 +52,7 @@ const Register = () => {
     );
     setListCP(listCP);
   };
-  const checkSex = (e) =>{
+  const checkSex = (e) => {
     setSex(e.target.value)
   }
 
@@ -70,25 +69,26 @@ const Register = () => {
 
   const onBlurVal = async (e, type) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.get(
         `/party/anonymous/checkUniqueVal/${type}/${e.target.value}`
       );
-      if (type==="login_id"){
-      console.log(response?.data);
-      setIdChecked(true);
-      setUniqueId(response?.data);
+      if (type === "login_id") {
+        console.log(response?.data);
+        setIdChecked(true);
+        setUniqueId(response?.data);
       }
-      if (type==="nick"){
-        if(!e.target.value && e.target.value === ""){
+      if (type === "nick") {
+        if (!e.target.value && e.target.value === "") {
           setNickChecked(false);
           setUniqueNick(false);
-        }else{
-        console.log(response?.data);
-        setNickChecked(true);
-        setUniqueNick(response?.data);}
+        } else {
+          console.log(response?.data);
+          setNickChecked(true);
+          setUniqueNick(response?.data);
         }
+      }
 
     } catch (err) {
       setErrMsg("에러");
@@ -136,10 +136,14 @@ const Register = () => {
   return (
     <>
       <form>
-        <InputGroup className="mb-3" style={{display: "inline-block",
-        align: "center", width:"50%", backgroundColor:""}}>
-          <InputGroup.Text id="basic-addon0"style={{display: "inline-block",
-        textAlign: "center"}}>회원가입</InputGroup.Text>
+        <InputGroup className="mb-3" style={{
+          display: "inline-block",
+          align: "center", width: "50%", backgroundColor: ""
+        }}>
+          <InputGroup.Text id="basic-addon0" style={{
+            display: "inline-block",
+            textAlign: "center"
+          }}>회원가입</InputGroup.Text>
         </InputGroup>
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">이름</InputGroup.Text>
@@ -158,14 +162,14 @@ const Register = () => {
             id="loginId"
             onChange={(e) => setLoginId(e.target.value)}
             required
-            onBlur={(e) => onBlurVal(e , "login_id")}
+            onBlur={(e) => onBlurVal(e, "login_id")}
           />{" "}
         </InputGroup>
         <p>
           {idChecked
             ? uniqueId
               ? <>사용 가능한 ID입니다</>
-              : <div style={{color:"red"}}>이미 사용중인 ID입니다</div>
+              : <div style={{ color: "red" }}>이미 사용중인 ID입니다</div>
             : ""}
         </p>
         <InputGroup className="mb-3">
@@ -197,7 +201,7 @@ const Register = () => {
             placeholder="닉네임을 정해주세요"
             onChange={(e) => setNick(e.target.value)}
             required
-            onBlur={(e) => onBlurVal(e , "nick")}
+            onBlur={(e) => onBlurVal(e, "nick")}
           />
         </InputGroup>
         <p>
@@ -300,24 +304,24 @@ const Register = () => {
         {console.log(listCP)}
       </form>
 
-        <br />
-        <Button
-          variant="outline-primary"
-          onClick={handleSubmit}
-          disabled={
-            !(
-              validMatch &&
-              nickChecked &&
-              uniqueNick &&
-              idChecked &&
-              uniqueId &&
-              isNameBlur &&
-              isBirthDateBlur
-            )
-          }
-        >
-          Sign Up
-        </Button>
+      <br />
+      <Button
+        variant="outline-primary"
+        onClick={handleSubmit}
+        disabled={
+          !(
+            validMatch &&
+            nickChecked &&
+            uniqueNick &&
+            idChecked &&
+            uniqueId &&
+            isNameBlur &&
+            isBirthDateBlur
+          )
+        }
+      >
+        Sign Up
+      </Button>
 
     </>
   );

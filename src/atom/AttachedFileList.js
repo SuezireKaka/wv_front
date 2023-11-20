@@ -3,15 +3,12 @@ import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import AttachFile from './AttachFile';
 
-
-
 export default function AttachedFileList({ writer, listAttach, setListAttach=f=>f, multiple = true }) {
-  const thumbnailRequestTarget = ["video", "image"];
+
   const [contentFilter, setContentFilter] = useState([]);
   const [업로드파일기억장치, set업로드파일기억장치] = useState([]);
   const [imgDtoList, setImgDtoList] = useState([]);
-  const [imgSrc, setImgSrc] = useState([]);
-  const [attachedFileUrls, setAttachedFileUrls] = useState([]);
+
 
   function onFileSelect(finedAndHeaders) {
     let files = [], headers = [];

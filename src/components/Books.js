@@ -40,23 +40,18 @@ const Books = ({ title }) => {
                 <button>검색</button>
             </form>
             <hr></hr>
-            <Container>
-            <Row>
-           
-        
-                    {documents.map(data => (
-                        <Col>
+            <Container><Row>
+                {documents.map(data => (
+                    <Col>
                         <div className='box'>
-                             
+
                             <img src={data.thumbnail ? data.thumbnail : 'http://via.placeholder.com/120X150'} alt="" />
                             <div >{data.title}</div>
                             <div>{data.authors[0]}</div>
-                           
                         </div>
-                        </Col>
-                    ))}
-
-                </Row></Container>
+                    </Col>
+                ))}
+            </Row></Container>
             <div>
                 <button onClick={() => setPage(page - 1)} disabled={page === 1}>이전</button>
                 <span style={{ margin: '10px' }}>{page}/{last}</span>

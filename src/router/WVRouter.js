@@ -1,8 +1,6 @@
 import Home from 'components/Home';
 import { Route, Routes } from 'react-router';
 import Showcase from 'components/Showcase';
-
-import ShowcaseList from 'components/ShowcaseList';
 import Series from 'components/Series';
 import ReportMng from 'components/ReportMng';
 import PostDetails from 'components/PostDetails';
@@ -19,7 +17,6 @@ import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
 import Test5 from 'example/Test5';
 import Test6 from 'example/Test6';
-import PostList from 'components/PostList';
 import ReportList from 'components/ReportList';
 import PostNormal from 'components/PostNormal';
 import FavoritesList from 'components/FavoritesList';
@@ -29,6 +26,7 @@ import LoginHandler from 'kakao-login/LoginHandler';
 import ReportDetails from 'components/ReportDetails';
 import ToolView from 'component-tool/ToolView';
 import NotFound from 'components/NotFound';
+
 export default function WVRouter() {
     return (
         <Routes> 

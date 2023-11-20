@@ -1,20 +1,13 @@
 import axios from 'api/axios';
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import RadioGroup from 'toolbox/RadioGroup';
 import Radio from 'toolbox/Radio';
-import { useState } from 'react';
 import AppContext from 'context/AppContextProvider';
-import { useContext } from 'react';
-import Checkbox from 'toolbox/Checkbox';
-import CheckboxGroup from 'toolbox/CheckboxGroup';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 export default function MemberRoleList({ member }) {
-  console.log(member)
   const [value, setValue] = useState(member?.roleList[0]?.role);
-  const [roles, setRoles] = React.useState([]);
-  const [listCheckMember, setListCheckMember] = useState(new Map());
   const { auth } = useContext(AppContext);
   const navigate = useNavigate();
 

@@ -1,18 +1,12 @@
-import { useRef, useState, useEffect, useContext } from 'react';
-import Button from 'react-bootstrap/Button';
+import { useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
 import axios from 'api/axios';
-
-import AppContext from "context/AppContextProvider";
 
 export default function OriginalFileView({imgUrl, afdto}) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [originalFileUrl, setOriginalFileUrl] = useState(false);
 
   const buildUri = (blob) => {
