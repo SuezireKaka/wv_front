@@ -44,7 +44,8 @@
   transition-duration: 0.5s;
   opacity: 1;
   display: block;
-  cursor:pointer
+  cursor:pointer;
+  
 }
 
 
@@ -82,6 +83,13 @@
   margin-bottom:-20%;
   max-height: initial;
 }
+
+
+.navMenu {
+  color: "grey";
+  text-decoration: "none";
+}
+
 
 
 

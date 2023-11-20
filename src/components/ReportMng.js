@@ -10,8 +10,6 @@ import axios from 'api/axios';
 import CheckboxGroup from "toolbox/CheckboxGroup";
 import Checkbox from "toolbox/Checkbox";
 
-
-
 export default function ReportMng() {
 
     const { auth, rptCodeList } = useContext(AppContext);
@@ -32,53 +30,55 @@ export default function ReportMng() {
     const [hasAnyType, setHasAnyType] = useState(report?.listAttachFile);
 
     useMemo(() => {
-		setHasAnyType(reportTypes?.length > 0);
-	}, [reportTypes])
+        setHasAnyType(reportTypes?.length > 0);
+    }, [reportTypes])
 
     const STYLE = { width: "50px 30%" }
 
     const handleSubmit = async (e) => {
-		
-		e.preventDefault();
+
+        e.preventDefault();
         if (!hasAnyType)
-			return;
-		
-		const reporter = {id:auth?.userId, nick:auth?.nick, loginId:auth?.loginId};
-		const bodyData = {
+            return;
+
+        const reporter = { id: auth?.userId, nick: auth?.nick, loginId: auth?.loginId };
+        const bodyData = {
             reporter, suspectId, suspectTable, cause,
-            rptTypesList : reportTypes.map(rpt => {
-                return {rptType : rpt}
+            rptTypesList: reportTypes.map(rpt => {
+                return { rptType: rpt }
             }),
-            listAttachFile:listAttach
-		};
-		console.log(JSON.stringify(bodyData));
+            listAttachFile: listAttach
+        };
+        console.log(JSON.stringify(bodyData));
 
-		try {
-			await axios.post(
-				"/report/manageReport",
-				bodyData,
-				{headers: {
-					'Content-Type': 'application/json',
-					"x-auth-token": `Bearer ${auth?.accessToken}`}}
-			);
+        try {
+            await axios.post(
+                "/report/manageReport",
+                bodyData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "x-auth-token": `Bearer ${auth?.accessToken}`
+                    }
+                }
+            );
 
-			if (!report?.id) {
-				//글쓰기
-				console.log('//글쓰기 ttt');
-				navigate(-1, {state:{boardId:report?.boardVO?.id, page:1, search:""}});
-			} else {
-				//수정
-				console.log('수정', report);
-				navigate(-1, {state:state});
-			}
-			
-		} catch (err) {
-			console.log('Registration Failed', err);
-		}
-	}
+            if (!report?.id) {
+                //글쓰기
+                console.log('//글쓰기 ttt');
+                navigate(-1, { state: { boardId: report?.boardVO?.id, page: 1, search: "" } });
+            } else {
+                //수정
+                console.log('수정', report);
+                navigate(-1, { state: state });
+            }
+
+        } catch (err) {
+            console.log('Registration Failed', err);
+        }
+    }
 
     return <div>
-        {/*[{reportTypes.join(", ")}]*/}
         <Form style={STYLE}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>신고사유를 선택해주세요</Form.Label>
@@ -92,11 +92,10 @@ export default function ReportMng() {
                 </CheckboxGroup>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                {/*<Form.Label>신고사유를 구체적으로 적어주세요</Form.Label>*/}
                 <Form.Control as="textarea"
                     style={{ resize: "none" }}
                     rows={6}
-				    value={cause}
+                    value={cause}
                     placeholder="신고사유를 구체적으로 적어주세요"
                     onChange={(e) => setCause(e.target.value)}
                 />
@@ -105,7 +104,7 @@ export default function ReportMng() {
             <ThumbnailList imgDtoList={listAttach} />
             <AttachedFileList writer={auth} listAttach={listAttach} setListAttach={setListAttach} />
             <Button variant="outline-danger" onClick={handleSubmit}
-                disabled={!reportTypes || reportTypes?.length === 0 || ! cause}>
+                disabled={!reportTypes || reportTypes?.length === 0 || !cause}>
                 신고하기
             </Button>
         </Form>

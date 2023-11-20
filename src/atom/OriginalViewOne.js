@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'api/axios';
+import React from 'react';
 import { AxiosPost } from 'toolbox/Fetch';
-import OriginalFileView from './OriginalFileView';
-
 //개량판
 export default function OriginalViewOne({ imgDtoList, x,y, d }) {
-    //console.log("ThumbnailList render ", imgDtoList);
-
     const thumbnailRequestTarget = ["video", "image"];
 
     function renderImg(afdto, blob) {

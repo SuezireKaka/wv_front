@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, useContext } from "react"
-import AppContext from "context/AppContextProvider";
+
 
 export default function Diagram() {
-    const { auth } = useContext(AppContext);
+
 
     const lookUpId = useRef();
 

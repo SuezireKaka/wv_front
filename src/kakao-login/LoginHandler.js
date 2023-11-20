@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
-import { useEffect, useContext } from "react";
 import AppContext from 'context/AppContextProvider';
 import axios from "axios";
 
@@ -45,7 +44,7 @@ const LoginHandler = (props) => {
   return (
     <div className="LoginHandeler">
       <div className="notice">
-      <Loading />
+        <Loading />
         <div className="spinner"></div>
       </div>
     </div>

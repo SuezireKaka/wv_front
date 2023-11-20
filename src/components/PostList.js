@@ -1,13 +1,8 @@
 import { useLocation } from "react-router";
-import { useState } from "react";
-import axios from "api/axios";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
 import { Fetch } from "toolbox/Fetch";
-import AppContext from "context/AppContextProvider";
 import { Table } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";
 import { Pagination } from "react-bootstrap";
@@ -15,8 +10,6 @@ import LoginTypeIcon from "toolbox/LoginTypeIcon";
 import { displayPagination } from "toolbox/Pagination";
 
 export default function PostList() {
-  const { auth } = useContext(AppContext);
-
   const location = useLocation();
   const state = location.state;
 
@@ -39,17 +32,13 @@ export default function PostList() {
 
   const txtSearch = useRef();
 
-  const onSearch = (e) => {
-    e.preventDefault();
-    let search = txtSearch.current.value;
+  return (
+    <div>
 
-    state.postListWithPaging = null;
-    state.search = search;
-    state.page = 1;
+      <Fetch uri={postListUri} renderSuccess={renderSuccess} />
 
-    setPostListUri(buildUrl());
-  }
-
+    </div>
+  )
   function renderSuccess(postListWithPaging) {
 
     const postList = postListWithPaging?.firstVal;
@@ -57,9 +46,9 @@ export default function PostList() {
 
     console.log("뭐가 나온 건지 확인", postListWithPaging)
 
-  return <>
-      <Table  striped bordered hover responsive variant="white">
-          <thead>
+    return <>
+      <Table striped bordered hover responsive variant="white">
+        <thead>
 
         </thead>
         <tbody>
@@ -67,8 +56,8 @@ export default function PostList() {
             <tr key={post.id}>
               <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
               <td width="60%">
-                <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
-                  state={{ id: post.id, page: state.page, search: txtSearch.current?.value, postListWithPaging, parentId: state?.seriesId, boardId: post?.boardVO?.id }}>{/*시리즈아이디필요*/}
+                <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`}
+                  state={{ page: state.page, search: txtSearch.current?.value, parentId: state?.seriesId, post: post }}>{/*시리즈아이디필요*/}
                   {post.title}</Link>
               </td>
               <td><LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>
@@ -91,11 +80,5 @@ export default function PostList() {
 
   console.log("여기서의 상태는?", state)
 
-  return (
-    <div>
 
-      <Fetch uri={postListUri} renderSuccess={renderSuccess} />
-
-    </div>
-  )
 }

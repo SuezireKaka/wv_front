@@ -14,7 +14,7 @@ const useHover = () => {
     element.addEventListener("mouseover", handleMouseOver);
     element.addEventListener("mouseout", handleMouseOut);
 
-	// useEffect에서 이벤트를 등록할 때는
+    // useEffect에서 이벤트를 등록할 때는
     // 꼭 정리(clean-up)를 해줘야한다.
     return () => {
       element.removeEventListener("mouseover", handleMouseOver);

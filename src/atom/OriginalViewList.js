@@ -5,10 +5,7 @@ import OriginalFileView from './OriginalFileView';
 
 //개량판
 export default function OriginalViewList({ imgDtoList, x, y }) {
-    //console.log("ThumbnailList render ", imgDtoList);
-
     const thumbnailRequestTarget = ["video", "image"];
-
     function renderImg(afdto, blob) {
         const thumbFile = new File([blob.data], "image");
         const imgUrl = (window.URL || window.webkitURL).createObjectURL(thumbFile);
