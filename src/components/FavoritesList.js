@@ -11,59 +11,14 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import Favorites from './Favorites';
 
-export default function FavoritesList() {
-  const { auth } = useContext(AppContext);
-  const uri = `/work/favoritesAll/1`
-  const [postList, setPostList] = useState([]);
-  const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-  const [page, setPage] = useState(1);
-
-  const getPostListThenSet = async () => {
-    try {
-      const { data } = await axios.get(
-        `/work/favoritesAll/${page}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            "x-auth-token": `Bearer ${auth?.accessToken}`
-          }
-        }
-      );
-
-      setPostList(postList.concat(data?.firstVal));
-    } catch {
-      console.error('fetching error');
-    }
-  };
-
-  const onIntersect = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setPage((prev) => prev + 1);
-        observer.unobserve(entry.target);
-      }
-    });
-  };
-
-  useEffect(() => {
-    console.log('page ? ', page);
-    getPostListThenSet();
-  }, [page]);
-
-  useEffect(() => {
-    let observer;
-    if (lastIntersectingImage) {
-      observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-      observer.observe(lastIntersectingImage);
-    }
-    return () => observer && observer.disconnect();
-  }, [lastIntersectingImage]);
-
+export default function FavoritesList({dataList, setLastIntersectingImage=f=>f, auth}) {
+  
+ console.log(dataList)
   return (
     <Container>
       <Row>
-        {postList?.map((post, index) => {
-          if (index === postList.length - 1) {
+        {dataList?.map((post, index) => {
+          if (index === dataList.length - 1) {
             return (
               <Col id={post?.id} ref={setLastIntersectingImage}>
 

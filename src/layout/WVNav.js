@@ -29,8 +29,8 @@ export default function TestNav() {
             <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
             {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
               ? <>
-                <Nav.Link><Link style={navMenu} class="jb-nav" to="/memberList/0000">회원정보</Link></Nav.Link>
-                <Nav.Link><Link style={navMenu} class="jb-nav" to="/report">신고사항</Link></Nav.Link>
+                <Nav.Link><Link style={navMenu} class="jb-nav" to="/MemberPrev">회원정보</Link></Nav.Link>
+                <Nav.Link><Link style={navMenu} class="jb-nav" to="/ReportPrev">신고사항</Link></Nav.Link>
               </>
               : ""
             }
