@@ -10,22 +10,24 @@ export default function ObjectEditor({id = "",
         initEdges, setInitEdges,
         nowEdges, setNowEdges} = useContext(ToolContext);
 
+    console.log("무엇을 디자인하실 건가요?", obj);
+
     return <tr>
         <td>
             <label>이름</label>{" : "}<input type="text"
-                defaultValue={obj.name}
+                value={obj.name}
                 onChange={e => {id ? onEdit(e, "name", id) : onSetup(e, "name")}}
             /><br/>
             <label>배경</label>{" : "}<input type="color"
-                defaultValue={obj.innerColor}
+                value={obj.innerColor}
                 onChange={e => {id ? onEdit(e, "innerColor", id) : onSetup(e, "innerColor")}}
             />{"  "}
             <label>테두리</label>{" : "}<input type="color"
-                defaultValue={obj.outerColor}
+                value={obj.outerColor}
                 onChange={e => {id ? onEdit(e, "outerColor", id) : onSetup(e, "outerColor")}}
             />{"  "}
             <label>글자색</label>{" : "}<input type="color"
-                defaultValue={obj.textColor}
+                value={obj.textColor}
                 onChange={e => {id ? onEdit(e, "textColor", id) : onSetup(e, "textColor")}}
             />
         </td>

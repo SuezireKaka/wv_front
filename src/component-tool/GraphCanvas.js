@@ -310,9 +310,14 @@ export default function GraphCanvas() {
         let rawIndex = extractIndex(nowObjectList, objId)
         // 날 인덱스가 nowVertices.length 미만이면 vertex 아니면 edge
         let resultType = rawIndex < nowVertices.length ? "vertex" : "edge"
-        let [initArray, nowArray] = resultType === "vertex" ? [initVertices, nowVertices] : [initEdges, nowEdges]
+
+        let [initArray, nowArray, setInitArray, setNowArray] =
+            resultType === "vertex"
+            ? [initVertices, nowVertices, setInitVertices, setNowVertices]
+            : [initEdges, nowEdges, setInitEdges, setNowEdges]
+
         let resultIndex = extractIndex(nowArray, objId)
-        return [resultType, resultIndex, initArray, nowArray]
+        return [resultType, resultIndex, initArray, nowArray, setInitArray, setNowArray]
     }
 
     function extractIndex(array, id) {
@@ -352,14 +357,24 @@ export default function GraphCanvas() {
     }
 
     function onEdit(e, prop, id) {
-        console.log("지금 " + id + "의 " + prop + "는 이거다리미", e.target.value)
+        let [, resultIndex, initArray, nowArray, setInitArray, setNowArray] = findTypeAndIndexOf(id);
+        copySet(e, initArray, resultIndex, prop, setInitArray);
+        copySet(e, nowArray, resultIndex, prop, setNowArray);
+    }
+
+    function copySet(e, array, index, prop, setFunc = f => f) {
+        let copyInitArray = [...array];
+        let copyInitObj = {...copyInitArray[index]};
+        copyInitObj[prop] = e.target.value;
+        copyInitArray[index] = copyInitObj;
+        setFunc(copyInitArray);
     }
 
     // 무조건 한 번 그리고
     useEffect(redraw)
 
     // 움직이면 다시 그려라
-    useMemo( redraw, [nowVertices, nowEdges])
+    useMemo(redraw, [nowVertices, nowEdges])
 
     console.log("툴 사이즈 초기값은?", initXToolSize, initYToolSize)
 
