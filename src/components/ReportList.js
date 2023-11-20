@@ -6,49 +6,8 @@ import { displayDate } from "toolbox/DateDisplayer";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
 import { Link } from "react-router-dom";
 
-export default function ReportList() {
-    const { auth } = useContext(AppContext);
-    const [reportList, setReportList] = useState([]);
-    const [page, setPage] = useState(1);
-    const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
-
-    const getPostListThenSet = async () => {
-        try {
-            const { data } = await axios.get(`/report/listAllReports/${page}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    "x-auth-token": `Bearer ${auth?.accessToken}`
-                }
-            });
-            console.log("읽어온 신고 목록", data?.firstVal);
-            setReportList(reportList.concat(data?.firstVal));
-        } catch {
-            console.error('fetching error');
-        }
-    };
-
-    const onIntersect = (entries, observer) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                setPage((prev) => prev + 1);
-                observer.unobserve(entry.target);
-            }
-        });
-    };
-
-    useEffect(() => {
-        console.log('page ? ', page);
-        getPostListThenSet();
-    }, [page]);
-
-    useEffect(() => {
-        let observer;
-        if (lastIntersectingImage) {
-            observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-            observer.observe(lastIntersectingImage);
-        }
-        return () => observer && observer.disconnect();
-    }, [lastIntersectingImage]);
+export default function ReportList({dataList, setLastIntersectingImage=f=>f, auth}) {
+    console.log(dataList)
     return <>
         <Table striped variant="light">
             <thead>
@@ -58,8 +17,8 @@ export default function ReportList() {
                 <th>첨부</th>
             </thead>
             <tbody>
-                {reportList.map((report, index) => {
-                    return index === reportList.length - 1
+                {dataList.map((report, index) => {
+                    return index === dataList.length - 1
                         ? <>
                             <tr ref={setLastIntersectingImage}>
                                 <td>{displayDate(report.regDt, report.uptDt)}</td>

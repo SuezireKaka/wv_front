@@ -62,7 +62,7 @@ export default function Home() {
         {postList2?.map((post, i) =>
           <tr >
             <td>
-              <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`} postListWithPaging={postListWithPaging} txtSearch={txtSearch}
+              <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`}
                 state={{ id: post.id, page: 1, search: txtSearch.current?.value, postListWithPaging, seriesId: "0000", parentId: "0000", boardId: post?.boardVO?.id, likeCount: post.likeCount }}>{/*시리즈아이디필요*/}
                 {post.title}</Link>
             </td>

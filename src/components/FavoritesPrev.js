@@ -13,15 +13,14 @@ import Favorites from 'components/Favorites';
 import FavoritesList from 'components/FavoritesList';
 import ListSortation from 'components/ListSortation';
 
-export default function Test1() {
+export default function FavoritesPrev() {
     const { auth } = useContext(AppContext);
-    const uri = `/work/favoritesAll/1`
     const [postList, setPostList] = useState([]);
-    const [lastIntersectingImage, setLastIntersectingImage] = useState(null);
+
     const [page, setPage] = useState(1);
-    const sortation = useState("favorites");
+    const uri = `/work/favoritesAll/${page}`
+    const [sortation] = useState("favorites");
     return <ListSortation  page={page} setPage={setPage}
-    lastIntersectingImage={lastIntersectingImage} setLastIntersectingImage={setLastIntersectingImage}
     postList={postList} setPostList={setPostList}
     uri={uri} sortation={sortation}
     />

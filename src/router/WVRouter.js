@@ -17,16 +17,17 @@ import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
 import Test5 from 'example/Test5';
 import Test6 from 'example/Test6';
-import ReportList from 'components/ReportList';
+import ReportPrev from 'components/ReportPrev';
 import PostNormal from 'components/PostNormal';
-import FavoritesList from 'components/FavoritesList';
+import FavoritesPrev from 'components/FavoritesPrev';
 import Books from 'components/Books';
 import UserSeries from 'login/UserSeries';
 import LoginHandler from 'kakao-login/LoginHandler';
 import ReportDetails from 'components/ReportDetails';
 import ToolView from 'component-tool/ToolView';
 import NotFound from 'components/NotFound';
-
+import MemberPrev from 'login/MemberPrev';
+import UserSeriesPrev from 'login/UserSeriesPrev';
 export default function WVRouter() {
     return (
         <Routes> 
@@ -46,14 +47,16 @@ export default function WVRouter() {
           <Route path={"/series/:seriesId/tool/:idPath"} element={ <ToolExplorer/> } />
           <Route path={"/series/:seriesId/tool/:idPath/view"} element={ <ToolView/> } />
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
-          <Route path={"/report"} element={ <ReportList/> } />
+          <Route path={"/FavoritesPrev"} element={ <FavoritesPrev/> } />
           <Route path={"/ReportDetails/:ReportId"} element={ <ReportDetails/> } />
           <Route path={"/log-in"} element={ <LoginStage/> } />
           <Route path={"/register"} element={ <Register/> } />
-          <Route path={"/favoritesList"} element={ <FavoritesList/> } />
+
+          <Route path={"/ReportPrev"} element={ <ReportPrev/> } />
+          
           <Route path={"/userProfile"} element={ <UserProfile/> } />
-          <Route path={"/UserSeries"} element={ <UserSeries /> } />
-          <Route path={"/memberList/:ownerId"} element={ <MemberList /> } />
+          <Route path={"/UserSeriesPrev"} element={ <UserSeriesPrev /> } />
+          <Route path={"/MemberPrev"} element={ <MemberPrev /> } />
           <Route path={"/login/oauth2/code/kakao"}  element={<LoginHandler />}  />
             {/* redirect_url//당신이 redirect_url에 맞춰 꾸밀 컴포넌트*/}
           <Route path={"/Books"} element={<Books />} />
