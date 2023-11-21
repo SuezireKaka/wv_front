@@ -8,7 +8,7 @@ export default function Diagram() {
 
     const canvasRef = useRef();
 
-    const GRAPH_DIAGRAM_URL = "http://localhost:8080/tool/anonymous/getToolById/"
+    const GRAPH_DIAGRAM_URL = "/tool/anonymous/getToolById/"
 
     const [customEntityList, setCustomEntityList] = useState([]);
     const [customRelationList, setCustomRelationList] = useState([]);

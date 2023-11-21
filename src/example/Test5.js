@@ -142,13 +142,11 @@ const Box = styled.div`
 
   function renderSuccess(data) {
 
-    const listRead = data
-    console.log(listRead)
     return(<>
     <div style={{width:700, height:500}}>
-    {listRead.map((data)=>{
+    {console.log(data)}
         <Gra1 data={data}/>
-      })}
+
         </div>
     </>
     )

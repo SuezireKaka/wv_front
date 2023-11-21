@@ -21,7 +21,7 @@ export default function ToolExplorer() {
     const [nowData, setNowData] = useState()
 
     function buildUrl() {
-        return "http://localhost:8080/tool/listAllNextTools/" + state?.seriesId + "/path" + state?.toolId + "/" + state?.page
+        return "/tool/listAllNextTools/" + state?.seriesId + "/path" + state?.toolId + "/" + state?.page
     }
 
     function manageToolSkin(toolSkin, index) {

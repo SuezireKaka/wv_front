@@ -10,8 +10,8 @@ export default function Drag({name = "야호", initPropList = []}) {
   const dragOverItem = useRef();
   const lookUpId = useRef();
 
-  const PROPERTIES_LIST_URL = "http://localhost:8080/tool/anonymous/listPropertiesOf/"
-  const PROPERTIES_SYNC_URL = "http://localhost:8080/tool/syncPropertiesOf/"
+  const PROPERTIES_LIST_URL = "/tool/anonymous/listPropertiesOf/"
+  const PROPERTIES_SYNC_URL = "/tool/syncPropertiesOf/"
 
   /*{propType : 'type 1', propVal : 'val 1', isSafe : true, isEdited : false},
   {propType : 'type 2', propVal : 'val 2', isSafe : true, isEdited : false},

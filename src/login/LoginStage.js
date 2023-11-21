@@ -6,7 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from 'react-bootstrap';
 import SocialKakao from 'kakao-login/SocialKakao';
 
-const LOGIN_URL = 'http://localhost:8080/party/anonymous/sign-in';
+const LOGIN_URL = '/party/anonymous/sign-in';
 const code = new URL(window.location.href).searchParams.get("code");
 
 const LoginStage = () => {
