@@ -3,7 +3,6 @@ import axios from 'api/axios';
 import { AxiosPost } from 'toolbox/Fetch';
 import OriginalFileView from './OriginalFileView';
 
-//개량판
 export default function OriginalViewList({ imgDtoList, x, y }) {
     const thumbnailRequestTarget = ["video", "image"];
     function renderImg(afdto, blob) {
