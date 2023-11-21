@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button';
 import axios from "api/axios";
 import PostPrevNext from "./PostPrevNext";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
-import { Fetch } from "toolbox/Fetch";
+import { AxiosAuth, Fetch } from "toolbox/Fetch";
 
 export default function PostDetails() {
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ export default function PostDetails() {
     }
   }
   return <>
-    <Fetch uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
+    <AxiosAuth uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
   </>
 
   function RenderSuccess({ post }) {
