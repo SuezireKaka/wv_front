@@ -42,7 +42,7 @@ const Books = ({ title }) => {
             <hr></hr>
             <Container><Row>
                 {documents.map(data => (
-                    <Col>
+                    <Col xs={3}>
                         <div className='box'>
 
                             <img src={data.thumbnail ? data.thumbnail : 'http://via.placeholder.com/120X150'} alt="" />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { AxiosPost } from 'toolbox/Fetch';
-//개량판
+
+
 export default function OriginalViewOne({ imgDtoList, x,y, d }) {
     const thumbnailRequestTarget = ["video", "image"];
 

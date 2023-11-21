@@ -12,6 +12,7 @@ import Button from 'react-bootstrap/Button';
 import axios from "api/axios";
 import PostPrevNext from "./PostPrevNext";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import { Fetch } from "toolbox/Fetch";
 
 export default function PostDetails() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function PostDetails() {
   const post = location.state.post;
   const [nowLike, setLike] = useState(post?.likeCount);
   const [nowDislike, setDisLike] = useState(post?.dislikeCount);
+  const postUri = `/work/anonymous/findById/${post.id}`;
 
   const onLike = async (id, like) => {
     let newLike = like++;
@@ -81,8 +83,11 @@ export default function PostDetails() {
       navigate(-1, { state: state });
     }
   }
+  return <>
+    <Fetch uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
+  </>
 
-  console.log("안에서 잘 그리고 있니?")
+  function RenderSuccess({ post }) {
   return <>
     <ListGroup as="ul">
       <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left", width: "50%", margin: "auto" }}>
@@ -122,7 +127,7 @@ export default function PostDetails() {
       </Accordion.Item>
     </Accordion>
   </>
-
+  }
 }
 
 // 아코디언 색 먹이기 <div style={{ display: 'block????', backgroundColor:"blue", padding: 1 }}>
