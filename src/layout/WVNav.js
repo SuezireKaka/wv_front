@@ -27,6 +27,7 @@ export default function TestNav() {
           <Nav className="me-auto  my-2 my-lg-0">
             <LoginButton className="me-auto  my-2 my-lg-0" />
             <Fetch uri={boardListUri} renderSuccess={renderSuccess} />
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/Books" >북</Link></Nav.Link>
             {(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))
               ? <>
                 <Nav.Link><Link style={navMenu} class="jb-nav" to="/MemberPrev">회원정보</Link></Nav.Link>
@@ -34,7 +35,6 @@ export default function TestNav() {
               </>
               : ""
             }
-            <Nav.Link><Link style={navMenu} class="jb-nav" to="/Books" >북</Link></Nav.Link>
             {/*
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test5">테스트용5</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/test2">테스트용2</Link></Nav.Link>

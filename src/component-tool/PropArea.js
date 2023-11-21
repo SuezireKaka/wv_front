@@ -4,7 +4,7 @@ import PropList from "./CustomProperty"
 
 export default function PropArea({selected, selectedName}) {
 
-    const PROPERTIES_LIST_URL = `http://localhost:8080/tool/anonymous/listPropertiesOf/`
+    const PROPERTIES_LIST_URL = `/tool/anonymous/listPropertiesOf/`
 
     console.log("잘먹겠습니다", selected)
 
