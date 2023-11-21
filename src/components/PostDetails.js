@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
 import ReplyList from "./ReplyList";
@@ -20,9 +20,10 @@ export default function PostDetails() {
   const location = useLocation();
   const state = location.state;
   const post = location.state.post;
+  console.log("지금 상태는 어때?", state);
   const [nowLike, setLike] = useState(post?.likeCount);
   const [nowDislike, setDisLike] = useState(post?.dislikeCount);
-  const postUri = `/work/anonymous/findById/${post.id}`;
+  const postUri = `/work/anonymous/findById/${post?.id}`;
 
   const onLike = async (id, like) => {
     let newLike = like++;
@@ -84,10 +85,11 @@ export default function PostDetails() {
     }
   }
   return <>
-    <AxiosAuth uri={postUri} renderSuccess={(post) => <RenderSuccess post={post} />} />
+    <AxiosAuth uri={postUri} renderSuccess={({data}) => <RenderSuccess post={data} />} />
   </>
 
   function RenderSuccess({ post }) {
+    console.log("포스트 내용 좀 보자", post)
   return <>
     <ListGroup as="ul">
       <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left", width: "50%", margin: "auto" }}>
