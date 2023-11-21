@@ -1,4 +1,6 @@
+import AppContext from "context/AppContextProvider";
 import {useFatch, usePost, useAuth} from "hooks/useFatch.js"
+import { useContext } from "react";
 import Loading from 'toolbox/Loading';
 
 function Fetch({uri, renderSuccess = f => f,
@@ -34,9 +36,11 @@ function AxiosPost({uri, body, renderSuccess = f=>f,
     }
 }
 
-function AxiosAuth({uri, auth, renderSuccess = f=>f,
+function AxiosAuth({uri, renderSuccess = f=>f,
     loadingFallBack = <Loading />,
     renderError = ({error})=>(<pre>{JSON.stringify(error, null, 2)}</pre>)}) {
+
+    const {auth} = useContext(AppContext)
 
     const {loading, data, error} = useAuth(uri, auth);
 

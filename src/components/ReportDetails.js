@@ -7,7 +7,6 @@ import ReportSuspectUser from './ReportSuspectUser';
 import AppContext from "context/AppContextProvider";
 
 export default function ReportDetails() {
-  const { auth } = useContext(AppContext);
   const location = useLocation();
   let state = location.state.report;
   let report = location.state.report
@@ -24,7 +23,7 @@ export default function ReportDetails() {
   return (
     <>
       {report.suspectTable === "t_account" ?
-        <AxiosAuth uri={`/party/findById/${report.suspectId}`} auth={auth} renderSuccess={(res) => {
+        <AxiosAuth uri={`/party/findById/${report.suspectId}`} renderSuccess={(res) => {
           return <><fieldset>{console.log(res.data)}
             <legend>신고 상세(유저)</legend>
             <Reporter report={report} />

@@ -120,7 +120,7 @@ export default function ShowcaseList({ page, setPage = f => f, postList, setPost
                   <Card.Body>
                     <Card.Title>{post?.title}
                       {!auth.roles || auth.roles.length === 0 ? "" :
-                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(res) => {
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} renderSuccess={(res) => {
                           return <><Favorites favorites={res?.data} post={post} /></>
                         }} />}
                     </Card.Title>
@@ -142,7 +142,7 @@ export default function ShowcaseList({ page, setPage = f => f, postList, setPost
                   <Card.Body>
                     <Card.Title>{post?.title}
                       {!auth.roles || auth.roles.length === 0 ? "" :
-                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(res) => {
+                        <AxiosAuth uri={`/work/isFavorites/${post.id}`} renderSuccess={(res) => {
                           return <><Favorites favorites={res?.data} post={post} /></>
                         }} />}
                     </Card.Title>

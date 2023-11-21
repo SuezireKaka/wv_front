@@ -7,7 +7,6 @@ import { ToolContextProvider } from './ToolContextProvider';
 import ToolData from './ToolData';
 
 export default function ToolView() {
-    const { auth } = useContext(AppContext);
 
     const param = useParams();
 
@@ -16,7 +15,7 @@ export default function ToolView() {
     const TOOL_DETAILS_URL = "/tool/getToolById/";
 
 
-    return <AxiosAuth uri={TOOL_DETAILS_URL + param.idPath} auth={auth}
+    return <AxiosAuth uri={TOOL_DETAILS_URL + param.idPath}
         renderSuccess={(res) =>
             <ToolContextProvider>
                 <ToolData data={res?.data} />

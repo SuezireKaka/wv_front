@@ -38,17 +38,19 @@ export default function Series() {
     }
   }
 
-  function SeriesDetailsSuccess(post) {
+  function SeriesDetailsSuccess({data}) {
+    console.log("이건 뭐야?", data);
+
     return <>
       <Table responsive variant="white">
         <thead>
           <tr>
-            <th colSpan='2'>{post.title}&nbsp;&nbsp;
+            <th colSpan='2'>{data.title}&nbsp;&nbsp;
               {/**/}
               {!auth.roles || auth.roles.length === 0 ? "" :
-                <AxiosAuth uri={favoriteCheckUri} auth={auth} renderSuccess={(res) => {
+                <AxiosAuth uri={favoriteCheckUri} renderSuccess={(res) => {
                   console.log("그래서 좋다는 거지?", res)
-                  return <><Favorites favorites={res?.data} post={post} /></>
+                  return <><Favorites favorites={res?.data} post={data} /></>
                 }} />}
 
 
@@ -57,30 +59,30 @@ export default function Series() {
         </thead>
         <tbody>
           <tr>
-            <td rowSpan='5' width="40%"><OriginalViewOne imgDtoList={post.listAttachFile} x="300" y="auto" /></td>
-            <td><LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>
+            <td rowSpan='5' width="40%"><OriginalViewOne imgDtoList={data.listAttachFile} x="300" y="auto" /></td>
+            <td><LoginTypeIcon loginType={data?.writer?.accountType} />{!data.writer?.nick ? data.writer?.kakaoNick : data.writer?.nick}</td>
           </tr>
           <tr>
-            <td rowSpan='2'>설명:{post.content}</td>
+            <td rowSpan='2'>설명:{data.content}</td>
           </tr>
           <tr>
 
           </tr>
           <tr>
-            <td>{post?.genreList?.map((genre) => <>#{genre.genre} </>)}</td>
+            <td>{data?.genreList?.map((genre) => <>#{genre.genre} </>)}</td>
           </tr>
           <tr>
             <td>
 
-              {(post.writer ? post.writer.id === auth.userId : false) || (auth.roles[0] === "admin" || auth.roles[0] === "manager") && state?.isReport ? <>
-                <Link to={`/series/${state.seriesId}/mng`} state={{ seriesId: state.seriesId, post: post, state, parentId: "", boardId: state.boardId, isSeries: isSeries }}>
+              {(data.writer ? data.writer.id === auth.userId : false) || (auth.roles[0] === "admin" || auth.roles[0] === "manager") && state?.isReport ? <>
+                <Link to={`/series/${state.seriesId}/mng`} state={{ seriesId: state.seriesId, post: data, state, parentId: "", boardId: state.boardId, isSeries: isSeries }}>
                   <Button variant="outline-info">수정</Button>
                 </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button>
               </>
                 : ""}
               {auth && auth.loginId
                 ? <>
-                  <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId, writer: post.writer, page: 1, toolId: "", addr: "" }}>
+                  <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId, writer: data.writer, page: 1, toolId: "", addr: "" }}>
                     <Button variant="outline-success">툴 목록</Button>
                   </Link>
                   <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work" }}>
@@ -94,10 +96,10 @@ export default function Series() {
           </tr>
         </tbody>
       </Table>
-      {(post?.repliesList == 0 && !post?.repliesList)
-        ? post?.length === 0 ? "" : ""
+      {(data?.repliesList == 0 && !data?.repliesList)
+        ? data?.length === 0 ? "" : ""
         : <>
-          {(post.writer ? post.writer.id === auth.userId : false) ?
+          {(data.writer ? data.writer.id === auth.userId : false) ?
             <Link to={`/series/${state.seriesId}/mng`} state={{ seriesId: state.seriesId, state, parentId: state.seriesId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
               <Button variant="outline-primary">신규</Button>
             </Link> : ""}
@@ -109,7 +111,7 @@ export default function Series() {
 
   return <>
     <div>
-      <Fetch uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
+      <AxiosAuth uri={seriesDetailsUri} renderSuccess={SeriesDetailsSuccess} />
     </div>
 
   </>

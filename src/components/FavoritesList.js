@@ -11,7 +11,7 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import Favorites from './Favorites';
 
-export default function FavoritesList({dataList, setLastIntersectingImage=f=>f, auth}) {
+export default function FavoritesList({dataList, setLastIntersectingImage=f=>f}) {
   
  console.log(dataList)
   return (
@@ -30,7 +30,7 @@ export default function FavoritesList({dataList, setLastIntersectingImage=f=>f, 
                   </Link>
                   <Card.Body>
                     <Card.Title>{post?.title}
-                      <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(res) => {
+                      <AxiosAuth uri={`/work/isFavorites/${post.id}`} renderSuccess={(res) => {
                         return <><Favorites favorites={res?.data} post={post} /></>
                       }} />
                     </Card.Title>
@@ -50,7 +50,7 @@ export default function FavoritesList({dataList, setLastIntersectingImage=f=>f, 
                   </Link>
                   <Card.Body>
                     <Card.Title>{post?.title}
-                      <AxiosAuth uri={`/work/isFavorites/${post.id}`} auth={auth} renderSuccess={(res) => {
+                      <AxiosAuth uri={`/work/isFavorites/${post.id}`} renderSuccess={(res) => {
                         return <><Favorites favorites={res?.data} post={post} /></>
                       }} />
                     </Card.Title>

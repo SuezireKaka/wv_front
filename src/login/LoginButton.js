@@ -42,7 +42,7 @@ export default function LoginButton() {
             <>
               <Dropdown.Item href="/">홈</Dropdown.Item>
               <Dropdown.Item href="/FavoritesPrev">즐겨찾기</Dropdown.Item>
-              {auth.accountType === "원더" ? <AxiosAuth uri={findByNickUri} auth={auth} renderSuccess={(res) => {
+              {auth.accountType === "원더" ? <AxiosAuth uri={findByNickUri} renderSuccess={(res) => {
                 return <Dropdown.Item href="/userProfile"><Link style={navMenu} key={res.data.id} to="/userProfile" state={res.data}>프로필</Link></Dropdown.Item>
               }} /> : ""}
               <Dropdown.Item href="/UserSeriesPrev">내작품보기</Dropdown.Item>
