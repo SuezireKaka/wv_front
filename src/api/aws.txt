@@ -17,7 +17,7 @@ pakage.json
 
 맨마지막에 추가
 ,
-  "homepage": "https://nasms018.github.io/"
+  "homepage": "https://nasms018.github.io/pages/"
 
 axios.js
 주소변경
