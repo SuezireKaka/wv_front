@@ -142,14 +142,12 @@ const Box = styled.div`
 
   function renderSuccess(data) {
 
-    console.log("이거 통계 그래프로 보여주는 거지?", data)
-
-    const listRead = data
-    console.log(listRead)
     return(<>
     <div style={{width:700, height:500}}>
-      <Gra1 data={listRead}/>
-    </div>
+    {console.log(data)}
+        <Gra1 data={data}/>
+
+        </div>
     </>
     )
  }
