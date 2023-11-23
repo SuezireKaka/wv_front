@@ -29,7 +29,9 @@ export default function LoginButton() {
   return (
     <div>
       <Dropdown style={{ position: "absolute", right: "10%" }}>
-        <Dropdown.Toggle variant="secondary" id="dropdown-basic" size="sm">
+        <Dropdown.Toggle id="dropdown-basic" size="sm"
+          style={{backgroundColor : "#aa7755", borderColor : "#aa7755", color : "#ead4bb"}}
+        >
           {!roles || roles.length === 0 ? <>Sign</> : <><LoginTypeIcon loginType={auth.accountType} /> {auth.nick}님</>}
         </Dropdown.Toggle>
         <Dropdown.Menu>

@@ -28,6 +28,7 @@ import ToolView from 'component-tool/ToolView';
 import NotFound from 'components/NotFound';
 import MemberPrev from 'login/MemberPrev';
 import UserSeriesPrev from 'login/UserSeriesPrev';
+import WorkStatistics from 'statistics/WorkStatistics';
 export default function WVRouter() {
     return (
         <Routes> 
@@ -46,6 +47,7 @@ export default function WVRouter() {
           <Route path={"/series/:seriesId/tool/"} element={ <ToolExplorer/> } />
           <Route path={"/series/:seriesId/tool/:idPath"} element={ <ToolExplorer/> } />
           <Route path={"/series/:seriesId/tool/:idPath/view"} element={ <ToolView/> } />
+          <Route path={"/series/:seriesId/statistics"} element={ <WorkStatistics/> } />
           <Route path={"/post/:postId"} element={ <PostDetails/> } />
           <Route path={"/FavoritesPrev"} element={ <FavoritesPrev/> } />
           <Route path={"/ReportDetails/:ReportId"} element={ <ReportDetails/> } />

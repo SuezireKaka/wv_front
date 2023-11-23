@@ -13,16 +13,18 @@ export default function TestNav() {
   const { auth } = useContext(AppContext);
   console.log(auth);
   const navMenu = {
-    color: "grey",
+    color: "#aa7755",
     textDecoration: "none",
 
   }
 
   return <>
-    <Navbar expand="lg" className="bg-body-tertiary"  style={{position: "sticky", top: 0, zIndex: "2"}}>
+    <Navbar expand="lg"
+      style={{position: "sticky", top: 0, zIndex: "2", backgroundColor : "#ead4bb"}}
+    >
       <Container>
         <Navbar.Brand href="/"><Link style={navMenu} to='/' class="jb-nav">WonderVatory</Link></Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto  my-2 my-lg-0">
             <LoginButton className="me-auto  my-2 my-lg-0" />
