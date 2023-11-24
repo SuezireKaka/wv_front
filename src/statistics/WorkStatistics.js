@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { InputGroup, Button, Form } from "react-bootstrap";
 import AppContext from "context/AppContextProvider";
 import axios from "api/axios";
+import { FaCircle } from "react-icons/fa";
 
 export default function WorkStatistics() {
     const { auth } = useContext(AppContext);
@@ -20,6 +21,7 @@ export default function WorkStatistics() {
     const uri = `/elastic/anonymous/listLatestReadOf/${param.seriesId}/${period}/sex_${selectedSex}-age_${selectedAge}`
 
     async function query(e) {
+        e.preventDefault();
         try {
             const response = await axios.get(uri, {
                 headers: {
@@ -33,6 +35,10 @@ export default function WorkStatistics() {
         }
     };
 
+    function onChange(e, callback = f => f) {
+        callback(e.target.value);
+    }
+
     return <>
         <br/>
         <form>
@@ -40,7 +46,7 @@ export default function WorkStatistics() {
                 <InputGroup.Text id="basic-addon2" style={POINT_STYLE}>
                     기간
                 </InputGroup.Text>
-                <Form.Select aria-label="Default select example" onChange={(e) => setPeriod(e.target.value)}>
+                <Form.Select aria-label="Default select example" onChange={(e) => {onChange(e, setPeriod)}}>
                     <option value={7}>최근 7일</option>
                     <option value={30}>최근 30일</option>
                 </Form.Select>
@@ -55,7 +61,7 @@ export default function WorkStatistics() {
                         label="상관없음"
                         name="userSex"
                         type="radio"
-                        onChange={(e) => setSelectedSex(e.target.value)}
+                        onChange={(e) => {onChange(e, setSelectedSex)}}
                         value="any"
                         id={`inline-radio-2`}
                     />
@@ -68,7 +74,7 @@ export default function WorkStatistics() {
                         name="userSex"
                         type="radio"
                         value="male"
-                        onChange={(e) => setSelectedSex(e.target.value)}
+                        onChange={(e) => {onChange(e, setSelectedSex)}}
                         id={`inline-radio-1`}
                     />
                 </InputGroup.Text>
@@ -79,7 +85,7 @@ export default function WorkStatistics() {
                         label="여성"
                         name="userSex"
                         type="radio"
-                        onChange={(e) => setSelectedSex(e.target.value)}
+                        onChange={(e) => {onChange(e, setSelectedSex)}}
                         value="female"
                         id={`inline-radio-2`}
                     />
@@ -87,7 +93,7 @@ export default function WorkStatistics() {
                 <InputGroup.Text id="basic-addon2" style={POINT_STYLE}>
                     연령대
                 </InputGroup.Text>
-                <Form.Select aria-label="Default select example" onChange={(e) => setSelectedAge(e.target.value)}>
+                <Form.Select aria-label="Default select example" onChange={(e) => {onChange(e, setSelectedAge)}}>
                     <option value={"any"}>상관없음</option>
                     {["10", "20", "30"].map(age => {
                         return <option value={age}>{age}대</option>
@@ -95,6 +101,8 @@ export default function WorkStatistics() {
                 </Form.Select>
             </InputGroup>
         </form>
+        <br />
+        <FaCircle color={selectedSex === "male" ? "#335be8" : selectedSex === "female" ? "#ef8fd2" : "#e3ac1c"}/>
         <br />
         <Button variant="outline-primary" onClick={query}>
             요청하기
