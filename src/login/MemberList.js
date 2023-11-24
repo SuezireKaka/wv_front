@@ -8,7 +8,7 @@ import LoginTypeIcon from 'toolbox/LoginTypeIcon';
 export default function MemberList({dataList, setLastIntersectingImage=f=>f, auth}) {
 
     const backgroundColorTD = {
-        backgroundColor: "#00CDFF"
+        backgroundColor: "#aa7755"
     }
 
     return <Table className='react-bootstrap-table' style={{ width: "100%" }}>
