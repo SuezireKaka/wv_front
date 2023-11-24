@@ -15,6 +15,10 @@ export default function PostNormal() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
+  console.log(state)
+  const backgroundColorTD = {
+    backgroundColor: "#aa7755"
+}
   function buildUrl(step) {
     if (state?.search)
       return `/work/anonymous/search/${state?.boardId}/${state?.search}/${state.page}`;
@@ -51,17 +55,18 @@ export default function PostNormal() {
 
       <Table striped bordered hover responsive variant="white">
         <thead>
-          <th><p></p></th>
-          <th><p>게시글</p></th>
-          <th><p>게시자</p></th>
-          <th><p>조회수</p></th>
-          <th><p>좋아요</p></th>
-          <th><p>작성일</p></th>
+          <tr>
+          <th style={backgroundColorTD}></th>
+          <th style={backgroundColorTD}>게시글</th>
+          <th style={backgroundColorTD}>게시자</th>
+          <th style={backgroundColorTD}>조회수</th>
+          <th style={backgroundColorTD}>좋아요</th>
+          <th style={backgroundColorTD}>작성일</th>
+          </tr>
         </thead>
         <tbody>
           {postList?.map(post => (
             <tr key={post.id}>
-
               <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
               <td width="60%">
                 <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`}

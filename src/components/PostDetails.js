@@ -19,7 +19,7 @@ export default function PostDetails() {
   const { auth } = useContext(AppContext);
   const location = useLocation();
   const state = location.state;
-  const post = location.state.post;
+  const post = location.state?.post;
   console.log("지금 상태는 어때?", state);
   const [nowLike, setLike] = useState(post?.likeCount);
   const [nowDislike, setDisLike] = useState(post?.dislikeCount);
@@ -91,12 +91,12 @@ export default function PostDetails() {
   function RenderSuccess({ post }) {
     console.log("포스트 내용 좀 보자", post)
   return <>
-    <ListGroup as="ul">
-      <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left", width: "50%", margin: "auto" }}>
+    <ListGroup as="ul" style={{width:"55%", margin: "auto" }}>
+      <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left" }}>
         <div>{post?.content}</div></ListGroup.Item>
       <ListGroup.Item as="li" disabled>
         {(state?.boardId === "0000" || state?.boardId === "0001") ? <ThumbnailList imgDtoList={post?.listAttachFile} /> :
-          <OriginalViewList imgDtoList={post?.listAttachFile} x="51%" y="51%" />}
+          <OriginalViewList imgDtoList={post?.listAttachFile} x="90%" y="90%" />}
       </ListGroup.Item>
       <ListGroup.Item>
         <LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}&nbsp;&nbsp;
@@ -105,7 +105,7 @@ export default function PostDetails() {
         <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{nowDislike}</span>
         🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
       <ListGroup.Item> <PostPrevNext post={post} state={{ parentId: state.parentId, boardId: state.boardId, page: state.page }} /></ListGroup.Item>
-    </ListGroup>
+      <ListGroup.Item>
     {state?.boardId === "0000" ?
       <Link key={state.parentId} to={`/`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
       : (state?.boardId === "0001")
@@ -119,8 +119,9 @@ export default function PostDetails() {
         state={{ seriesId: state.seriesId, post, state, parentId: state.parentId }}
       ><Button variant="outline-info">수정</Button></Link>&nbsp;<Button variant="outline-dark" onClick={handleDelete}>삭제</Button></> : ""}
     <br />
-
-    <Accordion>
+    </ListGroup.Item>
+    </ListGroup>
+    <Accordion style={{width:"55%", margin: "auto" }}>
       <Accordion.Item eventKey="0">
         <Accordion.Header>댓글확인</Accordion.Header>
         <Accordion.Body>
