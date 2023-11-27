@@ -20,7 +20,7 @@ export default function WVNav() {
 
   return <>
     <Navbar expand="lg"
-      style={{overflow: "auto", position: "sticky", top: 0, zIndex: "2", backgroundColor : "#ead4bb", width:"100%", paddingTop:10}}
+      style={{overflow: "auto", position: "sticky", top: 0, zIndex: "2", backgroundColor : "#ead4bb", width:"100%"}}
     >
       <Container>
         <Navbar.Brand href="/"><Link style={navMenu} to='/' class="jb-nav">WonderVatory</Link></Navbar.Brand>

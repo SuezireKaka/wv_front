@@ -4,6 +4,8 @@ import { AxiosAuth, Fetch } from 'toolbox/Fetch';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from "react-router";
+
+
 export default function PostPN({ post }) {
     const uri = `/work/anonymous/getPrevAndNext/${post.id}`
     const location = useLocation();

@@ -13,6 +13,8 @@ import axios from "api/axios";
 import PostPrevNext from "./PostPrevNext";
 import LoginTypeIcon from "toolbox/LoginTypeIcon";
 import { AxiosAuth, Fetch } from "toolbox/Fetch";
+import { BiArrowToTop, BiArrowToBottom  } from "react-icons/bi";
+
 
 export default function PostDetails() {
   const navigate = useNavigate();
@@ -104,9 +106,9 @@ export default function PostDetails() {
     console.log("포스트 내용 좀 보자", post)
     console.log("스테이트 좀 보자", state)
     return <>
-      <div style={{ position: "fixed", zIndex: "1", opacity: 0.5, overflow: "auto", right: 50, top: "33%"}}>
-          <Button variant="outline-danger" onClick={(e) => onTop(e)}>맨위로</Button><br/><br/>
-          <Button variant="outline-danger" onClick={(e) => onBottom(e)}>맨아래</Button>
+      <div style={{ position: "fixed", zIndex: "1", opacity: 0.6, overflow: "auto", right: 50, top: "33%"}}>
+          <Button variant="outline-danger" onClick={(e) => onTop(e)}><BiArrowToTop /></Button><br/><br/>
+          <Button variant="outline-danger" onClick={(e) => onBottom(e)}><BiArrowToBottom /></Button>
       </div>
 
       <ListGroup as="ul" style={{ width: "55%", margin: "auto" }}>
