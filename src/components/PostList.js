@@ -12,7 +12,7 @@ import { displayPagination } from "toolbox/Pagination";
 export default function PostList() {
   const location = useLocation();
   const state = location.state;
-
+  console.log(state)
   function buildUrl(step) {
     if (state.search)
       return `/work/anonymous/search/${state.boardId}/${state.search}/${state.page}`;

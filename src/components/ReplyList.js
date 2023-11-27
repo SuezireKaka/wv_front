@@ -32,7 +32,7 @@ export default function ReplyList({ parent }) {
   const handleDelete = async (e, reply) => {
     e.preventDefault();
     try {
-      const data = await axios.delete(`/work/${reply.id}`,
+      const data = await axios.delete(`/work/${reply?.id}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -97,16 +97,16 @@ export default function ReplyList({ parent }) {
 
   return <>
     {auth.nick ? <>
-      <Button size="sm" variant="outline-primary" onClick={(e) => { markShowAddReply(e, parent.id) }}>
+      <Button size="sm" variant="outline-primary" onClick={(e) => { markShowAddReply(e, parent?.id) }}>
         댓글
       </Button>
     </> : ""}
-    {openAddReplay.has(parent.id) ?
+    {openAddReplay.has(parent?.id) ?
       <ReplyNew auth={auth} reply={parent} replayOnReply={replayOnReply} onInputReplyContent={onInputReplyContent} mngReply={mngReply} handleDelete={handleDelete} />
       : ""}
     <ul>
       {parent.repliesList?.map((reply) => {
-        return <li key={reply.id} align="left">
+        return <li key={reply?.id} align="left">
           <span>{reply.content}</span>
           &nbsp;&nbsp; <span>{displayDate(reply.regDt, reply.uptDt)} </span>
           &nbsp;&nbsp; <span><LoginTypeIcon loginType={reply?.writer?.accountType} />{!reply.writer?.nick ? reply.writer?.kakaoNick : reply.writer?.nick} </span>

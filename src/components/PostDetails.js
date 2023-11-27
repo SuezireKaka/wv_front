@@ -25,6 +25,8 @@ export default function PostDetails() {
   const [nowDislike, setDisLike] = useState(post?.dislikeCount);
   const postUri = `/work/anonymous/findById/${post?.id}`;
 
+
+
   const onLike = async (id, like) => {
     let newLike = like++;
     console.log("예상치 : ", newLike)
@@ -90,11 +92,13 @@ export default function PostDetails() {
 
   function RenderSuccess({ post }) {
     console.log("포스트 내용 좀 보자", post)
+    console.log("스테이트 좀 보자", state)
   return <>
     <ListGroup as="ul" style={{width:"55%", margin: "auto" }}>
       <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left" }}>
         <div>{post?.content}</div></ListGroup.Item>
       <ListGroup.Item as="li" disabled>
+
         {(state?.boardId === "0000" || state?.boardId === "0001") ? <ThumbnailList imgDtoList={post?.listAttachFile} /> :
           <OriginalViewList imgDtoList={post?.listAttachFile} x="90%" y="90%" />}
       </ListGroup.Item>
@@ -104,13 +108,11 @@ export default function PostDetails() {
         <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{nowLike}</span>&nbsp;&nbsp;
         <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{nowDislike}</span>
         🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
-      <ListGroup.Item> <PostPrevNext post={post} state={{ parentId: state.parentId, boardId: state.boardId, page: state.page }} /></ListGroup.Item>
+      <ListGroup.Item> <PostPrevNext post={post} /></ListGroup.Item>
       <ListGroup.Item>
-    {state?.boardId === "0000" ?
-      <Link key={state.parentId} to={`/`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
-      : (state?.boardId === "0001")
-        ? <Link key={state.parentId} to={`/board/${state.boardId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>
-        : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId }}><Button variant="outline-warning">목록</Button></Link>}
+      {(state?.boardId === "0000" || state?.boardId === "0001") ? 
+         <Link key={state.parentId} to={`/board/${state.boardId}`} state={{   page: state.page, boardId: state.boardId, post:post,parentId: state?.parentId, seriesId: state.parentId }}><Button variant="outline-warning">목록</Button></Link>
+        : <Link key={state.parentId} to={`/series/${state?.parentId}`} state={{ seriesId: state.parentId, page: state.page, boardId: state.boardId, post:post,parentId: state?.parentId }}><Button variant="outline-warning">목록</Button></Link>}
     &nbsp;
 
     {(post.writer ? post.writer.id === auth.userId : false) ? <>

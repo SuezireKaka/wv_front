@@ -136,7 +136,7 @@ const Register = () => {
   return (
     <>
     <fieldset>
-        <legend>약관 동의</legend>
+        <legend>회원 가입</legend>
       <form style={{width:"55%", margin: "auto" }}>
         <InputGroup className="mb-3" style={{
           display: "inline-block",

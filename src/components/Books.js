@@ -42,20 +42,24 @@ const Books = ({ title }) => {
     return (
         <div>
             <table style={{ margin: "auto", position: "static" }} ><td>
-            <Form.Control type="text"  placeholder='검색어' value={query} onChange={(e) => setQuery(e.target.value)} />
+                <Form.Control type="text" placeholder='검색어' value={query} onChange={(e) => setQuery(e.target.value)} />
             </td><td>
-                <Button variant="outline-danger" onClick={onSubmit}>검색</Button> </td>
-                </table>
-                {/*<form onSubmit={onSubmit}></form>*/}
-                    <Container><Row>
+                    <Button variant="outline-danger" onClick={onSubmit}>검색</Button> </td>
+            </table>
+            {/*<form onSubmit={onSubmit}></form>*/}
+            <Container><Row>
                 {documents.map(data => (
                     <Col xs={3}>
                         <div className='box'>
-                        {console.log(data)}
-                        <Card id={data?.isbn} style={{ width: '15rem' }} >
-                            <img src={data.thumbnail ? data.thumbnail : 'http://via.placeholder.com/120X150'} width={xSize} height={ySize}  alt="" />
-                            <div >{data.title}</div>
-                            <div>{data.authors[0]}</div>
+                            {console.log(data)}
+                            <Card id={data?.isbn} style={{ width: '15rem' }} >
+                                <img src={data.thumbnail ? data.thumbnail : 'http://via.placeholder.com/120X150'} width={xSize} height={ySize} alt="" />
+                                <Card.Body>
+                                    <Card.Title>
+                                        <div>{data.title}</div>
+                                        <div>{data.authors[0]}</div>
+                                    </Card.Title>
+                                </Card.Body>
                             </Card>
                         </div>
                     </Col>

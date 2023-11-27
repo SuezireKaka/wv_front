@@ -67,10 +67,10 @@ export default function PostNormal() {
         <tbody>
           {postList?.map(post => (
             <tr key={post.id}>
-              <td><ThumbnailList imgDtoList={post?.listAttachFile} /></td>
+              <td></td>
               <td width="60%">
                 <Link style={{ all: "unset", cursor: "pointer" }} key={post.id} to={`/post/${post.id}`}
-                  state={{ page: state.page, search: txtSearch.current?.value, seriesId: state?.seriesId, parentId: state?.seriesId, post: post }}>{/*시리즈아이디필요*/}
+                  state={{ boardId:state.boardId, page: state.page, search: txtSearch.current?.value, seriesId: state?.seriesId, parentId: state?.seriesId, post: post }}>{/*시리즈아이디필요*/}
                   {post.title}</Link>
               </td>
               <td><LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}</td>

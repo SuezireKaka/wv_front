@@ -25,6 +25,7 @@ export default function OriginalFileView({imgUrl, afdto}) {
         .then(buildUri)
         .catch(error=>{
             console.log("getOriginalFile", error);
+            
         });
 
   }
