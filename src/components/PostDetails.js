@@ -97,7 +97,7 @@ export default function PostDetails() {
     <ListGroup as="ul" style={{width:"55%", margin: "auto" }}>
       <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left" }}>
         <div>{post?.content}</div></ListGroup.Item>
-      <ListGroup.Item as="li" disabled>
+      <ListGroup.Item as="li">
 
         {(state?.boardId === "0000" || state?.boardId === "0001") ? <ThumbnailList imgDtoList={post?.listAttachFile} /> :
           <OriginalViewList imgDtoList={post?.listAttachFile} x="90%" y="90%" />}
