@@ -93,7 +93,8 @@ export default function PostNormal() {
   return (
     <div>
       <table style={{ margin: "auto", position: "static" }}><td>
-        {!auth.roles || auth.roles.length === 0 ? "" :
+        {state.boardId==="0000"?"":
+        !auth.roles || auth.roles.length === 0 ? "" :
           <Link style={{ marginLeft: "auto", position: "relative" }} to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
             <Button variant="outline-primary">신규</Button>
           </Link>}
