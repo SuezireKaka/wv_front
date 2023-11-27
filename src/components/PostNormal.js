@@ -20,6 +20,7 @@ export default function PostNormal() {
     backgroundColor: "#aa7755"
 }
   function buildUrl(step) {
+  
     if (state?.search)
       return `/work/anonymous/search/${state?.boardId}/${state?.search}/${state.page}`;
     else
