@@ -11,7 +11,7 @@ export default function MemberList({dataList, setLastIntersectingImage=f=>f, aut
         backgroundColor: "#aa7755"
     }
 
-    return <Table className='react-bootstrap-table' style={{ width: "100%" }}>
+    return <Table className='react-bootstrap-table' style={{ width: "100%"}}>
         <thead>
             <tr>
                 <th style={backgroundColorTD}>아이디</th>

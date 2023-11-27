@@ -20,7 +20,7 @@ export default function WVNav() {
 
   return <>
     <Navbar expand="lg"
-      style={{position: "sticky", top: 0, zIndex: "2", backgroundColor : "#ead4bb"}}
+      style={{overflow: "auto", position: "sticky", top: 0, zIndex: "2", backgroundColor : "#ead4bb", width:"100%", paddingTop:10}}
     >
       <Container>
         <Navbar.Brand href="/"><Link style={navMenu} to='/' class="jb-nav">WonderVatory</Link></Navbar.Brand>
@@ -37,12 +37,12 @@ export default function WVNav() {
               </>
               : ""
             }
+            <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test3" >테스트용3</Link></Nav.Link>
             {/*
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test5">테스트용5</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/test2">테스트용2</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test4" >테스트용4</Link></Nav.Link>
           <Nav.Link><Link style={navMenu} class="jb-nav" to="/test1">테스트용</Link></Nav.Link>
-          <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test3" >테스트용3</Link></Nav.Link>
           <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test5">테스트용5</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test6">테스트용6</Link></Nav.Link>
           */}
