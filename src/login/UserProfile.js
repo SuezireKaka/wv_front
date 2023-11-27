@@ -179,7 +179,7 @@ export default function UserProfile() {
     }
   }
   console.log("지금 우리가 뭘 던지려고 하는 거야?", listCP);
-  return (<Form controlId={loginId} style={{width:"55%", margin: "auto" }}>
+  return (<Form controlId={loginId} style={{width:"60%", margin: "auto" }}>
         <fieldset>
         <legend>프로필</legend>
 

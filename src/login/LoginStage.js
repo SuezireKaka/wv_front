@@ -23,7 +23,7 @@ const LoginStage = () => {
     const formCenter = {
         display: "inline-block",
         align: "center",
-        width:"55%"
+        width:"60%"
     }
     
     useEffect(() => {

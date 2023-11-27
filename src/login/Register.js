@@ -137,10 +137,10 @@ const Register = () => {
     <>
     <fieldset>
         <legend>회원 가입</legend>
-      <form style={{width:"55%", margin: "auto" }}>
+      <form style={{width:"60%", margin: "auto" }}>
         <InputGroup className="mb-3" style={{
           display: "inline-block",
-          align: "center", width: "55%", backgroundColor: ""
+          align: "center", width: "60%", backgroundColor: ""
           
         }}>
        

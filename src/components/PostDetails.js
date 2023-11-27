@@ -106,12 +106,12 @@ export default function PostDetails() {
     console.log("포스트 내용 좀 보자", post)
     console.log("스테이트 좀 보자", state)
     return <>
-      <div style={{ position: "fixed", zIndex: "1", opacity: 0.6, overflow: "auto", right: 50, top: "33%"}}>
+      <div style={{ position: "fixed", zIndex: "2", opacity: 0.6, overflow: "auto", right: "5%", top: "33%"}}>
           <Button variant="outline-danger" onClick={(e) => onTop(e)}><BiArrowToTop /></Button><br/><br/>
           <Button variant="outline-danger" onClick={(e) => onBottom(e)}><BiArrowToBottom /></Button>
       </div>
 
-      <ListGroup as="ul" style={{ width: "55%", margin: "auto" }}>
+      <ListGroup as="ul" style={{ width: "60%", margin: "auto" }}>
         
         <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left" }}>
           <div>{post?.content}</div></ListGroup.Item>
@@ -142,7 +142,7 @@ export default function PostDetails() {
       </ListGroup>
 
 
-      <Accordion style={{ width: "55%", margin: "auto" }}>
+      <Accordion style={{ width: "60%", margin: "auto" }}>
         <Accordion.Item eventKey="0">
           <Accordion.Header>댓글확인</Accordion.Header>
           <Accordion.Body>
