@@ -46,6 +46,7 @@ export default function WVNav() {
           <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test5">테스트용5</Link></Nav.Link>
             <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test6">테스트용6</Link></Nav.Link>
           */}
+          <Nav.Link><Link style={navMenu} class="jb-nav" to="/Test7">테스트용7</Link></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

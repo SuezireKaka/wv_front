@@ -33,7 +33,7 @@ export default function GraphCanvas() {
         initYToolSize, setInitYToolSize,
         nowObjectList,
         onSummonObject, onDeleteAllObjects,
-        onSaveTool
+        onSaveTool, onRename
     } = useContext(ToolContext);
 
     const { auth } = useContext(AppContext);
@@ -358,6 +358,9 @@ export default function GraphCanvas() {
 
     function onEdit(e, prop, id) {
         let [, resultIndex, initArray, nowArray, setInitArray, setNowArray] = findTypeAndIndexOf(id);
+        if (prop === "name") {
+            onRename(e, id)
+        };
         copySet(e, initArray, resultIndex, prop, setInitArray);
         copySet(e, nowArray, resultIndex, prop, setNowArray);
     }
