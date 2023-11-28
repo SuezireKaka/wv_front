@@ -33,7 +33,7 @@ export default function ReportMng() {
         setHasAnyType(reportTypes?.length > 0);
     }, [reportTypes])
 
-    const STYLE = { width: "50px 30%" }
+    const STYLE = {width:"60%", margin: "auto"}
 
     const handleSubmit = async (e) => {
 

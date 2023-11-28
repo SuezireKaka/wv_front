@@ -46,7 +46,7 @@ export default function Showcase() {
                 장르
             </Button>
 
-            <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas show={show} onHide={handleClose} style={{backgroundColor: "#ead4bb"}}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>장르검색</Offcanvas.Title>
                 </Offcanvas.Header>
