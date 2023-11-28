@@ -100,7 +100,7 @@ export default function PostMng() {
 		}
 	}
 
-	return <Form style={{width:"55%", margin: "auto" }}>
+	return <Form style={{width:"60%", margin: "auto" }}>
 		<fieldset>
         <legend>글작성</legend>
 		<Form.Group className="mb-3" >

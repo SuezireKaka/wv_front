@@ -110,7 +110,8 @@ export default function ReplyList({ parent }) {
           <span>{reply.content}</span>
           &nbsp;&nbsp; <span>{displayDate(reply.regDt, reply.uptDt)} </span>
           &nbsp;&nbsp; <span><LoginTypeIcon loginType={reply?.writer?.accountType} />{!reply.writer?.nick ? reply.writer?.kakaoNick : reply.writer?.nick} </span>
-          <Button size="sm" variant="outline-dark" onClick={(e) => handleDelete(e, reply)}>삭제</Button>
+          {(reply.writer ? reply.writer.id === auth.userId : false) ?
+          <Button size="sm" variant="outline-dark" onClick={(e) => handleDelete(e, reply)}>삭제</Button>:""}
           <ReplyList parent={reply} />
         </li>
       })}
