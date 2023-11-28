@@ -1,6 +1,7 @@
 import { displayDate } from "toolbox/DateDisplayer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import NumberInput, { minmax } from "toolbox/NumberInput";
 
 export const [X_MIN_TOOLSIZE, Y_MIN_TOOLSIZE, X_MAX_TOOLSIZE, Y_MAX_TOOLSIZE] = [500, 300, 1500, 1500]
 
@@ -18,12 +19,12 @@ export default function ToolManager({
     const [nowXToolSize, setNowXToolSize] = useState(tool.xToolSize);
     const [nowYToolSize, setNowYToolSize] = useState(tool.yToolSize);
 
-    function minmax(value, minVal, maxVal) {
-        return value > minVal 
-        ? value < maxVal 
-            ? value
-            : maxVal
-        : minVal
+    function onChange(e, callback = f => f) {
+        callback(e.target.value)
+    }
+
+    function onBlur(e, min, max, callback = f => f) {
+        callback(minmax(e.target.value, min, max))
     }
 
     return <tr style={{ ...TABLE_STYLE, textAlign: "center" }}>
@@ -36,18 +37,18 @@ export default function ToolManager({
             />
         </td>
         <td>
-            <input type="number"
+            <NumberInput
                 min={X_MIN_TOOLSIZE} max={X_MAX_TOOLSIZE}
                 value={nowXToolSize}
-                onChange={e => setNowXToolSize(e.target.value)}
-                onBlur={e => setNowXToolSize(minmax(e.target.value, X_MIN_TOOLSIZE, X_MAX_TOOLSIZE))}
+                onChange={(e) => onChange(e, setNowXToolSize)}
+                onBlur={(e) => onBlur(e, X_MIN_TOOLSIZE, X_MAX_TOOLSIZE, setNowXToolSize)}
             />
             {" X "}
-            <input type="number"
+            <NumberInput
                 min={Y_MIN_TOOLSIZE} max={Y_MAX_TOOLSIZE}
                 value={nowYToolSize}
-                onChange={e => setNowYToolSize(e.target.value)}
-                onBlur={e => setNowYToolSize(minmax(e.target.value, Y_MIN_TOOLSIZE, Y_MAX_TOOLSIZE))}
+                onChange={(e) => onChange(e, setNowYToolSize)}
+                onBlur={(e) => onBlur(e, Y_MIN_TOOLSIZE, Y_MAX_TOOLSIZE, setNowYToolSize)}
             />
         </td>
         <td></td>

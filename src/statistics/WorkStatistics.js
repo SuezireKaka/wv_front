@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import { InputGroup, Button, Form } from "react-bootstrap";
 import AppContext from "context/AppContextProvider";
 import axios from "api/axios";
 import { FaCircle } from "react-icons/fa";
 import { WonderLineChart } from "./WonderCharts";
+import NumberInput, { minmax } from "toolbox/NumberInput";
 
 export default function WorkStatistics() {
     const { auth } = useContext(AppContext);
@@ -12,25 +13,33 @@ export default function WorkStatistics() {
     const [selectedSex, setSelectedSex] = useState("any");
     const [selectedAge, setSelectedAge] = useState("any");
 
-    const COLUMN_ARRAY = ["날짜", "시리즈 클릭수", "포스트 총 조회수"];
-
     const param = useParams();
 
-    const [hasRequested, setHasRequested] = useState(false);
+    const SUMMARY_COLUMN_ARRAY = ["날짜", "시리즈 클릭수", "포스트 총 조회수"];
+    const SUMMARY_INIT_DATA = [SUMMARY_COLUMN_ARRAY, [new Date(), 0, 0]];
+    const DETAIL_COLUMN_ARRAY = ["날짜", "포스트 조회수"];
+    const DETAIL_INIT_DATA = [DETAIL_COLUMN_ARRAY, [new Date(), 0]];
 
-    const [data, setData] = useState([COLUMN_ARRAY, [new Date(), 0, 0]]);
+    const [summaryData, setSummaryData] = useState(SUMMARY_INIT_DATA);
+    const [detailData, setDetailData] = useState(DETAIL_INIT_DATA);
     const [error, setError] = useState("");
 
-    const [epiNum, setEpiNum] = useState(1);
+    const [totalEpiNum, setTotalEpiNum] = useState(1);
+    const [nowEpiNum, setNowEpiNum] = useState(1);
+    const [selectedEpiNum, setSelectedNowEpiNum] = useState(1);
+
 
     const POINT_STYLE = { backgroundColor: "#55aaff" }
 
-    const uri = `/elastic/anonymous/getLatestReadOf/${param.seriesId}/${period}/sex_${selectedSex}-age_${selectedAge}`
+    const COUNT_URL = `work/anonymous/countPostsOf/${param.seriesId}`
+    const SUMMARY_DATA_URL = `/elastic/getLatestReadOf/${param.seriesId}/${period}/sex_${selectedSex}-age_${selectedAge}`
+    function buildDetailUrl(minmax) {
+        return `/elastic/getLatestReadByEpinum/${param.seriesId}/${minmax}/${period}/sex_${selectedSex}-age_${selectedAge}`
+    }
 
-    async function query(e) {
-        e.preventDefault();
+    async function query() {
         try {
-            const response = await axios.get(uri, {
+            const response = await axios.get(SUMMARY_DATA_URL, {
                 headers: {
                     'Content-Type': 'application/json',
                     "x-auth-token": `Bearer ${auth?.accessToken}`
@@ -40,8 +49,7 @@ export default function WorkStatistics() {
             let seriesReadData = JSON.parse(response.data.seriesReadData);
             let allPostsReadData = JSON.parse(response.data.allPostsReadData);
 
-            setData(saltData(seriesReadData, allPostsReadData))
-            setHasRequested(true);
+            setSummaryData([...saltData(seriesReadData, allPostsReadData)])
         } catch (err) {
             setError("Registration Failed");
         }
@@ -49,50 +57,105 @@ export default function WorkStatistics() {
 
     function onChange(e, callback = f => f) {
         callback(e.target.value);
-        setHasRequested(false);
+    }
+
+    function onBlur(e, min, max, callback = f => f) {
+        callback(e, minmax(e.target.value, min, max))
     }
 
     function calcColor(type) {
         return type === "Series"
-        ? selectedSex === "male" ? "#335be8" : selectedSex === "female" ? "#ef8fd2" : "#e3ac1c"
-        : selectedSex === "male" ? "#192d74" : selectedSex === "female" ? "#774769" : "#715e0e";
+            ? selectedSex === "male" ? "#335be8" : selectedSex === "female" ? "#ef8fd2" : "#e3ac1c"
+            : selectedSex === "male" ? "#192d74" : selectedSex === "female" ? "#774769" : "#715e0e";
     }
 
     function saltData(rawSeriesData, rawAllPostsData) {
-        let table = [COLUMN_ARRAY];
-
-        let seriesBuckets = rawSeriesData.aggregations.byDay.buckets;
-        let allPostsBuckets = rawAllPostsData.aggregations.byDay.buckets;
-
-        sync(seriesBuckets, allPostsBuckets)
         
-        if (seriesBuckets.length === 0) {
-            table.push([new Date().setHours(0, 0, 0, 0), 0, 0])
+        let table;
+        let seriesBuckets = rawSeriesData.aggregations.byDay.buckets;
+        
+
+        // rawAllPostsData가 들어오면 큰 틀에서의 조회수
+        if (rawAllPostsData) {
+            table = [SUMMARY_COLUMN_ARRAY];
+            let allPostsBuckets = rawAllPostsData.aggregations?.byDay?.buckets;
+            if (seriesBuckets.length === 0) {
+                table.push([new Date().setHours(0, 0, 0, 0), 0, 0])
+            }
+
+            seriesBuckets.forEach((readCnt, index) => {
+                table.push([
+                    new Date(readCnt.key_as_string + " 00:00:00"),
+                    readCnt.doc_count,
+                    allPostsBuckets[index].doc_count
+                ])
+
+            })
         }
-        seriesBuckets.forEach((readCnt, index) => {
-            table.push([
-                new Date(readCnt.key_as_string + " 00:00:00"),
-                readCnt.doc_count,
-                allPostsBuckets[index].doc_count
-            ])
-        })
+        // 안 들어오면 디테일한 조회수
+        else {
+            table = [DETAIL_COLUMN_ARRAY];
+            seriesBuckets.forEach(readCnt => {
+                table.push([
+                    new Date(readCnt.key_as_string + " 00:00:00"),
+                    readCnt.doc_count
+                ])
+            })
+        }
+            
         console.log("이걸 구글 차트한테 맡긴다는 거지?", table)
 
         return table
     }
-    
-    function sync(oneData, otherData) {
-        let oneKeysArr = oneData.map(data => data.key_as_string)
-        let otherKeysArr = otherData.map(data => data.key_as_string)
 
-        pushToSync(oneData, otherKeysArr, oneKeysArr)
-        pushToSync(otherData, oneKeysArr, otherKeysArr)
+    async function onDecideEpi(e, minmax) {
+        e?.preventDefault()
+        setNowEpiNum(minmax)
+        setSelectedNowEpiNum(minmax)
+        try {
+            const response = await axios.get(buildDetailUrl(minmax), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "x-auth-token": `Bearer ${auth?.accessToken}`
+                }
+            });
+
+            let postReadData = JSON.parse(response.data.postReadData);
+            setDetailData([...saltData(postReadData)]);
+        } catch (err) {
+            setError("Registration Failed");
+        }
     }
 
-    function pushToSync(data, oneKeysArr, otherKeysArr) {
-        let newKeysArr = oneKeysArr.filter(key => ! otherKeysArr.includes(key))
-        newKeysArr.forEach(key => data.push({key_as_string : key, doc_count : 0}))
-    }
+    useEffect(() => {
+        async function countPostsOf() {
+            console.log("이거 돌아가니?")
+            try {
+                const result = await axios.get(COUNT_URL);
+                setTotalEpiNum(result.data);
+            } catch (err) {
+                setError("Registration Failed");
+            }
+        };
+        setTotalEpiNum(countPostsOf());
+    }, [param.seriesId])
+
+    // 무조건 한 번 부르고
+    useMemo(() => {
+        query()
+    }, [])
+
+    // 조건이 바뀌어도 부르고
+    useMemo(() => {
+        query()
+    }, [period, selectedSex, selectedAge])
+
+    // 큰 그림을 불렀으면 디테일한 것도 불러라
+    useMemo(() => {
+        if (totalEpiNum > 0) {
+            onDecideEpi(null, nowEpiNum)
+        }
+    }, [summaryData])
 
     return <>
         <br />
@@ -156,20 +219,12 @@ export default function WorkStatistics() {
                 </Form.Select>
             </InputGroup>
         </form>
-        <br />
-        <FaCircle color={calcColor("Series")} /><FaCircle color={calcColor("Post")} />
-        <br />
-        <Button variant="outline-primary" onClick={query}>
-            요청하기
-        </Button>
-        <br />
-        <p>period : {period}, sex : {selectedSex}, age : {selectedAge}</p>
-        <br />
-        {hasRequested
-            ? <table>
+        <table>
                 <tr>
                     <td>
-                        <WonderLineChart data={data}
+                        <WonderLineChart data={summaryData}
+                            type={"Summary"}
+                            width={800} height={700}
                             period={period}
                             selectedAge={selectedAge}
                             selectedSex={selectedSex}
@@ -177,12 +232,30 @@ export default function WorkStatistics() {
                         />
                     </td>
                     <td>
-                        <Button></Button>
-                        <p>{`현재 ${epiNum}화 선택중......`}</p>
+                        {totalEpiNum > 0
+                        ? <>
+                            <label>화 수를 입력하세요 : </label>
+                            <NumberInput
+                                min={0} max={totalEpiNum}
+                                value={nowEpiNum}
+                                onChange={e => onChange(e, setNowEpiNum)}
+                                onBlur={e => onBlur(e, 1, totalEpiNum, onDecideEpi)}
+                            />
+                            <br/>
+                            <WonderLineChart data={detailData}
+                                type={"Detail"}
+                                nowEpi={selectedEpiNum}
+                                totalEpi={totalEpiNum}
+                                width={800} height={600}
+                                selectedSex={selectedSex}
+                                calcColor={calcColor}
+                            />
+                        </>
+                        : <p>(아직 등록된 포스트가 없습니다)</p>
+                        }
                     </td>
                 </tr>
             </table>
-            : ""}
     </>
 }
 
