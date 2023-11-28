@@ -25,9 +25,6 @@ export default function WorkStatistics() {
 
     const POINT_STYLE = { backgroundColor: "#55aaff" }
 
-    // 순서대로 시리즈-포스트 자체, 시리즈의 자식 포스트들의 총 조회수
-    const REG_ARRAY = ["", "(....)+"]
-
     const uri = `/elastic/anonymous/getLatestReadOf/${param.seriesId}/${period}/sex_${selectedSex}-age_${selectedAge}`
 
     async function query(e) {
