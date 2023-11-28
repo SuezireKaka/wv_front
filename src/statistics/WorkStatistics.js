@@ -4,7 +4,7 @@ import { InputGroup, Button, Form } from "react-bootstrap";
 import AppContext from "context/AppContextProvider";
 import axios from "api/axios";
 import { FaCircle } from "react-icons/fa";
-import { Chart } from "react-google-charts";
+import { WonderLineChart } from "./WonderCharts";
 
 export default function WorkStatistics() {
     const { auth } = useContext(AppContext);
@@ -12,16 +12,23 @@ export default function WorkStatistics() {
     const [selectedSex, setSelectedSex] = useState("any");
     const [selectedAge, setSelectedAge] = useState("any");
 
+    const COLUMN_ARRAY = ["날짜", "시리즈 클릭수", "포스트 총 조회수"];
+
     const param = useParams();
 
     const [hasRequested, setHasRequested] = useState(false);
 
-    const [data, setData] = useState([["날짜", "조회수"], [new Date(), 0]]);
+    const [data, setData] = useState([COLUMN_ARRAY, [new Date(), 0, 0]]);
     const [error, setError] = useState("");
+
+    const [epiNum, setEpiNum] = useState(1);
 
     const POINT_STYLE = { backgroundColor: "#55aaff" }
 
-    const uri = `/elastic/anonymous/listLatestReadOf/${param.seriesId}/${period}/sex_${selectedSex}-age_${selectedAge}`
+    // 순서대로 시리즈-포스트 자체, 시리즈의 자식 포스트들의 총 조회수
+    const REG_ARRAY = ["", "(....)+"]
+
+    const uri = `/elastic/anonymous/getLatestReadOf/${param.seriesId}/${period}/sex_${selectedSex}-age_${selectedAge}`
 
     async function query(e) {
         e.preventDefault();
@@ -32,16 +39,11 @@ export default function WorkStatistics() {
                     "x-auth-token": `Bearer ${auth?.accessToken}`
                 }
             });
-            let buckets = response.data.aggregations.byDay.buckets;
-            let table = [["날짜", "조회수"]];
-            if (buckets.length === 0) {
-                table.push([new Date().setHours(0, 0, 0, 0), 0])
-            }
-            buckets.forEach(readCnt => {
-                table.push([new Date(readCnt.key_as_string + " 00:00:00"), readCnt.doc_count])
-            })
-            console.log("이걸 구글 차트한테 맡긴다는 거지?", table)
-            setData(table)
+
+            let seriesReadData = JSON.parse(response.data.seriesReadData);
+            let allPostsReadData = JSON.parse(response.data.allPostsReadData);
+
+            setData(saltData(seriesReadData, allPostsReadData))
             setHasRequested(true);
         } catch (err) {
             setError("Registration Failed");
@@ -53,13 +55,46 @@ export default function WorkStatistics() {
         setHasRequested(false);
     }
 
-    function calcColor() {
-        return selectedSex === "male" ? "#335be8" : selectedSex === "female" ? "#ef8fd2" : "#e3ac1c";
+    function calcColor(type) {
+        return type === "Series"
+        ? selectedSex === "male" ? "#335be8" : selectedSex === "female" ? "#ef8fd2" : "#e3ac1c"
+        : selectedSex === "male" ? "#192d74" : selectedSex === "female" ? "#774769" : "#715e0e";
     }
 
-    function saltData(rawData) {
-        let result = [["날짜", "조회수"]];
+    function saltData(rawSeriesData, rawAllPostsData) {
+        let table = [COLUMN_ARRAY];
 
+        let seriesBuckets = rawSeriesData.aggregations.byDay.buckets;
+        let allPostsBuckets = rawAllPostsData.aggregations.byDay.buckets;
+
+        sync(seriesBuckets, allPostsBuckets)
+        
+        if (seriesBuckets.length === 0) {
+            table.push([new Date().setHours(0, 0, 0, 0), 0, 0])
+        }
+        seriesBuckets.forEach((readCnt, index) => {
+            table.push([
+                new Date(readCnt.key_as_string + " 00:00:00"),
+                readCnt.doc_count,
+                allPostsBuckets[index].doc_count
+            ])
+        })
+        console.log("이걸 구글 차트한테 맡긴다는 거지?", table)
+
+        return table
+    }
+    
+    function sync(oneData, otherData) {
+        let oneKeysArr = oneData.map(data => data.key_as_string)
+        let otherKeysArr = otherData.map(data => data.key_as_string)
+
+        pushToSync(oneData, otherKeysArr, oneKeysArr)
+        pushToSync(otherData, oneKeysArr, otherKeysArr)
+    }
+
+    function pushToSync(data, oneKeysArr, otherKeysArr) {
+        let newKeysArr = oneKeysArr.filter(key => ! otherKeysArr.includes(key))
+        newKeysArr.forEach(key => data.push({key_as_string : key, doc_count : 0}))
     }
 
     return <>
@@ -125,7 +160,7 @@ export default function WorkStatistics() {
             </InputGroup>
         </form>
         <br />
-        <FaCircle color={calcColor()} />
+        <FaCircle color={calcColor("Series")} /><FaCircle color={calcColor("Post")} />
         <br />
         <Button variant="outline-primary" onClick={query}>
             요청하기
@@ -134,25 +169,23 @@ export default function WorkStatistics() {
         <p>period : {period}, sex : {selectedSex}, age : {selectedAge}</p>
         <br />
         {hasRequested
-        ? <Chart width={1024} height={768}
-            chartType="LineChart"
-            data={data}
-            options={{
-                title: `최근 ${period}일 동안 `
-                    + `${selectedAge === "any" ? "" : selectedAge + "대 "}`
-                    + `${selectedSex === "any" ? "" : selectedSex === "male" ? "남성 " : "여성 "}`
-                    + `독자들의 조회 수`
-                ,
-                pointSize: 5,
-                trendlines: {
-                    0: {
-                        pointSize: 0,
-                    }
-                },
-                colors: [calcColor()]
-            }}
-        />
-        : ""}
+            ? <table>
+                <tr>
+                    <td>
+                        <WonderLineChart data={data}
+                            period={period}
+                            selectedAge={selectedAge}
+                            selectedSex={selectedSex}
+                            calcColor={calcColor}
+                        />
+                    </td>
+                    <td>
+                        <Button></Button>
+                        <p>{`현재 ${epiNum}화 선택중......`}</p>
+                    </td>
+                </tr>
+            </table>
+            : ""}
     </>
 }
 
