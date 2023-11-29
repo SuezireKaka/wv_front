@@ -20,11 +20,13 @@ export default function PostNormal() {
     backgroundColor: "#aa7755"
 }
   function buildUrl(step) {
-  
-    if (state?.search)
-      return `/work/anonymous/search/${state?.boardId}/${state?.search}/${state.page}`;
-    else
-      return `/work/anonymous/listAllPost/${state.boardId}/${state.page}`;//${state.boardId}
+    let url1 = `/work/anonymous/search/${state.boardId}/${state?.search}/${state.page}?genreId=`
+    if (state.search){
+      console.log(state)
+      return `/work/anonymous/search/${state.boardId}/${state?.search}/${state.page}?genreId=`}
+    else {
+      return `/work/anonymous/listAllPost/${state.boardId}/${state.page}`;}
+
   }
   const [postListUri, setPostListUri] = useState(buildUrl(222));
   const [targetBoard, setTargetBoard] = useState(state.boardId);
@@ -40,11 +42,12 @@ export default function PostNormal() {
 
   const onSearch = (e) => {
     e.preventDefault();
-    let search = txtSearch.current.value;
+    const search = txtSearch.current.value
+    //let search = txtSearch.current.value;
     state.postListWithPaging = null;
     state.search = search;
     state.page = 1;
-
+    console.log(state)
     setPostListUri(buildUrl());
   }
 
@@ -93,20 +96,22 @@ export default function PostNormal() {
   }
   return (
     <div>
-      <table style={{ margin: "auto", position: "static" }}><td>
-        {state.boardId==="0000"?"":
+
+        {state.boardId==="0000"?(auth && auth.roles && auth.roles.includes('manager') || auth.roles.includes('admin'))?<Link style={{ marginLeft: "auto", position: "relative" }} to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
+            <Button variant="outline-primary">신규</Button>
+          </Link>:"":
         !auth.roles || auth.roles.length === 0 ? "" :
           <Link style={{ marginLeft: "auto", position: "relative" }} to={`/series/${state.boardId}/mng`} state={{ seriesId: state.boardId, parentId: state.boardId, boardId: state.boardId, post: { boardVO: { id: state.boardId }, listAttachFile: [] } }}>
             <Button variant="outline-primary">신규</Button>
           </Link>}
-      </td><td>
-          <Form.Control placeholder="검색어" ref={txtSearch}></Form.Control>
-        </td><td>
-          <Button variant="outline-danger" onClick={onSearch}>
-            검색
-          </Button>
-        </td>
-      </table>
+
+
+                <input placeholder="검색어" ref={txtSearch}></input>
+                &nbsp;
+                <Button variant="info" onClick={onSearch}>
+                    검색
+                </Button>
+
       <Fetch uri={postListUri} renderSuccess={renderSuccess} />
     </div>
   )

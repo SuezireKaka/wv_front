@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AppContext from 'context/AppContextProvider'
 import { Button } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-
+import { BiArrowToTop, BiArrowToBottom  } from "react-icons/bi";
 export default function Showcase() {
     const param = useParams()
     const [page, setPage] = useState(1);
@@ -24,6 +24,7 @@ export default function Showcase() {
         setPostList([]);
         setPage(1);
         console.log(search);
+        
     };
 
     useEffect((e) => {
@@ -34,6 +35,15 @@ export default function Showcase() {
         console.log(page)
     }, [param.boardId, param.genreId])
 
+    const onTop = (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0 });
+      }
+      const onBottom = (e) => {
+        e.preventDefault();
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+    
 
     function GenreCanvas() {
         const { genreCodeList } = useContext(AppContext);
@@ -51,7 +61,7 @@ export default function Showcase() {
                     <Offcanvas.Title>장르검색</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body><b>
-                    <Link style={{ all: "unset", cursor: "pointer" }} key={param.boardId} to={`/board/${param.boardId}`}>전체</Link>&nbsp;&nbsp;<br />
+                    <Link style={{ all: "unset", cursor: "pointer",fontSize:"30" }} key={param.boardId} to={`/board/${param.boardId}`}>전체</Link>&nbsp;&nbsp;<br />
                     {genreCodeList?.map((gen) => <>
                         <Link style={{ all: "unset", cursor: "pointer" }} key={gen.id} to={`/board/${param.boardId}/${gen.id}`}>{gen?.genre}</Link>&nbsp;&nbsp;<br />
                     </>)}</b>
@@ -61,6 +71,10 @@ export default function Showcase() {
     }
 
     return <>
+          <div style={{ position: "fixed", zIndex: "2", opacity: 0.6, overflow: "auto", right: "5%", top: "33%"}}>
+          <Button variant="outline-danger" onClick={(e) => onTop(e)}><BiArrowToTop /></Button><br/><br/>
+          <Button variant="outline-danger" onClick={(e) => onBottom(e)}><BiArrowToBottom /></Button>
+      </div>
         <ShowcaseList board={param?.boardId} page={page} setPage={setPage}
             postList={postList} setPostList={setPostList}
             lastIntersectingImage={lastIntersectingImage}
