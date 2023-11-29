@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
-import { InputGroup, Button, Form } from "react-bootstrap";
+import { InputGroup, Button, Form, Row, Col } from "react-bootstrap";
 import AppContext from "context/AppContextProvider";
 import axios from "api/axios";
 import { FaCircle } from "react-icons/fa";
@@ -70,10 +70,10 @@ export default function WorkStatistics() {
     }
 
     function saltData(rawSeriesData, rawAllPostsData) {
-        
+
         let table;
         let seriesBuckets = rawSeriesData.aggregations.byDay.buckets;
-        
+
 
         // rawAllPostsData가 들어오면 큰 틀에서의 조회수
         if (rawAllPostsData) {
@@ -102,7 +102,7 @@ export default function WorkStatistics() {
                 ])
             })
         }
-            
+
         console.log("이걸 구글 차트한테 맡긴다는 거지?", table)
 
         return table
@@ -219,43 +219,40 @@ export default function WorkStatistics() {
                 </Form.Select>
             </InputGroup>
         </form>
-        <table>
-                <tr>
-                    <td>
-                        <WonderLineChart data={summaryData}
-                            type={"Summary"}
-                            width={800} height={700}
-                            period={period}
-                            selectedAge={selectedAge}
+        <Row><Col>
+
+            <WonderLineChart data={summaryData}
+                type={"Summary"}
+                width={800} height={700}
+                period={period}
+                selectedAge={selectedAge}
+                selectedSex={selectedSex}
+                calcColor={calcColor}
+            />
+        </Col><Col>
+                {totalEpiNum > 0
+                    ? <>
+                        <br /><br />
+                        <label>화 수를 입력하세요 : </label>
+                        <NumberInput
+                            min={0} max={totalEpiNum}
+                            value={nowEpiNum}
+                            onChange={e => onChange(e, setNowEpiNum)}
+                            onBlur={e => onBlur(e, 1, totalEpiNum, onDecideEpi)}
+                        />
+                        <br />
+                        <WonderLineChart data={detailData}
+                            type={"Detail"}
+                            nowEpi={selectedEpiNum}
+                            totalEpi={totalEpiNum}
+                            width={800} height={600}
                             selectedSex={selectedSex}
                             calcColor={calcColor}
                         />
-                    </td>
-                    <td>
-                        {totalEpiNum > 0
-                        ? <>
-                            <label>화 수를 입력하세요 : </label>
-                            <NumberInput
-                                min={0} max={totalEpiNum}
-                                value={nowEpiNum}
-                                onChange={e => onChange(e, setNowEpiNum)}
-                                onBlur={e => onBlur(e, 1, totalEpiNum, onDecideEpi)}
-                            />
-                            <br/>
-                            <WonderLineChart data={detailData}
-                                type={"Detail"}
-                                nowEpi={selectedEpiNum}
-                                totalEpi={totalEpiNum}
-                                width={800} height={600}
-                                selectedSex={selectedSex}
-                                calcColor={calcColor}
-                            />
-                        </>
-                        : <p>(아직 등록된 포스트가 없습니다)</p>
-                        }
-                    </td>
-                </tr>
-            </table>
+                    </>
+                    : <p>(아직 등록된 포스트가 없습니다)</p>
+                }
+            </Col></Row>
     </>
 }
 

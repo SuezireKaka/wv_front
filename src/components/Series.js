@@ -38,7 +38,7 @@ export default function Series() {
     }
   }
 
-  function SeriesDetailsSuccess({data}) {
+  function SeriesDetailsSuccess({ data }) {
     console.log("이건 뭐야?", data);
 
     return <>
@@ -78,11 +78,14 @@ export default function Series() {
                 </Link><Button variant="outline-dark" onClick={handleDelete}>삭제</Button>
               </>
                 : ""}
-              {auth && auth.loginId
+              {(auth.roles[0] === "admin" || auth.roles[0] === "manager" || auth.roles[0] === "writer")
                 ? <>
                   <Link to={`/series/${state.seriesId}/tool`} state={{ seriesId: state.seriesId, writer: data.writer, page: 1, toolId: "", addr: "" }}>
                     <Button variant="outline-success">툴 목록</Button>
                   </Link>
+                </> : ""}
+              {auth && auth.loginId
+                ? <>
                   <Link to={`/series/${state.seriesId}/report`} state={{ report: { listAttachFile: [] }, suspectId: state.seriesId, suspectTable: "T_work" }}>
                     <Button variant="outline-danger">신고 <FaBullhorn color="tomato" /></Button>
                   </Link>
