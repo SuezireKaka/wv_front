@@ -1,5 +1,5 @@
-export default function NumberInput({value, min, max, onChange = f => f, onBlur = f => f}) {
-    return <input type="number"
+export default function MinMaxInput({type, value, min, max, onChange = f => f, onBlur = f => f}) {
+    return <input type={type}
         min={min} max={max}
         value={value}
         onChange={onChange}

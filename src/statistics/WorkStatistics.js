@@ -5,7 +5,7 @@ import AppContext from "context/AppContextProvider";
 import axios from "api/axios";
 import { FaCircle } from "react-icons/fa";
 import { WonderLineChart } from "./WonderCharts";
-import NumberInput, { minmax } from "toolbox/NumberInput";
+import MinMaxInput, { minmax } from "toolbox/MinMaxInput";
 
 export default function WorkStatistics() {
     const { auth } = useContext(AppContext);
@@ -234,7 +234,7 @@ export default function WorkStatistics() {
                     ? <>
                         <br /><br />
                         <label>화 수를 입력하세요 : </label>
-                        <NumberInput
+                        <MinMaxInput type="number"
                             min={0} max={totalEpiNum}
                             value={nowEpiNum}
                             onChange={e => onChange(e, setNowEpiNum)}

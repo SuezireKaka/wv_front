@@ -30,6 +30,8 @@ import NotFound from 'components/NotFound';
 import MemberPrev from 'login/MemberPrev';
 import UserSeriesPrev from 'login/UserSeriesPrev';
 import WorkStatistics from 'statistics/WorkStatistics';
+import DashBoard from 'statistics/DashBoard';
+
 export default function WVRouter() {
     return (
         <Routes> 
@@ -63,6 +65,9 @@ export default function WVRouter() {
           <Route path={"/login/oauth2/code/kakao"}  element={<LoginHandler />}  />
             {/* redirect_url//당신이 redirect_url에 맞춰 꾸밀 컴포넌트*/}
           <Route path={"/Books"} element={<Books />} />
+
+          <Route path={"/dashboard"} element={<DashBoard/>}/>
+
           <Route path={"/test1"} element={<Test1 />} />
           <Route path={"/test2"} element={<Test2 />} />
           <Route path={"/Test3"} element={<Test3 />} />

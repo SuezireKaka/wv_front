@@ -1,7 +1,7 @@
 import { displayDate } from "toolbox/DateDisplayer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import NumberInput, { minmax } from "toolbox/NumberInput";
+import MinMaxInput, { minmax } from "toolbox/MinMaxInput";
 
 export const [X_MIN_TOOLSIZE, Y_MIN_TOOLSIZE, X_MAX_TOOLSIZE, Y_MAX_TOOLSIZE] = [500, 300, 1500, 1500]
 
@@ -37,14 +37,14 @@ export default function ToolManager({
             />
         </td>
         <td>
-            <NumberInput
+            <MinMaxInput type="number"
                 min={X_MIN_TOOLSIZE} max={X_MAX_TOOLSIZE}
                 value={nowXToolSize}
                 onChange={(e) => onChange(e, setNowXToolSize)}
                 onBlur={(e) => onBlur(e, X_MIN_TOOLSIZE, X_MAX_TOOLSIZE, setNowXToolSize)}
             />
             {" X "}
-            <NumberInput
+            <MinMaxInput type="number"
                 min={Y_MIN_TOOLSIZE} max={Y_MAX_TOOLSIZE}
                 value={nowYToolSize}
                 onChange={(e) => onChange(e, setNowYToolSize)}
