@@ -28,7 +28,7 @@ export default function LoginButton() {
 
   return (
     <div>
-      <Dropdown style={{ position: "absolute", right: "10%" }}>
+      <Dropdown style={{ position: "absolute", right: "10%", zIndex: "2" }}>
         <Dropdown.Toggle id="dropdown-basic" size="sm"
           style={{backgroundColor : "#aa7755", borderColor : "#aa7755", color : "#ffffff"}}
         >

@@ -93,10 +93,10 @@ export default function ShowcaseList({ page, setPage = f => f, postList, setPost
 
     <table style={{ margin: "auto", position: "static" }} ><td>
     </td><GenreCanvas param={param} /><td>
-        {!auth.roles || auth.roles.length === 0 ? "" :
-          <Link to={`/series/mng`} state={{ seriesId: "", parentId: "", boardId: param?.boardId, post: { listAttachFile: listAttachFile, genreList: [] }, isSeries: isSeries }}>
+    {(auth.roles[0] === "admin" || auth.roles[0] === "manager" || auth.roles[0] === "writer")
+                ?<Link to={`/series/mng`} state={{ seriesId: "", parentId: "", boardId: param?.boardId, post: { listAttachFile: listAttachFile, genreList: [] }, isSeries: isSeries }}>
             <Button variant="outline-primary">신규</Button>
-          </Link>}
+          </Link>:""}
       </td><td>
         <Form.Control type="text" placeholder="검색어" ref={txtSearch} ></Form.Control>
       </td><td>

@@ -30,6 +30,7 @@ export default function PostDetails() {
 
 
   const onLike = async (id, like) => {
+
     let newLike = like++;
     console.log("예상치 : ", newLike)
     try {
@@ -51,6 +52,7 @@ export default function PostDetails() {
   }
 
   const onDisLike = async (id, dislike) => {
+
     let newDisLike = dislike++;
     console.log("예상치 : ", newDisLike)
     try {
@@ -106,26 +108,8 @@ export default function PostDetails() {
     console.log("포스트 내용 좀 보자", post)
     console.log("스테이트 좀 보자", state)
     return <>
-      <div style={{ position: "fixed", zIndex: "2", opacity: 0.6, overflow: "auto", right: "5%", top: "33%"}}>
-          <Button variant="outline-danger" onClick={(e) => onTop(e)}><BiArrowToTop /></Button><br/><br/>
-          <Button variant="outline-danger" onClick={(e) => onBottom(e)}><BiArrowToBottom /></Button>
-      </div>
-
-      <ListGroup as="ul" style={{ width: "60%", margin: "auto" }}>
-        
-        <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left" }}>
-          <div>{post?.content}</div></ListGroup.Item>
-        <ListGroup.Item as="li">
-          {(state?.boardId === "0000" || state?.boardId === "0001") ? <ThumbnailList imgDtoList={post?.listAttachFile} /> :
-            <OriginalViewList imgDtoList={post?.listAttachFile} x="90%" y="90%" />}
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}&nbsp;&nbsp;
-          ✔<span>{post.readCount}</span>&nbsp;&nbsp;
-          <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{nowLike}</span>&nbsp;&nbsp;
-          <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{nowDislike}</span>
-          🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
-        <ListGroup.Item> <PostPrevNext post={post} /></ListGroup.Item>
+    <div style={{ position: "sticky", top: 56, zIndex: "1", backgroundColor : "#ffffff"}}>
+            <ListGroup.Item> <PostPrevNext post={post} /></ListGroup.Item>
         <ListGroup.Item>
           {(state?.boardId === "0000" || state?.boardId === "0001") ?
             <Link key={state.parentId} to={`/board/${state.boardId}`} state={{ page: state.page, boardId: state.boardId, post: post, parentId: state?.parentId, seriesId: state.parentId }}><Button variant="outline-warning">목록</Button></Link>
@@ -139,6 +123,28 @@ export default function PostDetails() {
             ><Button variant="outline-info">수정</Button></Link>&nbsp;<Button variant="outline-dark" onClick={handleDelete}>삭제</Button></> : ""}
           <br />
         </ListGroup.Item>
+        </div>
+      <div style={{ position: "fixed", zIndex: "2", opacity: 0.6, overflow: "auto", right: "5%", top: "33%"}}>
+          <Button variant="outline-danger" onClick={(e) => onTop(e)}><BiArrowToTop /></Button><br/><br/>
+          <Button variant="outline-danger" onClick={(e) => onBottom(e)}><BiArrowToBottom /></Button>
+      </div>
+
+      <ListGroup as="ul" style={{ width: "60%", margin: "auto", top: 120 }}>
+
+        <ListGroup.Item variant="light" as="li" style={{ whiteSpace: "pre-line", textAlign: "left" }}>
+          <div>{post?.content}</div></ListGroup.Item>
+        <ListGroup.Item as="li">
+          {(state?.boardId === "0000" || state?.boardId === "0001") ? <ThumbnailList imgDtoList={post?.listAttachFile} /> :
+            <OriginalViewList imgDtoList={post?.listAttachFile} x="90%" y="90%" />}
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <LoginTypeIcon loginType={post?.writer?.accountType} />{!post.writer?.nick ? post.writer?.kakaoNick : post.writer?.nick}&nbsp;&nbsp;
+          ✔<span>{post.readCount}</span>&nbsp;&nbsp;
+          {!auth.roles || auth.roles.length === 0 ? "" :<>
+          <span onClick={() => { onLike(post.id, post.likeCount) }}>👍{nowLike}</span>&nbsp;&nbsp;
+          <span onClick={() => { onDisLike(post.id, post.dislikeCount) }}>😡{nowDislike}</span></>}
+          🕐<span>{displayDate(post.regDt, post.uptDt)} </span><br /></ListGroup.Item>
+ 
       </ListGroup>
 
 

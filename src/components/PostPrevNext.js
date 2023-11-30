@@ -10,6 +10,7 @@ export default function PostPN({ post }) {
     const uri = `/work/anonymous/getPrevAndNext/${post.id}`
     const location = useLocation();
     const state = location.state;
+    window.scrollTo({ top: 0 });
     function renderSuccess({data}) {
         console.log("누구세요?", data)
         const prev = data?.firstVal
