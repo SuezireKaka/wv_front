@@ -1,4 +1,4 @@
-import ToolDetail from 'component-tool/ToolDetail';
+import ToolDetail from './ToolDetail';
 import ToolContext from './ToolContextProvider';
 import { useContext, useEffect } from 'react';
 

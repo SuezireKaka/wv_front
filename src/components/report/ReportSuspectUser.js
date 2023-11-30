@@ -1,8 +1,8 @@
 import React from 'react'
 import { displayDate } from 'toolbox/DateDisplayer'
 import { Table } from 'react-bootstrap'
-import MemberStatusList from 'login/MemberStatusList'
-import MemberRoleList from 'login/MemberRoleList'
+import MemberStatusList from 'components/member/MemberStatusList'
+import MemberRoleList from 'components/member/MemberRoleList'
 import ThumbnailList from 'atom/ThumbnailList'
 
 export default function ReportSuspectUser({ suspectUser, report }) {

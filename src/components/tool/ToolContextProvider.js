@@ -1,4 +1,4 @@
-import ToolDetail from 'component-tool/ToolDetail';
+import ToolDetail from './ToolDetail';
 import { useState, useRef, useContext, createContext, useMemo } from 'react';
 import AppContext from "context/AppContextProvider";
 import axios from 'api/axios';

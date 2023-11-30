@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import Image from 'react-bootstrap/Image';
 import AppContext from "context/AppContextProvider";
 import { Form } from "react-bootstrap";
-import Favorites from './Favorites';
+import Favorites from "components/favorites/Favorites";
 import { AxiosAuth } from 'toolbox/Fetch'
 
 export default function ShowcaseList({ page, setPage = f => f, postList, setPostList = f => f, lastIntersectingImage, setLastIntersectingImage = f => f,

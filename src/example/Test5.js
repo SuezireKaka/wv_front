@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import useHover from 'hooks/useHover';
 import Gra1 from './Gra1';
 import { Fetch } from 'toolbox/Fetch';
-import ToolManager from 'component-tool/ToolManager';
+import ToolManager from 'components/tool/ToolManager';
 import axios from 'api/axios';
 
 // 시각적인 효과를 위해 BOX컴포넌트 사용

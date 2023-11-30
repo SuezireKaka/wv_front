@@ -1,6 +1,6 @@
 import UseGestureElement from "toolbox/UseGestureElement"
 import { useContext } from "react";
-import ToolContext from 'component-tool/ToolContextProvider';
+import ToolContext from "./ToolContextProvider";
 
 export const TRACKER_SIZE = { x: 20, y: 20 }
 

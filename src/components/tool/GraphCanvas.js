@@ -1,13 +1,13 @@
 import { useState, useRef, useMemo, useEffect, useContext } from 'react';
 import ToolContext from './ToolContextProvider';
 import AppContext from 'context/AppContextProvider';
-import Remocon from '../toolbox/Remocon';
-import UseGestureElement from '../toolbox/UseGestureElement';
+import Remocon from 'toolbox/Remocon';
+import UseGestureElement from 'toolbox/UseGestureElement';
 import { Navigate, useLocation, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { isAnyDanger } from './PropAccordion';
 import { X_MAX_TOOLSIZE, X_MIN_TOOLSIZE, Y_MAX_TOOLSIZE, Y_MIN_TOOLSIZE } from './ToolManager';
-import Tracker from 'component-tool/Tracker';
+import Tracker from './Tracker';
 import ObjectEditor from './ObjectEditor';
 
 export const [DEFAULT_VERTEX_X_SIZE, DEFAULT_VERTEX_Y_SIZE,

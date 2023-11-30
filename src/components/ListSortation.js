@@ -9,12 +9,12 @@ import Container from "react-bootstrap/Container";
 import OriginalViewOne from "atom/OriginalViewOne";
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import Favorites from './Favorites';
-import FavoritesList from './FavoritesList';
-import ReportList from './ReportList';
-import MemberList from 'login/MemberList';
-import UserSeries from 'login/UserSeries';
-export default function List({
+import Favorites from './favorites/Favorites';
+import FavoritesList from './favorites/FavoritesList';
+import ReportList from './report/ReportList';
+import MemberList from './member/MemberList';
+import UserSeries from './post/UserSeries';
+export default function ListSortation({
     uri,sortation,
     page, setPage = f => f,
     postList, setPostList = f => f,

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
-import ReplyList from "./ReplyList";
+import ReplyList from "components/reply/ReplyList";
 import AppContext from "context/AppContextProvider";
 import { Accordion } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";

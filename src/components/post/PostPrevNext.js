@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from "react-router";
 
 
-export default function PostPN({ post }) {
+export default function PostPrevNext({ post }) {
     const uri = `/work/anonymous/getPrevAndNext/${post.id}`
     const location = useLocation();
     const state = location.state;

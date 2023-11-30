@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import ToolContext from './ToolContextProvider';
-import GraphCanvas from "./GraphCanvas"
+import GraphCanvas from './GraphCanvas';
 import PropAccordion from './PropAccordion';
 
 export default function ToolDetail() {

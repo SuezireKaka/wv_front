@@ -1,34 +1,31 @@
-import Home from 'components/Home';
+import Home from 'layout/Home';
 import { Route, Routes } from 'react-router';
-import Showcase from 'components/Showcase';
-import Series from 'components/Series';
-import ReportMng from 'components/ReportMng';
-import PostDetails from 'components/PostDetails';
-import ToolExplorer from 'component-tool/ToolExplorer';
+import Showcase from 'components/post/Showcase';
+import Series from 'components/post/Series';
+import ReportMng from 'components/report/ReportMng';
+import PostDetails from 'components/post/PostDetails';
+import ToolExplorer from 'components/tool/ToolExplorer';
 import Agreement from 'login/Agreement';
 import LoginStage from 'login/LoginStage';
 import Register from 'login/Register';
 import UserProfile from 'login/UserProfile';
-import MemberList from 'login/MemberList';
-import PostMng from 'components/PostMng';
-import Test1 from 'example/Test1';
+import PostMng from 'components/post/PostMng';
 import Test2 from 'example/Test2';
 import Test3 from 'example/Test3';
 import Test4 from 'example/Test4';
 import Test5 from 'example/Test5';
 import Test6 from 'example/Test6';
 import Test7 from 'example/Test7';
-import ReportPrev from 'components/ReportPrev';
-import PostNormal from 'components/PostNormal';
-import FavoritesPrev from 'components/FavoritesPrev';
-import Books from 'components/Books';
-import UserSeries from 'login/UserSeries';
+import ReportPrev from 'components/report/ReportPrev';
+import PostNormal from 'components/post/PostNormal';
+import FavoritesPrev from 'components/favorites/FavoritesPrev';
+import Books from 'components/post/Books';
 import LoginHandler from 'kakao-login/LoginHandler';
-import ReportDetails from 'components/ReportDetails';
-import ToolView from 'component-tool/ToolView';
-import NotFound from 'components/NotFound';
-import MemberPrev from 'login/MemberPrev';
-import UserSeriesPrev from 'login/UserSeriesPrev';
+import ReportDetails from 'components/report/ReportDetails';
+import ToolView from 'components/tool/ToolView';
+import NotFound from 'toolbox/NotFound';
+import MemberPrev from 'components/member/MemberPrev';
+import UserSeriesPrev from 'components/post/UserSeriesPrev';
 import WorkStatistics from 'statistics/WorkStatistics';
 import DashBoard from 'statistics/DashBoard';
 
@@ -68,7 +65,7 @@ export default function WVRouter() {
 
           <Route path={"/dashboard"} element={<DashBoard/>}/>
 
-          <Route path={"/test1"} element={<Test1 />} />
+
           <Route path={"/test2"} element={<Test2 />} />
           <Route path={"/Test3"} element={<Test3 />} />
           <Route path={"/test4"} element={<Test4 />} />

@@ -5,7 +5,7 @@ import { Fetch, AxiosAuth } from "toolbox/Fetch";
 import PostList from "./PostList";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
-import Favorites from "./Favorites";
+import Favorites from "components/favorites/Favorites";
 import AppContext from "context/AppContextProvider";
 import OriginalViewOne from "atom/OriginalViewOne";
 import { FaBullhorn } from "react-icons/fa";
