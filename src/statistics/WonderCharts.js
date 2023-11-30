@@ -1,5 +1,9 @@
+import axios from "api/axios";
+import AppContext from "context/AppContextProvider";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Chart } from "react-google-charts";
-import MinMaxInput from "toolbox/MinMaxInput";
+import clock from "toolbox/Clock";
+import MinMaxInput, { minmax } from "toolbox/MinMaxInput";
 
 export function WonderLineChart({
     data,
@@ -45,38 +49,91 @@ export function WonderAreaChart({
         options={{
             title: `${startTime}에서 ${endTime}까지의 ${type} 통계`,
             isStacked: true,
-            colors: type === "User" ? ["#c592c2", "#f2e24f"] : ["#804040", "#36c95b"]
+            colors: type === "account" ? ["#c592c2", "#f2e24f"] : ["#804040", "#36c95b"]
         }}
     />
 }
 
-export function WonderPeriodAreaCharter({
-    data, type,
-    min, max,
-    startValue, endValue,
-    onStartChange = f => f,
-    onEndChange = f => f,
-    onBlur = f => f }) {
+export function WonderPeriodAreaCharter({elasticIndex}) {
+    const {auth} = useContext(AppContext)
+
+    const TODAY = clock(new Date());
+    const SIJAK = "2023-10-01";
+
+    const DASHBOARD_ARRAY = elasticIndex === "account"
+    ? ["날짜", "원더 유저 수", "카카오 유저 수"]
+    : ["날짜", "포스트 수", "시리즈 수"];
+
+    const [startDate, setStartDate] = useState(SIJAK);
+    const [endDate, setEndDate] = useState(TODAY);
+    const [realStartDate, setRealStartDate] = useState(SIJAK);
+    const [realEndDate, setRealEndDate] = useState(TODAY);
+
+    const [data, setData] = useState([DASHBOARD_ARRAY, [new Date(), 0, 0]]);
+    const [error, setError] = useState();
+
+    const DASHBOARD_URL = `/elastic/getDashBoard/wondervatory_${elasticIndex}/${startDate}/${endDate}`
+
+    function onBlur(e, min, max, callback = f => f) {
+        callback(minmax(e.target.value, min, max))
+    }
+
+    async function query() {
+        try {
+            const response = await axios.get(DASHBOARD_URL, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "x-auth-token": `Bearer ${auth?.accessToken}`
+                }
+            });
+            let downBuckets = JSON.parse(response.data.downData).aggregations.byDay.buckets
+            let downData = downBuckets.map(bucket => [new Date(bucket.key_as_string), bucket.cumulative_count.value])
+            let upBuckets = JSON.parse(response.data.upData).aggregations.byDay.buckets
+            let upData = upBuckets.map(bucket => [new Date(bucket.key_as_string), bucket.cumulative_count.value])
+
+            let totalData = downData.map((data, index) => [data[0], downData[index][1], upData[index][1]])
+
+            console.log("이제 이거 그리는 거지?", totalData)
+
+            setData([DASHBOARD_ARRAY, ...totalData])
+
+        } catch (err) {
+            setError("Registration Failed");
+        }
+    };
+
+    // 무조건 한 번 불러라
+    useEffect(() => {
+        query()
+    }, [])
+
+    // 조건이 바뀌어도 불러라
+    useMemo(() => {
+        query()
+    }, [realStartDate, realEndDate])
+
     return <>
+
+
         <MinMaxInput type="date"
-            min={min} max={endValue}
-            value={startValue}
-            onChange={(e) => onStartChange(e.target.value)}
-            onBlur={(e) => onBlur(e, min, endValue, onStartChange)}
+            min={SIJAK} max={endDate}
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            onBlur={(e) => onBlur(e, SIJAK, endDate, setRealStartDate)}
         />
         {"~"}
         <MinMaxInput type="date"
-            min={startValue} max={max}
-            value={endValue}
-            onChange={(e) => onEndChange(e.target.value)}
-            onBlur={(e) => onBlur(e, startValue, max, onEndChange)}
+            min={startDate} max={TODAY}
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            onBlur={(e) => onBlur(e, startDate, TODAY, setRealEndDate)}
         />
         <br />
         <WonderAreaChart
-            data={data} type={type}
+            data={data} type={elasticIndex}
             width={800} height={700}
-            startTime={startValue}
-            endTime={endValue}
+            startTime={startDate}
+            endTime={endDate}
         />
     </>
 }

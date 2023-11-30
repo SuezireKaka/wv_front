@@ -49,7 +49,7 @@ export default function WorkStatistics() {
             let seriesReadData = JSON.parse(response.data.seriesReadData);
             let allPostsReadData = JSON.parse(response.data.allPostsReadData);
 
-            setSummaryData([...saltData(seriesReadData, allPostsReadData)])
+            setSummaryData([...saltData(SUMMARY_COLUMN_ARRAY, seriesReadData, allPostsReadData)])
         } catch (err) {
             setError("Registration Failed");
         }
@@ -69,45 +69,6 @@ export default function WorkStatistics() {
             : selectedSex === "male" ? "#192d74" : selectedSex === "female" ? "#774769" : "#715e0e";
     }
 
-    function saltData(rawSeriesData, rawAllPostsData) {
-
-        let table;
-        let seriesBuckets = rawSeriesData.aggregations.byDay.buckets;
-
-
-        // rawAllPostsData가 들어오면 큰 틀에서의 조회수
-        if (rawAllPostsData) {
-            table = [SUMMARY_COLUMN_ARRAY];
-            let allPostsBuckets = rawAllPostsData.aggregations?.byDay?.buckets;
-            if (seriesBuckets.length === 0) {
-                table.push([new Date().setHours(0, 0, 0, 0), 0, 0])
-            }
-
-            seriesBuckets.forEach((readCnt, index) => {
-                table.push([
-                    new Date(readCnt.key_as_string + " 00:00:00"),
-                    readCnt.doc_count,
-                    allPostsBuckets[index].doc_count
-                ])
-
-            })
-        }
-        // 안 들어오면 디테일한 조회수
-        else {
-            table = [DETAIL_COLUMN_ARRAY];
-            seriesBuckets.forEach(readCnt => {
-                table.push([
-                    new Date(readCnt.key_as_string + " 00:00:00"),
-                    readCnt.doc_count
-                ])
-            })
-        }
-
-        console.log("이걸 구글 차트한테 맡긴다는 거지?", table)
-
-        return table
-    }
-
     async function onDecideEpi(e, minmax) {
         e?.preventDefault()
         setNowEpiNum(minmax)
@@ -121,7 +82,7 @@ export default function WorkStatistics() {
             });
 
             let postReadData = JSON.parse(response.data.postReadData);
-            setDetailData([...saltData(postReadData)]);
+            setDetailData([...saltData(DETAIL_COLUMN_ARRAY, postReadData)]);
         } catch (err) {
             setError("Registration Failed");
         }
@@ -256,3 +217,41 @@ export default function WorkStatistics() {
     </>
 }
 
+export function saltData(columnArray, type, rawSeriesData, rawAllPostsData) {
+
+    let table;
+    let seriesBuckets = rawSeriesData.aggregations.byDay.buckets;
+
+
+    // rawAllPostsData가 들어오면 큰 틀에서의 조회수
+    if (rawAllPostsData) {
+        table = [[...columnArray]];
+        let allPostsBuckets = rawAllPostsData.aggregations?.byDay?.buckets;
+        if (seriesBuckets.length === 0) {
+            table.push([new Date().setHours(0, 0, 0, 0), 0, 0])
+        }
+
+        seriesBuckets.forEach((readCnt, index) => {
+            table.push([
+                new Date(readCnt.key_as_string + " 00:00:00"),
+                readCnt.doc_count,
+                allPostsBuckets[index].doc_count
+            ])
+
+        })
+    }
+    // 안 들어오면 디테일한 조회수
+    else {
+        table = [[...columnArray]];
+        seriesBuckets.forEach(readCnt => {
+            table.push([
+                new Date(readCnt.key_as_string + " 00:00:00"),
+                readCnt.doc_count
+            ])
+        })
+    }
+
+    console.log("이걸 구글 차트한테 맡긴다는 거지?", table)
+
+    return table
+}
