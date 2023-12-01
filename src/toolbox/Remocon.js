@@ -4,12 +4,18 @@ import AppContext from "context/AppContextProvider";
 
 export default function Remocon({ index = 1, type = "", writer, onSelect = f => f, immediate = f => f }) {
     const { auth, relationRemocon, explorerRemocon } = useContext(AppContext);
-    const selectedRemocon =
-        type === "rel"
-            ? relationRemocon
-            : type === "xpl"
-                ? explorerRemocon
-                : null
+    let selectedRemocon;
+    // 타입에 따라 어떤 리모콘을 선택할 것인지 결정
+    switch (type) {
+        case "rel" :
+            selectedRemocon = relationRemocon;
+            break;
+        case "xpl" :
+            selectedRemocon = explorerRemocon;
+            break;
+        default :
+            selectedRemocon = null;
+    }
     const remoteKeyList = selectedRemocon?.remoteKeyList
 
     return <div style={{ marginBottom: "5px" }}>
@@ -33,33 +39,45 @@ export default function Remocon({ index = 1, type = "", writer, onSelect = f => 
     </div>
 }
 
+// 리모콘의 authCode를 분해해서 이용 가능한 것만 보여주기
 function remoconAuth(auth, writer, authCode) {
+    // 먼저 and를 기준으로 분해하고 or을 기준으로 분해 -> 연산순서
     let andArray = authCode.split(" and ")
     let orArrayOfArray = andArray.map(clause => clause.split(" or "))
-    // reduce 안 reduce 실화?
+    
+    // 먼저 and로 쪼갠 걸 다시 or로 쪼갠 어레이들을 기준으로
     let result = orArrayOfArray.reduce(
         (lemma_fitst, nextArray) => {
             let bool = nextArray.reduce(
-                (lemma_second, nextAuth) => {return lemma_second || codeToAuth(auth, writer, nextAuth)}, false
+                // or로 쪼개인 각 조건에 대해 하나라도 참이면 일단 중간단계에 참으로 저장하기
+                (lemma_second, nextAuth) => {return lemma_second || codeToAuth(auth, writer, nextAuth)}
+                , false
             )
+            // and로 쪼개진 모든 중간결과 중 하나라도 거짓이면 안 보여주기
             return lemma_fitst && bool
         }, true
     )
-
     return result
 }
 
+// 코드랑 auth를 비교해서 맞는지 판단
 function codeToAuth(auth, writer, authCode) {
     switch (authCode) {
+        // 모두에게 공개
         case "all":
             return true
+        // 로그인 했으면 공개
         case "login":
             return auth
+        // 작가 본인에게만 공개
         case "self":
             return auth?.userId === writer?.id
+        // 매니저에게 공개
         case "manage":
             return auth?.roles.includes('manager') || auth?.roles.includes('admin')
+        // 조건이 안 걸려 있으면 아직 제작중인 걸로 보고 비공개
         default:
             return false
     }
 }
+

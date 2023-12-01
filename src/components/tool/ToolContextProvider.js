@@ -64,6 +64,7 @@ export const ToolContextProvider = ({ children }) => {
     }
 
     function onSaveTool(id, seriesId, writer, auth) {
+        console.log("저장될 정점이랑 간선 나와!!!", nowVertices, nowEdges)
         let saveDate = {
             id : id, name : nowName,
             series : {id : seriesId}, writer : writer,
@@ -91,10 +92,6 @@ export const ToolContextProvider = ({ children }) => {
         copyList[targetIndex].name = newName;
         setNowObjectList(copyList)
     }
-
-    useMemo(() => {
-        console.log("너희들 뭐하니?", nowVertices, nowEdges)
-    }, [nowVertices, nowEdges])
 
     return (
         <ToolContext.Provider value={{

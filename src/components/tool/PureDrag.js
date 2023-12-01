@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext } from 'react';
 import PropTest from 'example/PropTest';
+import { minmax } from 'toolbox/MinMaxInput';
 
 export default function PureDrag({propList = [], onChange = f => f}) {
   const dragItem = useRef();
@@ -15,8 +16,13 @@ export default function PureDrag({propList = [], onChange = f => f}) {
   };
 
   const drop = () => {
-    const copyListItems = [...propList];
+    let min = Math.min(dragItem.current, dragOverItem.current);
+    let max = Math.max(dragItem.current, dragOverItem.current);
+    // 수정하기로 예약되어 있었거나 min~max에 있는 건 다 수정 예약
+    const copyListItems = [...propList].map((prop, idx) => {return {... prop, isEdited : prop.isEdited || (idx >= min && idx <= max)}});
     const dragItemContent = copyListItems[dragItem.current];
+    
+    
     copyListItems.splice(dragItem.current, 1);
     copyListItems.splice(dragOverItem.current, 0, dragItemContent);
     dragItem.current = null;
@@ -26,7 +32,7 @@ export default function PureDrag({propList = [], onChange = f => f}) {
 
   const newProp = () => {
     setSummonedCnt(summonedCnt + 1)
-    onChange([...propList, {key : summonedCnt, propType : "", propVal : "", isSafe : false, isEdited : false}])
+    onChange([...propList, {key : summonedCnt, propType : "", propVal : "", isSafe : false, isEdited : true}])
   };
 
   const setType = (index, value) => {
@@ -34,6 +40,7 @@ export default function PureDrag({propList = [], onChange = f => f}) {
     let propTypeList = newList.map(prop => prop.propType)
     newList = newList.map((prop, idx) => {return {...prop, isSafe : checkQuality(idx, prop.propType, propTypeList)}})
     newList[index].isSafe = checkQuality(index, value, propTypeList)
+    newList[index].isEdited = true;
     onChange(newList)
   }
 
@@ -44,6 +51,7 @@ export default function PureDrag({propList = [], onChange = f => f}) {
   const editRes = (index, prop, value) => {
     let newList = [...propList]
     newList[index][prop] = value
+    newList[index].isEdited = true;
     return newList
   }
 
@@ -55,6 +63,8 @@ export default function PureDrag({propList = [], onChange = f => f}) {
   const onRemove = (index) => {
     onChange([...propList].filter((_, idx) => {return idx !== index}))
   }
+
+  console.log("프로퍼티들 상태 좀 보자", propList)
 
   return (
     <>

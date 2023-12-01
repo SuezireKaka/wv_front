@@ -7,12 +7,14 @@ import PureDrag from './PureDrag';
 export default function PropAccordion() {
     const {nowObjectList, onUpdate} = useContext(ToolContext);
 
+    console.log("아코디언 안에 무엇이 있나요?", nowObjectList)
+
     return <div style={{ width: "100%" }}>
         <div style={{ display: 'block????', backgroundColor: nowObjectList && nowObjectList.length > 0 ? "blue" : "white", padding: 1 }}> 
         <Accordion alwaysOpen flush>
             {nowObjectList?.map((obj, index) => {
                 return <Accordion.Item key={index} eventKey={index}>
-                    {console.log(obj?.name)}
+                    {console.log("수상해......", obj)}
                     <Accordion.Header>{obj?.name + "(" + obj?.id + ")"}</Accordion.Header>
                     <Accordion.Body style={{ backgroundColor:"lightblue"}}>
                         <PureDrag

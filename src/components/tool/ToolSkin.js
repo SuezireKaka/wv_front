@@ -11,7 +11,7 @@ export default function ToolSkin({ tool, state, onClick = f => f, onLink = f => 
     return <tr style={{ ...TABLE_STYLE, textAlign: "center" }}>
         <td onClick={() => onClick(tool)}>{tool.name}</td>
         <td onClick={() => onClick(tool)}>{tool.xToolSize + " X " + tool.yToolSize}</td>
-        <td onClick={() => onClick(tool)}>{displayDate(tool.regDt, tool.uptDt)}</td>
+        <td onClick={() => onClick(tool)}>{tool.regDt ? displayDate(tool.regDt, tool.uptDt) : "방금 전"}</td>
         <td>
             <Link to={`/series/${state.seriesId}/tool/${tool.id}`}
                 state={{ writer : state.writer, seriesId: state.seriesId, page: 1, toolId: tool.id, addr: state.addr + tool.name + "/" }}
