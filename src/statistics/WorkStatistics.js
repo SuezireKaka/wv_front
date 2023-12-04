@@ -217,8 +217,7 @@ export default function WorkStatistics() {
     </>
 }
 
-export function saltData(columnArray, type, rawSeriesData, rawAllPostsData) {
-
+export function saltData(columnArray, rawSeriesData, rawAllPostsData) {
     let table;
     let seriesBuckets = rawSeriesData.aggregations.byDay.buckets;
 
