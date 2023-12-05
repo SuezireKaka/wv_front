@@ -39,7 +39,6 @@ export default function Remocon({ index = 1, type = "", writer, onSelect = f => 
     </div>
 }
 
-// 리모콘의 authCode를 분해해서 이용 가능한 것만 보여주기
 function remoconAuth(auth, writer, authCode) {
     // 먼저 and를 기준으로 분해하고 or을 기준으로 분해 -> 연산순서
     let andArray = authCode.split(" and ")
@@ -60,7 +59,6 @@ function remoconAuth(auth, writer, authCode) {
     return result
 }
 
-// 코드랑 auth를 비교해서 맞는지 판단
 function codeToAuth(auth, writer, authCode) {
     switch (authCode) {
         // 모두에게 공개
