@@ -4,7 +4,7 @@ import AppContext from 'context/AppContextProvider';
 import { useNavigate } from 'react-router';
 import { AxiosAuth } from 'toolbox/Fetch';
 import { Link } from 'react-router-dom';
-import LoginTypeIcon from 'toolbox/LoginTypeIcon';
+import LoginTypeIcon from 'login/LoginTypeIcon';
 
 export default function LoginButton() {
   const { auth, setAuth } = useContext(AppContext);

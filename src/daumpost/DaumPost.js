@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PopupDom from './PopupDom ';
 import { ZipCode } from './ZipCode';
 import { Button } from 'react-bootstrap';
+
 const DaumPost = ({setAddress=f=>f}) => {
 	// 팝업창 상태 관리
     const [postButtonText, setPostButtonText] = useState("우편번호 검색")

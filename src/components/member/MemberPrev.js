@@ -1,9 +1,7 @@
-import React, { useContext, useState } from 'react'
-import AppContext from 'context/AppContextProvider';
+import React, { useState } from 'react'
 import ListSortation from 'components/ListSortation';
 
 export default function MemberPrev() {
-    const { auth } = useContext(AppContext);
     const [postList, setPostList] = useState([]);
     const [page, setPage] = useState(1);
     const uri = `/party/listAllAccount/0000/${page}/id`

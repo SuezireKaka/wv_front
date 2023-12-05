@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'api/axios';
 import MemberRoleList from './MemberRoleList';
 import { Table } from 'react-bootstrap';
-import AppContext from "context/AppContextProvider";
-import LoginTypeIcon from 'toolbox/LoginTypeIcon';
+import LoginTypeIcon from 'login/LoginTypeIcon';
 
 export default function MemberList({dataList, setLastIntersectingImage=f=>f, auth}) {
 

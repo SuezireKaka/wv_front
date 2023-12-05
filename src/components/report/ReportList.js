@@ -1,9 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import axios from "api/axios";
-import AppContext from "context/AppContextProvider";
 import { Table } from "react-bootstrap";
 import { displayDate } from "toolbox/DateDisplayer";
-import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import LoginTypeIcon from "login/LoginTypeIcon";
 import { Link } from "react-router-dom";
 
 export default function ReportList({dataList, setLastIntersectingImage=f=>f, auth}) {

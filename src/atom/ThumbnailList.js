@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { AxiosPost } from 'toolbox/Fetch';
 import OriginalFileView from './OriginalFileView';
 

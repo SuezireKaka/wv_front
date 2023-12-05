@@ -1,6 +1,4 @@
-import ToolDetail from './ToolDetail';
-import { useState, useRef, useContext, createContext, useMemo } from 'react';
-import AppContext from "context/AppContextProvider";
+import { useState, createContext } from 'react';
 import axios from 'api/axios';
 
 const ToolContext = createContext({});

@@ -1,7 +1,6 @@
 import { useContext } from "react"
 import AppContext from "context/AppContextProvider";
 
-
 export default function Remocon({ index = 1, type = "", writer, onSelect = f => f, immediate = f => f }) {
     const { auth, relationRemocon, explorerRemocon } = useContext(AppContext);
     let selectedRemocon;

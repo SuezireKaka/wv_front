@@ -1,6 +1,5 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTest from 'example/PropTest';
-import { minmax } from 'toolbox/MinMaxInput';
 
 export default function PureDrag({propList = [], onChange = f => f}) {
   const dragItem = useRef();

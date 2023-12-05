@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
 import ReplyList from "components/reply/ReplyList";
@@ -11,8 +11,8 @@ import { ListGroup } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import axios from "api/axios";
 import PostPrevNext from "./PostPrevNext";
-import LoginTypeIcon from "toolbox/LoginTypeIcon";
-import { AxiosAuth, Fetch } from "toolbox/Fetch";
+import LoginTypeIcon from "login/LoginTypeIcon";
+import { AxiosAuth } from "toolbox/Fetch";
 import { BiArrowToTop, BiArrowToBottom  } from "react-icons/bi";
 
 

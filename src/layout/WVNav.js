@@ -3,7 +3,7 @@ import { Nav, Navbar } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AxiosPost, Fetch } from "toolbox/Fetch";
+import { Fetch } from "toolbox/Fetch";
 import AppContext from "context/AppContextProvider";
 
 

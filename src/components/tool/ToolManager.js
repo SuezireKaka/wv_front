@@ -1,5 +1,3 @@
-import { displayDate } from "toolbox/DateDisplayer";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import MinMaxInput, { minmax } from "toolbox/MinMaxInput";
 

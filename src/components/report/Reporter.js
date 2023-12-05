@@ -1,6 +1,7 @@
 import React from 'react'
 import { displayDate } from 'toolbox/DateDisplayer';
 import { Table } from 'react-bootstrap'
+
 export default function Reporter({ report }) {
   return (
     <Table><thead>

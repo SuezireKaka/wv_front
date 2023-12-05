@@ -5,12 +5,11 @@ import { displayDate } from "toolbox/DateDisplayer";
 import { Fetch } from "toolbox/Fetch";
 import AppContext from "context/AppContextProvider";
 import { Table } from "react-bootstrap";
-import ThumbnailList from "atom/ThumbnailList";
 import { Pagination } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import LoginTypeIcon from "toolbox/LoginTypeIcon";
-import Form from 'react-bootstrap/Form';
+import LoginTypeIcon from "login/LoginTypeIcon";
 import { displayPagination } from "toolbox/Pagination";
+
 export default function PostNormal() {
   const { auth } = useContext(AppContext);
   const location = useLocation();

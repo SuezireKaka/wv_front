@@ -1,6 +1,3 @@
-import { useContext } from 'react';
-import ToolContext from './ToolContextProvider';
-
 export default function ObjectEditor({id = "",
     obj = {name : "", innerColor : "#f0f0f0", outerColor : "#000000", textColor : "#000000"},
     onSetup = f => f, onEdit = f => f

@@ -1,9 +1,5 @@
-import AppContext from "context/AppContextProvider";
-import { useContext } from 'react';
-import { useState, useEffect } from "react";
-import axios from "api/axios";
 import { Table } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { displayDate } from "toolbox/DateDisplayer";
 import OriginalViewOne from "atom/OriginalViewOne";
 import Button from "react-bootstrap/Button";

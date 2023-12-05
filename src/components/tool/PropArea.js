@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Fetch } from "toolbox/Fetch"
 import PropList from "./CustomProperty"
 

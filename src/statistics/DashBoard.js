@@ -1,8 +1,5 @@
-import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { WonderAreaChart, WonderPeriodAreaCharter } from "./WonderCharts";
-import clock from "toolbox/Clock";
-import MinMaxInput, { minmax } from "toolbox/MinMaxInput";
+import { WonderPeriodAreaCharter } from "./WonderCharts";
 
 export default function DashBoard() {
 

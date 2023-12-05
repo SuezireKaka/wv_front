@@ -5,7 +5,7 @@ import { useContext, useState } from 'react';
 import { displayDate } from "toolbox/DateDisplayer";
 import { useLocation, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
-import LoginTypeIcon from 'toolbox/LoginTypeIcon';
+import LoginTypeIcon from 'login/LoginTypeIcon';
 
 export default function ReplyList({ parent }) {
   const { auth } = useContext(AppContext);

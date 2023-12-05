@@ -1,7 +1,5 @@
 import ToolDetail from 'component-tool/ToolDetail';
-import { useState, useRef, useEffect, useContext } from 'react';
-import { AxiosAuth } from 'toolbox/Fetch';
-import { useLocation } from "react-router";
+import { useState, useContext } from 'react';
 import AppContext from "context/AppContextProvider";
 
 export default function ToolControler({tool}) {

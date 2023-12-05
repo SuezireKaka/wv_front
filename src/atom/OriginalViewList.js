@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'api/axios';
 import { AxiosPost } from 'toolbox/Fetch';
-import OriginalFileView from './OriginalFileView';
 
 export default function OriginalViewList({ imgDtoList, x, y }) {
     const thumbnailRequestTarget = ["video", "image"];

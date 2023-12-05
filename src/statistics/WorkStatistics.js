@@ -1,9 +1,8 @@
 import { useContext, useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
-import { InputGroup, Button, Form, Row, Col } from "react-bootstrap";
+import { InputGroup, Form, Row, Col } from "react-bootstrap";
 import AppContext from "context/AppContextProvider";
 import axios from "api/axios";
-import { FaCircle } from "react-icons/fa";
 import { WonderLineChart } from "./WonderCharts";
 import MinMaxInput, { minmax } from "toolbox/MinMaxInput";
 

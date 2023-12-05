@@ -1,10 +1,8 @@
-import React, { useContext } from 'react'
 import { AxiosAuth, Fetch } from 'toolbox/Fetch'
 import { useLocation } from "react-router-dom";
 import Reporter from './Reporter';
 import ReportSuspectPost from './ReportSuspectPost';
 import ReportSuspectUser from './ReportSuspectUser';
-import AppContext from "context/AppContextProvider";
 
 export default function ReportDetails() {
   const location = useLocation();

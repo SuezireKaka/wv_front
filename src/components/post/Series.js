@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router";
 import React, { useState, useContext } from "react";
 import axios from 'api/axios';
-import { Fetch, AxiosAuth } from "toolbox/Fetch";
+import { AxiosAuth } from "toolbox/Fetch";
 import PostList from "./PostList";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
@@ -10,7 +10,7 @@ import AppContext from "context/AppContextProvider";
 import OriginalViewOne from "atom/OriginalViewOne";
 import { FaBullhorn } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
-import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import LoginTypeIcon from "login/LoginTypeIcon";
 
 export default function Series() {
   const location = useLocation();

@@ -1,7 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
 import { AxiosAuth } from 'toolbox/Fetch'
-import axios from 'api/axios';
-import AppContext from 'context/AppContextProvider';
 import Image from 'react-bootstrap/Image';
 import Row from "react-bootstrap/Row";
 import { Col } from "react-bootstrap";

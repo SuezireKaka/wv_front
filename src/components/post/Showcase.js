@@ -6,6 +6,7 @@ import AppContext from 'context/AppContextProvider'
 import { Button } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { BiArrowToTop, BiArrowToBottom  } from "react-icons/bi";
+
 export default function Showcase() {
     const param = useParams()
     const [page, setPage] = useState(1);

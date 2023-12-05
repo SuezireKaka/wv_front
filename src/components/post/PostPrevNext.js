@@ -1,9 +1,9 @@
 import React from 'react'
 import { AiOutlineCaretLeft, AiOutlineCaretRight } from "react-icons/ai";
-import { AxiosAuth, Fetch } from 'toolbox/Fetch';
+import { AxiosAuth } from 'toolbox/Fetch';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useLocation} from "react-router";
 
 
 export default function PostPrevNext({ post }) {

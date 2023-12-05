@@ -3,7 +3,7 @@ import ToolContext from './ToolContextProvider';
 import AppContext from 'context/AppContextProvider';
 import Remocon from 'toolbox/Remocon';
 import UseGestureElement from 'toolbox/UseGestureElement';
-import { Navigate, useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { isAnyDanger } from './PropAccordion';
 import { X_MAX_TOOLSIZE, X_MIN_TOOLSIZE, Y_MAX_TOOLSIZE, Y_MIN_TOOLSIZE } from './ToolManager';

@@ -1,8 +1,5 @@
-import ToolDetail from './ToolDetail';
-import { useState, useRef, useEffect, useContext } from 'react';
 import { AxiosAuth } from 'toolbox/Fetch';
-import { useLocation, useParams } from "react-router";
-import AppContext from "context/AppContextProvider";
+import { useParams } from "react-router";
 import { ToolContextProvider } from './ToolContextProvider';
 import ToolData from './ToolData';
 

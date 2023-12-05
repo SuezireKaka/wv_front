@@ -6,7 +6,7 @@ import { Fetch } from "toolbox/Fetch";
 import { Table } from "react-bootstrap";
 import ThumbnailList from "atom/ThumbnailList";
 import { Pagination } from "react-bootstrap";
-import LoginTypeIcon from "toolbox/LoginTypeIcon";
+import LoginTypeIcon from "login/LoginTypeIcon";
 import { displayPagination } from "toolbox/Pagination";
 
 export default function PostList() {

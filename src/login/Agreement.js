@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Checkbox from "toolbox/Checkbox";
-import CheckboxGroup from "toolbox/CheckboxGroup";
 import { Button } from 'react-bootstrap';
 
 export default function Agreement() {
-  const [service, setService] = React.useState(false);
+  const [service, setService] = useState(false);
 
   return (
     <article>
